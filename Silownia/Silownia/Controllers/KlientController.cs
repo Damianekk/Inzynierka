@@ -66,8 +66,8 @@ namespace Silownia.Controllers
             {
                 return HttpNotFound();
             }
-            var x = klient;
-            return View(x);
+            var z = klient;
+            return View(z);
         }
 
         // GET: /Klient/Create
