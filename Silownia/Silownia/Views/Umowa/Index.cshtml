@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Silownia.Models.Umowa>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Silownia.Nazwa)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataPodpisania)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataZakonczenia)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cena)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Silownia.Nazwa)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DataPodpisania)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DataZakonczenia)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cena)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.UmowaID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.UmowaID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.UmowaID })
+        </td>
+    </tr>
+}
+
+</table>

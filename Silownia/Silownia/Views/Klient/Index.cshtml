@@ -1,0 +1,133 @@
+﻿@model PagedList.PagedList<Silownia.Models.Klient>
+ 
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@using (Html.BeginForm())
+{
+    <p>
+       
+        Find by city: @Html.TextBox("Miasto")
+        Find by name: @Html.TextBox("imieNazwisko")
+        <input type="submit" value="search" />
+    </p>
+    
+    
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.Label("Imie")
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+
+
+        if (item.Adres != null)
+        {
+
+            <text>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Imie)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nazwisko)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DataUrodzenia)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Mail)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NrTelefonu)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.OsobaID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.OsobaID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.OsobaID })
+                    </td>
+                </tr>
+            </text>
+        }
+        else
+        {
+            <text>
+                <tr class="danger">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Imie)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nazwisko)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DataUrodzenia)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Mail)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NrTelefonu)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.OsobaID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.OsobaID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.OsobaID }) 
+                       
+                    </td>
+                    <td> @Html.ActionLink("Brak adresu", "Create", "Adres", new { id = item.OsobaID },
+                        new { @class = "btn btn-primary pull-right" })</td>
+              
+                </tr>
+    
+    
+
+
+            </text>
+        
+        }
+        
+        
+
+    }
+    
+</table>
+
+<div class="col-sm-10">
+
+    <div class="center">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, pageSize = Model.PageSize, imieNazwisko = ViewBag.srchImieNazwisko, Miasto = ViewBag.srchMiasto }))
+        Showing @Model.FirstItemOnPage to @Model.LastItemOnPage of @Model.TotalItemCount Klient
+        
+         
+   </div>
+
+</div>

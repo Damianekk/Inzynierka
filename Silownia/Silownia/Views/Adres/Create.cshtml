@@ -1,0 +1,82 @@
+﻿@model Silownia.Models.Adres
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Adres</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.KodPocztowy, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.KodPocztowy)
+                @Html.ValidationMessageFor(model => model.KodPocztowy)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Kraj, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Kraj)
+                @Html.ValidationMessageFor(model => model.Kraj)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Miasto, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Miasto)
+                @Html.ValidationMessageFor(model => model.Miasto)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Ulica, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Ulica)
+                @Html.ValidationMessageFor(model => model.Ulica)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NrBudynku, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NrBudynku)
+                @Html.ValidationMessageFor(model => model.NrBudynku)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NrLokalu, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NrLokalu)
+                @Html.ValidationMessageFor(model => model.NrLokalu)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+ 
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

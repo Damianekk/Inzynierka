@@ -1,0 +1,66 @@
+﻿@model Silownia.Models.Umowa
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Umowa</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.UmowaID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SilowniaID, "SilowniaID", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("SilowniaID", String.Empty)
+                @Html.ValidationMessageFor(model => model.SilowniaID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DataPodpisania, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DataPodpisania)
+                @Html.ValidationMessageFor(model => model.DataPodpisania)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DataZakonczenia, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DataZakonczenia)
+                @Html.ValidationMessageFor(model => model.DataZakonczenia)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Cena, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Cena)
+                @Html.ValidationMessageFor(model => model.Cena)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
