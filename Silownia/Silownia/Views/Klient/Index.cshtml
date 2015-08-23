@@ -19,7 +19,7 @@
     <p>
        
         Find by city: @Html.TextBox("Miasto")
-        Find by name: @Html.TextBox("imieNazwisko")
+        Find by name/surname: @Html.TextBox("imieNazwisko")
         <input type="submit" value="search" />
     </p>
     
@@ -32,16 +32,16 @@
             @Html.Label("Imie")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model)
+            @Html.Label("Nazwisko")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model)
+            @Html.Label("Data urodzenia")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model)
+            @Html.Label("Email")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model)
+            @Html.Label("Nr telefonu")
         </th>
         <th></th>
     </tr>
@@ -103,8 +103,10 @@
                         @Html.ActionLink("Delete", "Delete", new { id = item.OsobaID }) 
                        
                     </td>
-                    <td> @Html.ActionLink("Brak adresu", "Create", "Adres", new { id = item.OsobaID },
-                        new { @class = "btn btn-primary pull-right" })</td>
+                    <td>
+                     @Html.ActionLink("Brak adresu", "Create", "Adres", new { id = item.OsobaID },
+                        new { @class = "btn btn-primary pull-right" })
+                    </td>
               
                 </tr>
     

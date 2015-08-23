@@ -37,9 +37,13 @@ namespace Silownia.Controllers
         }
 
         // GET: /Adres/Create
-        public ActionResult Create()
+        public ActionResult Create(long? id)
         {
-          
+            if (id != null)
+            {
+                Osoba osoba = db.Osoby.Find(id);
+                ViewBag.Osoba = osoba;
+            }
             return View();
         }
 

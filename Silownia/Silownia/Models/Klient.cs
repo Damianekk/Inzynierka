@@ -11,6 +11,7 @@ namespace Silownia.Models
         [EmailAddress]
         public string Mail { get; set; }
         [Phone]
+        [Display(Name = "Nr telefonu")]
         public string NrTelefonu { get; set; }
         
         public virtual ICollection<TreningPersonalny> TreningPersonalny { get; set; }
