@@ -66,7 +66,8 @@ namespace Silownia.Controllers
             {
                 return HttpNotFound();
             }
-            return View(klient);
+            var x = klient;
+            return View(x);
         }
 
         // GET: /Klient/Create
@@ -90,7 +91,7 @@ namespace Silownia.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            
             return View(klient);
         }
 
