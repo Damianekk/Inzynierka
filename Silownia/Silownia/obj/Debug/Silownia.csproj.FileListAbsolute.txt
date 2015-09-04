@@ -119,3 +119,4 @@ C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\bin\PagedList.dll
 C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\bin\PagedList.Mvc.dll
 C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\bin\PagedList.xml
 C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\bin\PagedList.Mvc.xml
+C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.csprojResolveAssemblyReference.cache

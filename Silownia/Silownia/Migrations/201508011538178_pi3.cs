@@ -1,8 +1,7 @@
 namespace Silownia.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class pi3 : DbMigration
     {
         public override void Up()

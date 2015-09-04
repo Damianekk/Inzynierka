@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Silownia.Models;
 using Silownia.DAL;
@@ -22,10 +20,10 @@ namespace Silownia.Controllers
         {
             ViewBag.srchMiasto = Miasto;
             ViewBag.srchImieNazwisko = imieNazwisko;
-       //     Test t = new Test();
-            
+            //     Test t = new Test();
 
 
+           
             var a = from Osoby in db.Osoby.OfType<Klient>() select Osoby;
             if (!String.IsNullOrEmpty(Miasto))
             {
