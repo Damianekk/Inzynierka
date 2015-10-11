@@ -57,7 +57,7 @@ namespace Silownia.Controllers
                 osoba.Adres = adres;
                 adres.Osoba = osoba;
                 db.SaveChanges();
-                return RedirectToAction("Index","Home");
+                return RedirectToAction("Index","Klient");
             }
 
             return View(adres);
