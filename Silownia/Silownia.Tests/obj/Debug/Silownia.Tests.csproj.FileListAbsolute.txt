@@ -89,3 +89,7 @@ C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia.Tests\bin\Debug\M
 C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia.Tests\bin\Debug\PagedList.dll
 C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia.Tests\bin\Debug\PagedList.xml
 C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia.Tests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia.Tests\bin\Debug\System.Web.Http.dll
+C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia.Tests\bin\Debug\System.Net.Http.Formatting.dll
+C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia.Tests\bin\Debug\System.Web.Http.xml
+C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia.Tests\bin\Debug\System.Net.Http.Formatting.xml

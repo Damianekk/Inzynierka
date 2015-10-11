@@ -120,3 +120,14 @@ C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\bin\PagedList.Mvc
 C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\bin\PagedList.xml
 C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\bin\PagedList.Mvc.xml
 C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.csprojResolveAssemblyReference.cache
+C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.Migrations.DodaniewmodeluKlienttypuUmowa.resources
+C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.Migrations.cofniecieZmian.resources
+C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.Migrations.Dodanierecepcjonisty.resources
+C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\bin\System.Net.Http.Formatting.dll
+C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\bin\System.Web.Http.dll
+C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\bin\System.Web.Http.WebHost.dll
+C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\bin\System.Net.Http.Formatting.xml
+C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\bin\System.Web.Http.xml
+C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\bin\System.Web.Http.WebHost.xml
+C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.Migrations.dodaniedoumowyrecepcjonistaIDlong.resources
+C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.Migrations.usunieciezumowyrecepcjonistaID.resources
