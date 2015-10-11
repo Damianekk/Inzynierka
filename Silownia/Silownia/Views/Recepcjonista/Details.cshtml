@@ -1,0 +1,58 @@
+﻿@model Silownia.Models.Recepcjonista
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Recepcjonista</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Imie)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Imie)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nazwisko)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nazwisko)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataUrodzenia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataUrodzenia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataZatrudnienia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataZatrudnienia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pensja)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pensja)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.OsobaID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
