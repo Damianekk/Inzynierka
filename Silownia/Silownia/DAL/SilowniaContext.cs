@@ -20,6 +20,7 @@ namespace Silownia.DAL
         public DbSet<Models.Silownia> Silownie { get; set; }
         public DbSet<Specjalizacja> Specjalizacje { get; set; }
         public DbSet<Trener> Trenerzy { get; set; }
+        public DbSet<Recepcjonista> Recepcjonisci { get; set; }
         public DbSet<TreningPersonalny> TreningiPersonalne { get; set; }
         public DbSet<Umowa> Umowy { get; set; }
 
