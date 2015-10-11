@@ -9,6 +9,7 @@ namespace Silownia.Models
  
 
         [Required]
+        [DataType(DataType.Date)]
         [Display(Name = "Data masażu")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
         public DateTime DataMasazu { get; set; }

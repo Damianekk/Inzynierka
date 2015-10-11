@@ -6,6 +6,7 @@ namespace Silownia.Models
     public class Pracownik : Osoba
     {
         [Required]
+        [DataType(DataType.Date)]
         [Display(Name = "Data zatrudnienia")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
         public DateTime DataZatrudnienia { get; set; }

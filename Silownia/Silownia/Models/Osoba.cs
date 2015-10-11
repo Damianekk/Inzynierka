@@ -14,12 +14,10 @@ namespace Silownia.Models
         public Adres AdresID { get; set; }
 
         [Required]
+        [DataType(DataType.Date)]
         [Display(Name = "Data urodzenia")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
         public DateTime DataUrodzenia { get; set; }
-
-        
-
 
         [Display(Name = "Imie nazwisko")]
         public string imieNazwisko { get { return Nazwisko + " " + Imie; } }

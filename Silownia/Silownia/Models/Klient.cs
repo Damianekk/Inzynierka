@@ -10,7 +10,7 @@ namespace Silownia.Models
         [Phone]
         [Display(Name = "Nr telefonu")]
         public string NrTelefonu { get; set; }
-        
+
         public virtual ICollection<TreningPersonalny> TreningPersonalny { get; set; }
         public virtual ICollection<Umowa> Umowa { get; set; }
         public virtual ICollection<Masaz> Masaz { get; set; }
