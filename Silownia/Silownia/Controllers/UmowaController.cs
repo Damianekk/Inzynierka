@@ -4,6 +4,9 @@ using System.Net;
 using System.Web.Mvc;
 using Silownia.Models;
 using Silownia.DAL;
+using System;
+using Microsoft.AspNet.Identity;
+ 
 
 namespace Silownia.Controllers
 {
@@ -36,8 +39,27 @@ namespace Silownia.Controllers
         // GET: /Umowa/Create
         public ActionResult Create()
         {
+            
             ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
-            return View();
+            ViewBag.RecepcjonistaID = new SelectList(db.Recepcjonisci, "OsobaID", "imieNazwisko");
+            var a = from Osoby in db.Osoby.OfType<Recepcjonista>() select Osoby;
+ 
+             Recepcjonista  recepcjonista = null;
+            var user = User.Identity.GetUserName();
+            foreach (Recepcjonista rec in a)
+            { 
+                if (rec.imieNazwisko.Replace(" ", "") == user)
+                {
+                    recepcjonista = rec;
+                    break;
+                }
+            }
+       
+            return View(new Umowa // W ten sposób tworze obiekt nadaje aktualny czas / przypisuje do Daty podpisania umowy i zwracam widok z datą (teraz)
+            {
+                DataPodpisania = DateTime.Now
+              // ,Recepcjonista = recepcjonista 
+            });
         }
 
         // POST: /Umowa/Create
@@ -45,15 +67,29 @@ namespace Silownia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="UmowaID,SilowniaID,DataPodpisania,DataZakonczenia,Cena")] Umowa umowa)
+        public ActionResult Create([Bind(Include= "UmowaID,SilowniaID,DataPodpisania,DataZakonczenia,Cena,RecepcjonistaID")] long? id, Umowa umowa)
         {
+            //if (ModelState.IsValid)
+            //{
+            //    Osoba osoba = db.Osoby.Find(id);
+            //    db.Adresy.Add(adres);
+            //    osoba.Adres = adres;
+            //    adres.Osoba = osoba;
+            //    db.SaveChanges();
+            //    return RedirectToAction("Index", "Klient");
+            //}
+            ViewBag.RecepcjonistaID = new SelectList(db.Recepcjonisci, "OsobaID", "imieNazwisko");
+             
             if (ModelState.IsValid)
             {
+                Klient osoba = db.Klienci.Find(id);
                 db.Umowy.Add(umowa);
+                umowa.Klient = osoba;
+                osoba.Umowa.Add(umowa);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            
             ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", umowa.SilowniaID);
             return View(umowa);
         }
