@@ -5,54 +5,100 @@
 }
 
 <h2>Details</h2>
+ 
+        <div>
+            <h4>Klient</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Imie)
+                </dt>
 
-<div>
-    <h4>Klient</h4>
-	<hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Imie)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Imie)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Imie)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Nazwisko)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Nazwisko)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Nazwisko)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Nazwisko)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.DataUrodzenia)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DataUrodzenia)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.DataUrodzenia)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.DataUrodzenia)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Mail)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Mail)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Mail)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Mail)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.NrTelefonu)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.NrTelefonu)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.NrTelefonu)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.NrTelefonu)
-        </dd>
+            </dl>
 
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.OsobaID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+            @*   ========= Umowy ========= *@
+            <dl , class="table-bordered" ,new style="color:#0099CC">
+                <dt>
+                    @Html.Label("Umowy", new { style = "color:#0099CC" })
+                </dt>
+
+                @if (Model.Umowa.Count > 0)
+                {
+                    <dd>
+                        <table class="table">
+                            <tr>
+                                <th>Data podpisania</th>
+                                <th>Data zakończenia</th>
+                                <th>Cena/mieś</th>
+                            </tr>
+                            @foreach (var item in Model.Umowa)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DataPodpisania)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DataZakonczenia)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Cena) zł
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </table>
+                    </dd>
+                }
+                else
+                {
+                    <dt>
+                        @Html.Label("Brak umów", new { style = "color:#D11919" })
+                    </dt>
+                }
+
+            </dl>
+            @*   ========= Umowy ========= *@
+        </div>
+
+            
+                <p>
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.OsobaID }) |
+                    @Html.ActionLink("Back to List", "Index")
+                </p>

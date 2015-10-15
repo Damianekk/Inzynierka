@@ -51,6 +51,47 @@
         </dd>
 
     </dl>
+    <dl , class="table-bordered" ,new style="color:#0099CC">
+        <dt>
+            @Html.Label("Umowy", new { style = "color:#0099CC" })
+        </dt>
+
+        @if (Model.Umowa.Count > 0)
+        {
+            <dd>
+                <table class="table">
+                    <tr>
+                        <th>Klient</th>
+                        <th>Data podpisania</th>
+                        <th>Data zakończenia</th>
+                    </tr>
+                    @foreach (var item in Model.Umowa)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Klient.imieNazwisko)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DataPodpisania)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DataZakonczenia)
+                            </td>
+
+                        </tr>
+                    }
+
+                </table>
+            </dd>
+        }
+        else
+        {
+            <dt>
+                @Html.Label("Brak klientów", new { style = "color:#D11919" })
+            </dt>
+        }
+
+    </dl>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.SilowniaID }) |
