@@ -67,7 +67,8 @@ namespace Silownia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include= "UmowaID,SilowniaID,DataPodpisania,DataZakonczenia,Cena,RecepcjonistaID")] long? id, Umowa umowa)
+       // public ActionResult Create([Bind(Include= "UmowaID,SilowniaID,DataPodpisania,DataZakonczenia,Cena,RecepcjonistaID")] long? id, Umowa umowa)
+        public ActionResult Create([Bind(Include = "UmowaID,DataPodpisania,DataZakonczenia,RecepcjonistaID,Cena")] long? id, Umowa umowa)
         {
             //if (ModelState.IsValid)
             //{
@@ -78,14 +79,28 @@ namespace Silownia.Controllers
             //    db.SaveChanges();
             //    return RedirectToAction("Index", "Klient");
             //}
-            ViewBag.RecepcjonistaID = new SelectList(db.Recepcjonisci, "OsobaID", "imieNazwisko");
-             
+            ViewBag.RecepcjonistaID = new SelectList(db.Recepcjonisci, "OsobaID", "imieNazwisko",umowa.RecepcjonistaID);
+            
             if (ModelState.IsValid)
             {
-                Klient osoba = db.Klienci.Find(id);
+                #region Klient
+                Klient klient = db.Klienci.Find(id);
+                umowa.Klient = klient;
+                klient.Umowa.Add(umowa);
+                #endregion
+
+                #region Recepcjonista
+                Recepcjonista recepcjonista = db.Recepcjonisci.Find(umowa.RecepcjonistaID);
+                umowa.Recepcjonista = recepcjonista;
+                recepcjonista.Umowa.Add(umowa);
+                #endregion
+
+                #region Silownia
+                Models.Silownia silownia = db.Silownie.Find(umowa.SilowniaID);
+                umowa.Silownia = silownia;
+                silownia.Umowa.Add(umowa);
+                #endregion
                 db.Umowy.Add(umowa);
-                umowa.Klient = osoba;
-                osoba.Umowa.Add(umowa);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

@@ -131,3 +131,5 @@ C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\bin\System.Web.Ht
 C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\bin\System.Web.Http.WebHost.xml
 C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.Migrations.dodaniedoumowyrecepcjonistaIDlong.resources
 C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.Migrations.usunieciezumowyrecepcjonistaID.resources
+C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.Migrations.dodanieIDkówdoklasyUmowa.resources
+C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.Migrations.usunięcierequirednatypachklaswumowie.resources

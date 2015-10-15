@@ -1,4 +1,5 @@
-﻿namespace Silownia.Models
+﻿using System.Collections.Generic;
+namespace Silownia.Models
 {
     public class Silownia 
     {
@@ -11,6 +12,6 @@
 
         
         public virtual Adres Adres { get; set; }
-
+        public virtual ICollection<Umowa> Umowa { get; set; }
     }
 }

@@ -6,9 +6,13 @@ namespace Silownia.Models
     public class Umowa
     {
         public long UmowaID { get; set; }
-        [Display(Name = "Siłownia")]
+        
+        [Required]
         public long SilowniaID { get; set; }
-
+        [Required]
+        public long KlientID { get; set; }
+        [Required]
+        public long RecepcjonistaID { get; set; }
  
 
         [Required]
@@ -23,12 +27,9 @@ namespace Silownia.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
         public DateTime DataZakonczenia { get; set; }
 
-        public string Cena { get; set; }
-        [Required]
+        public string Cena { get; set; }    
         public virtual Klient Klient { get; set; }
-        [Required]
         public virtual Recepcjonista Recepcjonista { get; set; }
-        [Required]
         public virtual Silownia Silownia { get; set; }
     }
 }
