@@ -245,6 +245,14 @@
     <Compile Include="Migrations\201510112010588_usuniecie z umowy recepcjonistaID.Designer.cs">
       <DependentUpon>201510112010588_usuniecie z umowy recepcjonistaID.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201510122012250_dodanie ID-ków do klasy Umowa.cs" />
+    <Compile Include="Migrations\201510122012250_dodanie ID-ków do klasy Umowa.Designer.cs">
+      <DependentUpon>201510122012250_dodanie ID-ków do klasy Umowa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201510122055489_usunięcie required na typach klas w umowie.cs" />
+    <Compile Include="Migrations\201510122055489_usunięcie required na typach klas w umowie.Designer.cs">
+      <DependentUpon>201510122055489_usunięcie required na typach klas w umowie.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Adres.cs" />
@@ -396,6 +404,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510112010588_usuniecie z umowy recepcjonistaID.resx">
       <DependentUpon>201510112010588_usuniecie z umowy recepcjonistaID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510122012250_dodanie ID-ków do klasy Umowa.resx">
+      <DependentUpon>201510122012250_dodanie ID-ków do klasy Umowa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510122055489_usunięcie required na typach klas w umowie.resx">
+      <DependentUpon>201510122055489_usunięcie required na typach klas w umowie.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
