@@ -14,8 +14,9 @@ namespace Silownia.Models
         public string Powierzchnia { get; set; }
         [Display(Name = "Nr kontaktowy")]
         public long NrTelefonu { get; set; }
+        public double Dlugosc { get; set; }
+        public double Szerokosc { get; set; }
 
-        
         public virtual Adres Adres { get; set; }
         public virtual ICollection<Umowa> Umowa { get; set; }
     }

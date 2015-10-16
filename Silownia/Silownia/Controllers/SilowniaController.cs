@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using Silownia.DAL;
+using GoogleMaps.LocationServices;
 
 namespace Silownia.Controllers
 {
@@ -24,6 +25,9 @@ namespace Silownia.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Models.Silownia silownia = db.Silownie.Find(id);
+            ViewBag.Dlugosc = silownia.Dlugosc;
+            ViewBag.Szerokosc = silownia.Szerokosc;
+
             if (silownia == null)
             {
                 return HttpNotFound();
@@ -44,12 +48,23 @@ namespace Silownia.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "SilowniaID,Nazwa,GodzinaOtwarcia,GodzinaZamkniecia,Powierzchnia,NrTelefonu")] Models.Silownia silownia)
         {
+            var address = "Złota 44, Warszawa";
+
+            var locationService = new GoogleLocationService();
+            var point = locationService.GetLatLongFromAddress(address);
+
+            var latitude = point.Latitude;
+            var longitude = point.Longitude;
             if (ModelState.IsValid)
             {
+                silownia.Dlugosc = longitude;
+                silownia.Szerokosc = latitude;
                 db.Silownie.Add(silownia);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+           
+
 
             return View(silownia);
         }
