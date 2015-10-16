@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Silownia.Models;
 using Silownia.DAL;
 using PagedList;
+ 
 
 namespace Silownia.Controllers
 {
@@ -15,11 +16,13 @@ namespace Silownia.Controllers
     
         private SilowniaContext db = new SilowniaContext();
 
+      
         // GET: /Klient/
-        public ActionResult Index(string Miasto,string imieNazwisko,int page=1 ,int pageSize = 10)
+        public ActionResult Index(string Miasto,string imieNazwisko,bool? czyUmowa,int page=1 ,int pageSize = 10)
         {
             ViewBag.srchMiasto = Miasto;
             ViewBag.srchImieNazwisko = imieNazwisko;
+            ViewBag.czyUmowa = czyUmowa;
             //     Test t = new Test();
 
 
@@ -29,15 +32,16 @@ namespace Silownia.Controllers
             {
                 a =  a.Where(s => s.Adres.Miasto.Contains(Miasto));
             }
-            else
-            {
-
-            }
+ 
 
             if (!String.IsNullOrEmpty(imieNazwisko))
             {
                 a = a.Where(s => s.Imie.Contains(imieNazwisko) || s.Nazwisko.Contains(imieNazwisko));
             }
+
+            if ((bool)czyUmowa)
+            a = a.Where(s => s.Umowa.Count > 0);
+
             var final = a.OrderBy(p => p.Imie);
             var ileWynikow = a.Count();
             if ((ileWynikow / page) <= 1)
