@@ -5,14 +5,14 @@ namespace Silownia.Models
 {
     public abstract class Osoba 
     {
+        [Key]
+        [Required]
         public long OsobaID { get; set; }
-
         [Required]
         public string Imie { get; set; }
         [Required]
         public string Nazwisko { get; set; }
-        public Adres AdresID { get; set; }
-
+        
         [Required]
         [DataType(DataType.Date)]
         [Display(Name = "Data urodzenia")]

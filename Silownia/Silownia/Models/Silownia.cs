@@ -5,6 +5,13 @@ namespace Silownia.Models
 {
     public class Silownia 
     {
+        public Silownia()
+        {
+            Umowa = new List<Umowa>();
+            Pracownik = new List<Pracownik>();
+            Sala = new List<Sala>();
+        }
+        [Key, Required]
         public long SilowniaID { get; set; }
         public string Nazwa { get; set; }
         [Display(Name = "Godziny otwarcia")]
@@ -19,5 +26,7 @@ namespace Silownia.Models
 
         public virtual Adres Adres { get; set; }
         public virtual ICollection<Umowa> Umowa { get; set; }
+        public virtual ICollection<Pracownik> Pracownik { get; set; }
+        public virtual ICollection<Sala> Sala { get; set; }
     }
 }

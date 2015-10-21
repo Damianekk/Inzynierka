@@ -47,7 +47,7 @@ namespace Silownia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="OsobaID,Imie,Nazwisko,DataUrodzenia,DataZatrudnienia,Pensja,SpecjalizacjaID")] Trener trener)
+        public ActionResult Create([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,DataZatrudnienia,Pensja,SpecjalizacjaID")] Trener trener)
         {
             if (ModelState.IsValid)
             {
@@ -81,7 +81,7 @@ namespace Silownia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="OsobaID,Imie,Nazwisko,DataUrodzenia,DataZatrudnienia,Pensja,SpecjalizacjaID")] Trener trener)
+        public ActionResult Edit([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,DataZatrudnienia,Pensja,SpecjalizacjaID")] Trener trener)
         {
             if (ModelState.IsValid)
             {

@@ -6,14 +6,12 @@ using System.Web;
 
 namespace Silownia.Models
 {
-    public class TreningPersonalny : Trening
+    public class TreningWlasny : Trening
     {
-        public long TreningPersonalnyID { get; set; }
+        public long TreningWlasnyID { get; set; }
 
-       [Required] 
+        [Required]
         public virtual Klient Klient { get; set; }
-        [Required] 
-        public virtual Trener Trener { get; set; }
+
     }
 }
-   

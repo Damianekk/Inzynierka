@@ -48,6 +48,9 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="GoogleMaps.LocationServices">
+      <HintPath>..\packages\GoogleMaps.LocationServices.0.9.8.5\lib\net40\GoogleMaps.LocationServices.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="PagedList">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
@@ -237,14 +240,6 @@
     <Compile Include="Migrations\201510111615194_Dodanie recepcjonisty.Designer.cs">
       <DependentUpon>201510111615194_Dodanie recepcjonisty.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201510112003296_dodanie do umowy recepcjonistaID long.cs" />
-    <Compile Include="Migrations\201510112003296_dodanie do umowy recepcjonistaID long.Designer.cs">
-      <DependentUpon>201510112003296_dodanie do umowy recepcjonistaID long.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201510112010588_usuniecie z umowy recepcjonistaID.cs" />
-    <Compile Include="Migrations\201510112010588_usuniecie z umowy recepcjonistaID.Designer.cs">
-      <DependentUpon>201510112010588_usuniecie z umowy recepcjonistaID.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201510122012250_dodanie ID-ków do klasy Umowa.cs" />
     <Compile Include="Migrations\201510122012250_dodanie ID-ków do klasy Umowa.Designer.cs">
       <DependentUpon>201510122012250_dodanie ID-ków do klasy Umowa.cs</DependentUpon>
@@ -257,16 +252,25 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Adres.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\InstruktorFitness.cs" />
     <Compile Include="Models\Klient.cs" />
+    <Compile Include="Models\KomentarzOPracowniku.cs" />
+    <Compile Include="Models\Konserwacja.cs" />
+    <Compile Include="Models\Konserwator.cs" />
     <Compile Include="Models\Masaz.cs" />
     <Compile Include="Models\Masazystka.cs" />
     <Compile Include="Models\Osoba.cs" />
     <Compile Include="Models\Pracownik.cs" />
     <Compile Include="Models\Recepcjonista.cs" />
+    <Compile Include="Models\Sala.cs" />
     <Compile Include="Models\Silownia.cs" />
     <Compile Include="Models\Specjalizacja.cs" />
+    <Compile Include="Models\Sprzet.cs" />
     <Compile Include="Models\Trener.cs" />
+    <Compile Include="Models\Trening.cs" />
+    <Compile Include="Models\TreningFitness.cs" />
     <Compile Include="Models\TreningPersonalny.cs" />
+    <Compile Include="Models\TreningWlasny.cs" />
     <Compile Include="Models\Umowa.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -282,6 +286,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="GoogleMaps.LocationServices.readme.txt" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -401,12 +406,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510111615194_Dodanie recepcjonisty.resx">
       <DependentUpon>201510111615194_Dodanie recepcjonisty.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201510112003296_dodanie do umowy recepcjonistaID long.resx">
-      <DependentUpon>201510112003296_dodanie do umowy recepcjonistaID long.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201510112010588_usuniecie z umowy recepcjonistaID.resx">
-      <DependentUpon>201510112010588_usuniecie z umowy recepcjonistaID.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510122012250_dodanie ID-ków do klasy Umowa.resx">
       <DependentUpon>201510122012250_dodanie ID-ków do klasy Umowa.cs</DependentUpon>

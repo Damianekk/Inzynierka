@@ -79,7 +79,7 @@ namespace Silownia.Controllers
             //    db.SaveChanges();
             //    return RedirectToAction("Index", "Klient");
             //}
-            ViewBag.RecepcjonistaID = new SelectList(db.Recepcjonisci, "OsobaID", "imieNazwisko",umowa.RecepcjonistaID);
+            ViewBag.RecepcjonistaID = new SelectList(db.Recepcjonisci, "OsobaID", "imieNazwisko", umowa.RecepcjonistaID);
             
             if (ModelState.IsValid)
             {

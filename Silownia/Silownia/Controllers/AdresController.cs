@@ -9,6 +9,7 @@ namespace Silownia.Controllers
 {
     public class AdresController : Controller
     {
+        
         private SilowniaContext db = new SilowniaContext();
 
         // GET: /Adres/
