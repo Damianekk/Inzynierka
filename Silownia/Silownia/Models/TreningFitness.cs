@@ -10,14 +10,14 @@ namespace Silownia.Models
     [Table("TreningFitness")]
     public class TreningFitness : Trening
     {
-        public long TreningFitnessID { get; set; }
+        public TreningFitness()
+        {
+            Klient = new Klient();
+        }
         public string NazwaTreningu { get; set; }
-        [MaxLength(300, ErrorMessage=" Opis przekracza dozwoloną ilość słów!")]
+        [MaxLength(300, ErrorMessage = " Opis przekracza dozwoloną ilość słów!")]
         [Display(Name = "Opis")]
         public string OpisTreningu { get; set; }
-
-        public int? KlientID { get; set; }
-        public virtual ICollection<Klient> Klient { get; set; }
         [Required]
         public virtual Trener Trener { get; set; }
         public virtual Sala Sala { get; set; }

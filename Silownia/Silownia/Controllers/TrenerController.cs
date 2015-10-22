@@ -56,7 +56,7 @@ namespace Silownia.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.SpecjalizacjaID = new SelectList(db.Specjalizacje, "SpecjalizacjaID", "Nazwa", trener.SpecjalizacjaID);
+            ViewBag.SpecjalizacjaID = new SelectList(db.Specjalizacje, "SpecjalizacjaID", "Nazwa", trener.Specjalizacja);
             return View(trener);
         }
 
@@ -72,7 +72,7 @@ namespace Silownia.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.SpecjalizacjaID = new SelectList(db.Specjalizacje, "SpecjalizacjaID", "Nazwa", trener.SpecjalizacjaID);
+            ViewBag.SpecjalizacjaID = new SelectList(db.Specjalizacje, "SpecjalizacjaID", "Nazwa", trener.Specjalizacja);
             return View(trener);
         }
 
@@ -89,7 +89,7 @@ namespace Silownia.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.SpecjalizacjaID = new SelectList(db.Specjalizacje, "SpecjalizacjaID", "Nazwa", trener.SpecjalizacjaID);
+            ViewBag.SpecjalizacjaID = new SelectList(db.Specjalizacje, "SpecjalizacjaID", "Nazwa", trener.Specjalizacja);
             return View(trener);
         }
 

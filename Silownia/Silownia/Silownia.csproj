@@ -192,62 +192,12 @@
     <Compile Include="Controllers\SpecjalizacjaController.cs" />
     <Compile Include="Controllers\TrenerController.cs" />
     <Compile Include="Controllers\UmowaController.cs" />
-    <Compile Include="DAL\MapowanieDziedziczenia.cs" />
+    <Compile Include="DAL\DziedziczenieOsoby.cs" />
+    <Compile Include="DAL\DziedziczeniePracownika.cs" />
+    <Compile Include="DAL\DziedziczenieTreningu.cs" />
     <Compile Include="DAL\SilowniaContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508011459175_pi.cs" />
-    <Compile Include="Migrations\201508011459175_pi.Designer.cs">
-      <DependentUpon>201508011459175_pi.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508011521284_pi1.cs" />
-    <Compile Include="Migrations\201508011521284_pi1.Designer.cs">
-      <DependentUpon>201508011521284_pi1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508011535032_pi2.cs" />
-    <Compile Include="Migrations\201508011535032_pi2.Designer.cs">
-      <DependentUpon>201508011535032_pi2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508011538178_pi3.cs" />
-    <Compile Include="Migrations\201508011538178_pi3.Designer.cs">
-      <DependentUpon>201508011538178_pi3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508011554111_pi4.cs" />
-    <Compile Include="Migrations\201508011554111_pi4.Designer.cs">
-      <DependentUpon>201508011554111_pi4.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508021730504_pi5.cs" />
-    <Compile Include="Migrations\201508021730504_pi5.Designer.cs">
-      <DependentUpon>201508021730504_pi5.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508021923209_pi6.cs" />
-    <Compile Include="Migrations\201508021923209_pi6.Designer.cs">
-      <DependentUpon>201508021923209_pi6.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508021926382_pi7.cs" />
-    <Compile Include="Migrations\201508021926382_pi7.Designer.cs">
-      <DependentUpon>201508021926382_pi7.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201509261649329_Dodanie w modelu Klient typu Umowa.cs" />
-    <Compile Include="Migrations\201509261649329_Dodanie w modelu Klient typu Umowa.Designer.cs">
-      <DependentUpon>201509261649329_Dodanie w modelu Klient typu Umowa.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201509261708464_cofniecieZmian.cs" />
-    <Compile Include="Migrations\201509261708464_cofniecieZmian.Designer.cs">
-      <DependentUpon>201509261708464_cofniecieZmian.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201510111615194_Dodanie recepcjonisty.cs" />
-    <Compile Include="Migrations\201510111615194_Dodanie recepcjonisty.Designer.cs">
-      <DependentUpon>201510111615194_Dodanie recepcjonisty.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201510122012250_dodanie ID-ków do klasy Umowa.cs" />
-    <Compile Include="Migrations\201510122012250_dodanie ID-ków do klasy Umowa.Designer.cs">
-      <DependentUpon>201510122012250_dodanie ID-ków do klasy Umowa.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201510122055489_usunięcie required na typach klas w umowie.cs" />
-    <Compile Include="Migrations\201510122055489_usunięcie required na typach klas w umowie.Designer.cs">
-      <DependentUpon>201510122055489_usunięcie required na typach klas w umowie.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -373,47 +323,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201508011459175_pi.resx">
-      <DependentUpon>201508011459175_pi.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508011521284_pi1.resx">
-      <DependentUpon>201508011521284_pi1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508011535032_pi2.resx">
-      <DependentUpon>201508011535032_pi2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508011538178_pi3.resx">
-      <DependentUpon>201508011538178_pi3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508011554111_pi4.resx">
-      <DependentUpon>201508011554111_pi4.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508021730504_pi5.resx">
-      <DependentUpon>201508021730504_pi5.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508021923209_pi6.resx">
-      <DependentUpon>201508021923209_pi6.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508021926382_pi7.resx">
-      <DependentUpon>201508021926382_pi7.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201509261649329_Dodanie w modelu Klient typu Umowa.resx">
-      <DependentUpon>201509261649329_Dodanie w modelu Klient typu Umowa.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201509261708464_cofniecieZmian.resx">
-      <DependentUpon>201509261708464_cofniecieZmian.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201510111615194_Dodanie recepcjonisty.resx">
-      <DependentUpon>201510111615194_Dodanie recepcjonisty.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201510122012250_dodanie ID-ków do klasy Umowa.resx">
-      <DependentUpon>201510122012250_dodanie ID-ków do klasy Umowa.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201510122055489_usunięcie required na typach klas w umowie.resx">
-      <DependentUpon>201510122055489_usunięcie required na typach klas w umowie.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

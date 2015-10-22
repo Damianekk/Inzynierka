@@ -16,13 +16,9 @@ namespace Silownia.Models
             KomentarzOPracowniku = new List<KomentarzOPracowniku>();
         }
 
-        public long KlientID { get; set; }
         [EmailAddress]
         public string Mail { get; set; }
-        [Phone]
-        [Display(Name = "Nr telefonu")]
-        public string NrTelefonu { get; set; }
-
+       
         public virtual ICollection<Umowa> Umowa { get; set; }
         public virtual ICollection<Masaz> Masaz { get; set; }
         public virtual ICollection<Trening> Trening { get; set; }

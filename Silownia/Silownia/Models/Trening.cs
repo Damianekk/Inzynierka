@@ -7,6 +7,7 @@ using System.Web;
 
 namespace Silownia.Models
 {
+    [Table("Trening")]
     public abstract class Trening
     {
         [Key,Required]
@@ -19,7 +20,7 @@ namespace Silownia.Models
         public DateTime Godzina_rozpoczecia { get; set; }
          [Display(Name = "Godzina zakończenia")]
         public DateTime Godzina_zakonczenia { get; set; } 
-         public long? KlientID { get; set; }
+       
          public virtual Klient Klient { get; set; }
          
     }

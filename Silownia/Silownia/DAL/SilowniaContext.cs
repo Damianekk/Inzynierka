@@ -7,11 +7,17 @@ namespace Silownia.DAL
 {
     public class SilowniaContext : DbContext
     {
+        
+
         public SilowniaContext()
             : base("SilowniaContext")
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<SilowniaContext, Silownia.Migrations.Configuration>("SilowniaContext"));
         }
+
+        public DbSet<Osoba> Osoby { get; set; }
+        public DbSet<Pracownik> Pracownicy { get; set; }
+        public DbSet<Trening> Treningi { get; set; }
 
         public DbSet<Adres> Adresy { get; set; }
         public DbSet<Klient> Klienci { get; set; }
@@ -35,6 +41,9 @@ namespace Silownia.DAL
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {            
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            modelBuilder.Configurations.Add(new DziedziczenieOsoby());
+            modelBuilder.Configurations.Add(new DziedziczeniePracownika());
+            modelBuilder.Configurations.Add(new DziedziczenieTreningu());
             
             //modelBuilder.Entity<Klient>().ToTable("Klienci");
             //modelBuilder.Entity<Mechanik>().ToTable("Mechanicy");

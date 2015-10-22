@@ -10,10 +10,7 @@ namespace Silownia.Models
     [Table("TreningWłasny")]
     public class TreningWlasny : Trening
     {
-        public long TreningWlasnyID { get; set; }
-
-        [Required]
-        public virtual Klient Klient { get; set; }
+        public DateTime OstatniTreninig { get; set; }
 
     }
 }

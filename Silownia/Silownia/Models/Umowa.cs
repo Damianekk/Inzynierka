@@ -5,12 +5,12 @@ namespace Silownia.Models
 {
     public class Umowa
     {
+        [Key,Required]
         public long UmowaID { get; set; }
         
         [Required]
         public long SilowniaID { get; set; }
-        [Required]
-        public long KlientID { get; set; }
+        
         [Required]
         public long RecepcjonistaID { get; set; }
  
@@ -29,7 +29,7 @@ namespace Silownia.Models
 
         public string Cena { get; set; }    
         public virtual Klient Klient { get; set; }
-        public virtual Recepcjonista Recepcjonista { get; set; }
+        public virtual Recepcjonista Recepcjonista {get; set;} 
         public virtual Silownia Silownia { get; set; }
     }
 }
