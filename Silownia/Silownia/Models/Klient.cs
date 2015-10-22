@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Silownia.Models
 {
+   [Table("Klient")]
     public class Klient : Osoba
     {
 

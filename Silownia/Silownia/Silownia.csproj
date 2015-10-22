@@ -192,6 +192,7 @@
     <Compile Include="Controllers\SpecjalizacjaController.cs" />
     <Compile Include="Controllers\TrenerController.cs" />
     <Compile Include="Controllers\UmowaController.cs" />
+    <Compile Include="DAL\MapowanieDziedziczenia.cs" />
     <Compile Include="DAL\SilowniaContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -258,7 +259,7 @@
     <Compile Include="Models\Konserwacja.cs" />
     <Compile Include="Models\Konserwator.cs" />
     <Compile Include="Models\Masaz.cs" />
-    <Compile Include="Models\Masazystka.cs" />
+    <Compile Include="Models\Masazysta.cs" />
     <Compile Include="Models\Osoba.cs" />
     <Compile Include="Models\Pracownik.cs" />
     <Compile Include="Models\Recepcjonista.cs" />

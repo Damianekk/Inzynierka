@@ -27,7 +27,7 @@ namespace Silownia.Controllers
 
 
            
-            var a = from Osoby in db.Osoby.OfType<Klient>() select Osoby;
+            var a = from Osoby in db.Klienci select Osoby;
             if (!String.IsNullOrEmpty(Miasto))
             {
                 a =  a.Where(s => s.Adres.Miasto.Contains(Miasto));
@@ -89,7 +89,7 @@ namespace Silownia.Controllers
 
             if (ModelState.IsValid)
             {
-                db.Osoby.Add(klient);
+                db.Klienci.Add(klient);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -149,7 +149,7 @@ namespace Silownia.Controllers
         public ActionResult DeleteConfirmed(long id)
         {
             Klient klient = db.Klienci.Find(id);
-            db.Osoby.Remove(klient);
+            db.Klienci.Remove(klient);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

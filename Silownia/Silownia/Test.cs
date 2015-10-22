@@ -12,11 +12,11 @@ namespace Silownia
         {
             for (int i = 0; i < 10000; i++)
             {
-                Osoba osoba = new Klient();
-                osoba.Imie = RandomString(5);
-                osoba.Nazwisko = RandomString(6);
-                osoba.DataUrodzenia = Convert.ToDateTime("1991-01-01");
-                db.Osoby.Add(osoba);
+                Osoba klient = new Klient();
+                klient.Imie = RandomString(5);
+                klient.Nazwisko = RandomString(6);
+                klient.DataUrodzenia = Convert.ToDateTime("1991-01-01");
+               // db.Klienci.Add(klient);
                 db.SaveChanges();
                 
             }

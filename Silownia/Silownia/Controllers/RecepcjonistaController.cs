@@ -18,7 +18,7 @@ namespace Silownia.Controllers
         // GET: Recepcjonista
         public ActionResult Index()
         {
-            var a = from Osoby in db.Osoby.OfType<Recepcjonista>() select Osoby;
+            var a = from Osoby in db.Recepcjonisci.OfType<Recepcjonista>() select Osoby;
             return View(a);
         }
 
@@ -53,7 +53,7 @@ namespace Silownia.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Osoby.Add(recepcjonista);
+                db.Recepcjonisci.Add(recepcjonista);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -113,7 +113,7 @@ namespace Silownia.Controllers
         public ActionResult DeleteConfirmed(long id)
         {
             Recepcjonista recepcjonista = db.Recepcjonisci.Find(id);
-            db.Osoby.Remove(recepcjonista);
+            db.Recepcjonisci.Remove(recepcjonista);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

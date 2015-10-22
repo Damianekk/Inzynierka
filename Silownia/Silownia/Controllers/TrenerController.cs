@@ -15,7 +15,7 @@ namespace Silownia.Controllers
         // GET: /Trener/
         public ActionResult Index()
         {
-            var a = from Osoby in db.Osoby.OfType<Trener>() select Osoby;
+            var a = from Osoby in db.Trenerzy select Osoby;
 
             return View(a.ToList());
         }
@@ -51,7 +51,7 @@ namespace Silownia.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Osoby.Add(trener);
+                db.Trenerzy.Add(trener);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -114,7 +114,7 @@ namespace Silownia.Controllers
         public ActionResult DeleteConfirmed(long id)
         {
             Trener trener = db.Trenerzy.Find(id);
-            db.Osoby.Remove(trener);
+            db.Trenerzy.Remove(trener);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Silownia.Models
 {
-    public class Pracownik : Osoba
+    [Table("Pracownik")]
+    public abstract class Pracownik : Osoba
     {
         [Key, Required]
         public int Pesel { get; set; }
@@ -13,7 +15,7 @@ namespace Silownia.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
         public DateTime DataZatrudnienia { get; set; }
         
-        public string Pensja { get; set; }
+        public decimal Pensja { get; set; }
 
     }
 }

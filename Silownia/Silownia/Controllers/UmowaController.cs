@@ -42,7 +42,7 @@ namespace Silownia.Controllers
             
             ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
             ViewBag.RecepcjonistaID = new SelectList(db.Recepcjonisci, "OsobaID", "imieNazwisko");
-            var a = from Osoby in db.Osoby.OfType<Recepcjonista>() select Osoby;
+            var a = from Osoby in db.Recepcjonisci select Osoby;
  
              Recepcjonista  recepcjonista = null;
             var user = User.Identity.GetUserName();

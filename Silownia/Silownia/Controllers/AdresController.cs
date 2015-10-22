@@ -38,7 +38,7 @@ namespace Silownia.Controllers
         {
             if (id != null)
             {
-                Osoba osoba = db.Osoby.Find(id);
+                Osoba osoba = db.Klienci.Find(id);
                 ViewBag.Osoba = osoba;
             }
             return View();
@@ -53,7 +53,7 @@ namespace Silownia.Controllers
         {
             if (ModelState.IsValid)
             {
-                Osoba osoba = db.Osoby.Find(id);
+                Osoba osoba = db.Klienci.Find(id);
                 db.Adresy.Add(adres);
                 osoba.Adres = adres;
                 adres.Osoba = osoba;
