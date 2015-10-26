@@ -11,6 +11,7 @@ namespace Silownia.Models
     public class TreningWlasny : Trening
     {
         public DateTime OstatniTreninig { get; set; }
+        public virtual Klient Klient { get; set; }
 
     }
 }

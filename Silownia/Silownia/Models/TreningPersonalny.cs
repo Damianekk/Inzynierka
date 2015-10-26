@@ -10,7 +10,7 @@ namespace Silownia.Models
     [Table("TreningOersonalny")]
     public class TreningPersonalny : Trening
     {
-        
+        public virtual Klient Klient { get; set; }
         public virtual Trener Trener { get; set; }
     }
 }

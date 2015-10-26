@@ -12,7 +12,7 @@ namespace Silownia.Models
     {
         public TreningFitness()
         {
-            Klient = new Klient();
+            Klienci = new List<Klient>();
         }
         public string NazwaTreningu { get; set; }
         [MaxLength(300, ErrorMessage = " Opis przekracza dozwoloną ilość słów!")]
@@ -20,6 +20,7 @@ namespace Silownia.Models
         public string OpisTreningu { get; set; }
         [Required]
         public virtual Trener Trener { get; set; }
+        public virtual ICollection<Klient> Klienci { get; set; }
         public virtual Sala Sala { get; set; }
     }
 }
