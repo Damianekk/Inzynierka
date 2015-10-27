@@ -10,7 +10,7 @@ namespace Silownia.Models
     {
         public Sprzet()
         {
-            Konserwacja = new List<Konserwacja>();
+            Konserwacje = new List<Konserwacja>();
         }
 
         [Key, Required]
@@ -20,7 +20,8 @@ namespace Silownia.Models
         public DateTime Data_zakupu { get; set; }
         public decimal Cena_zakupu { get; set; }
 
-        public virtual ICollection<Konserwacja> Konserwacja { get; set; }
+        public virtual ICollection<Konserwacja> Konserwacje { get; set; }
+        public virtual Sala Sala { get; set; }
 
     }
 }

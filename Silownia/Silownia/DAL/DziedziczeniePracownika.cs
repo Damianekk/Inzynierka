@@ -14,7 +14,7 @@ namespace Silownia.DAL
             this.Map<Trener>(x => x.ToTable("Trener"))
                 .Map<Konserwator>(x => x.ToTable("Konserwator"))
                 .Map<Masazysta>(x => x.ToTable("Masazysta"))
-                .Map<InstruktorFitness>(x => x.ToTable("InstruktorFitness"))
+                .Map<Instruktor>(x => x.ToTable("Instruktor"))
                 .Map<Recepcjonista>(x => x.ToTable("Recepcjonista"));
         }
     }

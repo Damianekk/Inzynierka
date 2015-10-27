@@ -7,10 +7,10 @@ using System.Web;
 
 namespace Silownia.Models
 {
-    [Table("TreningFitness")]
-    public class TreningFitness : Trening
+    [Table("ZajeciaGrupowe")]
+    public class ZajeciaGrupowe : Trening
     {
-        public TreningFitness()
+        public ZajeciaGrupowe()
         {
             Klienci = new List<Klient>();
         }

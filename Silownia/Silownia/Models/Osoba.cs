@@ -10,7 +10,7 @@ namespace Silownia.Models
     {
         [Key]
         [Required]
-        public int ID { get; set; }
+        public long OsobaID { get; set; }
         [Required]
         public string Imie { get; set; }
         [Required]

@@ -10,7 +10,7 @@ namespace Silownia.Models
     {
         public Sala()
         {
-            TreningFitness = new List<TreningFitness>();
+            ZajeciaGrup = new List<ZajeciaGrupowe>();
         }
 
 
@@ -19,7 +19,8 @@ namespace Silownia.Models
         public int Numer_sali { get; set; }
         public string Status { get; set; }
 
-        public virtual ICollection<TreningFitness> TreningFitness { get; set; } 
+        public virtual ICollection<Sprzet> Sprzety { get; set; }
+        public virtual ICollection<ZajeciaGrupowe> ZajeciaGrup { get; set; } 
         public virtual Silownia Silownia { get; set; }
 
     }

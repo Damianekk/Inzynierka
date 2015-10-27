@@ -10,7 +10,6 @@ namespace Silownia.Models
 
         public Klient()
         {
-            Trening = new List<Trening>();
             Masaz = new List<Masaz>();
             Umowa = new List<Umowa>();
             KomentarzOPracowniku = new List<KomentarzOPracowniku>();
@@ -21,7 +20,7 @@ namespace Silownia.Models
        
         public virtual ICollection<Umowa> Umowa { get; set; }
         public virtual ICollection<Masaz> Masaz { get; set; }
-        public virtual ICollection<Trening> Trening { get; set; }
+        public virtual ICollection<KlientZajeciaGrupowe> KlienciTreningi { get; set; }
         public virtual ICollection<KomentarzOPracowniku> KomentarzOPracowniku { get; set; }
 
 
