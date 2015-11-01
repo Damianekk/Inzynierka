@@ -4,6 +4,7 @@ using System.Net;
 using System.Web.Mvc;
 using Silownia.DAL;
 using GoogleMaps.LocationServices;
+using System.Collections.Generic;
 
 namespace Silownia.Controllers
 {
@@ -18,16 +19,15 @@ namespace Silownia.Controllers
         }
 
         // GET: /Silownia/Details/5
-        public ActionResult Details(long? id)
+        public ActionResult Details(long? id, bool? mniejSzczegolow = false, bool? mniejszaMapa = false)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Models.Silownia silownia = db.Silownie.Find(id);
-            ViewBag.Dlugosc = silownia.Dlugosc;
-            ViewBag.Szerokosc = silownia.Szerokosc;
-
+            ViewBag.mniejSzczegolow = mniejSzczegolow;
+            ViewBag.mniejszaMapa = mniejszaMapa;
             if (silownia == null)
             {
                 return HttpNotFound();
@@ -48,15 +48,17 @@ namespace Silownia.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "SilowniaID,Nazwa,GodzinaOtwarcia,GodzinaZamkniecia,Powierzchnia,NrTelefonu")] Models.Silownia silownia)
         {
-            var address = "Złota 44, Warszawa";
 
-            var locationService = new GoogleLocationService();
-            var point = locationService.GetLatLongFromAddress(address);
-
-            var latitude = point.Latitude;
-            var longitude = point.Longitude;
             if (ModelState.IsValid)
             {
+      
+
+                var locationService = new GoogleLocationService();
+                var point = locationService.GetLatLongFromAddress(silownia.Adres.Kraj+","+silownia.Adres.Miasto+","+silownia.Adres.NrBudynku+"/"+silownia.Adres.NrLokalu);
+
+                var latitude = point.Latitude;
+                var longitude = point.Longitude;
+
                 silownia.Dlugosc = longitude;
                 silownia.Szerokosc = latitude;
                 db.Silownie.Add(silownia);
@@ -77,6 +79,7 @@ namespace Silownia.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Models.Silownia silownia = db.Silownie.Find(id);
+
             if (silownia == null)
             {
                 return HttpNotFound();
@@ -133,6 +136,16 @@ namespace Silownia.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+        [HttpPost]
+        public JsonResult JsonTest()
+        {
+ 
+            
+            var silownie = db.Silownie.ToList();
+            //  silownie.RemoveAll(item => item.Adres != null);
+
+            return Json(new { ok = true, mydata = silownie, message = "" },JsonRequestBehavior.AllowGet);
         }
     }
 }
