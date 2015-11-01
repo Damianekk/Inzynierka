@@ -12,6 +12,7 @@ namespace Silownia.Models
             Sala = new List<Sala>();
         }
         [Key, Required]
+        [System.Web.Mvc.HiddenInput(DisplayValue = false)]
         public long SilowniaID { get; set; }
         public string Nazwa { get; set; }
         [Display(Name = "Godziny otwarcia")]
