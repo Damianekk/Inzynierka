@@ -23,7 +23,7 @@ namespace Silownia.Controllers
             ViewBag.srchMiasto = Miasto;
             ViewBag.srchImieNazwisko = imieNazwisko;
             ViewBag.czyUmowa = czyUmowa;
-            //     Test t = new Test();
+                //Test t = new Test();
 
 
            

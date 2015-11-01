@@ -231,11 +231,14 @@
     <Compile Include="Test.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\13.jpg" />
+    <Content Include="Content\4.jpg" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\images.jpg" />
+    <Content Include="Content\fitnesspremium3.jpg" />
     <Content Include="Content\PagedList.css" />
-    <Content Include="Content\paker.jpg" />
+    <Content Include="Content\Pilates_Guelph-060.jpg" />
+    <Content Include="Content\top_fitness.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -243,6 +246,7 @@
     <Content Include="GoogleMaps.LocationServices.readme.txt" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\Site.less" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -316,6 +320,8 @@
     <Content Include="Views\Recepcjonista\Details.cshtml" />
     <Content Include="Views\Recepcjonista\Edit.cshtml" />
     <Content Include="Views\Recepcjonista\Index.cshtml" />
+    <Content Include="Views\Home\_Carusel.cshtml" />
+    <Content Include="Views\Shared\_Carusel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

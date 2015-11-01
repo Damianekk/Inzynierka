@@ -21,7 +21,7 @@ namespace Silownia.Models
          [Display(Name = "Godzina zakończenia")]
         public DateTime Godzina_zakonczenia { get; set; }
 
-         public virtual ICollection<KlientZajeciaGrupowe> KlieniTreningi { get; set; }
+        
          
     }
 }

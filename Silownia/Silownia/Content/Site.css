@@ -56,3 +56,7 @@ input[type="checkbox"].input-validation-error {
 .validation-summary-valid {
     display: none;
 }
+
+.container #automaticgeneric .carousel slide{
+    margin-top: 220px
+}
