@@ -10,6 +10,7 @@ namespace Silownia.Models
     {
         [Key]
         [Required]
+        [System.Web.Mvc.HiddenInput(DisplayValue = false)]
         public long OsobaID { get; set; }
         [Required]
         public string Imie { get; set; }

@@ -34,12 +34,24 @@ namespace Silownia.Controllers
         }
 
         // GET: /Adres/Create
-        public ActionResult Create(long? id)
+        public ActionResult Create(long? id,KomuAdres komu)
         {
             if (id != null)
             {
-                Osoba osoba = db.Klienci.Find(id);
-                ViewBag.Osoba = osoba;
+                switch (komu)
+                {
+                    case KomuAdres.Osoba:
+                        Osoba osoba = db.Osoby.Find(id);
+                        ViewBag.Osoba = osoba;
+                        break;
+                    case KomuAdres.Silownia:
+                        Silownia.Models.Silownia silownia = db.Silownie.Find(id);
+                        ViewBag.Silownia = silownia;
+                        break;
+
+                    
+
+                }
             }
             return View();
         }
