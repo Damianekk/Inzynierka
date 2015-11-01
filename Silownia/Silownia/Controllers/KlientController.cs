@@ -18,7 +18,7 @@ namespace Silownia.Controllers
 
       
         // GET: /Klient/
-        public ActionResult Index(string Miasto,string imieNazwisko,bool? czyUmowa,int page=1 ,int pageSize = 10)
+        public ActionResult Index(string Miasto,string imieNazwisko,bool czyUmowa =false ,int page=1 ,int pageSize = 10)
         {
             ViewBag.srchMiasto = Miasto;
             ViewBag.srchImieNazwisko = imieNazwisko;
@@ -38,7 +38,7 @@ namespace Silownia.Controllers
             {
                 a = a.Where(s => s.Imie.Contains(imieNazwisko) || s.Nazwisko.Contains(imieNazwisko));
             }
-
+           
             if ((bool)czyUmowa)
             a = a.Where(s => s.Umowa.Count > 0);
 
