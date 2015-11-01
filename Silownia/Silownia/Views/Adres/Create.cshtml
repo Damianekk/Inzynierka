@@ -78,10 +78,20 @@
                 <th>
                     @if (ViewBag.Osoba != null) 
                     { 
-                    <div class="table-bordered" >             
-                      <div style="color :darkkhaki" >Imie </div>  @ViewBag.Osoba.Imie
-                      <div style="color :darkkhaki">Nazwisko </div> @ViewBag.Osoba.Nazwisko
+                    <div class="table-bordered" >          
+                      @*  @Html.Display("Osoba")*@   
+                        @*@Html.Partial("~/Views/Klient/Details.cshtml")*@
+                        @Html.Action("Details", "Klient", new { id = ViewBag.Osoba.OsobaID })
+                      @*<div style="color :darkkhaki" >Imie </div>  @ViewBag.Osoba.Imie
+                      <div style="color :darkkhaki">Nazwisko </div> @ViewBag.Osoba.Nazwisko*@
                     </div>
+                    }
+                    @if (ViewBag.Silownia != null)
+                    {
+                        <div class="table-bordered">
+                          @Html.Action("Details", "Silownia", new { id = ViewBag.Silownia.SilowniaID, mniejSzczegolow = true, mniejszaMapa = true })
+                          @*@Html.Display("Silownia")*@
+                        </div>
                     }
                 </th>
             </table>

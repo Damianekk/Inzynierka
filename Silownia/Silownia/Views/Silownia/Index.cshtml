@@ -51,6 +51,14 @@
             @Html.ActionLink("Details", "Details", new { id=item.SilowniaID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.SilowniaID })
         </td>
+        <td>
+            @if (item.Adres == null)
+            {
+                @Html.ActionLink("adres", "Create", "Adres", new { id = item.SilowniaID, komu = KomuAdres.Silownia },
+                           new { @class = "adresPic" })
+            }
+        </td>
+
     </tr>
 }
 

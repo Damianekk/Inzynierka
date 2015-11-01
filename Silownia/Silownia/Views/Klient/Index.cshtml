@@ -77,7 +77,7 @@
                 <td>
                     @if (item.Adres == null)
                     {
-                        @Html.ActionLink("adres", "Create", "Adres", new { id = item.OsobaID },
+                        @Html.ActionLink("adres", "Create", "Adres", new { id = item.OsobaID , komu = KomuAdres.Osoba},
                            new { @class = "adresPic" })
                     }
                 </td>
