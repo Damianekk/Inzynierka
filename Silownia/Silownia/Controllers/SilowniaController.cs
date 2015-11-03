@@ -3,8 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using Silownia.DAL;
-using GoogleMaps.LocationServices;
-using System.Collections.Generic;
+using System.Web.Script.Serialization;
 
 namespace Silownia.Controllers
 {
@@ -25,9 +24,11 @@ namespace Silownia.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            
             Models.Silownia silownia = db.Silownie.Find(id);
             ViewBag.mniejSzczegolow = mniejSzczegolow;
             ViewBag.mniejszaMapa = mniejszaMapa;
+          
             if (silownia == null)
             {
                 return HttpNotFound();
@@ -50,17 +51,7 @@ namespace Silownia.Controllers
         {
 
             if (ModelState.IsValid)
-            {
-      
-
-                var locationService = new GoogleLocationService();
-                var point = locationService.GetLatLongFromAddress(silownia.Adres.Kraj+","+silownia.Adres.Miasto+","+silownia.Adres.NrBudynku+"/"+silownia.Adres.NrLokalu);
-
-                var latitude = point.Latitude;
-                var longitude = point.Longitude;
-
-                silownia.Dlugosc = longitude;
-                silownia.Szerokosc = latitude;
+            {               
                 db.Silownie.Add(silownia);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -140,12 +131,14 @@ namespace Silownia.Controllers
         [HttpPost]
         public JsonResult JsonTest()
         {
- 
-            
-            var silownie = db.Silownie.ToList();
+
+            var jsonSerialiser = new JavaScriptSerializer();
+            var silownie = db.Silownie.Where(s => s.Adres != null).ToList();
+            var json = jsonSerialiser.Serialize(silownie);
+             
             //  silownie.RemoveAll(item => item.Adres != null);
 
-            return Json(new { ok = true, mydata = silownie, message = "" },JsonRequestBehavior.AllowGet);
+            return Json(new { ok = true, mydata = json, message = "" },JsonRequestBehavior.AllowGet);
         }
     }
 }
