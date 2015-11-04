@@ -4,6 +4,7 @@ using System.Net;
 using System.Web.Mvc;
 using Silownia.Models;
 using Silownia.DAL;
+using GoogleMaps.LocationServices;
 
 namespace Silownia.Controllers
 {
@@ -11,6 +12,7 @@ namespace Silownia.Controllers
     {
         
         private SilowniaContext db = new SilowniaContext();
+        KomuAdres komuPrzypisac;
 
         // GET: /Adres/
         public ActionResult Index()
@@ -43,10 +45,12 @@ namespace Silownia.Controllers
                     case KomuAdres.Osoba:
                         Osoba osoba = db.Osoby.Find(id);
                         ViewBag.Osoba = osoba;
+                        komuPrzypisac = komu;
                         break;
                     case KomuAdres.Silownia:
                         Silownia.Models.Silownia silownia = db.Silownie.Find(id);
                         ViewBag.Silownia = silownia;
+                        komuPrzypisac = komu;
                         break;
 
                     
@@ -61,16 +65,38 @@ namespace Silownia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="AdresID,KodPocztowy,Kraj,Miasto,Ulica,NrBudynku,NrLokalu")] Adres adres,long? id)
+        public ActionResult Create([Bind(Include="AdresID,KodPocztowy,Kraj,Miasto,Ulica,NrBudynku,NrLokalu")] Adres adres,long? id, KomuAdres komu)
         {
+            object redirectTo = null;
             if (ModelState.IsValid)
             {
-                Osoba osoba = db.Klienci.Find(id);
-                db.Adresy.Add(adres);
-                osoba.Adres = adres;
-                adres.Osoba = osoba;
+                switch (komu)
+                {
+                    case KomuAdres.Osoba:
+                        Osoba osoba = db.Osoby.Find(id);
+                        redirectTo =osoba.GetType().BaseType.Name;
+                        osoba.Adres = adres;
+                       
+                        //adres.Osoba = osoba;
+                        break;
+                    case KomuAdres.Silownia:
+                        Silownia.Models.Silownia silownia = db.Silownie.Find(id);
+                        silownia.Adres = adres;
+                        var locationService = new GoogleLocationService();
+                        AddressData adr = new AddressData();
+                        adr.Country = adres.Kraj;
+                        adr.City = adres.Miasto;
+                        adr.Zip = adres.KodPocztowy;
+                        adr.Address = adres.Ulica + " " + adres.NrBudynku + " " + adres.NrLokalu;
+                        var point = locationService.GetLatLongFromAddress(adr);
+                        silownia.Szerokosc = point.Longitude;
+                        silownia.Dlugosc = point.Latitude;
+                        redirectTo = silownia.GetType().BaseType.Name;
+                        break;                   
+                }
+                db.Adresy.Add(adres);            
                 db.SaveChanges();
-                return RedirectToAction("Index","Klient");
+                return RedirectToAction("Index",redirectTo);
             }
 
             return View(adres);
@@ -128,6 +154,20 @@ namespace Silownia.Controllers
         public ActionResult DeleteConfirmed(long id)
         {
             Adres adres = db.Adresy.Find(id);
+            Silownia.Models.Silownia silownia = db.Silownie.Where(w => w.Adres.AdresID == id).FirstOrDefault();
+            Osoba osoba;
+            
+            if(silownia != null)
+            {
+                silownia.Adres = null;
+            }
+            else
+            {
+              osoba = db.Osoby.Where(o => o.Adres.AdresID == id).FirstOrDefault();
+              if(osoba!=null)
+              osoba.Adres = null;
+            }
+           
             db.Adresy.Remove(adres);
             db.SaveChanges();
             return RedirectToAction("Index");
