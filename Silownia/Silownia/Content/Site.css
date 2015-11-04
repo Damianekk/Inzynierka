@@ -60,3 +60,27 @@ input[type="checkbox"].input-validation-error {
 .container #automaticgeneric .carousel slide{
     margin-top: 220px
 }
+
+.thumbnail{
+    height: 300px;
+    width: 100%;
+
+}
+
+ .footer{
+   position: fixed;
+   z-index:-1;
+   height: 420px;
+   width:84.5%;  
+   top: 60%;
+       padding-top:5%;
+       padding-left:10%;
+       padding-bottom: 5%;
+       background-color:#FF43A5;
+       margin-bottom: 5%;
+   }
+
+
+.margin{
+    background-color: grey;
+}

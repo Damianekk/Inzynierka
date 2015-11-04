@@ -234,9 +234,16 @@
   <ItemGroup>
     <Content Include="Content\13.jpg" />
     <Content Include="Content\4.jpg" />
+    <Content Include="Content\arrow.gif" />
+    <Content Include="Content\Arrow.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\fitnesspremium3.jpg" />
+    <Content Include="Content\images.jpg" />
+    <Content Include="Content\Trenerzy\Halinka.jpg" />
+    <Content Include="Content\Trenerzy\Konrad-Żuk1.png" />
+    <Content Include="Content\Trenerzy\marcin.jpg" />
+    <Content Include="Content\Trenerzy\Olga.jpg" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\Pilates_Guelph-060.jpg" />
     <Content Include="Content\top_fitness.jpg" />
@@ -322,7 +329,9 @@
     <Content Include="Views\Recepcjonista\Edit.cshtml" />
     <Content Include="Views\Recepcjonista\Index.cshtml" />
     <Content Include="Views\Home\_Carusel.cshtml" />
-    <Content Include="Views\Shared\_Carusel.cshtml" />
+    <Content Include="Views\Home\_Trenerzy.cshtml" />
+    <Content Include="Views\Home\_Video.cshtml" />
+    <Content Include="Views\Shared\_Footer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

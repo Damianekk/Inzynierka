@@ -2,38 +2,52 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1w>ZACZNIJ DZIEŃ OD<wlasne> 69</wlasne> </h1w>
-    <p class="h1w">Tylko teraz kanrnet miesięczny od <wlasne>69 zł !</wlasne>   </p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-large">Dowiedz się więcej &raquo;</a></p>
-</div>
 
-<div class="row">
-    <div class="col-md-5">
-        <h2>Poznaj nasze kluby</h2>
-        <p>
-            <div class="btn-group">
-                <button type="button" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    Zobacz siłownie <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Twoim mieście</a></li>
-                    <li><a href="#">Północnej polsce</a></li>
-                    <li><a href="#">Wschodniej polsce</a></li>
-                    <li><a href="#">Południowej polsce</a></li>
-                    <li><a href="#">Centalnej polsce</a></li>
-                    <li class="divider"></li>
+    @Html.Partial("_Carusel")
 
-                </ul>
+<div class="container">
+    <div class="jumbotron">
+        <div class="container" style="height: 5px; position: absolute;"></div>
+        <h2>ZACZNIJ DZIEŃ OD<wlasne> 69</wlasne> </h2>
+        <p class="h1w">Tylko teraz kanrnet miesięczny od <wlasne>69 zł !</wlasne>   </p>
+        <p><a href="http://asp.net" class="btn btn-primary btn-large">Dowiedz się więcej &raquo;</a></p>
+    </div>
+
+    <h3 style=" margin-left: 150px;">Nasi najlepsi trenerzy:</h3>
+    @Html.Partial("_Trenerzy")
+    <br />
+    <br />
+    <br />
+    <div style="margin-top: 230px">
+        @Html.Partial("_Video")
+    </div>
+    <div class="container" style="background-color: grey;">
+        <div class="row">
+            <div class="col-md-5">
+                <h2>Poznaj nasze kluby</h2>
+                <p>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            Zobacz siłownie <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Twoim mieście</a></li>
+                            <li><a href="#">Północnej polsce</a></li>
+                            <li><a href="#">Wschodniej polsce</a></li>
+                            <li><a href="#">Południowej polsce</a></li>
+                            <li><a href="#">Centalnej polsce</a></li>
+                            <li class="divider"></li>
+                        </ul>
+                    </div>
+                </p>
             </div>
-        </p>
-
+            <div class="row" style="background-color: grey">
+                <div class="col-md-5">
+                    <h2>Nie zwlekaj</h2>
+                    <p>Nie ma na co czekać sylwetka na wakacje sama się nie zrobi </p>
+                    <p><a class="btn btn-success" href="http://go.microsoft.com/fwlink/?LinkId=301866">Zacznij teraz ! &raquo;</a></p>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-5">
-        <h2>Nie zwlekaj</h2>
-        <p>Nie ma na co czekać sylwetka na wakacje sama się nie zrobi </p>
-        <p><a class="btn btn-success" href="http://go.microsoft.com/fwlink/?LinkId=301866">Zacznij teraz ! &raquo;</a></p>
-    </div>
-   
-
 </div>

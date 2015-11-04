@@ -10,8 +10,7 @@
     @Scripts.Render("~/bundles/modernizr")
      
 </head>
-<body>
-
+<body style="background-color: grey; z-index: 0;">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -42,42 +41,14 @@
             </div>
         </div>
     </div>
-    <div>
-        @Html.Partial("_Carusel")
-    </div>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-            
-            </div>
-
-            <div class="col-md-4">
-
-            </div>
-
-            <div class="col-md-4">
-
-            </div>
-        </div>
-    </div>
-
-
-
-
-    <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Sieć siłowni</p>
-        </footer>
-    </div>
-
+        @Html.Partial("_Footer")
 
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/scripts/Karuzel.js")
+    @Scripts.Render("~/scripts/Arrow.js")
     @RenderSection("scripts", required: false)
 </body>
 </html>
