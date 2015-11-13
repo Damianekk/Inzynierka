@@ -4,20 +4,22 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
 
-
+<h2>Nowy klient</h2>
+ 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
+         
         <h4>Klient</h4>
         <hr />
         @Html.ValidationSummary(true)
 
+ 
         <div class="form-group">
-            @Html.LabelFor(model => model.Imie, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Imie,new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Imie)
                 @Html.ValidationMessageFor(model => model.Imie)
@@ -58,14 +60,15 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Utwórz" class="btn btn-success" />
+                <span class="glyphicon glyphicon-refresh glyphicon-spin"></span>
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Powrót do klientów", "Index")
 </div>
 
 @section Scripts {

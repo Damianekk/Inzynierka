@@ -178,6 +178,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AkcjaEnum.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -198,6 +199,14 @@
     <Compile Include="DAL\SilowniaContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511131359474_nowa.cs" />
+    <Compile Include="Migrations\201511131359474_nowa.Designer.cs">
+      <DependentUpon>201511131359474_nowa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511131700276_nowa1.cs" />
+    <Compile Include="Migrations\201511131700276_nowa1.Designer.cs">
+      <DependentUpon>201511131700276_nowa1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -226,6 +235,7 @@
     <Compile Include="Models\TreningPersonalny.cs" />
     <Compile Include="Models\TreningWlasny.cs" />
     <Compile Include="Models\Umowa.cs" />
+    <Compile Include="PelnaNazwaEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="KomuAdres.cs" />
     <Compile Include="Startup.cs" />
@@ -256,6 +266,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\Site.less" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\infoCzynnosc.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -342,6 +353,14 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201511131359474_nowa.resx">
+      <DependentUpon>201511131359474_nowa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511131700276_nowa1.resx">
+      <DependentUpon>201511131700276_nowa1.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

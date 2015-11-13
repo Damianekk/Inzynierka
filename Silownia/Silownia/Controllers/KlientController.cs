@@ -11,21 +11,25 @@ using PagedList;
 
 namespace Silownia.Controllers
 {
+   
+
     public class KlientController : Controller
     {
-    
+
+
         private SilowniaContext db = new SilowniaContext();
 
-      
+
         // GET: /Klient/
-        public ActionResult Index(string Miasto,string imieNazwisko,bool czyUmowa =false ,int page=1 ,int pageSize = 10)
+ 
+        public ActionResult Index(string Miasto,string imieNazwisko,bool czyUmowa =false ,int page=1 ,int pageSize = 10 , AkcjaEnum akcja = AkcjaEnum.Brak , String info = null)
         {
             ViewBag.srchMiasto = Miasto;
             ViewBag.srchImieNazwisko = imieNazwisko;
             ViewBag.czyUmowa = czyUmowa;
                 //Test t = new Test();
 
-
+            
            
             var a = from Osoby in db.Klienci select Osoby;
             if (!String.IsNullOrEmpty(Miasto))
@@ -51,11 +55,18 @@ namespace Silownia.Controllers
             var kk = ileWynikow / page;
 
                 PagedList<Klient> model = new PagedList<Klient>(final, page, pageSize);
-            
+
+
+            if(akcja != AkcjaEnum.Brak)
+            {
+                ViewBag.info = info;
+                ViewBag.Akcja = akcja;
+            }
+ 
             return View(model);
           //  return View(db.Osoby.ToList());
         }
-
+       
         // GET: /Klient/Details/5
         public ActionResult Details(long? id)
         {
@@ -91,7 +102,7 @@ namespace Silownia.Controllers
             {
                 db.Klienci.Add(klient);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { akcja = AkcjaEnum.DodanoKlienta , info = klient.imieNazwisko });
             }
             
             return View(klient);
@@ -151,7 +162,7 @@ namespace Silownia.Controllers
             Klient klient = db.Klienci.Find(id);
             db.Klienci.Remove(klient);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { akcja = AkcjaEnum.UsunietoKlienta, info = klient.imieNazwisko });
         }
 
         protected override void Dispose(bool disposing)

@@ -5,9 +5,31 @@
 @{
     ViewBag.Title = "Index";
 }
+@Scripts.Render("~/Scripts/infoCzynnosc.js")
 
 
+  @if (ViewBag.Akcja != null)
+    {
+      if (ViewBag.Akcja == AkcjaEnum.DodanoKlienta)
+      {
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                     <div class="alert alert-success">
+                        <br /> 
+                            <h4>@PelnaNazwaEnum.GetDescription(@ViewBag.Akcja) @ViewBag.info</h4>
+                        <br />      
+                     </div>
+      }
 
+      if (ViewBag.Akcja == AkcjaEnum.UsunietoKlienta)
+      {
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <div class="alert alert-danger">
+            <br />
+            <h4>@PelnaNazwaEnum.GetDescription(@ViewBag.Akcja) @ViewBag.info</h4>
+            <br />
+        </div>
+      }
+  }
 <h2>Index</h2>
 
 <p>
@@ -71,7 +93,7 @@
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.OsobaID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.OsobaID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.OsobaID  }) |
                     @Html.ActionLink("Delete", "Delete", new { id = item.OsobaID })
                 </td>
                 <td>
