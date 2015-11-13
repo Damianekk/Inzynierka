@@ -1,6 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-color: #E0E0E0;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -15,22 +16,21 @@ select,
 textarea {
     max-width: 280px;
 }
-a.umowaPic
-{
+
+a.umowaPic {
     background: url(http://www.flatrateansweringservice.com/wp-content/uploads/2015/01/icons-4-service-provided.jpg) no-repeat;
-     display: block;
-     width: 50px;
-     height: 50px;
-     text-indent: -9999px; /* hides the link text */
+    display: block;
+    width: 50px;
+    height: 50px;
+    text-indent: -9999px; /* hides the link text */
 }
 
-a.adresPic
-{
+a.adresPic {
     background: url(http://www.resolute.me/img/icon_address.png) no-repeat;
-     display: block;
-     width: 48px;
-     height: 48px;
-     text-indent: -9999px; /* hides the link text */
+    display: block;
+    width: 48px;
+    height: 48px;
+    text-indent: -9999px; /* hides the link text */
 }
 /* styles for validation helpers */
 .field-validation-error {
@@ -57,30 +57,30 @@ input[type="checkbox"].input-validation-error {
     display: none;
 }
 
-.container #automaticgeneric .carousel slide{
-    margin-top: 220px
+.container #automaticgeneric .carousel slide {
+    margin-top: 220px;
+}
+
+.thumbnail {
+    height: 300px;
+    width: 100%;
+}
+
+.footer {
+    position: fixed;
+    z-index: -1;
+    height: 420px;
+    width: 85%;
+    top: 60%;
+    padding-top: 5%;
+    padding-left: 10%;
+    padding-bottom: 5%;
+    background-color: #6BD043;
+    margin-bottom: 5%;
 }
 
 .thumbnail{
-    height: 300px;
-    width: 100%;
-
+    background-color: #E0E0E0;
 }
 
- .footer{
-   position: fixed;
-   z-index:-1;
-   height: 420px;
-   width:84.5%;  
-   top: 60%;
-       padding-top:5%;
-       padding-left:10%;
-       padding-bottom: 5%;
-       background-color:#FF43A5;
-       margin-bottom: 5%;
-   }
 
-
-.margin{
-    background-color: grey;
-}
