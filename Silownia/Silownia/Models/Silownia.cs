@@ -15,12 +15,15 @@ namespace Silownia.Models
         [System.Web.Mvc.HiddenInput(DisplayValue = false)]
         public long SilowniaID { get; set; }
         public string Nazwa { get; set; }
+        [DataType(DataType.Time)]
         [Display(Name = "Godziny otwarcia")]
         public string GodzinaOtwarcia { get; set; }
+        [DataType(DataType.Time)]
         [Display(Name = "Godziny zamknięcia")]
         public string GodzinaZamkniecia { get; set; }
         public string Powierzchnia { get; set; }
         [Display(Name = "Nr kontaktowy")]
+        [DataType(DataType.PhoneNumber)]
         public long NrTelefonu { get; set; }
         public double Dlugosc { get; set; }
         public double Szerokosc { get; set; }

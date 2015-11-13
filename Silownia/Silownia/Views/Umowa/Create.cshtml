@@ -7,6 +7,7 @@
 <h2>Create</h2>
 
 
+ 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
@@ -16,6 +17,7 @@
         <hr />
         @Html.ValidationSummary(true)
 
+       
         <div class="form-group">
             @Html.LabelFor(model => model.RecepcjonistaID, "Recepcjonista", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -51,7 +53,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Cena, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Cena)
+                @Html.EditorFor(model => model.Cena, new { @type = "number" })
                 @Html.ValidationMessageFor(model => model.Cena)
             </div>
         </div>
@@ -62,7 +64,13 @@
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
+
+        @if (TempData["msg"] != null)
+        { @Html.Raw(TempData["msg"]) }
+       
     </div>
+
+  
 }
 
 <div>

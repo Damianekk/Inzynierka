@@ -6,7 +6,7 @@ using Silownia.Models;
 using Silownia.DAL;
 using System;
 using Microsoft.AspNet.Identity;
- 
+using System.Globalization;
 
 namespace Silownia.Controllers
 {
@@ -80,9 +80,15 @@ namespace Silownia.Controllers
             //    return RedirectToAction("Index", "Klient");
             //}
             ViewBag.RecepcjonistaID = new SelectList(db.Recepcjonisci, "OsobaID", "imieNazwisko", umowa.RecepcjonistaID);
-            
-            if (ModelState.IsValid)
+
+     
+          
+                
+        
+
+            if (ModelState.IsValid && !aktywnaUmowa(id,umowa.DataPodpisania,umowa.DataZakonczenia))
             {
+                
                 #region Klient
                 Klient klient = db.Klienci.Find(id);
                 umowa.Klient = klient;
@@ -104,9 +110,26 @@ namespace Silownia.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            
+          
             ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", umowa.SilowniaID);
             return View(umowa);
+        }
+
+        bool aktywnaUmowa(long? klientID , DateTime umowaOd , DateTime umowaDo )
+        {
+            //var check = from u in db.Umowy
+            //            from k in db.Klienci
+            //            where u.Klient.OsobaID == klientID && (u.DataPodpisania >= umowaOd.Date && u.DataZakonczenia.Date <= umowaDo)
+            //            select u;
+            
+            var check = db.Umowy.Where(o => o.Klient.OsobaID == klientID && DbFunctions.TruncateTime(o.DataPodpisania) <= umowaOd.Date && DbFunctions.TruncateTime(o.DataZakonczenia) >= umowaDo.Date).ToList();
+
+            if (check.Count == 1)
+            {
+                TempData["msg"] = "<script>alert('Klient posiada umowe w wybranym terminie');</script>";
+                return true; // klient ma umowe w tym terminie
+            }
+            else return false; // klient nie ma umowy
         }
 
         // GET: /Umowa/Edit/5

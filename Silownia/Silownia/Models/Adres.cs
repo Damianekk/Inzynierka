@@ -6,6 +6,7 @@ namespace Silownia.Models
     public class Adres
     {
         public long AdresID { get; set; }
+        [DataType(DataType.PostalCode)]
         [Display(Name = "Kod pocztowy")]
         public string KodPocztowy { get; set; }
         public string Kraj { get; set; }
