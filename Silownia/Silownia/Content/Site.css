@@ -66,18 +66,21 @@ input[type="checkbox"].input-validation-error {
     height: 300px;
     width: 100%;
 }
+.container{
+    padding: 0 0 0 0;
+}
 
-.footer {
+.footery {
     position: fixed;
     z-index: -1;
     height: 420px;
-    width: 85%;
-    top: 60%;
-    padding-top: 5%;
-    padding-left: 10%;
-    padding-bottom: 5%;
+    width: 100%;
+    top: 70%;
+    text-align: center;
+    padding-top: 5%;   
+    padding-bottom: 8%;
     background-color: #6BD043;
-    margin-bottom: 5%;
+     
 }
 
 .thumbnail{
@@ -114,3 +117,9 @@ h4 {
     }
 }
 
+.container.clear {
+    height: 270px;
+    width: 100%;  
+    padding-right: 114px; 
+    
+}
