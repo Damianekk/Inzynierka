@@ -25,6 +25,7 @@ a.umowaPic {
     text-indent: -9999px; /* hides the link text */
 }
 
+
 a.adresPic {
     background: url(http://www.resolute.me/img/icon_address.png) no-repeat;
     display: block;
@@ -50,7 +51,7 @@ input[type="checkbox"].input-validation-error {
 }
 
 .validation-summary-errors {
-    color: #b94a48;
+    color: #6BD043;
 }
 
 .validation-summary-valid {

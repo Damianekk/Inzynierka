@@ -1,53 +1,170 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+<html lang="en">
+<head>
 
 
-    @Html.Partial("_Carusel")
+    <title>@ViewBag.Title - Silownie</title>
+    @{
+        Layout = "";
+    }
 
-<div class="container" style="background-color: #E0E0E0;">
-    <div class="jumbotron">
-        <div class="container" style="height: 5px; position: absolute;"></div>
-        <h2>ZACZNIJ DZIEŃ OD<wlasne> 69</wlasne> </h2>
-        <p class="h1w">Tylko teraz kanrnet miesięczny od <wlasne>69 zł !</wlasne>   </p>
-        <p><a href="http://asp.net" class="btn btn-primary btn-large">Dowiedz się więcej &raquo;</a></p>
-    </div>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Bootstrap Core CSS -->
+    <link href="HomeView/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="HomeView/css/grayscale.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="HomeView/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
 
-    <h3 style=" margin-left: 150px;">Nasi najlepsi trenerzy:</h3>
-    @Html.Partial("_Trenerzy")
-    <br />
-    <br />
-    <br />
-    <div style="margin-top: 230px">
-        @Html.Partial("_Video")
-    </div>
-    <div class="container" style="background-color: #E0E0E0;">
-        <div class="row">
-            <div class="col-md-5">
-                <h2>Poznaj nasze kluby</h2>
-                <p>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                            Zobacz siłownie <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Twoim mieście</a></li>
-                            <li><a href="#">Północnej polsce</a></li>
-                            <li><a href="#">Wschodniej polsce</a></li>
-                            <li><a href="#">Południowej polsce</a></li>
-                            <li><a href="#">Centalnej polsce</a></li>
-                            <li class="divider"></li>
-                        </ul>
-                    </div>
-                </p>
+    <!-- jQuery -->
+    <script src="HomeView/js/jquery.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="HomeView/js/bootstrap.min.js"></script>
+    <!-- Plugin JavaScript -->
+    <script src="HomeView/js/jquery.easing.min.js"></script>
+    <!-- Google Maps API Key - Use your own API key to enable the map feature. More information on the Google Maps API can be found at https://developers.google.com/maps/ -->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRngKslUGJTlibkQ3FkfTxj3Xss1UlZDA&sensor=false"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="HomeView/js/grayscale.js"></script>
+
+</head>
+
+<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+    <!-- Navigation -->
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">
+                    <i class="fa fa-play-circle"></i>  <span class="light">PURE</span> MUSCLES
+                </a>
             </div>
-            <div class="row" style="background-color: grey">
-                <div class="col-md-5">
-                    <h2>Nie zwlekaj</h2>
-                    <p>Nie ma na co czekać sylwetka na wakacje sama się nie zrobi </p>
-                    <p><a class="btn btn-success" href="http://go.microsoft.com/fwlink/?LinkId=301866">Zacznij teraz ! &raquo;</a></p>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                <ul class="nav navbar-nav">
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+
+                    <li>
+                        <a class="page-scroll" href="#intro">GŁÓWNA</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#oNas">O NAS</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#TRENERZY">TRENERZY</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#KONTAKT">KONTAKT</a>
+                    </li>
+
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+ 
+    <header class="intro">
+        <div class="intro-body">
+            <div class="container">
+                <section id="intro" class="container content-section text-center">
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <h1 class="brand-heading">pure muscles</h1>
+                            <p class="intro-text"><a class="zielony">Tylko u nas treningi</a> SZYTE <a class="zielony">na miarę !</a><br></p>
+                            <a href="#oNas" class="btn btn-circle page-scroll">
+                                <i class="fa fa-angle-double-down animated"></i>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </header>
+
+    <section id="oNas" class="container content-section text-center">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <h2>O NAS</h2>
+                <p>
+                    Kluby <a class="zielony">PURE MUSCLES</a> to 7 nowoczesnych lokalizacji w Warszawie. Nasze kluby mieszczą się w dogodnych
+                    lokalizacjach zapewniając <a class="zielony">WYGODNY</a> dojazd do dowolnego klubu fitness z każdego miejsca w Warszawie.
+                <p>
+                    Nasze kluby fitness
+                    oferują swoim członkom bardzo zróżnicowane zajęcia, takie jak np. zumba, aerobic, joga oraz Total Fitness – <a class="zielony">
+                        UNIKALNY
+                    </a>    program opracowany przez <a href="https://www.google.pl/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=ewa%20chodakowska"> Ewę Chodakowską</a>.
+                <p>
+                    Jeśli nie jesteś przekonany czy fitness jest dla Ciebie pobierz darmową wejściówkę
+                    na zajęcia fitness w Warszawie i sprawdź Jatomi Fitness. Jeśli szukasz zajęć fitness w Warszawie, wybierz te w Jatomi Fitness
+                    - takie zdanie ma kilkadziesiąt tysięcy naszych klubowiczów, sprawdź dlaczego!
+            </div>
+        </div>
+    </section>
+
+
+    <section id="download" class="content-section text-center">
+        <div class="download-section">
+            <div class="container">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <h2>Nie tylko siłownia</h2>
+                    <p>
+                        Ćwiczenia są niezwykle ważne, ale równie ważna jest właściwa dieta
+                        . Jeśli odpowiednio się odżywiasz, będziesz mieć więcej energii do ćwiczeń, a zrzucenie zbędnych kilogramów przyjdzie Ci o wiele łatwiej.
+                    </p>
+
+                    <a href="@Url.Action("Register", "Account")" class="btn btn-default btn-lg">Zarejestruj się już teraz </a>
+
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    </section>
+
+    <section id="TRENERZY" class="container content-section text-center">
+        <h2>NASI TRENERZY</h2>
+        @Html.Partial("_Carusel")
+    </section>
+
+    <section id="KONTAKT" class="container content-section text-center">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <h2>KONTAKT PURE MUSCLES</h2>
+                <p>W razie jakichkolwiek pytań dzwoń lub pisz!</p>
+                <p>
+                    Tel: <a>22 652 22 24</a>
+                    <br />
+                    Email: <a href="mailto:PureMuscles@feedback.com">PureMuscles@feedback.com</a>
+                </p>
+                <ul class="list-inline banner-social-buttons">
+                    <li>
+                        <a href="" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
+                    </li>
+                    <li>
+                        <a href="" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
+                    </li>
+                    <li>
+                        <a href="" class="btn btn-default btn-lg"><i class="fa fa-google-plus fa-fw"></i> <span class="network-name">Google+</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    
+        <!-- Map Section -->
+        <div id="map"></div>
+</body>
+</html>
