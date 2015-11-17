@@ -40,6 +40,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DayPilot">
+      <HintPath>..\packages\DayPilot.5.0.303\lib\DayPilot.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -188,6 +191,7 @@
     <Compile Include="Controllers\AdresController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KlientController.cs" />
+    <Compile Include="Controllers\PlanZajecController.cs" />
     <Compile Include="Controllers\RecepcjonistaController.cs" />
     <Compile Include="Controllers\SilowniaController.cs" />
     <Compile Include="Controllers\SpecjalizacjaController.cs" />
@@ -336,6 +340,7 @@
     <Content Include="Views\Home\_Trenerzy.cshtml" />
     <Content Include="Views\Home\_Video.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
+    <Content Include="Views\PlanZajec\_PlanZajec.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
