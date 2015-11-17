@@ -10,7 +10,7 @@
 
   @if (ViewBag.Akcja != null)
     {
-      if (ViewBag.Akcja == AkcjaEnum.DodanoKlienta)
+      if (ViewBag.Akcja == Silownia.AkcjaEnum.DodanoKlienta)
       {
                 <a href="#" class="close" data-dismiss="alert">&times;</a>
                      <div class="alert alert-success">
@@ -20,7 +20,7 @@
                      </div>
       }
 
-      if (ViewBag.Akcja == AkcjaEnum.UsunietoKlienta)
+      if (ViewBag.Akcja == Silownia.AkcjaEnum.UsunietoKlienta)
       {
         <a href="#" class="close" data-dismiss="alert">&times;</a>
         <div class="alert alert-danger">

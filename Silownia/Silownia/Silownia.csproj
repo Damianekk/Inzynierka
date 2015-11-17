@@ -204,6 +204,18 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511131359474_nowa.cs" />
+    <Compile Include="Migrations\201511131359474_nowa.Designer.cs">
+      <DependentUpon>201511131359474_nowa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511131700276_nowa1.cs" />
+    <Compile Include="Migrations\201511131700276_nowa1.Designer.cs">
+      <DependentUpon>201511131700276_nowa1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511141823588_usuniec.cs" />
+    <Compile Include="Migrations\201511141823588_usuniec.Designer.cs">
+      <DependentUpon>201511141823588_usuniec.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Adres.cs" />
@@ -258,11 +270,32 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="GoogleMaps.LocationServices.readme.txt" />
+    <Content Include="HomeView\css\bootstrap.css" />
+    <Content Include="HomeView\css\bootstrap.min.css" />
+    <Content Include="HomeView\css\grayscale.css" />
+    <Content Include="HomeView\font-awesome\font-awesome.css" />
+    <Content Include="HomeView\font-awesome\font-awesome.min.css" />
+    <Content Include="HomeView\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="HomeView\img\downloads-bg.jpg" />
+    <Content Include="HomeView\img\Healthy_food.jpg" />
+    <Content Include="HomeView\img\intro-bg.jpg" />
+    <Content Include="HomeView\img\map-marker.png" />
+    <Content Include="HomeView\js\bootstrap.js" />
+    <Content Include="HomeView\js\bootstrap.min.js" />
+    <Content Include="HomeView\js\grayscale.js" />
+    <Content Include="HomeView\js\jquery.easing.min.js" />
+    <Content Include="HomeView\js\jquery.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\Site.less" />
+    <Content Include="HomeView\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="HomeView\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="HomeView\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="HomeView\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="HomeView\less\grayscale.less" />
+    <Content Include="HomeView\less\mixins.less" />
+    <Content Include="HomeView\less\variables.less" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\daypilot-all.min.js" />
     <Content Include="Scripts\infoCzynnosc.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -351,6 +384,17 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201511131359474_nowa.resx">
+      <DependentUpon>201511131359474_nowa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511131700276_nowa1.resx">
+      <DependentUpon>201511131700276_nowa1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511141823588_usuniec.resx">
+      <DependentUpon>201511141823588_usuniec.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -144,3 +144,4 @@ C:\Users\Mtk\Desktop\Inzynier_MVC\Inzynierka\Silownia\Silownia.Tests\bin\Debug\M
 C:\Users\Mtk\Desktop\Inzynier_MVC\Inzynierka\Silownia\Silownia.Tests\obj\Debug\Silownia.Tests.csprojResolveAssemblyReference.cache
 C:\Users\Mtk\Desktop\Inzynier_MVC\Inzynierka\Silownia\Silownia.Tests\obj\Debug\Silownia.Tests.dll
 C:\Users\Mtk\Desktop\Inzynier_MVC\Inzynierka\Silownia\Silownia.Tests\obj\Debug\Silownia.Tests.pdb
+C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia.Tests\bin\Debug\GoogleMaps.LocationServices.dll
