@@ -38,7 +38,7 @@ function init() {
     // For more options see: https://developers.google.com/maps/documentation/javascript/reference#MapOptions
     var mapOptions = {
         // How zoomed in you want the map to start at (always required)
-        zoom: 15,
+        zoom: 6,
 
         // The latitude and longitude to center the map (always required)
         center: new google.maps.LatLng(52.230240, 21.003694), // Warszawa
@@ -168,10 +168,10 @@ function init() {
     var map = new google.maps.Map(mapElement, mapOptions);
 
     var data = [ 
-                          { "Id": 1, "Nazwa": "PURE MUSCLES", "GodzinyOtwarcia": "07:00 - 23:30", "GeoLong": "52.230240", "GeoLat": "21.003694", "Opis": "Silownia znajduje sie na 3 pietrze" },
-                          { "Id": 2, "Nazwa": "Merseyside Maritime Museum ", "GodzinyOtwarcia": "9-1,2-5, M-F", "GeoLong": "53.401217", "GeoLat": "-2.993052" },
-                          { "Id": 3, "Nazwa": "Walker Art Gallery", "GodzinyOtwarcia": "9-7, M-F", "GeoLong": "53.409839", "GeoLat": "-2.979447" },
-                          { "Id": 4, "Nazwa": "National Conservation Centre", "GodzinyOtwarcia": "10-6, M-F", "GeoLong": "53.407511", "GeoLat": "-2.984683" }
+                          { "Id": 1, "Nazwa": "PURE MUSCLES ZLOTE TARASY", "GodzinyOtwarcia": "07:00 - 23:30", "GeoLong": "52.230240", "GeoLat": "21.003694", "Opis": "Silownia znajduje sie na 3 pietrze" },
+                          { "Id": 2, "Nazwa": "PURE MUSCLES POZNAN", "GodzinyOtwarcia": "08:00 - 24:00", "GeoLong": "52.410100", "GeoLat": "16.926690" },
+                          { "Id": 3, "Nazwa": "PURE MUSCLES SKY CLUB", "GodzinyOtwarcia": "24h/d", "GeoLong": "52.232307", "GeoLat": "20.984304" },
+                          { "Id": 4, "Nazwa": "PURE MUSCLES MANUFAKTURA", "GodzinyOtwarcia": "06:30 - 22:30", "GeoLong": "51.780001", "GeoLat": "19.447375" }
     ];
 
     var image = 'HomeView/img/map-marker.png';

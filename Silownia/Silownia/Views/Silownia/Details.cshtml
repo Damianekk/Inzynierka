@@ -18,8 +18,8 @@
 <!-- This css is to give a nice big popup "info window" when a marker is clicked on the map -->
 <style>
     .infoDiv {
-        height: 150px;
-        width: 200px;
+        height: auto;
+        width: auto;
         -webkit-user-select: none;
         background-color: white;
     }
@@ -72,11 +72,11 @@
                 // you can either make up a JSON list server side, or call it from a controller using JSONResult
 
                 
-                var data = [
-                          { "Id": 1, "PlaceName": "Liverpool Museum", "OpeningHours":"9-5, M-F","GeoLong": "53.410146", "GeoLat": "-2.979919" },
-                          { "Id": 2, "PlaceName": "Merseyside Maritime Museum ", "OpeningHours": "9-1,2-5, M-F", "GeoLong": "53.401217", "GeoLat": "-2.993052" },
-                          { "Id": 3, "PlaceName": "Walker Art Gallery", "OpeningHours": "9-7, M-F", "GeoLong": "53.409839", "GeoLat": "-2.979447" },
-                          { "Id": 4, "PlaceName": "National Conservation Centre", "OpeningHours": "10-6, M-F", "GeoLong": "53.407511", "GeoLat": "-2.984683" }
+                var data = [ 
+                        { "Id": 1, "Nazwa": "PURE MUSCLES ZLOTE TARASY", "GodzinyOtwarcia": "07:00 - 23:30", "GeoLong": "52.230240", "GeoLat": "21.003694", "Opis": "Silownia znajduje sie na 3 pietrze" },
+                        { "Id": 2, "Nazwa": "PURE MUSCLES POZNAN", "GodzinyOtwarcia": "08:00 - 24:00", "GeoLong": "52.410100", "GeoLat": "16.926690" },
+                        { "Id": 3, "Nazwa": "PURE MUSCLES SKY CLUB", "GodzinyOtwarcia": "24h/d", "GeoLong": "52.232307", "GeoLat": "20.984304" },
+                        { "Id": 4, "Nazwa": "PURE MUSCLES MANUFAKTURA", "GodzinyOtwarcia": "06:30 - 22:30", "GeoLong": "51.780001", "GeoLat": "19.447375" }
                 ];
 
                 // Using the JQuery "each" selector to iterate through the JSON list and drop marker pins
@@ -92,7 +92,12 @@
 
                     // put in some information about each json object - in this case, the opening hours.
                     var infowindow = new google.maps.InfoWindow({
-                        content: "<div class='infoDiv'><h2>" + item.PlaceName + "</h2>" + "<div><h4>Opening hours: " + item.OpeningHours + "</h4></div></div>"
+                        content: 
+                                "<div class='h4' style='color:black'><h2>" + item.Nazwa + "</h2>"
+                                + "<div><div class='h4' style='color:black'>Info:<div style='color:blue'> "
+                                + item.Opis + "</div> " + "<br/>Godziny otwarcia:<div style='color:blue'> "
+                                + item.GodzinyOtwarcia
+                                + "</div></div></div></div>"
                     });
 
                     // finally hook up an "OnClick" listener to the map so it pops up out info-window when the marker-pin is clicked!
