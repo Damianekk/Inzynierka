@@ -191,7 +191,7 @@
     <Compile Include="Controllers\AdresController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KlientController.cs" />
-    <Compile Include="Controllers\PlanZajecController.cs" />
+    <Compile Include="Controllers\KlientViewController.cs" />
     <Compile Include="Controllers\RecepcjonistaController.cs" />
     <Compile Include="Controllers\SilowniaController.cs" />
     <Compile Include="Controllers\SpecjalizacjaController.cs" />
@@ -215,6 +215,10 @@
     <Compile Include="Migrations\201511141823588_usuniec.cs" />
     <Compile Include="Migrations\201511141823588_usuniec.Designer.cs">
       <DependentUpon>201511141823588_usuniec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511191615358_nowa2.cs" />
+    <Compile Include="Migrations\201511191615358_nowa2.Designer.cs">
+      <DependentUpon>201511191615358_nowa2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -373,7 +377,8 @@
     <Content Include="Views\Home\_Trenerzy.cshtml" />
     <Content Include="Views\Home\_Video.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
-    <Content Include="Views\PlanZajec\_PlanZajec.cshtml" />
+    <Content Include="Views\Shared\_LayoutClient.cshtml" />
+    <Content Include="Views\KlientView\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -394,6 +399,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511141823588_usuniec.resx">
       <DependentUpon>201511141823588_usuniec.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511191615358_nowa2.resx">
+      <DependentUpon>201511191615358_nowa2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
