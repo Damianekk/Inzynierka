@@ -12,14 +12,13 @@ namespace Silownia.DAL
         public SilowniaContext()
             : base("SilowniaContext")
         {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<SilowniaContext, Silownia.Migrations.Configuration>("SilowniaContext"));
+          //  Database.SetInitializer(new MigrateDatabaseToLatestVersion<SilowniaContext, Silownia.Migrations.Configuration>("SilowniaContext"));
             
         }
 
         public DbSet<Osoba> Osoby { get; set; }
         public DbSet<Pracownik> Pracownicy { get; set; }
         public DbSet<Trening> Treningi { get; set; }
-
         public DbSet<Adres> Adresy { get; set; }
         public DbSet<Klient> Klienci { get; set; }
         public DbSet<Masaz> Masaze { get; set; }
@@ -45,10 +44,26 @@ namespace Silownia.DAL
             modelBuilder.Configurations.Add(new DziedziczenieOsoby());
             modelBuilder.Configurations.Add(new DziedziczeniePracownika());
             modelBuilder.Configurations.Add(new DziedziczenieTreningu());
-            
-            //modelBuilder.Entity<Klient>().ToTable("Klienci");
-            //modelBuilder.Entity<Mechanik>().ToTable("Mechanicy");
-            //modelBuilder.Entity<Pracownik>().ToTable("Pracownicy");
+
+            //modelBuilder.Entity<TreningPersonalny>().Map(m =>
+            //{
+            //    m.MapInheritedProperties();
+            //    m.ToTable("TreningPersonalny");
+            //});
+
+            //modelBuilder.Entity<TreningWlasny>().Map(m =>
+            //{
+            //    m.MapInheritedProperties();
+            //    m.ToTable("TreningWlasny");
+
+            //});
+
+            //modelBuilder.Entity<ZajeciaGrupowe>().Map(m =>
+            //{
+            //    m.MapInheritedProperties();
+            //    m.ToTable("ZajeciaGrupowe");
+
+            //});
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
         }
 
