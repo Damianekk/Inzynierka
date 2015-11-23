@@ -18,6 +18,7 @@ namespace Silownia.Models
         [EmailAddress]
         public string Mail { get; set; }
        
+
         public virtual ICollection<Umowa> Umowa { get; set; }
         public virtual ICollection<Masaz> Masaz { get; set; }
         public virtual ICollection<KlientZajeciaGrupowe> KlienciTreningi { get; set; }

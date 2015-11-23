@@ -111,7 +111,6 @@ C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\bin\PagedList.dll
 C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\bin\PagedList.Mvc.dll
 C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\bin\PagedList.xml
 C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\bin\PagedList.Mvc.xml
-C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.csprojResolveAssemblyReference.cache
 C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\bin\System.Net.Http.Formatting.dll
 C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\bin\System.Web.Http.dll
 C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\bin\System.Web.Http.WebHost.dll
@@ -188,5 +187,6 @@ C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\bin\GoogleMaps.Lo
 C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.Migrations.nowa.resources
 C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.Migrations.nowa1.resources
 C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.Migrations.usuniec.resources
-C:\Users\Mtk\Desktop\Inzynier_MVC\Inzynierka\Silownia\Silownia\bin\DHTMLX.pdb
-C:\Users\Mtk\Desktop\Inzynier_MVC\Inzynierka\Silownia\Silownia\bin\DHTMLX.xml
+C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\bin\DayPilot.dll
+C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.csprojResolveAssemblyReference.cache
+C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.Migrations.nowa2.resources
