@@ -188,3 +188,5 @@ C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\bin\GoogleMaps.Lo
 C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.Migrations.nowa.resources
 C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.Migrations.nowa1.resources
 C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.Migrations.usuniec.resources
+C:\Users\Mtk\Desktop\Inzynier_MVC\Inzynierka\Silownia\Silownia\bin\DHTMLX.pdb
+C:\Users\Mtk\Desktop\Inzynier_MVC\Inzynierka\Silownia\Silownia\bin\DHTMLX.xml
