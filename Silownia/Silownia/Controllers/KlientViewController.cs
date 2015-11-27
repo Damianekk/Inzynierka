@@ -18,14 +18,22 @@ namespace Silownia.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            ViewBag.Trenerzy = new SelectList(db.Recepcjonisci, "OsobaID", "imieNazwisko");
             Klient klient = db.Klienci.Find(id);
-            
+        
             if (klient == null)
             {
                 return HttpNotFound();
             }
             var z = klient;
+            
             return View(z);
         }
+
+        public ActionResult Act(string username,long trenerID)
+        {
+            return null;
+        }
+
     }
 }

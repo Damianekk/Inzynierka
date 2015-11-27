@@ -299,6 +299,10 @@
     <Content Include="HomeView\less\grayscale.less" />
     <Content Include="HomeView\less\mixins.less" />
     <Content Include="HomeView\less\variables.less" />
+    <None Include="Properties\PublishProfiles\PureMuscles - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\PureMuscles - Web Deploy.pubxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\infoCzynnosc.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
