@@ -7,7 +7,6 @@ using System.Web;
 
 namespace Silownia.Models
 {
-    [Table("TreningOersonalny")]
     public class TreningPersonalny : Trening
     {
         public virtual Klient Klient { get; set; }

@@ -7,10 +7,9 @@ using System.Web;
 
 namespace Silownia.Models
 {
-    [Table("TreningWłasny")]
+    [Table("TreningWlasny")]
     public class TreningWlasny : Trening
     {
-        public DateTime OstatniTreninig { get; set; }
         public virtual Klient Klient { get; set; }
 
     }

@@ -40,9 +40,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DayPilot">
-      <HintPath>..\packages\DayPilot.5.0.303\lib\DayPilot.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -63,6 +60,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http.Formatting, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.0.0\lib\net45\System.Net.Http.Formatting.dll</HintPath>
@@ -203,22 +201,6 @@
     <Compile Include="DAL\SilowniaContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201511131359474_nowa.cs" />
-    <Compile Include="Migrations\201511131359474_nowa.Designer.cs">
-      <DependentUpon>201511131359474_nowa.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201511131700276_nowa1.cs" />
-    <Compile Include="Migrations\201511131700276_nowa1.Designer.cs">
-      <DependentUpon>201511131700276_nowa1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201511141823588_usuniec.cs" />
-    <Compile Include="Migrations\201511141823588_usuniec.Designer.cs">
-      <DependentUpon>201511141823588_usuniec.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201511191615358_nowa2.cs" />
-    <Compile Include="Migrations\201511191615358_nowa2.Designer.cs">
-      <DependentUpon>201511191615358_nowa2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -395,18 +377,7 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201511131359474_nowa.resx">
-      <DependentUpon>201511131359474_nowa.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511131700276_nowa1.resx">
-      <DependentUpon>201511131700276_nowa1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511141823588_usuniec.resx">
-      <DependentUpon>201511141823588_usuniec.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511191615358_nowa2.resx">
-      <DependentUpon>201511191615358_nowa2.cs</DependentUpon>
-    </EmbeddedResource>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

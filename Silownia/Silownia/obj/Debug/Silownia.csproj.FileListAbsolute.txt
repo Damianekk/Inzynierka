@@ -182,7 +182,6 @@ C:\Users\Mtk\Desktop\Inzynier_MVC\Inzynierka\Silownia\Silownia\bin\Microsoft.Owi
 C:\Users\Mtk\Desktop\Inzynier_MVC\Inzynierka\Silownia\Silownia\bin\Microsoft.Owin.Security.Google.xml
 C:\Users\Mtk\Desktop\Inzynier_MVC\Inzynierka\Silownia\Silownia\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\Mtk\Desktop\Inzynier_MVC\Inzynierka\Silownia\Silownia\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-C:\Users\Mtk\Desktop\Inzynier_MVC\Inzynierka\Silownia\Silownia\obj\Debug\Silownia.csprojResolveAssemblyReference.cache
 C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\bin\GoogleMaps.LocationServices.dll
 C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.Migrations.nowa.resources
 C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.Migrations.nowa1.resources

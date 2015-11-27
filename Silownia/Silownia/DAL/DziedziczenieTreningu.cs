@@ -13,7 +13,7 @@ namespace Silownia.DAL
         {
             this.Map<TreningPersonalny>(x => x.ToTable("TreningPersonalny"))
                 .Map<TreningWlasny>(x => x.ToTable("TreningWlasny"))
-                .Map<ZajeciaGrupowe>(x => x.ToTable("ZajeciaGrup"));
+                .Map<ZajeciaGrupowe>(x => x.ToTable("ZajeciaGrupowe"));
         }
     }
 }
