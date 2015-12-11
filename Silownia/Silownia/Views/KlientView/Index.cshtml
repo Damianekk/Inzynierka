@@ -23,11 +23,29 @@
             }
         });
     }
-    
+
     function BlokujWiadomosc() {
         document.getElementById("Wiadomosc").disabled = true;
         document.getElementById("Send").disabled = true;
-        document.getElementById("Trenerzy").disabled = true;     
+        document.getElementById("Trenerzy").disabled = true;
+    }
+
+    function Odbierz()
+    {
+        var okienko = document.getElementById("WiadomosciOdebrane");
+        var osWys ;
+
+        var array = @Html.Raw(Json.Encode(@ViewBag.Wiad));
+
+        for(var i = 0; i < array.length; i++) {
+            osWys = array[i].OsobaWysylajaca;
+
+            okienko.innerHTML = array[i].OsobaWysylajaca.imieNazwisko+": "+array[i].Tresc+"\n----------------------------------------------------------------------------------------------------------------------------------------------------------------------";
+       
+            okienko.style.fontSize = "small";
+
+        }
+
     }
 
 
@@ -91,9 +109,29 @@
 
         </div>
 
-        <div class="col-xs-2" style=" width:1435px; height:320px">
+        <div class="col-xs-2" style=" width:735px; height:320px">
+          
 
-         
+        </div>
+        <div class="col-xs-2" style=" width:700px; height:320px">
+        <h3>Odebrane wiadmości</h3>
+        @if (ViewBag.Wiad != null)
+        {
+
+            @Html.TextArea("WiadomosciOdebrane", htmlAttributes: new { style = "width: 100%; max-width: 100%; height:250px;", @readonly = "readonly" })
+        //    @Html.TextArea("WiadomosciOdebrane", new { @style = "width:650px; height:180px" })
+            <script type="text/javascript">Odbierz();</script>
+            @*<h3>
+            @{
+                @ViewBag.Wiad[0].Tresc
+                @: |
+                @ViewBag.Wiad[0].OsobaWysylajaca
+                @: |
+                @ViewBag.Wiad[0].OsobaOdbierajaca
+        }
+    </h3>*@
+        }
+
 
         </div>
 

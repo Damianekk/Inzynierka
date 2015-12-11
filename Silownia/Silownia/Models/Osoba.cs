@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -30,6 +31,7 @@ namespace Silownia.Models
         public string imieNazwisko { get { return Nazwisko + " " + Imie; } }
 
         public virtual Adres Adres { get; set; }
+        public virtual ICollection<Wiadomosc> Wiadomosci { get; set; }
 
     }
 }

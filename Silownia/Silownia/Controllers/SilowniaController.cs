@@ -134,11 +134,11 @@ namespace Silownia.Controllers
 
             var jsonSerialiser = new JavaScriptSerializer();
             var silownie = db.Silownie.Where(s => s.Adres != null).ToList();
-            var json = jsonSerialiser.Serialize(silownie);
+      
              
             //  silownie.RemoveAll(item => item.Adres != null);
 
-            return Json(new { ok = true, mydata = json, message = "" },JsonRequestBehavior.AllowGet);
+            return Json(new { ok = true, mydata = silownie, message = "" },JsonRequestBehavior.AllowGet);
         }
     }
 }

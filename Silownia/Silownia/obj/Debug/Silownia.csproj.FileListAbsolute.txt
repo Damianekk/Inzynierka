@@ -106,7 +106,6 @@ C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\bin\Microsoft.Owi
 C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.dll
 C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.pdb
-C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.csproj.GenerateResource.Cache
 C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\bin\PagedList.dll
 C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\bin\PagedList.Mvc.dll
 C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\bin\PagedList.xml
@@ -183,9 +182,8 @@ C:\Users\Mtk\Desktop\Inzynier_MVC\Inzynierka\Silownia\Silownia\bin\Microsoft.Owi
 C:\Users\Mtk\Desktop\Inzynier_MVC\Inzynierka\Silownia\Silownia\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\Mtk\Desktop\Inzynier_MVC\Inzynierka\Silownia\Silownia\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\bin\GoogleMaps.LocationServices.dll
-C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.Migrations.nowa.resources
-C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.Migrations.nowa1.resources
-C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.Migrations.usuniec.resources
-C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\bin\DayPilot.dll
 C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.csprojResolveAssemblyReference.cache
-C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.Migrations.nowa2.resources
+C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.Migrations.dodaniewiadomosci.resources
+C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.csproj.GenerateResource.Cache
+C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.Migrations.Dodaniewiadomoscidoosoby.resources
+C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.Migrations.zmianywwiadomosciach.resources

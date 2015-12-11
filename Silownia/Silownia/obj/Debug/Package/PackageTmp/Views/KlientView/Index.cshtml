@@ -1,0 +1,71 @@
+﻿@model Silownia.Models.Klient
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<html>
+    <head>
+    
+    </head>
+
+    <body>
+        @* Zdjecie *@
+        <div class="col-xs-2">
+            <img src="https://upload.wikimedia.org/wikipedia/en/7/70/Shawn_Tok_Profile.jpg" height="300" width="300">
+        </div>
+        @* Dane klienta *@
+        <div class="col-xs-3" style="border:solid;">
+        <div style="text-align:right">DANE PERSONALNE</div> 
+           <h4>Imie:</h4><h3 style="color:aquamarine">@Model.Imie</h3>
+            <br />
+            <h4>Nazwisko:</h4><h3 style="color:aquamarine">@Model.Nazwisko</h3>
+            <br />
+            <h4>Data urodzenia:</h4><h3 style="color:aquamarine">@Model.DataUrodzenia.ToShortDateString()</h3>
+            <br />
+        </div>
+        <div class="col-xs-4" style="border:solid; height:380px; min-width:340px;">
+            <div style="text-align:right">ADRES</div> 
+            @if (Model.Adres != null)
+            {
+            <h4>Kod pocztowy:</h4><h3 style="color:aquamarine">@Model.Adres.KodPocztowy</h3>
+            <br />
+            <h4>Miasto:</h4><h3 style="color:aquamarine">@Model.Adres.Miasto</h3>
+            <br />
+            <h4>Adres:</h4><h3 style="color:aquamarine">@Model.Adres.Ulica @Model.Adres.NrBudynku  @Model.Adres.NrLokalu</h3>
+            <br />
+            }
+            else
+            {
+                <h1 style="color:palevioletred; text-align:center">BRAK DANYCH</h1>
+            }
+        </div>
+        <div class="col-xs-2" style="border:solid; width:300px; height:150px;">
+            <h3>Umowa aktywna</h3>  
+            @if(@Model.Umowa.FirstOrDefault() != null)
+            {
+                <h3 style="color:aquamarine">@Model.Umowa.First().DataZakonczenia.ToShortDateString()</h3>
+
+            }
+            else
+            {
+                <h3 style="color:palevioletred">BRAK</h3>
+            }
+
+        </div>
+        @* Ostatni trening *@
+        <div class="col-xs-2" style="border:solid; width:300px; height:150px;">
+          
+              <h3>Ostatni trening własny</h3>
+                
+        </div>
+        <div class="col-xs-2" style="border:solid; width:300px; height:150px;">
+
+            <h3>Ostatni trening personalny</h3>
+          
+        </div>
+
+
+    </body>
+</html>
