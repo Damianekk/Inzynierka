@@ -1,14 +1,12 @@
 ﻿@model Silownia.Models.Silownia
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Siłownia: usuń";
 }
 
-<h2>Usuń</h2>
+<h2>Czy na pewno chcesz usunąć siłownię @Model.Nazwa?</h2>
 
-<h3>Jesteś pewien, że chcesz usunąć siłownie z listy?</h3>
 <div>
-    <h4>Silownia</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -57,8 +55,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Wróć do listy", "Index")
+            <input type="submit" value="Usuń" class="btn btn-default" /> |
+            @Html.ActionLink("Wróć do listy siłowni", "Index")
         </div>
     }
 </div>

@@ -1,20 +1,17 @@
 ﻿@model Silownia.Models.Specjalizacja
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Specjalizacja: usuń";
 }
 
-<h2>Delete</h2>
+<h2>Czy na pewno chcesz usunąć specjalizację @Model.Nazwa?</h2>
 
-<h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Specjalizacja</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Nazwa)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Nazwa)
         </dd>
@@ -25,8 +22,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Usuń" class="btn btn-default" /> |
+            @Html.ActionLink("Powrót do listy specjalizacji", "Index")
         </div>
     }
 </div>

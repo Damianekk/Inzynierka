@@ -2,7 +2,7 @@
 @using System.Globalization;
 <script src="http://maps.google.com/maps/api/js?sensor=true" type="text/javascript"></script> 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Siłownia: szczegóły";
 }
 
 
@@ -131,13 +131,8 @@
     </section>
 }
 
- 
-
-<h2>Informacje Szczegółowe:</h2>
-
 <div>
-
-    <h4>Silownia</h4>
+    <h2>Szczegóły dotyczące wybranej siłowni</h2>
 	<hr />
     <fieldset>
         <table>
@@ -186,7 +181,7 @@
                         {
                         <dt>
                                          
-                            @Html.ActionLink("Edit", "Edit", new { id = Model.SilowniaID }) |
+                            @Html.ActionLink("Edytuj", "Edit", new { id = Model.SilowniaID }) |
                         
                         </dt>
                         <dt>
@@ -224,8 +219,8 @@
                 <table class="table">
                     <tr>
                         <th>Klient</th>
-                        <th>Data podpisania</th>
-                        <th>Data zakończenia</th>
+                        <th>Data podpisania umowy</th>
+                        <th>Data końca umowy</th>
                     </tr>
                     @foreach (var item in Model.Umowa)
                     {

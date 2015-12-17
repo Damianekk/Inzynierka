@@ -1,18 +1,16 @@
 ﻿@model Silownia.Models.Silownia
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Siłownia: dodaj";
 }
 
-<h2>Dodaj Silownie do listy:</h2>
-
+<h2>Dodaj nową siłownię</h2>
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Silownia</h4>
         <hr />
         @Html.ValidationSummary(true)
 
@@ -58,14 +56,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Utwórz" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Wróć do listy", "Index")
+    @Html.ActionLink("Wróć do listy siłowni", "Index")
 </div>
 
 @section Scripts {

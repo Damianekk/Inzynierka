@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<Silownia.Models.Umowa>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Umowy: index";
 }
 
-<h2>Index</h2>
+<h2>Lista umów podpisanych w naszej sieci</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -41,9 +41,9 @@
             @Html.DisplayFor(modelItem => item.Cena)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.UmowaID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.UmowaID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.UmowaID })
+            @Html.ActionLink("Edytuj", "Edit", new { id=item.UmowaID }) |
+            @Html.ActionLink("Szczegóły", "Details", new { id=item.UmowaID }) |
+            @Html.ActionLink("Usuń", "Delete", new { id=item.UmowaID })
         </td>
     </tr>
 }

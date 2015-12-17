@@ -1,10 +1,13 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using Silownia.Models;
 using Silownia.DAL;
+using PagedList;
+using Silownia.Helpers;
 
 namespace Silownia.Controllers
 {
@@ -13,11 +16,42 @@ namespace Silownia.Controllers
         private SilowniaContext db = new SilowniaContext();
 
         // GET: /Trener/
-        public ActionResult Index()
+        public ActionResult Index( string imieNazwisko, int page = 1, int pageSize = 10, AkcjaEnumTrener akcja = AkcjaEnumTrener.Brak, String info = null)
         {
-            var a = from Osoby in db.Trenerzy select Osoby;
+           // ViewBag.srchSilownia = Miasto;
+            ViewBag.srchImieNazwisko = imieNazwisko;
 
-            return View(a.ToList());
+            var a = from Osoby in db.Trenerzy select Osoby;
+           // var b = from Silownie in db.Silownie select Silownie;
+            /*
+            if (!String.IsNullOrEmpty(Miasto))
+            {
+                a = a.Where(s => s.Adres.Miasto.Contains(Miasto));
+               // b = b.Where(s => s.Nazwa.Contains(Silownia));
+            }
+            */
+            if (!String.IsNullOrEmpty(imieNazwisko))
+            {
+                a = a.Where(s => s.Imie.Contains(imieNazwisko) || s.Nazwisko.Contains(imieNazwisko));
+            }
+
+            var final = a.OrderBy(p => p.Imie);
+            var ileWynikow = a.Count();
+            if ((ileWynikow / page) <= 1)
+            {
+                page = 1;
+            }
+            var kk = ileWynikow / page;
+
+            PagedList<Trener> model = new PagedList<Trener>(final, page, pageSize);
+
+            if (akcja != AkcjaEnumTrener.Brak)
+            {
+                ViewBag.info = info;
+                ViewBag.Akcja = akcja;
+            }
+
+            return View(model);
         }
 
         // GET: /Trener/Details/5
@@ -53,7 +87,7 @@ namespace Silownia.Controllers
             {
                 db.Trenerzy.Add(trener);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { akcja = AkcjaEnumTrener.DodanoTrenera, info = trener.imieNazwisko });
             }
 
             ViewBag.SpecjalizacjaID = new SelectList(db.Specjalizacje, "SpecjalizacjaID", "Nazwa", trener.Specjalizacja);
@@ -116,7 +150,7 @@ namespace Silownia.Controllers
             Trener trener = db.Trenerzy.Find(id);
             db.Trenerzy.Remove(trener);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { akcja = AkcjaEnumTrener.UsunietoTrenera, info = trener.imieNazwisko });
         }
 
         protected override void Dispose(bool disposing)

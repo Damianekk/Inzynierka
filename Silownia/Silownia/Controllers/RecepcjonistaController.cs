@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using Silownia.DAL;
 using Silownia.Models;
+using Silownia.Helpers;
+using PagedList;
 
 namespace Silownia.Controllers
 {
@@ -16,10 +18,34 @@ namespace Silownia.Controllers
         private SilowniaContext db = new SilowniaContext();
 
         // GET: Recepcjonista
-        public ActionResult Index()
+        public ActionResult Index(string imieNazwisko, int page = 1, int pageSize = 10, AkcjaEnumRecepcjonista akcja = AkcjaEnumRecepcjonista.Brak, String info = null)
         {
+            ViewBag.srchImieNazwisko = imieNazwisko;
+
             var a = from Osoby in db.Recepcjonisci.OfType<Recepcjonista>() select Osoby;
-            return View(a);
+
+            if (!String.IsNullOrEmpty(imieNazwisko))
+            {
+                a = a.Where(s => s.Imie.Contains(imieNazwisko) || s.Nazwisko.Contains(imieNazwisko));
+            }
+
+            var final = a.OrderBy(p => p.Imie);
+            var ileWynikow = a.Count();
+            if ((ileWynikow / page) <= 1)
+            {
+                page = 1;
+            }
+            var kk = ileWynikow / page;
+
+            PagedList<Recepcjonista> model = new PagedList<Recepcjonista>(final, page, pageSize);
+
+            if (akcja != AkcjaEnumRecepcjonista.Brak)
+            {
+                ViewBag.info = info;
+                ViewBag.Akcja = akcja;
+            }
+
+            return View(model);
         }
 
         // GET: Recepcjonista/Details/5
@@ -55,7 +81,7 @@ namespace Silownia.Controllers
             {
                 db.Recepcjonisci.Add(recepcjonista);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { akcja = AkcjaEnumRecepcjonista.DodanoRecepcjoniste, info = recepcjonista.imieNazwisko });
             }
 
             return View(recepcjonista);
@@ -115,7 +141,7 @@ namespace Silownia.Controllers
             Recepcjonista recepcjonista = db.Recepcjonisci.Find(id);
             db.Recepcjonisci.Remove(recepcjonista);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { akcja = AkcjaEnumRecepcjonista.UsunietoRecepcjoniste, info = recepcjonista.imieNazwisko });
         }
 
         protected override void Dispose(bool disposing)

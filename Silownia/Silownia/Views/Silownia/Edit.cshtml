@@ -1,18 +1,16 @@
 ﻿@model Silownia.Models.Silownia
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Siłownia: edytuj";
 }
 
-<h2>Edytuj</h2>
-
+<h2>Edycja wybranej siłowni</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Silownia</h4>
         <hr />
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.SilowniaID)
@@ -59,14 +57,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Zapisz" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Wróć do listy", "Index")
+    @Html.ActionLink("Wróć do listy siłowni", "Index")
 </div>
 
 @section Scripts {

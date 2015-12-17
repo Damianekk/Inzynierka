@@ -7,13 +7,11 @@ namespace Silownia.DAL
 {
     public class SilowniaContext : DbContext
     {
-        
 
         public SilowniaContext()
             : base("SilowniaContext")
         {
-          //  Database.SetInitializer(new MigrateDatabaseToLatestVersion<SilowniaContext, Silownia.Migrations.Configuration>("SilowniaContext"));
-            
+            //  Database.SetInitializer(new MigrateDatabaseToLatestVersion<SilowniaContext, Silownia.Migrations.Configuration>("SilowniaContext"));
         }
 
         public DbSet<Osoba> Osoby { get; set; }
@@ -41,7 +39,7 @@ namespace Silownia.DAL
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {            
+        {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Configurations.Add(new DziedziczenieOsoby());
             modelBuilder.Configurations.Add(new DziedziczeniePracownika());
@@ -57,15 +55,14 @@ namespace Silownia.DAL
             //{
             //    m.MapInheritedProperties();
             //    m.ToTable("TreningWlasny");
-
             //});
 
             //modelBuilder.Entity<ZajeciaGrupowe>().Map(m =>
             //{
             //    m.MapInheritedProperties();
             //    m.ToTable("ZajeciaGrupowe");
-
             //});
+
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
         }
 

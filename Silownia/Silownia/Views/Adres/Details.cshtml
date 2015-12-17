@@ -1,14 +1,14 @@
 ﻿@model Silownia.Models.Adres
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Adres: szczegóły";
 }
 
-<h2>Details</h2>
+<h2>Szczegóły dotyczące wybranego adresu</h2>
 
 <div>
-    <h4>Adres</h4>
-	<hr />
+
+    <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.KodPocztowy)
@@ -61,6 +61,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.AdresID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edytuj", "Edit", new { id = Model.AdresID }) |
+    @Html.ActionLink("Powrót do listy adresów", "Index")
 </p>

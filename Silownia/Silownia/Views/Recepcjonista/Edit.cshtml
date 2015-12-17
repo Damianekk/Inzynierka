@@ -1,18 +1,16 @@
 ﻿@model Silownia.Models.Recepcjonista
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Recepcjonista: edit";
 }
 
-<h2>Edit</h2>
-
+<h2>Edycja wybranego recepcjonisty</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Recepcjonista</h4>
         <hr />
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.OsobaID)
@@ -59,14 +57,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Zapisz" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Powrót do listy recepcjonistów", "Index")
 </div>
 
 @section Scripts {

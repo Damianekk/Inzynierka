@@ -1,12 +1,10 @@
 ﻿@model Silownia.Models.Umowa
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Umowa: usuń";
 }
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
+<h2>Czy na pewno chcesz usunąć umowę klienta: @Model.Klient.imieNazwisko z siłownią @Model.Silownia.Nazwa?</h2>
 <div>
     <h4>Umowa</h4>
     <hr />
@@ -49,8 +47,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Usuń" class="btn btn-default" /> |
+            @Html.ActionLink("Powrót do listy umów", "Index")
         </div>
     }
 </div>
