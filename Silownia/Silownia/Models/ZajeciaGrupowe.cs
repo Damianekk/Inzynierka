@@ -12,15 +12,18 @@ namespace Silownia.Models
     {
         public ZajeciaGrupowe()
         {
-            Klienci = new List<Klient>();
+            KlientZajeciaGrupowe = new List<KlientZajeciaGrupowe>();
         }
         public string NazwaTreningu { get; set; }
+
         [MaxLength(300, ErrorMessage = " Opis przekracza dozwoloną ilość słów!")]
         [Display(Name = "Opis")]
         public string OpisTreningu { get; set; }
+
         [Required]
-        public virtual Trener Trener { get; set; }
-        public virtual ICollection<Klient> Klienci { get; set; }
+        public virtual Instruktor Instruktor { get; set; }
+        public virtual ICollection<KlientZajeciaGrupowe> KlientZajeciaGrupowe { get; set; }
+        [Required]
         public virtual Sala Sala { get; set; }
     }
 }

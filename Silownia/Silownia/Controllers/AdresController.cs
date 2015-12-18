@@ -10,7 +10,7 @@ namespace Silownia.Controllers
 {
     public class AdresController : Controller
     {
-        
+
         private SilowniaContext db = new SilowniaContext();
         KomuAdres komuPrzypisac;
 
@@ -36,7 +36,7 @@ namespace Silownia.Controllers
         }
 
         // GET: /Adres/Create
-        public ActionResult Create(long? id,KomuAdres komu)
+        public ActionResult Create(long? id, KomuAdres komu)
         {
             if (id != null)
             {
@@ -52,9 +52,6 @@ namespace Silownia.Controllers
                         ViewBag.Silownia = silownia;
                         komuPrzypisac = komu;
                         break;
-
-                    
-
                 }
             }
             return View();
@@ -65,7 +62,7 @@ namespace Silownia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="AdresID,KodPocztowy,Kraj,Miasto,Ulica,NrBudynku,NrLokalu")] Adres adres,long? id, KomuAdres komu)
+        public ActionResult Create([Bind(Include = "AdresID,KodPocztowy,Kraj,Miasto,Ulica,NrBudynku,NrLokalu")] Adres adres, long? id, KomuAdres komu)
         {
             object redirectTo = null;
             if (ModelState.IsValid)
@@ -74,9 +71,9 @@ namespace Silownia.Controllers
                 {
                     case KomuAdres.Osoba:
                         Osoba osoba = db.Osoby.Find(id);
-                        redirectTo =osoba.GetType().BaseType.Name;
+                        redirectTo = osoba.GetType().BaseType.Name;
                         osoba.Adres = adres;
-                       
+
                         //adres.Osoba = osoba;
                         break;
                     case KomuAdres.Silownia:
@@ -92,11 +89,11 @@ namespace Silownia.Controllers
                         silownia.Szerokosc = point.Longitude;
                         silownia.Dlugosc = point.Latitude;
                         redirectTo = silownia.GetType().BaseType.Name;
-                        break;                   
+                        break;
                 }
-                db.Adresy.Add(adres);            
+                db.Adresy.Add(adres);
                 db.SaveChanges();
-                return RedirectToAction("Index",redirectTo);
+                return RedirectToAction("Index", redirectTo);
             }
 
             return View(adres);
@@ -122,7 +119,7 @@ namespace Silownia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="AdresID,KodPocztowy,Kraj,Miasto,Ulica,NrBudynku,NrLokalu")] Adres adres)
+        public ActionResult Edit([Bind(Include = "AdresID,KodPocztowy,Kraj,Miasto,Ulica,NrBudynku,NrLokalu")] Adres adres)
         {
             if (ModelState.IsValid)
             {
@@ -156,18 +153,18 @@ namespace Silownia.Controllers
             Adres adres = db.Adresy.Find(id);
             Silownia.Models.Silownia silownia = db.Silownie.Where(w => w.Adres.AdresID == id).FirstOrDefault();
             Osoba osoba;
-            
-            if(silownia != null)
+
+            if (silownia != null)
             {
                 silownia.Adres = null;
             }
             else
             {
-              osoba = db.Osoby.Where(o => o.Adres.AdresID == id).FirstOrDefault();
-              if(osoba!=null)
-              osoba.Adres = null;
+                osoba = db.Osoby.Where(o => o.Adres.AdresID == id).FirstOrDefault();
+                if (osoba != null)
+                    osoba.Adres = null;
             }
-           
+
             db.Adresy.Remove(adres);
             db.SaveChanges();
             return RedirectToAction("Index");

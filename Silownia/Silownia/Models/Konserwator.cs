@@ -9,6 +9,11 @@ namespace Silownia.Models
     [Table("Konserwator")]
     public class Konserwator : Pracownik
     {
-        public virtual ICollection<Konserwacja> Konserwacja { get; set; }
+        public Konserwator()
+        {
+            Konserwacje = new List<Konserwacja>();
+        }
+
+        public virtual ICollection<Konserwacja> Konserwacje { get; set; }
     }
 }

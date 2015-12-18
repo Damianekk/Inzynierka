@@ -7,9 +7,9 @@ namespace Silownia.Models
     {
         public Silownia()
         {
-            Umowa = new List<Umowa>();
-            Pracownik = new List<Pracownik>();
-            Sala = new List<Sala>();
+            Umowy = new List<Umowa>();
+            Pracownicy = new List<Pracownik>();
+            Sale = new List<Sala>();
         }
         [Key, Required]
         [System.Web.Mvc.HiddenInput(DisplayValue = false)]
@@ -29,8 +29,8 @@ namespace Silownia.Models
         public double Szerokosc { get; set; }
 
         public virtual Adres Adres { get; set; }
-        public virtual ICollection<Umowa> Umowa { get; set; }
-        public virtual ICollection<Pracownik> Pracownik { get; set; }
-        public virtual ICollection<Sala> Sala { get; set; }
+        public virtual ICollection<Umowa> Umowy { get; set; }
+        public virtual ICollection<Pracownik> Pracownicy { get; set; }
+        public virtual ICollection<Sala> Sale { get; set; }
     }
 }

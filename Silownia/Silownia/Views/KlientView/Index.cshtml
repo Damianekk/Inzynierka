@@ -91,9 +91,9 @@
         @* Umowa *@
         <div class="col-xs-2" style="border:solid; width:300px; height:190px;">
             <h3>Umowa aktywna</h3>  
-            @if(@Model.Umowa.FirstOrDefault() != null)
+            @if(@Model.Umowy.FirstOrDefault() != null)
             {
-                <h3 style="color:aquamarine">@Model.Umowa.First().DataZakonczenia.ToShortDateString()</h3>
+                <h3 style="color:aquamarine">@Model.Umowy.First().DataZakonczenia.ToShortDateString()</h3>
 
             }
             else

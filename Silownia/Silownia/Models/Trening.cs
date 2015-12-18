@@ -10,12 +10,12 @@ namespace Silownia.Models
     [Table("Trening")]
     public abstract class Trening
     {
-        [Key,Required]
+        [Key, Required]
         public int TreningID { get; set; }
         [Required]
         [Display(Name = "Początek")]
         public DateTime Poczatek { get; set; }
-         [Display(Name = "Koniec")]
+        [Display(Name = "Koniec")]
         public DateTime Koniec { get; set; }
     }
 }

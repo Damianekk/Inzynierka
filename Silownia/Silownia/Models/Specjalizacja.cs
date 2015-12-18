@@ -4,5 +4,6 @@
     {
         public long SpecjalizacjaID { get; set; }
         public string Nazwa { get; set; }
+
     }
 }

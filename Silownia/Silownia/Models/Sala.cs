@@ -11,11 +11,12 @@ namespace Silownia.Models
         public Sala()
         {
             ZajeciaGrup = new List<ZajeciaGrupowe>();
+            Sprzety = new List<Sprzet>();
         }
 
 
         [Key, Required]
-        [Display(Name="Nr sali")]
+        [Display(Name="Numer sali")]
         public int Numer_sali { get; set; }
         public string Status { get; set; }
 

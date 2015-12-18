@@ -11,8 +11,8 @@ namespace Silownia.Models
     {
         public Recepcjonista()
         {
-            Umowa = new List<Umowa>();
+            Umowy = new List<Umowa>();
         }
-        public virtual ICollection<Umowa> Umowa { get; set; }
+        public virtual ICollection<Umowa> Umowy { get; set; }
     }
 }

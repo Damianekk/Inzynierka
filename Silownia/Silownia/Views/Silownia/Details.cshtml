@@ -213,7 +213,7 @@
             @Html.Label("Umowy", new { style = "color:#0099CC" })
         </dt>
 
-        @if (Model.Umowa.Count > 0)
+        @if (Model.Umowy.Count > 0)
         {
             <dd>
                 <table class="table">
@@ -222,7 +222,7 @@
                         <th>Data podpisania umowy</th>
                         <th>Data końca umowy</th>
                     </tr>
-                    @foreach (var item in Model.Umowa)
+                    @foreach (var item in Model.Umowy)
                     {
                         <tr>
                             <td>

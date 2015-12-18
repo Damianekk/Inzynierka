@@ -44,7 +44,7 @@ namespace Silownia.Controllers
             }
            
             if ((bool)czyUmowa)
-            a = a.Where(s => s.Umowa.Count > 0);
+            a = a.Where(s => s.Umowy.Count > 0);
 
             var final = a.OrderBy(p => p.Imie);
             var ileWynikow = a.Count();

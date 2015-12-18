@@ -92,19 +92,19 @@ namespace Silownia.Controllers
                 #region Klient
                 Klient klient = db.Klienci.Find(id);
                 umowa.Klient = klient;
-                klient.Umowa.Add(umowa);
+                klient.Umowy.Add(umowa);
                 #endregion
 
                 #region Recepcjonista
                 Recepcjonista recepcjonista = db.Recepcjonisci.Find(umowa.RecepcjonistaID);
                 umowa.Recepcjonista = recepcjonista;
-                recepcjonista.Umowa.Add(umowa);
+                recepcjonista.Umowy.Add(umowa);
                 #endregion
 
                 #region Silownia
                 Models.Silownia silownia = db.Silownie.Find(umowa.SilowniaID);
                 umowa.Silownia = silownia;
-                silownia.Umowa.Add(umowa);
+                silownia.Umowy.Add(umowa);
                 #endregion
                 db.Umowy.Add(umowa);
                 db.SaveChanges();
