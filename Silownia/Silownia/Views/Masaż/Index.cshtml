@@ -1,0 +1,37 @@
+﻿
+@model IEnumerable<Silownia.Models.Masaz>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Masaże</title>
+</head>
+<body>
+     <div class="container">
+         <div class="col-md-3 col-md-offset-2">
+             <label>Masaże</label>
+             @Html.Kendo().DropDownList()
+                            .Name("Masaze")
+                            .DataTextField("Name")
+                            .DataValueField("ID")
+                            .OptionLabel("Select typ masażu")
+                            .DataSource(source => {
+                                 source.Read(read =>
+                                    {
+                                        read.Action("GetMasaz","Masaż")
+                                    });
+                            })
+
+         </div>
+     </div>
+    
+    
+   
+</body>
+</html>

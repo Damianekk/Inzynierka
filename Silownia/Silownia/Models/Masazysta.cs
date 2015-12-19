@@ -7,11 +7,12 @@ namespace Silownia.Models
 {
     public class Masazysta : Pracownik
     {
-        Masazysta()
+       public Masazysta()
         {
             Masaze = new List<Masaz>();
         }
 
         public virtual IList<Masaz> Masaze { get; set; }
+        
     }
 }

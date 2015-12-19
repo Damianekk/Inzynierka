@@ -14,8 +14,9 @@ namespace Silownia.Models
         [Display(Name = "Data zatrudnienia")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
         public DateTime DataZatrudnienia { get; set; }
-        
-        public decimal Pensja { get; set; }
+        public double stawka_godzinowa { get; set; }
+        public int ilosc_godzin{get; set;}
+        public double Pensja { get; set; }
 
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Web.UI.WebControls;
+
 
 
 namespace Silownia.Models
@@ -12,6 +14,7 @@ namespace Silownia.Models
         [Required]
         [System.Web.Mvc.HiddenInput(DisplayValue = false)]
         public long OsobaID { get; set; }
+    
         [Required]
         public string Imie { get; set; }
         [Required]

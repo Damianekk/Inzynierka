@@ -11,16 +11,21 @@ namespace Silownia.Models
         public Sala()
         {
             ZajeciaGrup = new List<ZajeciaGrupowe>();
+            Sprzety = new List<Sprzet>();
+            Masaze = new List<Masaz>();
         }
 
 
         [Key, Required]
+       
         [Display(Name="Nr sali")]
         public int Numer_sali { get; set; }
+        public string rodzaj { get; set; }
         public string Status { get; set; }
-
+        public string Opis { get; set; }
         public virtual ICollection<Sprzet> Sprzety { get; set; }
-        public virtual ICollection<ZajeciaGrupowe> ZajeciaGrup { get; set; } 
+        public virtual ICollection<ZajeciaGrupowe> ZajeciaGrup { get; set; }
+        public virtual ICollection<Masaz> Masaze { get; set; }
         public virtual Silownia Silownia { get; set; }
 
     }

@@ -1,0 +1,50 @@
+﻿@model Silownia.Models.Trening
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Trening</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Tytul)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tytul)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Poczatek)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Poczatek)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Koniec)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Koniec)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OpisTreningu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OpisTreningu)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.TreningID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

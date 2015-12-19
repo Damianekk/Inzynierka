@@ -1,0 +1,125 @@
+﻿@model IEnumerable<Silownia.Models.Sala>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    @*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
+    <div class="container-fluid" style="background-color: grey">
+        
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header text-center">
+                    Nasze sale 
+                    <small><font color="black">Tak wygladaja nasze sale do ćwiczeń.</font></small>
+                </h1>
+            </div>
+        </div>
+        
+        <div class="row center-block" >
+            <div class="col-md-3 col-md-offset-1 portfolio-item">
+                <a href="#">
+                    <img class="img-responsive" src="~/Content/Sale/Silownia1.jpg" alt="">
+                </a>
+                <h3>
+                    <a href="#">Sala Siłowni</a>
+                </h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
+            </div>
+            <div class="col-md-3 portfolio-item">
+                <a href="#">
+                    <img class="img-responsive" src="~/Content/Sale/Silownia2.png" alt="">
+                </a>
+                <h3>
+                    <a href="#">Sala Siłowni</a>
+                </h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
+            </div>
+            <div class="col-md-3 portfolio-item">
+                <a href="#">
+                    <img class="img-responsive" src="~/Content/Sale/crossfit.jpg" alt="">
+                </a>
+                <h3>
+                    <a href="#">Sala CrossFit</a>
+                </h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
+            </div>
+        </div>
+    
+        <div class="row- center-block">
+            <div class="col-md-3  col-md-offset-1 portfolio-item">
+                <a href="#">
+                    <img class="img-responsive" src="~/Content/Sale/crossfit1.jpg" alt="">
+                </a>
+                <h3>
+                    <a href="#">Sala CrossFit</a>
+                </h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
+            </div>
+            <div class="col-md-3 portfolio-item">
+                <a href="#">
+                    <img class="img-responsive" src="~/Content/Sale/fitness.jpg" alt="">
+                </a>
+                <h3>
+                    <a href="#">Sala Fitness</a>
+                </h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
+            </div>
+            <div class="col-md-3 portfolio-item">
+                <a href="#">
+                    <img class="img-responsive" src="~/Content/Sale/fitness2.jpg" alt="">
+                </a>
+                <h3>
+                    <a href="#">Sala Fitness</a>
+                </h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
+            </div>
+        </div>
+       
+        </div>
+        @*<table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Status)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Numer_sali)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Masaze)
+                    </th>
+                    <th></th>
+                </tr>
+
+            @foreach (var item in Model) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Numer_sali)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Masaze)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id=item.Numer_sali }) |
+                        @Html.ActionLink("Details", "Details", new { id=item.Numer_sali }) |
+                        @Html.ActionLink("Delete", "Delete", new { id=item.Numer_sali })
+                    </td>
+                </tr>
+            }
+
+            </table>*@
+</body>
+</html>

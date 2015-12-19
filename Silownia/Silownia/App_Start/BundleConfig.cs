@@ -24,7 +24,18 @@ namespace Silownia
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css"));       
+            // czytanie plików styli .css i sryptów dla Kendo
+            bundles.Add(new ScriptBundle("~/bundles/kendo").Include(
+                     "~/Scripts/kendo/kendo.all.min.js",
+                     "~/Scripts/kendo/kendo.timezones.min.js",
+                     "~/Scripts/kendo/kendo.aspnetmvc.min.js"));
+
+            bundles.Add(new StyleBundle("~/Content/kendo/css").Include(
+                      "~/Content/kendo/kendo.common-bootstrap.min.css",
+                      "~/Content/kendo/kendo.bootstrap.min.css"));
+
+            bundles.IgnoreList.Clear();
         }
     }
 }

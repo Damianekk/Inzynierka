@@ -11,6 +11,15 @@ namespace Silownia.Models
     {
         public virtual Klient Klient { get; set; }
         public virtual Trener Trener { get; set; }
+
+        public TreningPersonalny()
+        {
+
+        }
+
+        //public virtual IQuerable<Trening> GetAll()
+        //{
+
+        //}
     }
 }
-   
