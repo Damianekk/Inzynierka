@@ -16,7 +16,7 @@ namespace Silownia.Models
 
         [Required(ErrorMessage = "Podaj datę rozpoczęcia")]
         [DataType(DataType.Date)]
-        [Display(Name = "Data podpisania umowy")]
+        [Display(Name = "Data podpisania")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
         public DateTime DataPodpisania { get; set; }
 
@@ -28,6 +28,7 @@ namespace Silownia.Models
 
         [RegularExpression("\\d{1,3}[,\\.]?(\\d{1,2})?", ErrorMessage = "Wprowadź poprawną kwotę")]
         [Required(ErrorMessage = "Uzupełnij koszt karnetu/mc")]
+        [Display(Name = "Opłata /msc")]
         public string Cena { get; set; }
 
 

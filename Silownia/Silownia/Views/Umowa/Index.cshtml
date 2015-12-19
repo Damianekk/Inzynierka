@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Silownia.Models.Umowa>
+﻿@model PagedList.PagedList<Silownia.Models.Umowa>
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "Umowy: index";
@@ -6,22 +7,36 @@
 
 <h2>Lista umów podpisanych w naszej sieci</h2>
 
+@using (Html.BeginForm())
+{
+    <p>
+        Szukaj po nazwie siłowni: @Html.DropDownList("SilowniaID", "Wybierz siłownię")
+        Szukaj po imieniu/nazwisku Klienta: @Html.TextBox("imieNazwisko")
+        <input type="submit" value="szukaj" />
+    </p>
+}
+
 <p>
-    @Html.ActionLink("Dodaj nową umowę", "Create")
+        @*
+        @Html.ActionLink("Dodaj nową umowę", "Create")
+        *@
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Silownia.Nazwa)
+            @Html.Label("Nazwa siłowni:")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DataPodpisania)
+            @Html.Label("Imię i nazwisko klienta:")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DataZakonczenia)
+            @Html.Label("Data początku umowy:")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Cena)
+            @Html.Label("Data końca umowy:")
+        </th>
+        <th>
+            @Html.Label("Opłata miesięczna:")
         </th>
         <th></th>
     </tr>
@@ -30,6 +45,9 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Silownia.Nazwa)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Klient.imieNazwisko)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.DataPodpisania)
@@ -47,5 +65,9 @@
         </td>
     </tr>
 }
-
 </table>
+
+<div class="center">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, pageSize = Model.PageSize, imieNazwisko = ViewBag.srchImieNazwisko }))
+    Wyświetlam od @Model.FirstItemOnPage do @Model.LastItemOnPage z @Model.TotalItemCount rekordów Umowa
+</div>

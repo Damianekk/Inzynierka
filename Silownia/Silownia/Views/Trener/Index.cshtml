@@ -66,6 +66,9 @@
         <th>
             @Html.Label("Specjalizacja:")
         </th>
+        <th>
+            @Html.Label("Siłownia:")
+        </th>
         <th></th>
     </tr>
 
@@ -89,6 +92,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Specjalizacja.Nazwa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Silownia.Nazwa)
             </td>
             <td>
                 @Html.ActionLink("Edytuj", "Edit", new { id = item.OsobaID }) |

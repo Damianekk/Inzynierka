@@ -204,6 +204,7 @@
     </Compile>
     <Compile Include="Helpers\AkcjaEnumRecepcjonista.cs" />
     <Compile Include="Helpers\AkcjaEnumTrener.cs" />
+    <Compile Include="Helpers\AkcjaEnumUmowa.cs" />
     <Compile Include="Helpers\StatusWiadomosciEnum.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />

@@ -7,7 +7,7 @@
 <h2>Szczegóły dotyczące wybranego trenera:</h2>
 
 <div>
-	<hr />
+    <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Imie)
@@ -57,9 +57,16 @@
             @Html.DisplayFor(model => model.Specjalizacja.Nazwa)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Silownia.Nazwa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Silownia.Nazwa)
+        </dd>
     </dl>
 </div>
 <p>
     @Html.ActionLink("Edytuj", "Edit", new { id = Model.OsobaID }) |
-    @Html.ActionLink("Wróć do listy trenerów", "Index")
+    @Html.ActionLink("Przejdź do listy trenerów", "Index")
 </p>

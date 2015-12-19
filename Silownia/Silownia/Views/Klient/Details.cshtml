@@ -59,12 +59,12 @@
 
 <p>
     @Html.ActionLink("Edytuj", "Edit", new { id = Model.OsobaID }) |
-    @Html.ActionLink("Powrót do listy klientów", "Index")
+    @Html.ActionLink("Przejdź do listy klientów", "Index")
 </p>
 
 @*   ========= Umowy ========= *@
 
-<button style="background : no-repeat; border : none;" type="submit" id="btnToggle">Umowy<img src="https://cdn3.iconfinder.com/data/icons/files-2/512/sign_contract_file-512.png" width="60" height="60"></button>
+<button style="background : no-repeat; border : none;" type="button" id="btnToggle">Umowy<img src="https://cdn3.iconfinder.com/data/icons/files-2/512/sign_contract_file-512.png" width="60" height="60"></button>
 <div id="slidetogglediv" class="slidediv">
     <div id="hidden" style="display:none">
         <b>
@@ -81,7 +81,7 @@
                             <tr>
                                 <th>Data podpisania</th>
                                 <th>Data zakończenia</th>
-                                <th>Cena/mieś</th>
+                                <th>Cena/msc</th>
                             </tr>
                             @foreach (var item in Model.Umowy)
                             {
@@ -152,4 +152,3 @@
         $("#slidetogglediv").fadeIn('slow');
     })
 </script>
->

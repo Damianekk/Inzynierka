@@ -9,7 +9,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true)
@@ -52,6 +52,14 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Pensja)
                 @Html.ValidationMessageFor(model => model.Pensja)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SilowniaID, "Siłownia", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("SilowniaID", String.Empty)
+                @Html.ValidationMessageFor(model => model.SilowniaID)
             </div>
         </div>
 

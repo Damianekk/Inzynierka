@@ -48,9 +48,16 @@
             @Html.DisplayFor(model => model.Pensja)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Silownia.Nazwa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Silownia.Nazwa)
+        </dd>
     </dl>
 </div>
 <p>
     @Html.ActionLink("Edytuj", "Edit", new { id = Model.OsobaID }) |
-    @Html.ActionLink("Powrót do listy recepcjonistów", "Index")
+    @Html.ActionLink("Przejdź do listy recepcjonistów", "Index")
 </p>

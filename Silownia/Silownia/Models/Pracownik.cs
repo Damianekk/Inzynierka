@@ -16,8 +16,9 @@ namespace Silownia.Models
         public DateTime DataZatrudnienia { get; set; }
 
         [Required]
-        public decimal Pensja { get; set; }
+        public int Pensja { get; set; }
 
-
+        public long SilowniaID { get; set; }
+        public virtual Silownia Silownia { get; set; }
     }
 }

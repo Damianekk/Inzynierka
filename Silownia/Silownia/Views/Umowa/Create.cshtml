@@ -5,73 +5,90 @@
 }
 
 <h2>Dodaj nową umowę</h2>
- 
-@using (Html.BeginForm()) 
+
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true)
+        <table class="table">
+            <tr>
+                <th>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.RecepcjonistaID, "Recepcjonista", new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("RecepcjonistaID", String.Empty)
+                            @Html.ValidationMessageFor(model => model.RecepcjonistaID)
+                        </div>
+                    </div>
 
-       
-        <div class="form-group">
-            @Html.LabelFor(model => model.RecepcjonistaID, "Recepcjonista", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("RecepcjonistaID",String.Empty)
-                @Html.ValidationMessageFor(model => model.RecepcjonistaID)
-            </div>
-        </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.SilowniaID, "Siłownia", new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("SilowniaID", String.Empty)
+                            @Html.ValidationMessageFor(model => model.SilowniaID)
+                        </div>
+                    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.SilowniaID, "Siłownia", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("SilowniaID", String.Empty)
-                @Html.ValidationMessageFor(model => model.SilowniaID)
-            </div>
-        </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DataPodpisania, new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.DataPodpisania)
+                            @Html.ValidationMessageFor(model => model.DataPodpisania)
+                        </div>
+                    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.DataPodpisania, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DataPodpisania)
-                @Html.ValidationMessageFor(model => model.DataPodpisania)
-            </div>
-        </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DataZakonczenia, new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.DataZakonczenia)
+                            @Html.ValidationMessageFor(model => model.DataZakonczenia)
+                        </div>
+                    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.DataZakonczenia, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DataZakonczenia)
-                @Html.ValidationMessageFor(model => model.DataZakonczenia)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Cena, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Cena, new { @type = "number" })
-                @Html.ValidationMessageFor(model => model.Cena)
-            </div>
-        </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Cena, new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Cena, new { @type = "number" })
+                            @Html.ValidationMessageFor(model => model.Cena)
+                        </div>
+                    </div>
 
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Utwórz" class="btn btn-default" />
-            </div>
-        </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Utwórz" class="btn btn-default" />
+                        </div>
+                    </div>
+                </th>
 
-        @if (TempData["msg"] != null)
-        { @Html.Raw(TempData["msg"]) }
-       
+                @if (TempData["msg"] != null)
+                { @Html.Raw(TempData["msg"]) }
+
+                <th>
+                    @if (ViewBag.Osoba != null)
+                    {
+                        <div class="table-bordered">
+                            @*  @Html.Display("Osoba")*@
+                            @*@Html.Partial("~/Views/Klient/Details.cshtml")*@
+                            @Html.Action("Details", "Klient", new { id = ViewBag.Osoba.OsobaID })
+                            @*<div style="color :darkkhaki" >Imie </div>  @ViewBag.Osoba.Imie
+                <div style="color :darkkhaki">Nazwisko </div> @ViewBag.Osoba.Nazwisko*@
+                        </div>
+                    }
+                </th>
+
+            </tr>
+        </table>
     </div>
 
-  
+
 }
 
 <div>
-    @Html.ActionLink("Powrót do listy umów", "Index")
+    @Html.ActionLink("Przejdź do listy umów", "Index")
 </div>
 
 @section Scripts {

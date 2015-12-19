@@ -14,6 +14,7 @@ namespace Silownia.Models
         [Key, Required]
         [System.Web.Mvc.HiddenInput(DisplayValue = false)]
         public long SilowniaID { get; set; }
+        [Display(Name = "Nazwa siłowni")]
         public string Nazwa { get; set; }
         [DataType(DataType.Time)]
         [Display(Name = "Godziny otwarcia")]

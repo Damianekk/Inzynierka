@@ -57,6 +57,13 @@
             @Html.DisplayFor(model => model.Specjalizacja.Nazwa)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Silownia.Nazwa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Silownia.Nazwa)
+        </dd>
     </dl>
 
     @using (Html.BeginForm()) {
@@ -64,7 +71,7 @@
 
         <div class="form-actions no-color">
             <input type="submit" value="Usuń" class="btn btn-default" /> |
-            @Html.ActionLink("Wróć do listy trenerów", "Index")
+            @Html.ActionLink("Powrót do listy trenerów", "Index")
         </div>
     }
 </div>
