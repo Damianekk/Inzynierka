@@ -1,19 +1,17 @@
 ﻿@model Silownia.Models.Specjalizacja
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Specjalizacja: szczegóły";
 }
 
-<h2>Details</h2>
+<h2>Szczegóły dotyczące wybranej specjalizacji:</h2>
 
 <div>
-    <h4>Specjalizacja</h4>
-	<hr />
+    <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Nazwa)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Nazwa)
         </dd>
@@ -21,6 +19,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.SpecjalizacjaID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edycja", "Edit", new { id = Model.SpecjalizacjaID }) |
+    @Html.ActionLink("Przejdź do listy specjalizacji", "Index")
 </p>

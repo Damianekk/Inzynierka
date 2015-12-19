@@ -11,6 +11,5 @@ namespace Silownia.Models
     public class TreningWlasny : Trening
     {
         public virtual Klient Klient { get; set; }
-
     }
 }

@@ -1,57 +1,109 @@
-﻿@model IEnumerable<Silownia.Models.Recepcjonista>
+﻿@model PagedList.PagedList<Silownia.Models.Recepcjonista>
+@using PagedList.Mvc;
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Recepcjonista: index";
 }
 
-<h2>Index</h2>
+@Scripts.Render("~/Scripts/infoCzynnosc.js")
 
+
+@if (ViewBag.Akcja != null)
+{
+    if (ViewBag.Akcja == Silownia.AkcjaEnumRecepcjonista.DodanoRecepcjoniste)
+    {
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <div class="alert alert-success">
+            <br />
+            <h4>@PelnaNazwaEnum.GetDescription(@ViewBag.Akcja) @ViewBag.info</h4>
+            <br />
+        </div>
+    }
+
+    if (ViewBag.Akcja == Silownia.AkcjaEnumRecepcjonista.UsunietoRecepcjoniste)
+    {
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <div class="alert alert-danger">
+            <br />
+            <h4>@PelnaNazwaEnum.GetDescription(@ViewBag.Akcja) @ViewBag.info</h4>
+            <br />
+        </div>
+    }
+}
+
+<h2>Lista recepcjonistów pracujących w naszej sieci</h2>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Dodaj nowego recepcjonistę", "Create")
 </p>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Szukaj po imieniu/nazwisku: @Html.TextBox("imieNazwisko")
+
+        <input type="submit" value="szukaj" />
+    </p>
+}
+
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Imie)
+            @Html.Label("Imię:")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Nazwisko)
+            @Html.Label("Nazwisko:")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DataUrodzenia)
+            @Html.Label("Data urodzenia:")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DataZatrudnienia)
+            @Html.Label("Data zatrudnienia:")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Pensja)
+            @Html.Label("Pensja:")
+        </th>
+        <th>
+            @Html.Label("Siłownia:")
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Imie)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nazwisko)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DataUrodzenia)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DataZatrudnienia)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Pensja)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.OsobaID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.OsobaID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.OsobaID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Imie)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nazwisko)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataUrodzenia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataZatrudnienia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pensja)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Silownia.Nazwa)
+            </td>
+            <td>
+                @Html.ActionLink("Edytuj", "Edit", new { id = item.OsobaID }) |
+                @Html.ActionLink("Szczegóły", "Details", new { id = item.OsobaID }) |
+                @Html.ActionLink("Usuń", "Delete", new { id = item.OsobaID })
+            </td>
+        </tr>
+    }
 
 </table>
+
+<div class="col-sm-10">
+
+    <div class="center">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, pageSize = Model.PageSize, imieNazwisko = ViewBag.srchImieNazwisko, Miasto = ViewBag.srchMiasto }))
+        Wyświetlam od @Model.FirstItemOnPage do @Model.LastItemOnPage z @Model.TotalItemCount rekordów Recepcjonista
+    </div>
+
+</div>

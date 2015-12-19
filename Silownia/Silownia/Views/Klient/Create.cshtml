@@ -1,25 +1,22 @@
 ﻿@model Silownia.Models.Klient
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Klient: dodaj";
 }
+<h2>Dodaj nowego klienta</h2>
 
-
-<h2>Dodaj klienta:</h2>
- 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-         
-        <h4>Klient</h4>
+
         <hr />
         @Html.ValidationSummary(true)
 
- 
+
         <div class="form-group">
-            @Html.LabelFor(model => model.Imie,new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Imie, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Imie)
                 @Html.ValidationMessageFor(model => model.Imie)
@@ -68,7 +65,7 @@
 }
 
 <div>
-    @Html.ActionLink("Wróć do listy klientów", "Index")
+    @Html.ActionLink("Powrót do listy klientów", "Index")
 </div>
 
 @section Scripts {

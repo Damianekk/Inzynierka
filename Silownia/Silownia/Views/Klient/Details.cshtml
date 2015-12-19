@@ -1,11 +1,11 @@
 ﻿@model Silownia.Models.Klient
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Klient: szczegóły";
 }
 
-<h2>Szczegółowe informacje o kliencie: </h2>
- 
+<h2>Szczegóły dotyczące wybranego klienta:</h2>
+
 <div>
 
     <hr />
@@ -59,55 +59,56 @@
 
 <p>
     @Html.ActionLink("Edytuj", "Edit", new { id = Model.OsobaID }) |
-    @Html.ActionLink("Wróć do listy klientów", "Index")
+    @Html.ActionLink("Przejdź do listy klientów", "Index")
 </p>
 
 @*   ========= Umowy ========= *@
 
-<button style="background : no-repeat; border : none;" type="submit" id="btnToggle">Umowy<img src="https://cdn3.iconfinder.com/data/icons/files-2/512/sign_contract_file-512.png" width="60" height="60"></button>
+<button style="background : no-repeat; border : none;" type="button" id="btnToggle">Umowy<img src="https://cdn3.iconfinder.com/data/icons/files-2/512/sign_contract_file-512.png" width="60" height="60"></button>
 <div id="slidetogglediv" class="slidediv">
     <div id="hidden" style="display:none">
+        <b>
 
-        <dl class="table-bordered" style="color:#0099CC">
-            <dt>
-                @Html.Label("Umowy", new { style = "color:#0099CC" })
-            </dt>
-
-            @if (Model.Umowa.Count > 0)
-            {
-                <dd>
-                    <table class="table">
-                        <tr>
-                            <th>Data podpisania</th>
-                            <th>Data zakończenia</th>
-                            <th>Cena/mieś</th>
-                        </tr>
-                        @foreach (var item in Model.Umowa)
-                        {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.DataPodpisania)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.DataZakonczenia)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Cena) zł
-                                </td>
-
-                            </tr>
-                        }
-
-                    </table>
-                </dd>
-            }
-            else
-            {
+            <dl , class="table-bordered" ,new style="color:#0099CC">
                 <dt>
-                    @Html.Label("Brak umów", new { style = "color:#D11919" })
+                    @Html.Label("Umowy", new { style = "color:#0099CC" })
                 </dt>
-            }
 
+                @if (Model.Umowy.Count > 0)
+                {
+                    <dd>
+                        <table class="table">
+                            <tr>
+                                <th>Data podpisania</th>
+                                <th>Data zakończenia</th>
+                                <th>Cena/msc</th>
+                            </tr>
+                            @foreach (var item in Model.Umowy)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DataPodpisania)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DataZakonczenia)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Cena) zł
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </table>
+                    </dd>
+                }
+                else
+                {
+                    <dt>
+                        @Html.Label("Brak umów", new { style = "color:#D11919" })
+                    </dt>
+                }
+        </b>
         </dl>
     </div><br />
 

@@ -15,8 +15,8 @@ namespace Silownia.Models
         [Key, Column(Order = 1)]
         public int TreningID { get; set; }
 
-        public virtual Klient Klienci { get; set; }
-        public virtual ZajeciaGrupowe ZajeciaGrup { get; set; }
+        public virtual Klient Klient { get; set; }
+        public virtual ZajeciaGrupowe ZajeciaGrupowe { get; set; }
 
     }
-}
+} 

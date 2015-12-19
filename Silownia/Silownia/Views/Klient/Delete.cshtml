@@ -1,14 +1,12 @@
 ﻿@model Silownia.Models.Klient
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Klient: usuń";
 }
 
-<h2>Usuń</h2>
 
-<h3>Czy na pewno chcesz usunąć @Model.imieNazwisko?</h3>
+<h2>Czy na pewno chcesz usunąć klienta @Model.imieNazwisko?</h2>
 <div>
-    <h4>Klient</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -58,7 +56,7 @@
 
         <div class="form-actions no-color">
             <input type="submit" value="Usuń" class="btn btn-danger" /> |
-            @Html.ActionLink("Wróć do listy klientów", "Index")
+            @Html.ActionLink("Powrót do listy klientów", "Index")
         </div>
     }
 </div>

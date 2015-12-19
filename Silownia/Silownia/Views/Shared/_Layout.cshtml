@@ -7,19 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Silownie</title>
     @Styles.Render("~/Content/css")
-    @Styles.Render("~/Content/kendo/css")
     @Scripts.Render("~/bundles/modernizr")
 
      
-	<link href="http://cdn.kendostatic.com/2015.3.1111/styles/kendo.common.min.css" rel="stylesheet" type="text/css" />
-	<link href="http://cdn.kendostatic.com/2015.3.1111/styles/kendo.mobile.all.min.css" rel="stylesheet" type="text/css" />
-	<link href="http://cdn.kendostatic.com/2015.3.1111/styles/kendo.dataviz.min.css" rel="stylesheet" type="text/css" />
-	<link href="http://cdn.kendostatic.com/2015.3.1111/styles/kendo.metro.min.css" rel="stylesheet" type="text/css" />
-	<link href="http://cdn.kendostatic.com/2015.3.1111/styles/kendo.dataviz.metro.min.css" rel="stylesheet" type="text/css" />
-	<script src="http://cdn.kendostatic.com/2015.3.1111/js/jquery.min.js"></script>
-	<script src="http://cdn.kendostatic.com/2015.3.1111/js/jszip.min.js"></script>
-	<script src="http://cdn.kendostatic.com/2015.3.1111/js/kendo.all.min.js"></script>
-	<script src="http://cdn.kendostatic.com/2015.3.1111/js/kendo.aspnetmvc.min.js"></script>
 </head>
 <body style="background-color: #707070; z-index: 0;">
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -37,15 +27,15 @@
                 </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("O nas", "About", "Home")</li>
+                   @*<li>@Html.ActionLink("Kontakt", "Contact", "Home")</li>*@ 
                     <li>@Html.ActionLink("Klienci", "Index", "Klient")</li>
-
                     <li>@Html.ActionLink("Umowy", "Index", "Umowa")</li>
-                    <li>@Html.ActionLink("Plan zajęć", "Index", "Zajecia")</li>
-                    <li>@Html.ActionLink("Masaże", "Index", "Masaż")</li>
                     <li>@Html.ActionLink("Trenerzy", "Index", "Trener")</li>
                     <li>@Html.ActionLink("Recepcjoniści", "Index", "Recepcjonista")</li>
                     <li>@Html.ActionLink("Silownia", "Index", "Silownia")</li>
-
+                    <li>@Html.ActionLink("Specjalizacje", "Index", "Specjalizacja")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -54,14 +44,12 @@
        
         @RenderBody()
        
-    @Html.Partial("_Footer")
+@*    @Html.Partial("_Footer")*@
  
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/kendo")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/scripts/Karuzel.js")
     @Scripts.Render("~/scripts/Arrow.js")
-    
     @RenderSection("scripts", required: false)
 </body>
 </html>

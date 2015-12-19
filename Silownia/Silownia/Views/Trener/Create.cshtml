@@ -1,10 +1,10 @@
 ﻿@model Silownia.Models.Trener
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Trenerzy: dodaj";
 }
 
-<h2>Dodaj trenera:</h2>
+<h2>Dodaj nowego trenera</h2>
 
 
 @using (Html.BeginForm()) 
@@ -12,7 +12,6 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Trener</h4>
         <hr />
         @Html.ValidationSummary(true)
 
@@ -65,15 +64,23 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.SilowniaID, "Silownia", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("SilowniaID", String.Empty)
+                @Html.ValidationMessageFor(model => model.SilowniaID)
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Utwórz" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Wróć do listy", "Index")
+    @Html.ActionLink("Powrót do listy trenerów", "Index")
 </div>
 
 @section Scripts {
