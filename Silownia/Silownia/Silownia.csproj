@@ -179,6 +179,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\SalaController.cs" />
     <Compile Include="Helpers\AkcjaEnum.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -239,6 +240,7 @@
     <Compile Include="Helpers\KomuAdres.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Test.cs" />
+    <Compile Include="ViewModel\SprzetSaleModelView.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\13.jpg" />
@@ -253,6 +255,12 @@
     <Content Include="Content\OurTeam\jbielawska.jpg" />
     <Content Include="Content\OurTeam\lmajcher.jpg" />
     <Content Include="Content\OurTeam\mbielec.jpg" />
+    <Content Include="Content\Sale\crossfit.jpg" />
+    <Content Include="Content\Sale\crossfit1.jpg" />
+    <Content Include="Content\Sale\fitness.jpg" />
+    <Content Include="Content\Sale\fitness2.jpg" />
+    <Content Include="Content\Sale\Silownia1.jpg" />
+    <Content Include="Content\Sale\silownia2.png" />
     <Content Include="Content\Trenerzy\Halinka.jpg" />
     <Content Include="Content\Trenerzy\Konrad-Żuk1.png" />
     <Content Include="Content\Trenerzy\marcin.jpg" />
@@ -375,6 +383,11 @@
     <Content Include="Views\Shared\_LayoutClient.cshtml" />
     <Content Include="Views\KlientView\Index.cshtml" />
     <Content Include="Views\Home\_OurTeam.cshtml" />
+    <Content Include="Views\Sala\Create.cshtml" />
+    <Content Include="Views\Sala\Delete.cshtml" />
+    <Content Include="Views\Sala\Details.cshtml" />
+    <Content Include="Views\Sala\Edit.cshtml" />
+    <Content Include="Views\Sala\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

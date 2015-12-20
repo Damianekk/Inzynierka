@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Web;
 
@@ -20,7 +21,8 @@ namespace Silownia.Models
        
         [Display(Name="Nr sali")]
         public int Numer_sali { get; set; }
-        public string rodzaj { get; set; }
+        public string ImageFile { get; set; }
+        public string Rodzaj { get; set; }
         public string Status { get; set; }
         public string Opis { get; set; }
         public virtual ICollection<Sprzet> Sprzety { get; set; }

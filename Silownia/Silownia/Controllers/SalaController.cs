@@ -18,7 +18,7 @@ namespace Silownia.Controllers
         // GET: /Sala/
         public ActionResult Index()
         {
-            return View(db.Sale.OrderBy(nr => nr.Numer_sali).ToList());
+            return View(db.Sale.ToList());
         }
 
         // GET: /Sala/Details/5
@@ -47,7 +47,7 @@ namespace Silownia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="Numer_sali,Status")] Sala sala)
+        public ActionResult Create([Bind(Include="Numer_sali,Rodzaj,Status,Opis")] Sala sala)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +79,7 @@ namespace Silownia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="Numer_sali,Status")] Sala sala)
+        public ActionResult Edit([Bind(Include="Numer_sali,Rodzaj,Status,Opis")] Sala sala)
         {
             if (ModelState.IsValid)
             {
