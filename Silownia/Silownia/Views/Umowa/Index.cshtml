@@ -10,8 +10,8 @@
 @using (Html.BeginForm())
 {
     <p>
-        Szukaj po nazwie siłowni: @Html.DropDownList("SilowniaID", "Wybierz siłownię")
-        Szukaj po imieniu/nazwisku Klienta: @Html.TextBox("imieNazwisko")
+        Szukaj po imieniu/nazwisku Klienta: <br /> @Html.TextBox("imieNazwisko") <br /> <br />
+        Szukaj po nazwie siłowni: @Html.DropDownList("SilowniaID", (SelectList)ViewBag.SilowniaID, "Wybierz siłownię", new { onchange = "this.form.submit();", @class = "form-control" }) <br />
         <input type="submit" value="szukaj" />
     </p>
 }

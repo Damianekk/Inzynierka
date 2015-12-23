@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Silownia.Models;
 using Silownia.DAL;
 using PagedList;
+using System.Collections.Generic;
  
 
 namespace Silownia.Controllers
@@ -15,39 +16,40 @@ namespace Silownia.Controllers
 
     public class KlientController : Controller
     {
-
-
         private SilowniaContext db = new SilowniaContext();
 
 
         // GET: /Klient/
  
-        public ActionResult Index(string Miasto,string imieNazwisko,bool czyUmowa =false ,int page=1 ,int pageSize = 10 , AkcjaEnum akcja = AkcjaEnum.Brak , String info = null)
+        public ActionResult Index(string Miasto,string imieNazwisko, bool czyUmowa =false ,int page=1 ,int pageSize = 10 , AkcjaEnum akcja = AkcjaEnum.Brak , String info = null)
         {
-            ViewBag.srchMiasto = Miasto;
+            var MiastoLst = new List<string>();
+            var MiastoQry = from d in db.Adresy orderby d.Miasto select d.Miasto;
+            MiastoLst.AddRange(MiastoQry.Distinct());
+            ViewBag.Miasto = new SelectList(MiastoLst);
+
             ViewBag.srchImieNazwisko = imieNazwisko;
             ViewBag.czyUmowa = czyUmowa;
-                //Test t = new Test();
+   
+            var osoby = from Osoby in db.Klienci select Osoby;
 
-            
-           
-            var a = from Osoby in db.Klienci select Osoby;
+
             if (!String.IsNullOrEmpty(Miasto))
             {
-                a =  a.Where(s => s.Adres.Miasto.Contains(Miasto));
+                osoby = osoby.Where(s => s.Adres.Miasto.Contains(Miasto));
             }
  
 
             if (!String.IsNullOrEmpty(imieNazwisko))
             {
-                a = a.Where(s => s.Imie.Contains(imieNazwisko) || s.Nazwisko.Contains(imieNazwisko));
+                osoby = osoby.Where(s => s.Imie.Contains(imieNazwisko) || s.Nazwisko.Contains(imieNazwisko));
             }
            
             if ((bool)czyUmowa)
-            a = a.Where(s => s.Umowy.Count > 0);
+            osoby = osoby.Where(s => s.Umowy.Count > 0);
 
-            var final = a.OrderBy(p => p.Imie);
-            var ileWynikow = a.Count();
+            var final = osoby.OrderBy(p => p.Imie);
+            var ileWynikow = osoby.Count();
             if ((ileWynikow / page) <= 1)
             {
                 page = 1;
@@ -64,7 +66,7 @@ namespace Silownia.Controllers
             }
  
             return View(model);
-          //  return View(db.Osoby.ToList());
+
         }
        
         // GET: /Klient/Details/5

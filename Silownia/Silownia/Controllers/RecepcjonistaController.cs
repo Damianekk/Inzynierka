@@ -18,19 +18,29 @@ namespace Silownia.Controllers
         private SilowniaContext db = new SilowniaContext();
 
         // GET: Recepcjonista
-        public ActionResult Index(string imieNazwisko, int page = 1, int pageSize = 10, AkcjaEnumRecepcjonista akcja = AkcjaEnumRecepcjonista.Brak, String info = null)
+        public ActionResult Index(string imieNazwisko, string SilowniaID, int page = 1, int pageSize = 10, AkcjaEnumRecepcjonista akcja = AkcjaEnumRecepcjonista.Brak, String info = null)
         {
             ViewBag.srchImieNazwisko = imieNazwisko;
 
-            var a = from Osoby in db.Recepcjonisci.OfType<Recepcjonista>() select Osoby;
+            var SilowniaLst = new List<string>();
+            var SilowniaQry = from d in db.Silownie orderby d.Nazwa select d.Nazwa;
+            SilowniaLst.AddRange(SilowniaQry.Distinct());
+            ViewBag.SilowniaID = new SelectList(SilowniaLst);
+
+            var recepcjonisci = from Osoby in db.Recepcjonisci.OfType<Recepcjonista>() select Osoby;
 
             if (!String.IsNullOrEmpty(imieNazwisko))
             {
-                a = a.Where(s => s.Imie.Contains(imieNazwisko) || s.Nazwisko.Contains(imieNazwisko));
+                recepcjonisci = recepcjonisci.Where(s => s.Imie.Contains(imieNazwisko) || s.Nazwisko.Contains(imieNazwisko));
             }
 
-            var final = a.OrderBy(p => p.Imie);
-            var ileWynikow = a.Count();
+            if (!string.IsNullOrEmpty(SilowniaID))
+            {
+                recepcjonisci = recepcjonisci.Where(s => s.Silownia.Nazwa == SilowniaID);
+            }
+
+            var final = recepcjonisci.OrderBy(p => p.Imie);
+            var ileWynikow = recepcjonisci.Count();
             if ((ileWynikow / page) <= 1)
             {
                 page = 1;

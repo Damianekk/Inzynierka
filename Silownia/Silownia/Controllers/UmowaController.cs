@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using System.Globalization;
 using PagedList;
 using Silownia.Helpers;
+using System.Collections.Generic;
 
 namespace Silownia.Controllers
 {
@@ -17,24 +18,25 @@ namespace Silownia.Controllers
         private SilowniaContext db = new SilowniaContext();
 
         // GET: /Umowa/
-        public ActionResult Index(string imieNazwisko, string Silownia, int page = 1, int pageSize = 10, AkcjaEnumUmowa akcja = AkcjaEnumUmowa.Brak, String info = null)
+        public ActionResult Index(string imieNazwisko, string SilowniaID, int page = 1, int pageSize = 10, AkcjaEnumUmowa akcja = AkcjaEnumUmowa.Brak, String info = null)
         {
             ViewBag.srchImieNazwisko = imieNazwisko;
-            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", Silownia);
-            //TODO: do ogarnięcia - wybór z dropdownlisty nie przechodzi do wyszukiwania
+
+            var SilowniaLst = new List<string>();
+            var SilowniaQry = from d in db.Silownie orderby d.Nazwa select d.Nazwa;
+            SilowniaLst.AddRange(SilowniaQry.Distinct());
+            ViewBag.SilowniaID = new SelectList(SilowniaLst);
 
             var umowy = from Umowy in db.Umowy select Umowy;
-            umowy.Include(s => s.Silownia);
-
-            if (!String.IsNullOrEmpty(Silownia))
-            {
-                umowy = umowy.Where(s => s.Silownia.Nazwa.Contains(Silownia));
-            }
- 
 
             if (!String.IsNullOrEmpty(imieNazwisko))
             {
                 umowy = umowy.Where(s => s.Klient.Imie.Contains(imieNazwisko) || s.Klient.Nazwisko.Contains(imieNazwisko));
+            }
+
+            if (!string.IsNullOrEmpty(SilowniaID))
+            {
+                umowy = umowy.Where(s => s.Silownia.Nazwa == SilowniaID);
             }
 
 
@@ -92,7 +94,8 @@ namespace Silownia.Controllers
             {
                 DataPodpisania = DateTime.Now,
                 // tu przydałoby się dodać datę now + miesiąc
-                DataZakonczenia = DateTime.Now
+                DataZakonczenia = (DateTime.Now).AddMonths(1),
+                
                 // ,Recepcjonista = recepcjonista 
             });
         }

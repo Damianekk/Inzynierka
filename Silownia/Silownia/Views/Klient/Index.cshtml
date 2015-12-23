@@ -39,9 +39,9 @@
 {
     <p>
 
-        Szukaj po adresie: @Html.TextBox("Miasto")
-        Szukaj po imieniu/nazwisku: @Html.TextBox("imieNazwisko")
-        Tylko z umową: @Html.CheckBox("czyUmowa")
+        Szukaj po miastach: @Html.DropDownList("Miasto", (SelectList)ViewBag.Miasto, "Wszystkie miasta", new { onchange = "this.form.submit();", @class = "form-control" }) <br />
+        Szukaj po imieniu/nazwisku: <br /> @Html.TextBox("imieNazwisko") <br />
+        Tylko z umową: @Html.CheckBox("czyUmowa") <br />
 
 
         <input type="submit" value="szukaj" />

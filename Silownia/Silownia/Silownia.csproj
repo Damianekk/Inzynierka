@@ -204,6 +204,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AkcjaEnumRecepcjonista.cs" />
+    <Compile Include="Helpers\AkcjaEnumSilownia.cs" />
     <Compile Include="Helpers\AkcjaEnumTrener.cs" />
     <Compile Include="Helpers\AkcjaEnumUmowa.cs" />
     <Compile Include="Helpers\StatusWiadomosciEnum.cs" />

@@ -9,6 +9,15 @@
 <p>
     @Html.ActionLink("Dodaj nową siłownię", "Create")
 </p>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Szukaj po lokalizacji siłowni: @Html.DropDownList("Miasto", (SelectList)ViewBag.Miasto, "Wszystkie miasta", new { onchange = "this.form.submit();", @class = "form-control" }) <br />
+        <input type="submit" value="szukaj" />
+    </p>
+}
+
 <table class="table">
     <tr>
         <th>
