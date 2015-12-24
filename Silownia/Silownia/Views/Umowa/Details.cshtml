@@ -1,13 +1,12 @@
 ﻿@model Silownia.Models.Umowa
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Umowa: szczegóły";
 }
 
-<h2>Details</h2>
+<h2>Szczegóły dotyczące wybranej umowy:</h2>
 
 <div>
-    <h4>Umowa</h4>
 	<hr />
     <dl class="dl-horizontal">
         <dt>
@@ -45,6 +44,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.UmowaID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edycja", "Edit", new { id = Model.UmowaID }) |
+    @Html.ActionLink("Powrót do listy umów", "Index")
 </p>

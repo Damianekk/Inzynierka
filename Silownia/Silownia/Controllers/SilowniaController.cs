@@ -4,6 +4,11 @@ using System.Net;
 using System.Web.Mvc;
 using Silownia.DAL;
 using System.Web.Script.Serialization;
+using System;
+using PagedList;
+using Silownia.Models;
+using System.Data;
+using System.Collections.Generic;
 
 namespace Silownia.Controllers
 {
@@ -12,9 +17,38 @@ namespace Silownia.Controllers
         private SilowniaContext db = new SilowniaContext();
 
         // GET: /Silownia/
-        public ActionResult Index()
+        public ActionResult Index(string Miasto, int page = 1, int pageSize = 10, AkcjaEnumSilownia akcja = AkcjaEnumSilownia.Brak, String info = null)
         {
-            return View(db.Silownie.ToList());
+            var MiastoLst = new List<string>();
+            var MiastoQry = from d in db.Adresy orderby d.Miasto select d.Miasto;
+            MiastoLst.AddRange(MiastoQry.Distinct());
+            ViewBag.Miasto = new SelectList(MiastoLst);
+
+            var silownie = from Silownie in db.Silownie select Silownie;
+
+            if (!String.IsNullOrEmpty(Miasto))
+            {
+                silownie = silownie.Where(s => s.Adres.Miasto.Contains(Miasto));
+            }
+
+            var final = silownie.OrderBy(p => p.Nazwa);
+            var ileWynikow = silownie.Count();
+            if ((ileWynikow / page) <= 1)
+            {
+                page = 1;
+            }
+            var kk = ileWynikow / page;
+
+            PagedList<Models.Silownia> model = new PagedList<Models.Silownia>(final, page, pageSize);
+
+
+            if (akcja != AkcjaEnumSilownia.Brak)
+            {
+                ViewBag.info = info;
+                ViewBag.Akcja = akcja;
+            }
+
+            return View(model);
         }
 
         // GET: /Silownia/Details/5

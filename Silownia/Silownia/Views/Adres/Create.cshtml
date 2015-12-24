@@ -1,21 +1,19 @@
 ﻿@model Silownia.Models.Adres
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Adres: dodaj";
 }
+<h2>Dodaj nowy adres</h2>
 
-<h2>Create</h2>
-
-
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Adres</h4>
+
         <hr />
         @Html.ValidationSummary(true)
-        
+
         <table class="table">
             <tr>
                 <th>
@@ -76,33 +74,34 @@
                     </div>
                 </th>
                 <th>
-                    @if (ViewBag.Osoba != null) 
-                    { 
-                    <div class="table-bordered" >          
-                      @*  @Html.Display("Osoba")*@   
-                        @*@Html.Partial("~/Views/Klient/Details.cshtml")*@
-                        @Html.Action("Details", "Klient", new { id = ViewBag.Osoba.OsobaID })
-                      @*<div style="color :darkkhaki" >Imie </div>  @ViewBag.Osoba.Imie
-                      <div style="color :darkkhaki">Nazwisko </div> @ViewBag.Osoba.Nazwisko*@
-                    </div>
+                    @if (ViewBag.Osoba != null)
+                    {
+                        <div class="table-bordered">
+                            @*  @Html.Display("Osoba")*@
+                            @*@Html.Partial("~/Views/Klient/Details.cshtml")*@
+                            @Html.Action("Details", "Klient", new { id = ViewBag.Osoba.OsobaID })
+                            @*<div style="color :darkkhaki" >Imie </div>  @ViewBag.Osoba.Imie
+                                <div style="color :darkkhaki">Nazwisko </div> @ViewBag.Osoba.Nazwisko*@
+                        </div>
                     }
                     @if (ViewBag.Silownia != null)
                     {
                         <div class="table-bordered">
-                          @Html.Action("Details", "Silownia", new { id = ViewBag.Silownia.SilowniaID, mniejSzczegolow = true, mniejszaMapa = true })
-                          @*@Html.Display("Silownia")*@
+                            @Html.Action("Details", "Silownia", new { id = ViewBag.Silownia.SilowniaID, mniejSzczegolow = true, mniejszaMapa = true })
+                            @*@Html.Display("Silownia")*@
                         </div>
                     }
                 </th>
-            </table>
-      
+            </tr>
+        </table>
+
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Powrót do listy adresów", "Index")
 </div>
- 
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

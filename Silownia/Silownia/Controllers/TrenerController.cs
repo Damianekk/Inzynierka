@@ -1,10 +1,14 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using Silownia.Models;
 using Silownia.DAL;
+using PagedList;
+using Silownia.Helpers;
+using System.Collections.Generic;
 
 namespace Silownia.Controllers
 {
@@ -13,11 +17,56 @@ namespace Silownia.Controllers
         private SilowniaContext db = new SilowniaContext();
 
         // GET: /Trener/
-        public ActionResult Index()
+        public ActionResult Index(string imieNazwisko, string SilowniaID, string SpecjalizacjaID, int page = 1, int pageSize = 10, AkcjaEnumTrener akcja = AkcjaEnumTrener.Brak, String info = null)
         {
-            var a = from Osoby in db.Trenerzy select Osoby;
+            ViewBag.srchImieNazwisko = imieNazwisko;
 
-            return View(a.ToList());
+            var SilowniaLst = new List<string>();
+            var SilowniaQry = from d in db.Silownie orderby d.Nazwa select d.Nazwa;
+            SilowniaLst.AddRange(SilowniaQry.Distinct());
+            ViewBag.SilowniaID = new SelectList(SilowniaLst);
+
+            var SpecLst = new List<string>();
+            var SpecQry = from d in db.Specjalizacje orderby d.Nazwa select d.Nazwa;
+            SpecLst.AddRange(SpecQry.Distinct());
+            ViewBag.SpecjalizacjaID = new SelectList(SpecLst);
+
+            var osoby = from Osoby in db.Trenerzy select Osoby;
+
+
+            if (!String.IsNullOrEmpty(imieNazwisko))
+            {
+                osoby = osoby.Where(s => s.Imie.Contains(imieNazwisko) || s.Nazwisko.Contains(imieNazwisko));
+            }
+
+            if (!string.IsNullOrEmpty(SilowniaID))
+            {
+                osoby = osoby.Where(s => s.Silownia.Nazwa == SilowniaID);
+            }
+
+            if (!string.IsNullOrEmpty(SpecjalizacjaID))
+            {
+                osoby = osoby.Where(s => s.Specjalizacja.Nazwa == SpecjalizacjaID);
+            }
+
+
+            var final = osoby.OrderBy(p => p.Imie);
+            var ileWynikow = osoby.Count();
+            if ((ileWynikow / page) <= 1)
+            {
+                page = 1;
+            }
+            var kk = ileWynikow / page;
+
+            PagedList<Trener> model = new PagedList<Trener>(final, page, pageSize);
+
+            if (akcja != AkcjaEnumTrener.Brak)
+            {
+                ViewBag.info = info;
+                ViewBag.Akcja = akcja;
+            }
+
+            return View(model);
         }
 
         // GET: /Trener/Details/5
@@ -39,6 +88,7 @@ namespace Silownia.Controllers
         public ActionResult Create()
         {
             ViewBag.SpecjalizacjaID = new SelectList(db.Specjalizacje, "SpecjalizacjaID", "Nazwa");
+            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
             return View();
         }
 
@@ -47,16 +97,17 @@ namespace Silownia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,DataZatrudnienia,Pensja,SpecjalizacjaID")] Trener trener)
+        public ActionResult Create([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,DataZatrudnienia,Pensja,SilowniaID,SpecjalizacjaID")] Trener trener)
         {
             if (ModelState.IsValid)
             {
                 db.Trenerzy.Add(trener);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { akcja = AkcjaEnumTrener.DodanoTrenera, info = trener.imieNazwisko });
             }
 
             ViewBag.SpecjalizacjaID = new SelectList(db.Specjalizacje, "SpecjalizacjaID", "Nazwa", trener.Specjalizacja);
+            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
             return View(trener);
         }
 
@@ -73,6 +124,7 @@ namespace Silownia.Controllers
                 return HttpNotFound();
             }
             ViewBag.SpecjalizacjaID = new SelectList(db.Specjalizacje, "SpecjalizacjaID", "Nazwa", trener.Specjalizacja);
+            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
             return View(trener);
         }
 
@@ -81,7 +133,7 @@ namespace Silownia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,DataZatrudnienia,Pensja,SpecjalizacjaID")] Trener trener)
+        public ActionResult Edit([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,DataZatrudnienia,Pensja,SilowniaID,SpecjalizacjaID")] Trener trener)
         {
             if (ModelState.IsValid)
             {
@@ -90,6 +142,7 @@ namespace Silownia.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.SpecjalizacjaID = new SelectList(db.Specjalizacje, "SpecjalizacjaID", "Nazwa", trener.Specjalizacja);
+            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
             return View(trener);
         }
 
@@ -116,7 +169,7 @@ namespace Silownia.Controllers
             Trener trener = db.Trenerzy.Find(id);
             db.Trenerzy.Remove(trener);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { akcja = AkcjaEnumTrener.UsunietoTrenera, info = trener.imieNazwisko });
         }
 
         protected override void Dispose(bool disposing)

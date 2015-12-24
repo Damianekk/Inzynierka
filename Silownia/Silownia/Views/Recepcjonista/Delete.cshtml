@@ -1,14 +1,11 @@
 ﻿@model Silownia.Models.Recepcjonista
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Recepcjonista: usuń";
 }
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
+<h2>Czy na pewno chcesz usunąć recepcjonistę @Model.imieNazwisko?</h2>
 <div>
-    <h4>Recepcjonista</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -51,14 +48,22 @@
             @Html.DisplayFor(model => model.Pensja)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Silownia.Nazwa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Silownia.Nazwa)
+        </dd>
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Usuń" class="btn btn-default" /> |
+            @Html.ActionLink("Powrót do listy recepcjonistów", "Index")
         </div>
     }
 </div>

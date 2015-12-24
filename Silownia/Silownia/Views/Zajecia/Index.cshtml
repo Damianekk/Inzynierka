@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Silownia.Models.TreningPersonalny>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Treningi</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Tytul)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Poczatek)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Koniec)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OpisTreningu)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Trener)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tytul)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Poczatek)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Koniec)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OpisTreningu)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Trener)
+        </td>
+        <td>
+            
+            @Html.ActionLink("szczegóły", "Details", new { id=item.TreningID }) |
+        </td>
+    </tr>
+}
+
+</table>

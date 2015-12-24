@@ -1,72 +1,69 @@
 ﻿@model PagedList.PagedList<Silownia.Models.Klient>
-
 @using PagedList.Mvc;
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Klient: index";
 }
 @Scripts.Render("~/Scripts/infoCzynnosc.js")
 
 
-  @if (ViewBag.Akcja != null)
+@if (ViewBag.Akcja != null)
+{
+    if (ViewBag.Akcja == Silownia.AkcjaEnum.DodanoKlienta)
     {
-      if (ViewBag.Akcja == Silownia.AkcjaEnum.DodanoKlienta)
-      {
-                <a href="#" class="close" data-dismiss="alert">&times;</a>
-                     <div class="alert alert-success">
-                        <br /> 
-                            <h4>@PelnaNazwaEnum.GetDescription(@ViewBag.Akcja) @ViewBag.info</h4>
-                        <br />      
-                     </div>
-      }
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <div class="alert alert-success">
+            <br />
+            <h4>@PelnaNazwaEnum.GetDescription(@ViewBag.Akcja) @ViewBag.info</h4>
+            <br />
+        </div>
+    }
 
-      if (ViewBag.Akcja == Silownia.AkcjaEnum.UsunietoKlienta)
-      {
+    if (ViewBag.Akcja == Silownia.AkcjaEnum.UsunietoKlienta)
+    {
         <a href="#" class="close" data-dismiss="alert">&times;</a>
         <div class="alert alert-danger">
             <br />
             <h4>@PelnaNazwaEnum.GetDescription(@ViewBag.Akcja) @ViewBag.info</h4>
             <br />
         </div>
-      }
-  }
-<h2>Index</h2>
+    }
+}
+<h2>Lista klientów korzystających z usług naszej sieci</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Dodaj nowego klienta", "Create")
 </p>
 
 @using (Html.BeginForm())
 {
     <p>
 
-        Szukaj po adresie: @Html.TextBox("Miasto")
-        Szukaj po imieniu/nazwisku: @Html.TextBox("imieNazwisko")
-        Tylko z umową: @Html.CheckBox("czyUmowa")
+        Szukaj po miastach: @Html.DropDownList("Miasto", (SelectList)ViewBag.Miasto, "Wszystkie miasta", new { onchange = "this.form.submit();", @class = "form-control" }) <br />
+        Szukaj po imieniu/nazwisku: <br /> @Html.TextBox("imieNazwisko") <br />
+        Tylko z umową: @Html.CheckBox("czyUmowa") <br />
 
 
-        <input type="submit" value="search" />
+        <input type="submit" value="szukaj" />
     </p>
-
-
 }
 
 <table class="table">
     <tr>
         <th>
-            @Html.Label("Imie")
+            @Html.Label("Imię:")
         </th>
         <th>
-            @Html.Label("Nazwisko")
+            @Html.Label("Nazwisko:")
         </th>
         <th>
-            @Html.Label("Data urodzenia")
+            @Html.Label("Data urodzenia:")
         </th>
         <th>
-            @Html.Label("Email")
+            @Html.Label("Email:")
         </th>
         <th>
-            @Html.Label("Nr telefonu")
+            @Html.Label("Numer telefonu:")
         </th>
         <th></th>
     </tr>
@@ -92,19 +89,19 @@
                     @Html.DisplayFor(modelItem => item.NrTelefonu)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.OsobaID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.OsobaID  }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.OsobaID })
+                    @Html.ActionLink("Edytuj", "Edit", new { id = item.OsobaID }) |
+                    @Html.ActionLink("Szczegóły", "Details", new { id = item.OsobaID }) |
+                    @Html.ActionLink("Usuń", "Delete", new { id = item.OsobaID })
                 </td>
                 <td>
                     @if (item.Adres == null)
                     {
-                        @Html.ActionLink("adres", "Create", "Adres", new { id = item.OsobaID , komu = KomuAdres.Osoba},
+                        @Html.ActionLink("adres", "Create", "Adres", new { id = item.OsobaID, komu = KomuAdres.Osoba },
                            new { @class = "adresPic" })
                     }
                 </td>
                 <td>
-                    @if (item.Umowa.Count == 0)
+                    @if (item.Umowy.Count == 0)
                     {
 
                         @Html.ActionLink("umowa", "Create", "Umowa", new { id = item.OsobaID },
@@ -116,19 +113,13 @@
     }
 
 
-
-
-
-
-
-
 </table>
 
 <div class="col-sm-10">
 
     <div class="center">
         @Html.PagedListPager(Model, page => Url.Action("Index", new { page, pageSize = Model.PageSize, imieNazwisko = ViewBag.srchImieNazwisko, Miasto = ViewBag.srchMiasto }))
-        Showing @Model.FirstItemOnPage to @Model.LastItemOnPage of @Model.TotalItemCount Klient
+        Wyświetlam od @Model.FirstItemOnPage do @Model.LastItemOnPage z @Model.TotalItemCount rekordów Klient
     </div>
 
 </div>

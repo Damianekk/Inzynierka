@@ -29,14 +29,14 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("O nas", "About", "Home")</li>
-                    <li>@Html.ActionLink("Kontakt", "Contact", "Home")</li>
+                   @*<li>@Html.ActionLink("Kontakt", "Contact", "Home")</li>*@ 
                     <li>@Html.ActionLink("Klienci", "Index", "Klient")</li>
-
                     <li>@Html.ActionLink("Umowy", "Index", "Umowa")</li>
                     <li>@Html.ActionLink("Trenerzy", "Index", "Trener")</li>
                     <li>@Html.ActionLink("Recepcjoniści", "Index", "Recepcjonista")</li>
                     <li>@Html.ActionLink("Silownia", "Index", "Silownia")</li>
-
+                    <li>@Html.ActionLink("Specjalizacje", "Index", "Specjalizacja")</li>
+                    <li>@Html.ActionLink("Sale", "Index", "Sala")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

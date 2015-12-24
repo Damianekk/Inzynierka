@@ -1,117 +1,117 @@
 ﻿@model Silownia.Models.Klient
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Klient: szczegóły";
 }
 
-<h2>Details</h2>
- 
-        <div>
-    <h4>Klient</h4>
+<h2>Szczegóły dotyczące wybranego klienta:</h2>
+
+<div>
+
     <hr />
 
-                <dl class="dl-horizontal">
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Imie)
-                    </dt>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Imie)
+        </dt>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.Imie)
-                    </dd>
+        <dd>
+            @Html.DisplayFor(model => model.Imie)
+        </dd>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Nazwisko)
-                    </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.Nazwisko)
+        </dt>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.Nazwisko)
-                    </dd>
+        <dd>
+            @Html.DisplayFor(model => model.Nazwisko)
+        </dd>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.DataUrodzenia)
-                    </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.DataUrodzenia)
+        </dt>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.DataUrodzenia)
-                    </dd>
+        <dd>
+            @Html.DisplayFor(model => model.DataUrodzenia)
+        </dd>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Mail)
-                    </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.Mail)
+        </dt>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.Mail)
-                    </dd>
+        <dd>
+            @Html.DisplayFor(model => model.Mail)
+        </dd>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.NrTelefonu)
-                    </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.NrTelefonu)
+        </dt>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.NrTelefonu)
-                    </dd>
+        <dd>
+            @Html.DisplayFor(model => model.NrTelefonu)
+        </dd>
 
-                </dl>
-            
-             
+    </dl>
+
+
 </div>
 
-            
-  <p>
-      @Html.ActionLink("Edit", "Edit", new { id = Model.OsobaID }) |
-      @Html.ActionLink("Back to List", "Index")
- </p>
+
+<p>
+    @Html.ActionLink("Edytuj", "Edit", new { id = Model.OsobaID }) |
+    @Html.ActionLink("Przejdź do listy klientów", "Index")
+</p>
 
 @*   ========= Umowy ========= *@
 
-    <button style="background : no-repeat; border : none;" type="submit" id="btnToggle">Umowy<img src="https://cdn3.iconfinder.com/data/icons/files-2/512/sign_contract_file-512.png" width="60" height="60"></button>
-    <div id="slidetogglediv" class="slidediv">
-        <div id="hidden" style="display:none">
-            <b>
+<button style="background : no-repeat; border : none;" type="button" id="btnToggle">Umowy<img src="https://cdn3.iconfinder.com/data/icons/files-2/512/sign_contract_file-512.png" width="60" height="60"></button>
+<div id="slidetogglediv" class="slidediv">
+    <div id="hidden" style="display:none">
+        <b>
 
-                <dl , class="table-bordered" ,new style="color:#0099CC">
-                    <dt>
-                        @Html.Label("Umowy", new { style = "color:#0099CC" })
-                    </dt>
+            <dl , class="table-bordered" ,new style="color:#0099CC">
+                <dt>
+                    @Html.Label("Umowy", new { style = "color:#0099CC" })
+                </dt>
 
-                    @if (Model.Umowa.Count > 0)
+                @if (Model.Umowy.Count > 0)
                 {
-                        <dd>
-                            <table class="table">
-                                <tr>
-                                    <th>Data podpisania</th>
-                                    <th>Data zakończenia</th>
-                                    <th>Cena/mieś</th>
-                                </tr>
-                                @foreach (var item in Model.Umowa)
+                    <dd>
+                        <table class="table">
+                            <tr>
+                                <th>Data podpisania</th>
+                                <th>Data zakończenia</th>
+                                <th>Cena/msc</th>
+                            </tr>
+                            @foreach (var item in Model.Umowy)
                             {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.DataPodpisania)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.DataZakonczenia)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Cena) zł
-                                        </td>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DataPodpisania)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DataZakonczenia)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Cena) zł
+                                    </td>
 
-                                    </tr>
+                                </tr>
                             }
 
-                            </table>
-                        </dd>
+                        </table>
+                    </dd>
                 }
                 else
                 {
-                        <dt>
-                            @Html.Label("Brak umów", new { style = "color:#D11919" })
-                        </dt>
+                    <dt>
+                        @Html.Label("Brak umów", new { style = "color:#D11919" })
+                    </dt>
                 }
-            </b>
-            </dl>
-        </div><br />
-    
+        </b>
+        </dl>
+    </div><br />
+
     @*   ========= Umowy ========= *@
 
 </div>
@@ -131,25 +131,24 @@
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">
 </script>
 
- <script type="text/javascript">
-// Applying SlideUp effect
-    $("#slideupdiv").click(function() {
-    $(this).slideUp(2000);
+<script type="text/javascript">
+    // Applying SlideUp effect
+    $("#slideupdiv").click(function () {
+        $(this).slideUp(2000);
     });
     // Applying SlideDown effect
-    $("#slidedowndiv").click(function() {
-    $(this).hide().slideDown(2000);
+    $("#slidedowndiv").click(function () {
+        $(this).hide().slideDown(2000);
     });
     // Applying SlideToggle effect
-    $("#btnToggle").click(function() {
+    $("#btnToggle").click(function () {
         $('div#hidden').slideToggle();
-  
+
     });
     // Reset the div's
-    $('#btnReset').click(function() {
-    $('#slideupdiv').fadeIn('slow');
-    $("#slidedowndiv").fadeIn('slow');
-    $("#slidetogglediv").fadeIn('slow');
+    $('#btnReset').click(function () {
+        $('#slideupdiv').fadeIn('slow');
+        $("#slidedowndiv").fadeIn('slow');
+        $("#slidetogglediv").fadeIn('slow');
     })
- </script>
->
+</script>

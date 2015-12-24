@@ -1,0 +1,89 @@
+﻿@model IEnumerable<Silownia.Models.Sala>
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Sale</title>
+</head>
+<body>
+    
+    <h3>
+        @Html.ActionLink("Dodaj nową", "Create")
+    </h3>
+   
+
+        <div class="container" style="background-color: grey">
+        
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header text-center">
+                    Nasze sale 
+                    <small><font color="black">Tak wygladaja nasze sale do ćwiczeń.</font></small>
+                </h1>
+            </div>
+        </div>
+       
+    <div class="row center-block">
+@foreach (var item in Model) {
+        <div class="col-md-3 col-md-offset-1 portfolio-item">
+            <a href="#">
+                <img class="img-responsive" src="@item.ImageFile" alt="no file">
+            </a>
+            <h3>
+                @Html.ActionLink("Sala "+ item.Rodzaj, "Details", new { id = item.Numer_sali })
+
+            </h3>
+            <p>@item.Opis</p>
+        </div>
+}
+       
+        </div>
+        @*<table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Rodzaj)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Numer_sali)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Opis)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Status)
+                    </th>
+                    <th></th>
+                </tr>
+
+            @foreach (var item in Model) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Rodzaj)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Numer_sali)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Opis)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id=item.Numer_sali }) |
+                        @Html.ActionLink("Details", "Details", new { id=item.Numer_sali }) |
+                        @Html.ActionLink("Delete", "Delete", new { id=item.Numer_sali })
+                    </td>
+                </tr>
+            }
+
+            </table>*@
+</body>
+</html>

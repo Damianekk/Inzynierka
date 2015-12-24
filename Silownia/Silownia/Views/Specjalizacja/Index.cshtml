@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<Silownia.Models.Specjalizacja>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Specjalizacja: index";
 }
 
-<h2>Index</h2>
+<h2>Lista specjalizacji naszych trenerów</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Dodaj nową specjalizację", "Create")
 </p>
 <table class="table">
     <tr>
@@ -23,9 +23,9 @@
             @Html.DisplayFor(modelItem => item.Nazwa)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.SpecjalizacjaID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.SpecjalizacjaID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.SpecjalizacjaID })
+            @Html.ActionLink("Edytuj", "Edit", new { id=item.SpecjalizacjaID }) |
+            @Html.ActionLink("Szczegóły", "Details", new { id=item.SpecjalizacjaID }) |
+            @Html.ActionLink("Usuń", "Delete", new { id=item.SpecjalizacjaID })
         </td>
     </tr>
 }

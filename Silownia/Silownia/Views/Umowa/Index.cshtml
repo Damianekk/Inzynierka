@@ -1,27 +1,42 @@
-﻿@model IEnumerable<Silownia.Models.Umowa>
+﻿@model PagedList.PagedList<Silownia.Models.Umowa>
+@using PagedList.Mvc;
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Umowy: index";
 }
 
-<h2>Index</h2>
+<h2>Lista umów podpisanych w naszej sieci</h2>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Szukaj po imieniu/nazwisku Klienta: <br /> @Html.TextBox("imieNazwisko") <br /> <br />
+        Szukaj po nazwie siłowni: @Html.DropDownList("SilowniaID", (SelectList)ViewBag.SilowniaID, "Wybierz siłownię", new { onchange = "this.form.submit();", @class = "form-control" }) <br />
+        <input type="submit" value="szukaj" />
+    </p>
+}
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+        @*
+        @Html.ActionLink("Dodaj nową umowę", "Create")
+        *@
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Silownia.Nazwa)
+            @Html.Label("Nazwa siłowni:")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DataPodpisania)
+            @Html.Label("Imię i nazwisko klienta:")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DataZakonczenia)
+            @Html.Label("Data początku umowy:")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Cena)
+            @Html.Label("Data końca umowy:")
+        </th>
+        <th>
+            @Html.Label("Opłata miesięczna:")
         </th>
         <th></th>
     </tr>
@@ -30,6 +45,9 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Silownia.Nazwa)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Klient.imieNazwisko)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.DataPodpisania)
@@ -41,11 +59,15 @@
             @Html.DisplayFor(modelItem => item.Cena)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.UmowaID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.UmowaID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.UmowaID })
+            @Html.ActionLink("Edytuj", "Edit", new { id=item.UmowaID }) |
+            @Html.ActionLink("Szczegóły", "Details", new { id=item.UmowaID }) |
+            @Html.ActionLink("Usuń", "Delete", new { id=item.UmowaID })
         </td>
     </tr>
 }
-
 </table>
+
+<div class="center">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, pageSize = Model.PageSize, imieNazwisko = ViewBag.srchImieNazwisko }))
+    Wyświetlam od @Model.FirstItemOnPage do @Model.LastItemOnPage z @Model.TotalItemCount rekordów Umowa
+</div>

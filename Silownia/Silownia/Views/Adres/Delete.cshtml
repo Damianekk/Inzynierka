@@ -1,14 +1,11 @@
 ﻿@model Silownia.Models.Adres
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Adres: usuń";
 }
 
-<h2>Delete</h2>
-
-<h3>Czy na pewno chcesz to usunąć?</h3>
+<h2>Czy chcesz usunąć ten adres?</h2>
 <div>
-    <h4>Adres</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -66,7 +63,7 @@
 
         <div class="form-actions no-color">
             <input type="submit" value="Usuń" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            @Html.ActionLink("Powrót do listy adresów", "Index")
         </div>
     }
 </div>
