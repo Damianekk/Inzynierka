@@ -88,7 +88,10 @@ namespace Silownia.Controllers
 
             ViewBag.SpecjalizacjaID = new SelectList(db.Specjalizacje, "SpecjalizacjaID", "Nazwa", trener.Specjalizacja);
             ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
-            return View(trener);
+            return View(new Trener
+            {
+                DataZatrudnienia = DateTime.Now
+            });
         }
 
         // GET: /Trener/Edit/5
@@ -104,7 +107,7 @@ namespace Silownia.Controllers
                 return HttpNotFound();
             }
             ViewBag.SpecjalizacjaID = new SelectList(db.Specjalizacje, "SpecjalizacjaID", "Nazwa", trener.Specjalizacja);
-            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
+            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", trener.Silownia);
             return View(trener);
         }
 
@@ -122,7 +125,7 @@ namespace Silownia.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.SpecjalizacjaID = new SelectList(db.Specjalizacje, "SpecjalizacjaID", "Nazwa", trener.Specjalizacja);
-            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
+            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", trener.Silownia);
             return View(trener);
         }
 
