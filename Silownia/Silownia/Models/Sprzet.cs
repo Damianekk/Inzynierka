@@ -17,7 +17,7 @@ namespace Silownia.Models
         public long SprzetID { get; set; }
         [Required]
         public string Nazwa { get; set; }
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime Data_zakupu { get; set; }
         [Display(Name="Cena zakupu")]
         public decimal Cena_zakupu { get; set; }

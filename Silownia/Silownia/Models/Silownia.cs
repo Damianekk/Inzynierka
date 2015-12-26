@@ -29,6 +29,7 @@ namespace Silownia.Models
         public long NrTelefonu { get; set; }
         public double Dlugosc { get; set; }
         public double Szerokosc { get; set; }
+        [Display(Name = "Dodatkowe informacje")]
         public string DodatkoweInfo { get; set; }
       
         [NotMapped]

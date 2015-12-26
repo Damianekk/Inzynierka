@@ -209,10 +209,6 @@
     <Compile Include="Helpers\AkcjaEnumUmowa.cs" />
     <Compile Include="Helpers\StatusWiadomosciEnum.cs" />
     <Compile Include="Helpers\KryteriaSzukania.cs" />
-    <Compile Include="Migrations\201512251921067_pobieranie pinezek z bazy.cs" />
-    <Compile Include="Migrations\201512251921067_pobieranie pinezek z bazy.Designer.cs">
-      <DependentUpon>201512251921067_pobieranie pinezek z bazy.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Adres.cs" />
@@ -415,11 +411,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201512251921067_pobieranie pinezek z bazy.resx">
-      <DependentUpon>201512251921067_pobieranie pinezek z bazy.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
