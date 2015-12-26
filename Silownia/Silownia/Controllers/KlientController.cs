@@ -24,7 +24,10 @@ namespace Silownia.Controllers
         public ActionResult Index(string Miasto,string imieNazwisko, bool czyUmowa =false ,int page=1 ,int pageSize = 10 , AkcjaEnum akcja = AkcjaEnum.Brak , String info = null)
         {
 
-            ViewBag.Miasto = new SelectList(db.Adresy.DistinctBy(a=>new{a.Miasto}), "Miasto", "Miasto");
+            var Miasta = db.Klienci.Where(u => (u.OsobaID != null) && (u.Adres != null)).DistinctBy(a => new { a.Adres.Miasto }).Select(x => x.Adres);
+
+
+            ViewBag.Miasto = new SelectList(Miasta, "Miasto", "Miasto");
             //ViewBag.srchImieNazwisko = imieNazwisko;   Póki co niech będzie zakomentowane 
             //ViewBag.czyUmowa = czyUmowa;
    

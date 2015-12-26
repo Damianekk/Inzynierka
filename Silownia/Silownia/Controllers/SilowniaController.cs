@@ -19,7 +19,11 @@ namespace Silownia.Controllers
         // GET: /Silownia/
         public ActionResult Index(string Miasto, int page = 1, int pageSize = 10, AkcjaEnumSilownia akcja = AkcjaEnumSilownia.Brak, String info = null)
         {
-            ViewBag.Miasto = new SelectList(db.Adresy.DistinctBy(a => new { a.Miasto }), "Miasto", "Miasto");
+ 
+            var Miasta = db.Silownie.Where(u => (u.SilowniaID != null) && (u.Adres != null)).DistinctBy(a => new { a.Adres.Miasto }).Select(x=>x.Adres);
+
+
+            ViewBag.Miasto = new SelectList(Miasta, "Miasto", "Miasto");
 
             var silownie = from Silownie in db.Silownie select Silownie;
             silownie = silownie.Search(Miasto, m => m.Adres.Miasto);
