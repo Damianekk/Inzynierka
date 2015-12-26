@@ -38,6 +38,22 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.Pesel, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Pesel)
+                @Html.ValidationMessageFor(model => model.Pesel)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NrTelefonu, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NrTelefonu)
+                @Html.ValidationMessageFor(model => model.NrTelefonu)
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.DataZatrudnienia, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.DataZatrudnienia)

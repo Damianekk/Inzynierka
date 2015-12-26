@@ -179,6 +179,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\MasazystaController.cs" />
     <Compile Include="Controllers\SalaController.cs" />
     <Compile Include="Helpers\AkcjaEnum.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -203,16 +204,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\AkcjaEnumMasazysta.cs" />
     <Compile Include="Helpers\AkcjaEnumRecepcjonista.cs" />
     <Compile Include="Helpers\AkcjaEnumSilownia.cs" />
     <Compile Include="Helpers\AkcjaEnumTrener.cs" />
     <Compile Include="Helpers\AkcjaEnumUmowa.cs" />
     <Compile Include="Helpers\StatusWiadomosciEnum.cs" />
     <Compile Include="Helpers\KryteriaSzukania.cs" />
-    <Compile Include="Migrations\201512251921067_pobieranie pinezek z bazy.cs" />
-    <Compile Include="Migrations\201512251921067_pobieranie pinezek z bazy.Designer.cs">
-      <DependentUpon>201512251921067_pobieranie pinezek z bazy.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Adres.cs" />
@@ -400,6 +398,11 @@
     <Content Include="Views\Shared\KryteriaSzukania\_miasto.cshtml" />
     <Content Include="Views\Shared\KryteriaSzukania\_tylkoZumowa.cshtml" />
     <Content Include="Views\Shared\KryteriaSzukania\_specjalizacja.cshtml" />
+    <Content Include="Views\Masazysta\Create.cshtml" />
+    <Content Include="Views\Masazysta\Delete.cshtml" />
+    <Content Include="Views\Masazysta\Details.cshtml" />
+    <Content Include="Views\Masazysta\Edit.cshtml" />
+    <Content Include="Views\Masazysta\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -415,11 +418,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201512251921067_pobieranie pinezek z bazy.resx">
-      <DependentUpon>201512251921067_pobieranie pinezek z bazy.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -8,11 +8,11 @@ namespace Silownia.Models
     public abstract class Pracownik : Osoba
     {
         [Key, Required]
-        public int Pesel { get; set; }
+        public long Pesel { get; set; }
         [Required]
         [DataType(DataType.Date)]
         [Display(Name = "Data zatrudnienia")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime DataZatrudnienia { get; set; }
 
         [Required]

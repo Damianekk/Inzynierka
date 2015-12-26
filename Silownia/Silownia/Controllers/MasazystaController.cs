@@ -8,36 +8,39 @@ using System.Web;
 using System.Web.Mvc;
 using Silownia.DAL;
 using Silownia.Models;
-using Silownia.Helpers;
 using PagedList;
+using Silownia.Helpers;
 
 namespace Silownia.Controllers
 {
-    public class RecepcjonistaController : Controller
+    public class MasazystaController : Controller
     {
         private SilowniaContext db = new SilowniaContext();
 
-        // GET: Recepcjonista
-        public ActionResult Index(string imieNazwisko, string SilowniaID, int page = 1, int pageSize = 10, AkcjaEnumRecepcjonista akcja = AkcjaEnumRecepcjonista.Brak, String info = null)
+        // GET: Masazysta
+
+        public ActionResult Index(string imieNazwisko, string SilowniaID, int page = 1, int pageSize = 10, AkcjaEnumMasazysta akcja = AkcjaEnumMasazysta.Brak, String info = null)
         {
-            //ViewBag.srchImieNazwisko = imieNazwisko;
+            ViewBag.srchImieNazwisko = imieNazwisko;
 
             ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
-            var recepcjonisci = from Osoby in db.Recepcjonisci.OfType<Recepcjonista>() select Osoby;
-            recepcjonisci = recepcjonisci.Search(imieNazwisko, i => i.Imie, i => i.Nazwisko);
-            recepcjonisci = recepcjonisci.Search(SilowniaID, i => i.Silownia.Nazwa);
 
-            var final = recepcjonisci.OrderBy(p => p.Imie);
-            var ileWynikow = recepcjonisci.Count();
+            var osoby = from Osoby in db.Masazysci select Osoby;
+
+            osoby = osoby.Search(imieNazwisko, i => i.Imie, i => i.Nazwisko);
+            osoby = osoby.Search(SilowniaID, i => i.Silownia.Nazwa);
+
+            var final = osoby.OrderBy(p => p.Imie);
+            var ileWynikow = osoby.Count();
             if ((ileWynikow / page) <= 1)
             {
                 page = 1;
             }
             var kk = ileWynikow / page;
 
-            PagedList<Recepcjonista> model = new PagedList<Recepcjonista>(final, page, pageSize);
+            PagedList<Masazysta> model = new PagedList<Masazysta>(final, page, pageSize);
 
-            if (akcja != AkcjaEnumRecepcjonista.Brak)
+            if (akcja != AkcjaEnumMasazysta.Brak)
             {
                 ViewBag.info = info;
                 ViewBag.Akcja = akcja;
@@ -46,104 +49,108 @@ namespace Silownia.Controllers
             return View(model);
         }
 
-        // GET: Recepcjonista/Details/5
+
+        // GET: Masazysta/Details/5
         public ActionResult Details(long? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Recepcjonista recepcjonista = db.Recepcjonisci.Find(id);
-
-            if (recepcjonista == null)
+            Masazysta masazysta = db.Masazysci.Find(id);
+            if (masazysta == null)
             {
                 return HttpNotFound();
             }
-            return View(recepcjonista);
+            return View(masazysta);
         }
 
-        // GET: Recepcjonista/Create
+        // GET: Masazysta/Create
         public ActionResult Create()
         {
             ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
             return View();
         }
 
-        // POST: Recepcjonista/Create
+        // POST: Masazysta/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,Pesel,NrTelefonu,DataZatrudnienia,Pensja,SilowniaID")] Recepcjonista recepcjonista)
+        public ActionResult Create([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,NrTelefonu,Pesel,DataZatrudnienia,Pensja,StawkaGodzinowa,SilowniaID")] Masazysta masazysta)
         {
             if (ModelState.IsValid)
             {
-                db.Recepcjonisci.Add(recepcjonista);
+                db.Osoby.Add(masazysta);
                 db.SaveChanges();
-                return RedirectToAction("Index", new { akcja = AkcjaEnumRecepcjonista.DodanoRecepcjoniste, info = recepcjonista.imieNazwisko });
+                return RedirectToAction("Index", new { akcja = AkcjaEnumMasazysta.DodanoMasazyste, info = masazysta.imieNazwisko });
             }
 
-            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
-            return View(recepcjonista);
+            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", masazysta.SilowniaID);
+            return View(new Masazysta
+            {
+                DataZatrudnienia = DateTime.Now
+            }
+            );
         }
 
-        // GET: Recepcjonista/Edit/5
+        // GET: Masazysta/Edit/5
         public ActionResult Edit(long? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Recepcjonista recepcjonista = db.Recepcjonisci.Find(id);
-            if (recepcjonista == null)
+            Masazysta masazysta = db.Masazysci.Find(id);
+            if (masazysta == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
-            return View(recepcjonista);
+            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", masazysta.Silownia);
+            return View(masazysta);
         }
 
-        // POST: Recepcjonista/Edit/5
+        // POST: Masazysta/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,Pesel,NrTelefonu,DataZatrudnienia,Pensja,SilowniaID")] Recepcjonista recepcjonista)
+        public ActionResult Edit([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,NrTelefonu,Pesel,DataZatrudnienia,Pensja,StawkaGodzinowa,SilowniaID")] Masazysta masazysta)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(recepcjonista).State = EntityState.Modified;
+                db.Entry(masazysta).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
-            return View(recepcjonista);
+            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", masazysta.SilowniaID);
+            return View(masazysta);
         }
 
-        // GET: Recepcjonista/Delete/5
+        // GET: Masazysta/Delete/5
         public ActionResult Delete(long? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Recepcjonista recepcjonista = db.Recepcjonisci.Find(id);
-            if (recepcjonista == null)
+            Masazysta masazysta = db.Masazysci.Find(id);
+            if (masazysta == null)
             {
                 return HttpNotFound();
             }
-            return View(recepcjonista);
+            return View(masazysta);
         }
 
-        // POST: Recepcjonista/Delete/5
+        // POST: Masazysta/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            Recepcjonista recepcjonista = db.Recepcjonisci.Find(id);
-            db.Recepcjonisci.Remove(recepcjonista);
+            Masazysta masazysta = db.Masazysci.Find(id);
+            db.Osoby.Remove(masazysta);
             db.SaveChanges();
-            return RedirectToAction("Index", new { akcja = AkcjaEnumRecepcjonista.UsunietoRecepcjoniste, info = recepcjonista.imieNazwisko });
+            return RedirectToAction("Index", new { akcja = AkcjaEnumMasazysta.UsunietoMasazyste, info = masazysta.imieNazwisko });
         }
 
         protected override void Dispose(bool disposing)

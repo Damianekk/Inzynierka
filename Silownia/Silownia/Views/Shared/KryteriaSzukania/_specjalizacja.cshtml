@@ -1,8 +1,8 @@
 ﻿  
 <div class="col-lg-2">
     <div style="font-size:larger">
-        Szukaj po specjalizacji:
+        Szukaj po <br /> specjalizacji:
     </div>
-    @Html.DropDownList("SpecjalizacjaID", (SelectList)ViewBag.SpecjalizacjaID, "Wybierz specjalizację", new { onchange = "this.form.submit();", @class = "form-control" }) <br />
+    @Html.DropDownList("SpecjalizacjaID", (SelectList)ViewBag.SpecjalizacjaID, "Wszystkie specjalizacje", new { onchange = "this.form.submit();", @class = "form-control" }) <br />
 </div>
 

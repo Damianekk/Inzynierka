@@ -18,12 +18,12 @@ namespace Silownia.Models
 
         [Required]
         [Display(Name = "Data zgłoszenia")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime Data_zgłoszenia { get; set; }
 
         [Required]
         [Display(Name = "Data naprawy")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime Data_naprawy { get; set; }
 
         public string Status { get; set; }

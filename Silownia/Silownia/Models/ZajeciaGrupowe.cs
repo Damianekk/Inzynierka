@@ -16,7 +16,7 @@ namespace Silownia.Models
         }
         public string NazwaTreningu { get; set; }
 
-        [MaxLength(300, ErrorMessage = " Opis przekracza dozwoloną ilość słów!")]
+        [MaxLength(300, ErrorMessage = " Opis przekracza dozwoloną ilość znaków (300)")]
         [Display(Name = "Opis")]
         public string OpisTreningu { get; set; }
 
