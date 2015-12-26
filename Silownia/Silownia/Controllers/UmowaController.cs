@@ -20,10 +20,10 @@ namespace Silownia.Controllers
         // GET: /Umowa/
         public ActionResult Index(string imieNazwisko, string SilowniaID, int page = 1, int pageSize = 10, AkcjaEnumUmowa akcja = AkcjaEnumUmowa.Brak, String info = null)
         {
-            //  ViewBag.srchImieNazwisko = imieNazwisko;
+          //  ViewBag.srchImieNazwisko = imieNazwisko;
 
             ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
-
+     
             var umowy = from Umowy in db.Umowy select Umowy;
 
             umowy = umowy.Search(imieNazwisko, i => i.Klient.Imie, i => i.Klient.Nazwisko);
@@ -84,7 +84,7 @@ namespace Silownia.Controllers
                 DataPodpisania = DateTime.Now,
                 // tu przydałoby się dodać datę now + miesiąc
                 DataZakonczenia = (DateTime.Now).AddMonths(1),
-
+                
                 // ,Recepcjonista = recepcjonista 
             });
         }
@@ -135,7 +135,7 @@ namespace Silownia.Controllers
             }
 
             ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", umowa.SilowniaID);
-
+           
             return View(umowa);
         }
 
@@ -183,7 +183,7 @@ namespace Silownia.Controllers
             {
                 db.Entry(umowa).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index", new { akcja = AkcjaEnumUmowa.UsunietoUmowe });
+                return RedirectToAction("Index", new { akcja = AkcjaEnumUmowa.UsunietoUmowe});
             }
             ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", umowa.SilowniaID);
             return View(umowa);
