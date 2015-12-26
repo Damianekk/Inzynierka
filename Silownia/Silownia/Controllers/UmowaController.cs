@@ -20,25 +20,14 @@ namespace Silownia.Controllers
         // GET: /Umowa/
         public ActionResult Index(string imieNazwisko, string SilowniaID, int page = 1, int pageSize = 10, AkcjaEnumUmowa akcja = AkcjaEnumUmowa.Brak, String info = null)
         {
-            ViewBag.srchImieNazwisko = imieNazwisko;
+          //  ViewBag.srchImieNazwisko = imieNazwisko;
 
-            var SilowniaLst = new List<string>();
-            var SilowniaQry = from d in db.Silownie orderby d.Nazwa select d.Nazwa;
-            SilowniaLst.AddRange(SilowniaQry.Distinct());
-            ViewBag.SilowniaID = new SelectList(SilowniaLst);
-
+            ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
+     
             var umowy = from Umowy in db.Umowy select Umowy;
 
-            if (!String.IsNullOrEmpty(imieNazwisko))
-            {
-                umowy = umowy.Where(s => s.Klient.Imie.Contains(imieNazwisko) || s.Klient.Nazwisko.Contains(imieNazwisko));
-            }
-
-            if (!string.IsNullOrEmpty(SilowniaID))
-            {
-                umowy = umowy.Where(s => s.Silownia.Nazwa == SilowniaID);
-            }
-
+            umowy = umowy.Search(imieNazwisko, i => i.Klient.Imie, i => i.Klient.Nazwisko);
+            umowy = umowy.Search(SilowniaID, i => i.Silownia.Nazwa);
 
             var final = umowy.OrderBy(p => p.Klient.Imie);
             var ileWynikow = umowy.Count();
