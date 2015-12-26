@@ -21,34 +21,14 @@ namespace Silownia.Controllers
         {
             ViewBag.srchImieNazwisko = imieNazwisko;
 
-            var SilowniaLst = new List<string>();
-            var SilowniaQry = from d in db.Silownie orderby d.Nazwa select d.Nazwa;
-            SilowniaLst.AddRange(SilowniaQry.Distinct());
-            ViewBag.SilowniaID = new SelectList(SilowniaLst);
-
-            var SpecLst = new List<string>();
-            var SpecQry = from d in db.Specjalizacje orderby d.Nazwa select d.Nazwa;
-            SpecLst.AddRange(SpecQry.Distinct());
-            ViewBag.SpecjalizacjaID = new SelectList(SpecLst);
-
+            ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
+            ViewBag.SpecjalizacjaID = new SelectList(db.Specjalizacje.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
+      
             var osoby = from Osoby in db.Trenerzy select Osoby;
 
-
-            if (!String.IsNullOrEmpty(imieNazwisko))
-            {
-                osoby = osoby.Where(s => s.Imie.Contains(imieNazwisko) || s.Nazwisko.Contains(imieNazwisko));
-            }
-
-            if (!string.IsNullOrEmpty(SilowniaID))
-            {
-                osoby = osoby.Where(s => s.Silownia.Nazwa == SilowniaID);
-            }
-
-            if (!string.IsNullOrEmpty(SpecjalizacjaID))
-            {
-                osoby = osoby.Where(s => s.Specjalizacja.Nazwa == SpecjalizacjaID);
-            }
-
+            osoby = osoby.Search(imieNazwisko, i => i.Imie, i => i.Nazwisko);
+            osoby = osoby.Search(SpecjalizacjaID, i => i.Specjalizacja.Nazwa);
+            osoby = osoby.Search(SilowniaID, i => i.Silownia.Nazwa);
 
             var final = osoby.OrderBy(p => p.Imie);
             var ileWynikow = osoby.Count();

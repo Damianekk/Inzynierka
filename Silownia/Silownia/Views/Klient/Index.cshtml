@@ -37,15 +37,17 @@
 
 @using (Html.BeginForm())
 {
-    <p>
+    
 
-        Szukaj po miastach: @Html.DropDownList("Miasto", (SelectList)ViewBag.Miasto, "Wszystkie miasta", new { onchange = "this.form.submit();", @class = "form-control" }) <br />
-        Szukaj po imieniu/nazwisku: <br /> @Html.TextBox("imieNazwisko") <br />
-        Tylko z umową: @Html.CheckBox("czyUmowa") <br />
+       
+        @Html.Partial("KryteriaSzukania/_imieNazwisko")
+        @Html.Partial("KryteriaSzukania/_miasto")
+        @Html.Partial("KryteriaSzukania/_tylkoZumowa")
 
-
-        <input type="submit" value="szukaj" />
-    </p>
+        <br />
+    
+        <input type="submit" value="szukaj" class="btn btn-success" style="width:10%" />
+    
 }
 
 <table class="table">

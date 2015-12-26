@@ -20,24 +20,12 @@ namespace Silownia.Controllers
         // GET: Recepcjonista
         public ActionResult Index(string imieNazwisko, string SilowniaID, int page = 1, int pageSize = 10, AkcjaEnumRecepcjonista akcja = AkcjaEnumRecepcjonista.Brak, String info = null)
         {
-            ViewBag.srchImieNazwisko = imieNazwisko;
+            //ViewBag.srchImieNazwisko = imieNazwisko;
 
-            var SilowniaLst = new List<string>();
-            var SilowniaQry = from d in db.Silownie orderby d.Nazwa select d.Nazwa;
-            SilowniaLst.AddRange(SilowniaQry.Distinct());
-            ViewBag.SilowniaID = new SelectList(SilowniaLst);
-
+            ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
             var recepcjonisci = from Osoby in db.Recepcjonisci.OfType<Recepcjonista>() select Osoby;
-
-            if (!String.IsNullOrEmpty(imieNazwisko))
-            {
-                recepcjonisci = recepcjonisci.Where(s => s.Imie.Contains(imieNazwisko) || s.Nazwisko.Contains(imieNazwisko));
-            }
-
-            if (!string.IsNullOrEmpty(SilowniaID))
-            {
-                recepcjonisci = recepcjonisci.Where(s => s.Silownia.Nazwa == SilowniaID);
-            }
+            recepcjonisci = recepcjonisci.Search(imieNazwisko, i => i.Imie, i => i.Nazwisko);
+            recepcjonisci = recepcjonisci.Search(SilowniaID, i => i.Silownia.Nazwa);
 
             var final = recepcjonisci.OrderBy(p => p.Imie);
             var ileWynikow = recepcjonisci.Count();

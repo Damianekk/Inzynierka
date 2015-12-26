@@ -19,18 +19,11 @@ namespace Silownia.Controllers
         // GET: /Silownia/
         public ActionResult Index(string Miasto, int page = 1, int pageSize = 10, AkcjaEnumSilownia akcja = AkcjaEnumSilownia.Brak, String info = null)
         {
-            var MiastoLst = new List<string>();
-            var MiastoQry = from d in db.Adresy orderby d.Miasto select d.Miasto;
-            MiastoLst.AddRange(MiastoQry.Distinct());
-            ViewBag.Miasto = new SelectList(MiastoLst);
+            ViewBag.Miasto = new SelectList(db.Adresy.DistinctBy(a => new { a.Miasto }), "Miasto", "Miasto");
 
             var silownie = from Silownie in db.Silownie select Silownie;
-
-            if (!String.IsNullOrEmpty(Miasto))
-            {
-                silownie = silownie.Where(s => s.Adres.Miasto.Contains(Miasto));
-            }
-
+            silownie = silownie.Search(Miasto, m => m.Adres.Miasto);
+         
             var final = silownie.OrderBy(p => p.Nazwa);
             var ileWynikow = silownie.Count();
             if ((ileWynikow / page) <= 1)
@@ -81,14 +74,14 @@ namespace Silownia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "SilowniaID,Nazwa,GodzinaOtwarcia,GodzinaZamkniecia,Powierzchnia,NrTelefonu")] Models.Silownia silownia)
+        public ActionResult Create([Bind(Include = "SilowniaID,Nazwa,GodzinaOtwarcia,GodzinaZamkniecia,Powierzchnia,NrTelefonu,DodatkoweInfo")] Models.Silownia silownia)
         {
 
             if (ModelState.IsValid)
             {               
                 db.Silownie.Add(silownia);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create","Adres",new { id = silownia.SilowniaID, komu = KomuAdres.Silownia });
             }
            
 
@@ -117,7 +110,7 @@ namespace Silownia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "SilowniaID,Nazwa,GodzinaOtwarcia,GodzinaZamkniecia,Powierzchnia,NrTelefonu")] Models.Silownia silownia)
+        public ActionResult Edit([Bind(Include = "SilowniaID,Nazwa,GodzinaOtwarcia,GodzinaZamkniecia,Powierzchnia,NrTelefonu,DodatkoweInfo")] Models.Silownia silownia)
         {
             if (ModelState.IsValid)
             {
@@ -163,16 +156,26 @@ namespace Silownia.Controllers
             base.Dispose(disposing);
         }
         [HttpPost]
-        public JsonResult JsonTest()
+        public JsonResult SilowniaInfoJSON()
         {
 
             var jsonSerialiser = new JavaScriptSerializer();
-            var silownie = db.Silownie.Where(s => s.Adres != null).ToList();
-      
-             
-            //  silownie.RemoveAll(item => item.Adres != null);
+            var silownie = db.Silownie.Where(s => s.Adres != null).ToList<Silownia.Models.Silownia>();
 
-            return Json(new { ok = true, mydata = silownie, message = "" },JsonRequestBehavior.AllowGet);
+            //  silownie.RemoveAll(item => item.Adres != null);
+            var z = silownie.Select(x => new
+                        {
+                            dlugosc = x.Dlugosc,
+                            szerokosc = x.Szerokosc,
+                            godzOtw = x.GodzinaOtwarcia,
+                            godzZam = x.GodzinaZamkniecia,
+                            nazwa = x.Nazwa,
+                            info = x.infoDodatkowe
+
+                        });
+            return Json(z);
+
+          //  return Json(new { ok = true, myData = silownie }, JsonRequestBehavior.AllowGet);
         }
     }
 }

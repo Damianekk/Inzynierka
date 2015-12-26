@@ -183,10 +183,6 @@ C:\Users\Mtk\Desktop\Inzynier_MVC\Inzynierka\Silownia\Silownia\bin\Microsoft.Owi
 C:\Users\Mtk\Desktop\Inzynier_MVC\Inzynierka\Silownia\Silownia\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\bin\GoogleMaps.LocationServices.dll
 C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.csprojResolveAssemblyReference.cache
-C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.Migrations.dodaniewiadomosci.resources
-C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.csproj.GenerateResource.Cache
-C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.Migrations.Dodaniewiadomoscidoosoby.resources
-C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.Migrations.zmianywwiadomosciach.resources
 C:\Users\Łukasz\Source\Repos\Inzynierka\Silownia\Silownia\obj\Debug\Silownia.csprojResolveAssemblyReference.cache
 C:\Users\Łukasz\Source\Repos\Inzynierka\Silownia\Silownia\obj\Debug\Silownia.dll
 C:\Users\Łukasz\Source\Repos\Inzynierka\Silownia\Silownia\obj\Debug\Silownia.pdb
@@ -320,3 +316,5 @@ C:\Users\Łukasz\Source\Inzynierka\Silownia\Silownia\bin\Microsoft.Owin.Security
 C:\Users\Łukasz\Source\Inzynierka\Silownia\Silownia\obj\Debug\Silownia.csprojResolveAssemblyReference.cache
 C:\Users\Łukasz\Source\Inzynierka\Silownia\Silownia\obj\Debug\Silownia.dll
 C:\Users\Łukasz\Source\Inzynierka\Silownia\Silownia\obj\Debug\Silownia.pdb
+C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.Migrations.pobieraniepinezekzbazy.resources
+C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.csproj.GenerateResource.Cache

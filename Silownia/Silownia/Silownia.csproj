@@ -208,6 +208,11 @@
     <Compile Include="Helpers\AkcjaEnumTrener.cs" />
     <Compile Include="Helpers\AkcjaEnumUmowa.cs" />
     <Compile Include="Helpers\StatusWiadomosciEnum.cs" />
+    <Compile Include="Helpers\KryteriaSzukania.cs" />
+    <Compile Include="Migrations\201512251921067_pobieranie pinezek z bazy.cs" />
+    <Compile Include="Migrations\201512251921067_pobieranie pinezek z bazy.Designer.cs">
+      <DependentUpon>201512251921067_pobieranie pinezek z bazy.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Adres.cs" />
@@ -240,6 +245,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\KomuAdres.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Helpers\SwapExpressionVisitor.cs" />
     <Compile Include="Test.cs" />
     <Compile Include="ViewModel\SprzetSaleModelView.cs" />
   </ItemGroup>
@@ -389,6 +395,11 @@
     <Content Include="Views\Sala\Details.cshtml" />
     <Content Include="Views\Sala\Edit.cshtml" />
     <Content Include="Views\Sala\Index.cshtml" />
+    <Content Include="Views\Shared\KryteriaSzukania\_imieNazwisko.cshtml" />
+    <Content Include="Views\Shared\KryteriaSzukania\_silownia.cshtml" />
+    <Content Include="Views\Shared\KryteriaSzukania\_miasto.cshtml" />
+    <Content Include="Views\Shared\KryteriaSzukania\_tylkoZumowa.cshtml" />
+    <Content Include="Views\Shared\KryteriaSzukania\_specjalizacja.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -397,11 +408,18 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201512251921067_pobieranie pinezek z bazy.resx">
+      <DependentUpon>201512251921067_pobieranie pinezek z bazy.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

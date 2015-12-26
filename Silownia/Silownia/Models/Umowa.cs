@@ -17,13 +17,13 @@ namespace Silownia.Models
         [Required(ErrorMessage = "Podaj datę rozpoczęcia")]
         [DataType(DataType.Date)]
         [Display(Name = "Data podpisania")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime DataPodpisania { get; set; }
 
         [Required(ErrorMessage = "Podaj datę zakończenia")]
         [DataType(DataType.Date)]
         [Display(Name = "Data zakończenia")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime DataZakonczenia { get; set; }
 
         [RegularExpression("\\d{1,3}[,\\.]?(\\d{1,2})?", ErrorMessage = "Wprowadź poprawną kwotę")]

@@ -23,31 +23,18 @@ namespace Silownia.Controllers
  
         public ActionResult Index(string Miasto,string imieNazwisko, bool czyUmowa =false ,int page=1 ,int pageSize = 10 , AkcjaEnum akcja = AkcjaEnum.Brak , String info = null)
         {
-            var MiastoLst = new List<string>();
-            var MiastoQry = from d in db.Adresy orderby d.Miasto select d.Miasto;
-            MiastoLst.AddRange(MiastoQry.Distinct());
-            ViewBag.Miasto = new SelectList(MiastoLst);
 
-            ViewBag.srchImieNazwisko = imieNazwisko;
-            ViewBag.czyUmowa = czyUmowa;
+            ViewBag.Miasto = new SelectList(db.Adresy.DistinctBy(a=>new{a.Miasto}), "Miasto", "Miasto");
+            //ViewBag.srchImieNazwisko = imieNazwisko;   Póki co niech będzie zakomentowane 
+            //ViewBag.czyUmowa = czyUmowa;
    
             var osoby = from Osoby in db.Klienci select Osoby;
 
-
-            if (!String.IsNullOrEmpty(Miasto))
-            {
-                osoby = osoby.Where(s => s.Adres.Miasto.Contains(Miasto));
-            }
- 
-
-            if (!String.IsNullOrEmpty(imieNazwisko))
-            {
-                osoby = osoby.Where(s => s.Imie.Contains(imieNazwisko) || s.Nazwisko.Contains(imieNazwisko));
-            }
-           
-            if ((bool)czyUmowa)
-            osoby = osoby.Where(s => s.Umowy.Count > 0);
-
+            osoby = osoby.Search(imieNazwisko, i => i.Imie, i => i.Nazwisko);
+            osoby = osoby.Search(Miasto, m => m.Adres.Miasto);
+            if(czyUmowa)
+            osoby = osoby.Where(u => u.Umowy.Count > 0);
+          
             var final = osoby.OrderBy(p => p.Imie);
             var ileWynikow = osoby.Count();
             if ((ileWynikow / page) <= 1)
