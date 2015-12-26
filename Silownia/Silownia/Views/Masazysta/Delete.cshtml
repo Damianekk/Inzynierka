@@ -1,10 +1,11 @@
-﻿@model Silownia.Models.Recepcjonista
+﻿@model Silownia.Models.Masazysta
 
 @{
-    ViewBag.Title = "Recepcjonista: szczegóły";
+    ViewBag.Title = "Masażysta: usuń";
 }
 
-<h2>Szczegóły dotyczące wybranego recepcjonisty</h2>
+<h2>Czy na pewno chcesz usunąć masażystę @Model.imieNazwisko?</h2>
+
 <div>
     <hr />
     <dl class="dl-horizontal">
@@ -65,15 +66,30 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.StawkaGodzinowa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StawkaGodzinowa)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.Silownia.Nazwa)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Silownia.Nazwa)
         </dd>
+
     </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Usuń" class="btn btn-default" /> |
+            @Html.ActionLink("Powrót do listy masażystów", "Index")
+        </div>
+    }
 </div>
-<p>
-    @Html.ActionLink("Edytuj", "Edit", new { id = Model.OsobaID }) |
-    @Html.ActionLink("Przejdź do listy recepcjonistów", "Index")
-</p>

@@ -38,9 +38,9 @@
 
 @using (Html.BeginForm())
 {
-       @Html.Partial("KryteriaSzukania/_imieNazwisko")
-       @Html.Partial("KryteriaSzukania/_silownia")      
-        <br />
+    @Html.Partial("KryteriaSzukania/_imieNazwisko")
+    @Html.Partial("KryteriaSzukania/_silownia")
+    <br />
 
     <input type="submit" value="szukaj" class="btn btn-success" />
 }
@@ -53,9 +53,12 @@
         <th>
             @Html.Label("Nazwisko:")
         </th>
-        <th>
-            @Html.Label("Data urodzenia:")
-        </th>
+        @*
+                <th>
+                @Html.Label("Data urodzenia:")
+            </th>
+        *@
+
         <th>
             @Html.Label("Data zatrudnienia:")
         </th>
@@ -77,9 +80,13 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Nazwisko)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataUrodzenia)
-            </td>
+            @*
+                    <td>
+                    @Html.DisplayFor(modelItem => item.DataUrodzenia)
+                </td>
+
+            *@
+
             <td>
                 @Html.DisplayFor(modelItem => item.DataZatrudnienia)
             </td>

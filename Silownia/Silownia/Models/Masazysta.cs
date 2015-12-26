@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -11,6 +12,9 @@ namespace Silownia.Models
         {
             Masaze = new List<Masaz>();
         }
+        [Required]
+        [Display(Name ="Stawka za godzinę pracy")]
+        public int StawkaGodzinowa { get; set; }
 
         public virtual IList<Masaz> Masaze { get; set; }
         

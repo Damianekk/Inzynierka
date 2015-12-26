@@ -1,10 +1,11 @@
-﻿@model Silownia.Models.Recepcjonista
+﻿@model Silownia.Models.Masazysta
 
 @{
-    ViewBag.Title = "Recepcjonista: szczegóły";
+    ViewBag.Title = "Masażysta: szczegóły";
 }
 
-<h2>Szczegóły dotyczące wybranego recepcjonisty</h2>
+<h2>Szczegóły dotyczące wybranego masażysty:</h2>
+
 <div>
     <hr />
     <dl class="dl-horizontal">
@@ -71,9 +72,11 @@
         <dd>
             @Html.DisplayFor(model => model.Silownia.Nazwa)
         </dd>
+
     </dl>
 </div>
 <p>
     @Html.ActionLink("Edytuj", "Edit", new { id = Model.OsobaID }) |
-    @Html.ActionLink("Przejdź do listy recepcjonistów", "Index")
+    @Html.ActionLink("Przejdź do listy masażystów", "Index")
 </p>
+

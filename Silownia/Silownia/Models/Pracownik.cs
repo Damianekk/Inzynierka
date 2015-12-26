@@ -8,7 +8,7 @@ namespace Silownia.Models
     public abstract class Pracownik : Osoba
     {
         [Key, Required]
-        public int Pesel { get; set; }
+        public long Pesel { get; set; }
         [Required]
         [DataType(DataType.Date)]
         [Display(Name = "Data zatrudnienia")]
