@@ -9,7 +9,7 @@ namespace Silownia.DAL
     {
 
         public SilowniaContext()
-            : base("SilowniaContext")
+            : base("Data Source=db-mssql.pjwstk.edu.pl;Initial Catalog=inzSilownie;Persist Security Info=True;User ID=inzSilownie;Password=P@ssw0rd15;MultipleActiveResultSets=True")
         {
             //  Database.SetInitializer(new MigrateDatabaseToLatestVersion<SilowniaContext, Silownia.Migrations.Configuration>("SilowniaContext"));
         }
@@ -34,6 +34,7 @@ namespace Silownia.DAL
         public DbSet<TreningWlasny> TreningiWlasne { get; set; }
         public DbSet<KomentarzOPracowniku> KomentarzeOPracownikach { get; set; }
         public DbSet<Umowa> Umowy { get; set; }
+        public DbSet<Uzytkownik> Uzytkownicy { get; set; }
         public DbSet<Sala> Sale { get; set; }
         public DbSet<Wiadomosc> Wiadomosci { get; set; }
 
