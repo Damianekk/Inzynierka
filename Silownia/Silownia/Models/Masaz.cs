@@ -11,15 +11,10 @@ namespace Silownia.Models
         public long MasazID { get; set; }
 
         [Required(ErrorMessage = "Podaj datę masażu")]
-        [DataType(DataType.Date)]
-        [Display(Name = "Data masażu")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+        //[Display(Name = "Pełna data masażu")]
+        //[DataType(DataType.Date)]
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime DataMasazu { get; set; }
-
-        [Required(ErrorMessage = "Podaj godzinę masażu")]
-        [DataType(DataType.Time)]
-        [Display(Name = "Godzina masażu")]
-        public DateTime GodzinaMasazuOd { get; set; }
 
         [Display(Name = "Czas trwania")]
         public int CzasTrwania { get; set; }
