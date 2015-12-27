@@ -1,0 +1,46 @@
+﻿@model Silownia.Models.Masaz
+
+@{
+    ViewBag.Title = "Masaż: usuń";
+}
+
+<h2>Czy na pewno chcesz usunąć masaż klienta: @Model.Klient.imieNazwisko z masażystą @Model.Masazysta.imieNazwisko?</h2>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Masazysta.imieNazwisko)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Masazysta.imieNazwisko)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataMasazu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataMasazu)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CzasTrwania)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CzasTrwania)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Usuń" class="btn btn-default" /> |
+            @Html.ActionLink("Przejdź do listy masaży", "Index")
+        </div>
+    }
+</div>

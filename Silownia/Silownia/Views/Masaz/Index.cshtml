@@ -1,0 +1,71 @@
+﻿@model PagedList.PagedList<Silownia.Models.Masaz>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Masaże: index";
+}
+
+<h2>Lista masaży zapisanych w naszej bazie:</h2>
+
+@using (Html.BeginForm())
+{
+
+    @Html.Partial("KryteriaSzukania/_imieNazwisko")
+    @Html.Partial("KryteriaSzukania/_silownia")
+    @Html.Partial("KryteriaSzukania/_masazysta")
+
+    <br />
+
+    <input type="submit" value="szukaj" class="btn btn-success" />
+}
+
+<p>
+    @*@Html.ActionLink("Create New", "Create")*@
+</p>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.Label("Imię i nazwisko klienta:")
+        </th>
+        <th>
+            @Html.Label("Imię i nazwisko masażysty:")
+        </th>
+        <th>
+            @Html.Label("Data masażu:")
+        </th>
+        <th>
+            @Html.Label("Czas trwania:")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Klient.imieNazwisko)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Masazysta.imieNazwisko)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataMasazu)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CzasTrwania)
+            </td>
+            <td>
+                @Html.ActionLink("Edytuj", "Edit", new { id = item.MasazID }) |
+                @Html.ActionLink("Szczegóły", "Details", new { id = item.MasazID }) |
+                @Html.ActionLink("Usuń", "Delete", new { id = item.MasazID })
+            </td>
+        </tr>
+    }
+</table>
+
+<div class="center">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, pageSize = Model.PageSize, imieNazwisko = ViewBag.srchImieNazwisko }))
+    Wyświetlam od @Model.FirstItemOnPage do @Model.LastItemOnPage z @Model.TotalItemCount rekordów Masażysta
+</div>
