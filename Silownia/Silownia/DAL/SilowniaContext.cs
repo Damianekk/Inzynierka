@@ -9,7 +9,7 @@ namespace Silownia.DAL
     {
 
         public SilowniaContext()
-            : base("Data Source=db-mssql.pjwstk.edu.pl;Initial Catalog=inzSilownie;Persist Security Info=True;User ID=inzSilownie;Password=P@ssw0rd15;MultipleActiveResultSets=True")
+            : base("SilowniaContext")
         {
             //  Database.SetInitializer(new MigrateDatabaseToLatestVersion<SilowniaContext, Silownia.Migrations.Configuration>("SilowniaContext"));
         }
