@@ -34,6 +34,7 @@ namespace Silownia.DAL
         public DbSet<TreningWlasny> TreningiWlasne { get; set; }
         public DbSet<KomentarzOPracowniku> KomentarzeOPracownikach { get; set; }
         public DbSet<Umowa> Umowy { get; set; }
+        public DbSet<Uzytkownik> Uzytkownicy { get; set; }
         public DbSet<Sala> Sale { get; set; }
         public DbSet<Wiadomosc> Wiadomosci { get; set; }
 

@@ -5,12 +5,15 @@ namespace Silownia.Models
 {
     public class Masaz
     {
+        [Required(ErrorMessage = "Wybierz masażystę z listy")]
+        public long MasazystaID { get; set; }
+
         public long MasazID { get; set; }
 
         [Required(ErrorMessage = "Podaj datę masażu")]
-        [DataType(DataType.Date)]
-        [Display(Name = "Data masażu")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+        //[Display(Name = "Pełna data masażu")]
+        //[DataType(DataType.Date)]
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime DataMasazu { get; set; }
 
         [Display(Name = "Czas trwania")]

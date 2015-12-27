@@ -234,6 +234,7 @@
     <Compile Include="Models\Sprzet.cs" />
     <Compile Include="Models\Trener.cs" />
     <Compile Include="Models\Trening.cs" />
+    <Compile Include="Models\Uzytkownik.cs" />
     <Compile Include="Models\Wiadomosc.cs" />
     <Compile Include="Models\ZajeciaGrupowe.cs" />
     <Compile Include="Models\TreningPersonalny.cs" />
@@ -446,9 +447,6 @@
           <CustomServerUrl>
           </CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
-          <servers defaultServer="SelfHostServer">
-            <server name="SelfHostServer" exePath="" cmdArgs="" url="http://localhost:58451/" workingDir="" />
-          </servers>
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>
