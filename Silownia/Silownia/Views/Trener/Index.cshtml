@@ -40,9 +40,11 @@
 @using (Html.BeginForm())
 {
     <p>
-        Szukaj po imieniu/nazwisku: @Html.TextBox("imieNazwisko")
-
-        <input type="submit" value="szukaj" />
+        @Html.Partial("KryteriaSzukania/_imieNazwisko")
+        @Html.Partial("KryteriaSzukania/_silownia")
+        @Html.Partial("KryteriaSzukania/_specjalizacja")
+        <br />
+        <input type="submit" value="szukaj" class="btn btn-success" />
     </p>
 }
 
@@ -54,9 +56,12 @@
         <th>
             @Html.Label("Nazwisko:")
         </th>
-        <th>
-            @Html.Label("Data urodzenia:")
-        </th>
+        @*
+                <th>
+                @Html.Label("Data urodzenia:")
+            </th>
+        *@
+
         <th>
             @Html.Label("Data zatrudnienia:")
         </th>
@@ -81,9 +86,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Nazwisko)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataUrodzenia)
-            </td>
+            @*
+                    <td>
+                    @Html.DisplayFor(modelItem => item.DataUrodzenia)
+                </td>
+
+            *@
             <td>
                 @Html.DisplayFor(modelItem => item.DataZatrudnienia)
             </td>

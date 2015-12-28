@@ -18,19 +18,17 @@ namespace Silownia.Controllers
         private SilowniaContext db = new SilowniaContext();
 
         // GET: Recepcjonista
-        public ActionResult Index(string imieNazwisko, int page = 1, int pageSize = 10, AkcjaEnumRecepcjonista akcja = AkcjaEnumRecepcjonista.Brak, String info = null)
+        public ActionResult Index(string imieNazwisko, string SilowniaID, int page = 1, int pageSize = 10, AkcjaEnumRecepcjonista akcja = AkcjaEnumRecepcjonista.Brak, String info = null)
         {
-            ViewBag.srchImieNazwisko = imieNazwisko;
+            //ViewBag.srchImieNazwisko = imieNazwisko;
 
-            var a = from Osoby in db.Recepcjonisci.OfType<Recepcjonista>() select Osoby;
+            ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
+            var recepcjonisci = from Osoby in db.Recepcjonisci.OfType<Recepcjonista>() select Osoby;
+            recepcjonisci = recepcjonisci.Search(imieNazwisko, i => i.Imie, i => i.Nazwisko);
+            recepcjonisci = recepcjonisci.Search(SilowniaID, i => i.Silownia.Nazwa);
 
-            if (!String.IsNullOrEmpty(imieNazwisko))
-            {
-                a = a.Where(s => s.Imie.Contains(imieNazwisko) || s.Nazwisko.Contains(imieNazwisko));
-            }
-
-            var final = a.OrderBy(p => p.Imie);
-            var ileWynikow = a.Count();
+            var final = recepcjonisci.OrderBy(p => p.Imie);
+            var ileWynikow = recepcjonisci.Count();
             if ((ileWynikow / page) <= 1)
             {
                 page = 1;
@@ -76,7 +74,7 @@ namespace Silownia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,DataZatrudnienia,Pensja,SilowniaID")] Recepcjonista recepcjonista)
+        public ActionResult Create([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,Pesel,NrTelefonu,DataZatrudnienia,Pensja,SilowniaID")] Recepcjonista recepcjonista)
         {
             if (ModelState.IsValid)
             {
@@ -110,7 +108,7 @@ namespace Silownia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,DataZatrudnienia,Pensja,SilowniaID")] Recepcjonista recepcjonista)
+        public ActionResult Edit([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,Pesel,NrTelefonu,DataZatrudnienia,Pensja,SilowniaID")] Recepcjonista recepcjonista)
         {
             if (ModelState.IsValid)
             {

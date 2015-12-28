@@ -9,11 +9,14 @@
 
 @using (Html.BeginForm())
 {
-    <p>
-        Szukaj po nazwie siłowni: @Html.DropDownList("SilowniaID", "Wybierz siłownię")
-        Szukaj po imieniu/nazwisku Klienta: @Html.TextBox("imieNazwisko")
-        <input type="submit" value="szukaj" />
-    </p>
+    
+       @Html.Partial("KryteriaSzukania/_imieNazwisko")
+       @Html.Partial("KryteriaSzukania/_silownia")
+    
+       
+        <br />
+
+    <input type="submit" value="szukaj" class="btn btn-success" />
 }
 
 <p>

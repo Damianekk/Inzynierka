@@ -93,7 +93,7 @@ namespace Silownia.Controllers
                 }
                 db.Adresy.Add(adres);
                 db.SaveChanges();
-                return RedirectToAction("Index", redirectTo);
+                return RedirectToAction("Index", redirectTo.ToString());
             }
 
             return View(adres);

@@ -25,6 +25,13 @@ a.umowaPic {
     text-indent: -9999px; /* hides the link text */
 }
 
+a.masazPic {
+    background: url(http://cabrerahotelmalecon.com/wp-content/uploads/2014/11/massage-icon-e1416187871460.png) no-repeat;
+    display: block;
+    width: 50px;
+    height: 50px;
+    text-indent: -9999px; /* hides the link text */
+}
 
 a.adresPic {
     background: url(http://www.resolute.me/img/icon_address.png) no-repeat;

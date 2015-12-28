@@ -1,0 +1,95 @@
+﻿@model Silownia.Models.Masazysta
+
+@{
+    ViewBag.Title = "Masażysta: usuń";
+}
+
+<h2>Czy na pewno chcesz usunąć masażystę @Model.imieNazwisko?</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Imie)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Imie)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nazwisko)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nazwisko)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataUrodzenia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataUrodzenia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pesel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pesel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NrTelefonu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NrTelefonu)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataZatrudnienia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataZatrudnienia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pensja)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pensja)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StawkaGodzinowa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StawkaGodzinowa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Silownia.Nazwa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Silownia.Nazwa)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Usuń" class="btn btn-default" /> |
+            @Html.ActionLink("Powrót do listy masażystów", "Index")
+        </div>
+    }
+</div>

@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using System.Globalization;
 using PagedList;
 using Silownia.Helpers;
+using System.Collections.Generic;
 
 namespace Silownia.Controllers
 {
@@ -17,26 +18,16 @@ namespace Silownia.Controllers
         private SilowniaContext db = new SilowniaContext();
 
         // GET: /Umowa/
-        public ActionResult Index(string imieNazwisko, string Silownia, int page = 1, int pageSize = 10, AkcjaEnumUmowa akcja = AkcjaEnumUmowa.Brak, String info = null)
+        public ActionResult Index(string imieNazwisko, string SilowniaID, int page = 1, int pageSize = 10, AkcjaEnumUmowa akcja = AkcjaEnumUmowa.Brak, String info = null)
         {
-            ViewBag.srchImieNazwisko = imieNazwisko;
-            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", Silownia);
-            //TODO: do ogarnięcia - wybór z dropdownlisty nie przechodzi do wyszukiwania
+          //  ViewBag.srchImieNazwisko = imieNazwisko;
 
+            ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
+     
             var umowy = from Umowy in db.Umowy select Umowy;
-            umowy.Include(s => s.Silownia);
 
-            if (!String.IsNullOrEmpty(Silownia))
-            {
-                umowy = umowy.Where(s => s.Silownia.Nazwa.Contains(Silownia));
-            }
- 
-
-            if (!String.IsNullOrEmpty(imieNazwisko))
-            {
-                umowy = umowy.Where(s => s.Klient.Imie.Contains(imieNazwisko) || s.Klient.Nazwisko.Contains(imieNazwisko));
-            }
-
+            umowy = umowy.Search(imieNazwisko, i => i.Klient.Imie, i => i.Klient.Nazwisko);
+            umowy = umowy.Search(SilowniaID, i => i.Silownia.Nazwa);
 
             var final = umowy.OrderBy(p => p.Klient.Imie);
             var ileWynikow = umowy.Count();
@@ -92,7 +83,8 @@ namespace Silownia.Controllers
             {
                 DataPodpisania = DateTime.Now,
                 // tu przydałoby się dodać datę now + miesiąc
-                DataZakonczenia = DateTime.Now
+                DataZakonczenia = (DateTime.Now).AddMonths(1),
+                
                 // ,Recepcjonista = recepcjonista 
             });
         }
@@ -115,7 +107,7 @@ namespace Silownia.Controllers
             //    return RedirectToAction("Index", "Klient");
             //}
             ViewBag.RecepcjonistaID = new SelectList(db.Recepcjonisci, "OsobaID", "imieNazwisko", umowa.RecepcjonistaID);
-
+            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", umowa.SilowniaID);
 
             if (ModelState.IsValid && !aktywnaUmowa(id, umowa.DataPodpisania, umowa.DataZakonczenia))
             {
@@ -142,8 +134,7 @@ namespace Silownia.Controllers
                 return RedirectToAction("Index", new { akcja = AkcjaEnumUmowa.DodanoUmowe, info = klient.imieNazwisko });
             }
 
-            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", umowa.SilowniaID);
-           
+            
             return View(umowa);
         }
 
@@ -191,7 +182,7 @@ namespace Silownia.Controllers
             {
                 db.Entry(umowa).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index", new { akcja = AkcjaEnumUmowa.UsunietoUmowe});
+                return RedirectToAction("Index");
             }
             ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", umowa.SilowniaID);
             return View(umowa);
@@ -220,7 +211,7 @@ namespace Silownia.Controllers
             Umowa umowa = db.Umowy.Find(id);
             db.Umowy.Remove(umowa);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { akcja = AkcjaEnumUmowa.UsunietoUmowe });
         }
 
         protected override void Dispose(bool disposing)

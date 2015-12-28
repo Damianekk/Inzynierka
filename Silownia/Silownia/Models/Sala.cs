@@ -25,9 +25,12 @@ namespace Silownia.Models
         public string Rodzaj { get; set; }
         public string Status { get; set; }
         public string Opis { get; set; }
+
         public virtual ICollection<Sprzet> Sprzety { get; set; }
         public virtual ICollection<ZajeciaGrupowe> ZajeciaGrup { get; set; }
         public virtual ICollection<Masaz> Masaze { get; set; }
+
+        public long SilowniaID { get; set; }
         public virtual Silownia Silownia { get; set; }
 
     }

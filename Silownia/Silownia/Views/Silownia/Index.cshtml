@@ -9,6 +9,15 @@
 <p>
     @Html.ActionLink("Dodaj nową siłownię", "Create")
 </p>
+
+@using (Html.BeginForm())
+{
+      @Html.Partial("KryteriaSzukania/_miasto")      
+        <br />
+
+    <input type="submit" value="szukaj" class="btn btn-success" />
+}
+
 <table class="table">
     <tr>
         <th>

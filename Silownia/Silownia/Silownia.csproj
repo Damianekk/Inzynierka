@@ -179,6 +179,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\MasazController.cs" />
+    <Compile Include="Controllers\MasazystaController.cs" />
     <Compile Include="Controllers\SalaController.cs" />
     <Compile Include="DAL\_Repository.cs" />
     <Compile Include="Helpers\AkcjaEnum.cs" />
@@ -204,11 +206,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\AkcjaEnumMasaz.cs" />
+    <Compile Include="Helpers\AkcjaEnumMasazysta.cs" />
     <Compile Include="Helpers\AkcjaEnumRecepcjonista.cs" />
+    <Compile Include="Helpers\AkcjaEnumSilownia.cs" />
     <Compile Include="Helpers\AkcjaEnumTrener.cs" />
     <Compile Include="Helpers\AkcjaEnumUmowa.cs" />
     <Compile Include="Helpers\SelectToList.cs" />
     <Compile Include="Helpers\StatusWiadomosciEnum.cs" />
+    <Compile Include="Helpers\KryteriaSzukania.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Adres.cs" />
@@ -232,6 +238,7 @@
     <Compile Include="Models\Sprzet.cs" />
     <Compile Include="Models\Trener.cs" />
     <Compile Include="Models\Trening.cs" />
+    <Compile Include="Models\Uzytkownik.cs" />
     <Compile Include="Models\Wiadomosc.cs" />
     <Compile Include="Models\ZajeciaGrupowe.cs" />
     <Compile Include="Models\TreningPersonalny.cs" />
@@ -241,6 +248,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\KomuAdres.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Helpers\SwapExpressionVisitor.cs" />
     <Compile Include="Test.cs" />
     <Compile Include="ViewModel\SprzetSaleSilkaModelView.cs" />
   </ItemGroup>
@@ -249,9 +257,14 @@
     <Content Include="Content\4.jpg" />
     <Content Include="Content\arrow.gif" />
     <Content Include="Content\Arrow.js" />
+    <Content Include="Content\bootstrap-datetimepicker.css" />
+    <Content Include="Content\bootstrap-datetimepicker.min.css" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\fitnesspremium3.jpg" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\images.jpg" />
     <Content Include="Content\OurTeam\dbudzynowski.jpg" />
     <Content Include="Content\OurTeam\jbielawska.jpg" />
@@ -290,8 +303,9 @@
     <Content Include="HomeView\js\grayscale.js" />
     <Content Include="HomeView\js\jquery.easing.min.js" />
     <Content Include="HomeView\js\jquery.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\Site.less" />
     <Content Include="HomeView\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="HomeView\fonts\glyphicons-halflings-regular.ttf" />
@@ -300,11 +314,94 @@
     <Content Include="HomeView\less\grayscale.less" />
     <Content Include="HomeView\less\mixins.less" />
     <Content Include="HomeView\less\variables.less" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap\wells.less" />
+    <Content Include="Content\bootstrap\variables.less" />
+    <Content Include="Content\bootstrap\utilities.less" />
+    <Content Include="Content\bootstrap\type.less" />
+    <Content Include="Content\bootstrap\tooltip.less" />
+    <Content Include="Content\bootstrap\thumbnails.less" />
+    <Content Include="Content\bootstrap\theme.less" />
+    <Content Include="Content\bootstrap\tables.less" />
+    <Content Include="Content\bootstrap\scaffolding.less" />
+    <Content Include="Content\bootstrap\responsive-utilities.less" />
+    <Content Include="Content\bootstrap\responsive-embed.less" />
+    <Content Include="Content\bootstrap\progress-bars.less" />
+    <Content Include="Content\bootstrap\print.less" />
+    <Content Include="Content\bootstrap\popovers.less" />
+    <Content Include="Content\bootstrap\panels.less" />
+    <Content Include="Content\bootstrap\pagination.less" />
+    <Content Include="Content\bootstrap\pager.less" />
+    <Content Include="Content\bootstrap\normalize.less" />
+    <Content Include="Content\bootstrap\navs.less" />
+    <Content Include="Content\bootstrap\navbar.less" />
+    <Content Include="Content\bootstrap\modals.less" />
+    <Content Include="Content\bootstrap\mixins\vendor-prefixes.less" />
+    <Content Include="Content\bootstrap\mixins\text-overflow.less" />
+    <Content Include="Content\bootstrap\mixins\text-emphasis.less" />
+    <Content Include="Content\bootstrap\mixins\table-row.less" />
+    <Content Include="Content\bootstrap\mixins\tab-focus.less" />
+    <Content Include="Content\bootstrap\mixins\size.less" />
+    <Content Include="Content\bootstrap\mixins\responsive-visibility.less" />
+    <Content Include="Content\bootstrap\mixins\resize.less" />
+    <Content Include="Content\bootstrap\mixins\reset-text.less" />
+    <Content Include="Content\bootstrap\mixins\reset-filter.less" />
+    <Content Include="Content\bootstrap\mixins\progress-bar.less" />
+    <Content Include="Content\bootstrap\mixins\panels.less" />
+    <Content Include="Content\bootstrap\mixins\pagination.less" />
+    <Content Include="Content\bootstrap\mixins\opacity.less" />
+    <Content Include="Content\bootstrap\mixins\nav-vertical-align.less" />
+    <Content Include="Content\bootstrap\mixins\nav-divider.less" />
+    <Content Include="Content\bootstrap\mixins\list-group.less" />
+    <Content Include="Content\bootstrap\mixins\labels.less" />
+    <Content Include="Content\bootstrap\mixins\image.less" />
+    <Content Include="Content\bootstrap\mixins\hide-text.less" />
+    <Content Include="Content\bootstrap\mixins\grid-framework.less" />
+    <Content Include="Content\bootstrap\mixins\grid.less" />
+    <Content Include="Content\bootstrap\mixins\gradients.less" />
+    <Content Include="Content\bootstrap\mixins\forms.less" />
+    <Content Include="Content\bootstrap\mixins\clearfix.less" />
+    <Content Include="Content\bootstrap\mixins\center-block.less" />
+    <Content Include="Content\bootstrap\mixins\buttons.less" />
+    <Content Include="Content\bootstrap\mixins\border-radius.less" />
+    <Content Include="Content\bootstrap\mixins\background-variant.less" />
+    <Content Include="Content\bootstrap\mixins\alerts.less" />
+    <Content Include="Content\bootstrap\mixins.less" />
+    <Content Include="Content\bootstrap\media.less" />
+    <Content Include="Content\bootstrap\list-group.less" />
+    <Content Include="Content\bootstrap\labels.less" />
+    <Content Include="Content\bootstrap\jumbotron.less" />
+    <Content Include="Content\bootstrap\input-groups.less" />
+    <Content Include="Content\bootstrap\grid.less" />
+    <Content Include="Content\bootstrap\glyphicons.less" />
+    <Content Include="Content\bootstrap\forms.less" />
+    <Content Include="Content\bootstrap\dropdowns.less" />
+    <Content Include="Content\bootstrap\component-animations.less" />
+    <Content Include="Content\bootstrap\code.less" />
+    <Content Include="Content\bootstrap\close.less" />
+    <Content Include="Content\bootstrap\carousel.less" />
+    <Content Include="Content\bootstrap\buttons.less" />
+    <Content Include="Content\bootstrap\button-groups.less" />
+    <Content Include="Content\bootstrap\breadcrumbs.less" />
+    <Content Include="Content\bootstrap\bootstrap.less" />
+    <Content Include="Content\bootstrap\badges.less" />
+    <Content Include="Content\bootstrap\alerts.less" />
+    <Content Include="Content\bootstrap-datetimepicker-build.less" />
+    <Content Include="Content\_bootstrap-datetimepicker.less" />
     <None Include="Properties\PublishProfiles\PureMuscles - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\PureMuscles - Web Deploy.pubxml">
       <SubType>Designer</SubType>
     </None>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\infoCzynnosc.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -315,6 +412,11 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\Karuzela.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
@@ -390,15 +492,30 @@
     <Content Include="Views\Sala\Details.cshtml" />
     <Content Include="Views\Sala\Edit.cshtml" />
     <Content Include="Views\Sala\Index.cshtml" />
+    <Content Include="Views\Shared\KryteriaSzukania\_imieNazwisko.cshtml" />
+    <Content Include="Views\Shared\KryteriaSzukania\_silownia.cshtml" />
+    <Content Include="Views\Shared\KryteriaSzukania\_miasto.cshtml" />
+    <Content Include="Views\Shared\KryteriaSzukania\_tylkoZumowa.cshtml" />
+    <Content Include="Views\Shared\KryteriaSzukania\_specjalizacja.cshtml" />
+    <Content Include="Views\Masazysta\Create.cshtml" />
+    <Content Include="Views\Masazysta\Delete.cshtml" />
+    <Content Include="Views\Masazysta\Details.cshtml" />
+    <Content Include="Views\Masazysta\Edit.cshtml" />
+    <Content Include="Views\Masazysta\Index.cshtml" />
+    <Content Include="Views\Masaz\Create.cshtml" />
+    <Content Include="Views\Masaz\Delete.cshtml" />
+    <Content Include="Views\Masaz\Details.cshtml" />
+    <Content Include="Views\Masaz\Edit.cshtml" />
+    <Content Include="Views\Masaz\Index.cshtml" />
+    <Content Include="Views\Shared\KryteriaSzukania\_masazysta.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
@@ -431,9 +548,6 @@
           <CustomServerUrl>
           </CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
-          <servers defaultServer="SelfHostServer">
-            <server name="SelfHostServer" exePath="" cmdArgs="" url="http://localhost:58451/" workingDir="" />
-          </servers>
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>

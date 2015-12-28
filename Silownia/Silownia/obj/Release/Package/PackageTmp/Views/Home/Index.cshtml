@@ -1,0 +1,122 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<html lang="en">
+
+
+
+<head>
+
+    @{
+        Layout = "~/Views/Shared/_LayoutClient.cshtml";
+    }
+
+</head>
+
+<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+    <header class="intro">
+        <div class="intro-body">
+            <div class="container">
+                <section id="intro" class="container content-section text-center">
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <h1 class="brand-heading">pure muscles</h1>
+                            <p class="intro-text"><a class="zielony">Tylko u nas treningi</a> SZYTE <a class="zielony">na miarę !</a><br></p>
+                            <a href="#oNas" class="btn btn-circle page-scroll">
+                                <i class="fa fa-angle-double-down animated"></i>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </header>
+
+    <section id="oNas" class="container content-section text-center">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <h2>O NAS</h2>
+                <p>
+                    Kluby <a class="zielony">PURE MUSCLES</a> to 7 nowoczesnych lokalizacji w Warszawie. Nasze kluby mieszczą się w dogodnych
+                    lokalizacjach zapewniając <a class="zielony">WYGODNY</a> dojazd do dowolnego klubu fitness z każdego miejsca w Warszawie.
+                <p>
+                    Nasze kluby fitness
+                    oferują swoim członkom bardzo zróżnicowane zajęcia, takie jak np. zumba, aerobic, joga oraz Total Fitness – <a class="zielony">
+                        UNIKALNY
+                    </a>    program opracowany przez <a href="https://www.google.pl/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=ewa%20chodakowska"> Ewę Chodakowską</a>.
+                <p>
+                    Jeśli nie jesteś przekonany czy fitness jest dla Ciebie pobierz darmową wejściówkę
+                    na zajęcia fitness w Warszawie i sprawdź Jatomi Fitness. Jeśli szukasz zajęć fitness w Warszawie, wybierz te w Jatomi Fitness
+                    - takie zdanie ma kilkadziesiąt tysięcy naszych klubowiczów, sprawdź dlaczego!
+            </div>
+        </div>
+    </section>
+
+
+    <section id="oNas" class="content-section text-center">
+        <div class="download-section">
+            <div class="container">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <h2>Nie tylko siłownia</h2>
+                    <p>
+                        Ćwiczenia są niezwykle ważne, ale równie ważna jest właściwa dieta
+                        . Jeśli odpowiednio się odżywiasz, będziesz mieć więcej energii do ćwiczeń, a zrzucenie zbędnych kilogramów przyjdzie Ci o wiele łatwiej.
+                    </p>
+
+                    <a href="@Url.Action("Register", "Account")" class="btn btn-default btn-lg">Zarejestruj się już teraz </a>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="TRENERZY" class="container content-section text-center">
+        <h2>NASI TRENERZY</h2>
+        @Html.Partial("_Carusel")
+    </section>
+
+    <section id="LOKALIZACJE">
+        <br/>
+        <!-- Map Section -->
+        <div id="map" style="height:600px"></div>
+    </section>
+
+    <section id="KONTAKT" class="container content-section text-center">
+        <br/>
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <h2>KONTAKT PURE MUSCLES</h2>
+                <p>W razie jakichkolwiek pytań dzwoń lub pisz!</p>
+                <p>
+                    Tel: <a>22 652 22 24</a>
+                    <br />
+                    Email: <a href="mailto:PureMuscles@feedback.com">PureMuscles@feedback.com</a>
+                </p>
+                <ul class="list-inline banner-social-buttons">
+                    <li>
+                        <a href="" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
+                    </li>
+                    <li>
+                        <a href="" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
+                    </li>
+                    <li>
+                        <a href="" class="btn btn-default btn-lg"><i class="fa fa-google-plus fa-fw"></i> <span class="network-name">Google+</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+
+
+    <footer>
+        <div class="container text-center">
+            <p>Copyright &copy; Your Website 2014</p>
+        </div>
+    </footer>
+</body>
+</html>
+
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRngKslUGJTlibkQ3FkfTxj3Xss1UlZDA&sensor=false"></script>
+
+

@@ -29,6 +29,22 @@
             @Html.DisplayNameFor(model => model.DataUrodzenia)
         </dt>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Pesel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pesel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NrTelefonu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NrTelefonu)
+        </dd>
+
         <dd>
             @Html.DisplayFor(model => model.DataUrodzenia)
         </dd>
@@ -66,7 +82,8 @@
         </dd>
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">

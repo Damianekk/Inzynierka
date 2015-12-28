@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Silownia.Models
 {
@@ -28,6 +29,21 @@ namespace Silownia.Models
         public long NrTelefonu { get; set; }
         public double Dlugosc { get; set; }
         public double Szerokosc { get; set; }
+        [Display(Name = "Dodatkowe informacje")]
+        public string DodatkoweInfo { get; set; }
+      
+        [NotMapped]
+        public string infoDodatkowe
+        {
+            get
+            {
+                return !string.IsNullOrEmpty(DodatkoweInfo) ? DodatkoweInfo : "Brak";
+            }
+            set
+            {
+                DodatkoweInfo = value;
+            }
+        }
 
         public virtual Adres Adres { get; set; }
         public virtual ICollection<Umowa> Umowy { get; set; }

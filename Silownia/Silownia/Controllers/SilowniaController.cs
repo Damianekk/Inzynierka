@@ -4,6 +4,11 @@ using System.Net;
 using System.Web.Mvc;
 using Silownia.DAL;
 using System.Web.Script.Serialization;
+using System;
+using PagedList;
+using Silownia.Models;
+using System.Data;
+using System.Collections.Generic;
 
 namespace Silownia.Controllers
 {
@@ -12,9 +17,35 @@ namespace Silownia.Controllers
         private SilowniaContext db = new SilowniaContext();
 
         // GET: /Silownia/
-        public ActionResult Index()
+        public ActionResult Index(string Miasto, int page = 1, int pageSize = 10, AkcjaEnumSilownia akcja = AkcjaEnumSilownia.Brak, String info = null)
         {
-            return View(db.Silownie.ToList());
+ 
+            var Miasta = db.Silownie.Where(u => (u.SilowniaID != null) && (u.Adres != null)).DistinctBy(a => new { a.Adres.Miasto }).Select(x=>x.Adres);
+
+
+            ViewBag.Miasto = new SelectList(Miasta, "Miasto", "Miasto");
+
+            var silownie = from Silownie in db.Silownie select Silownie;
+            silownie = silownie.Search(Miasto, m => m.Adres.Miasto);
+         
+            var final = silownie.OrderBy(p => p.Nazwa);
+            var ileWynikow = silownie.Count();
+            if ((ileWynikow / page) <= 1)
+            {
+                page = 1;
+            }
+            var kk = ileWynikow / page;
+
+            PagedList<Models.Silownia> model = new PagedList<Models.Silownia>(final, page, pageSize);
+
+
+            if (akcja != AkcjaEnumSilownia.Brak)
+            {
+                ViewBag.info = info;
+                ViewBag.Akcja = akcja;
+            }
+
+            return View(model);
         }
 
         // GET: /Silownia/Details/5
@@ -47,14 +78,14 @@ namespace Silownia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "SilowniaID,Nazwa,GodzinaOtwarcia,GodzinaZamkniecia,Powierzchnia,NrTelefonu")] Models.Silownia silownia)
+        public ActionResult Create([Bind(Include = "SilowniaID,Nazwa,GodzinaOtwarcia,GodzinaZamkniecia,Powierzchnia,NrTelefonu,DodatkoweInfo")] Models.Silownia silownia)
         {
 
             if (ModelState.IsValid)
             {               
                 db.Silownie.Add(silownia);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create","Adres",new { id = silownia.SilowniaID, komu = KomuAdres.Silownia });
             }
            
 
@@ -83,7 +114,7 @@ namespace Silownia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "SilowniaID,Nazwa,GodzinaOtwarcia,GodzinaZamkniecia,Powierzchnia,NrTelefonu")] Models.Silownia silownia)
+        public ActionResult Edit([Bind(Include = "SilowniaID,Nazwa,GodzinaOtwarcia,GodzinaZamkniecia,Powierzchnia,NrTelefonu,DodatkoweInfo")] Models.Silownia silownia)
         {
             if (ModelState.IsValid)
             {
@@ -129,16 +160,26 @@ namespace Silownia.Controllers
             base.Dispose(disposing);
         }
         [HttpPost]
-        public JsonResult JsonTest()
+        public JsonResult SilowniaInfoJSON()
         {
 
             var jsonSerialiser = new JavaScriptSerializer();
-            var silownie = db.Silownie.Where(s => s.Adres != null).ToList();
-      
-             
-            //  silownie.RemoveAll(item => item.Adres != null);
+            var silownie = db.Silownie.Where(s => s.Adres != null).ToList<Silownia.Models.Silownia>();
 
-            return Json(new { ok = true, mydata = silownie, message = "" },JsonRequestBehavior.AllowGet);
+            //  silownie.RemoveAll(item => item.Adres != null);
+            var z = silownie.Select(x => new
+                        {
+                            dlugosc = x.Dlugosc,
+                            szerokosc = x.Szerokosc,
+                            godzOtw = x.GodzinaOtwarcia,
+                            godzZam = x.GodzinaZamkniecia,
+                            nazwa = x.Nazwa,
+                            info = x.infoDodatkowe
+
+                        });
+            return Json(z);
+
+          //  return Json(new { ok = true, myData = silownie }, JsonRequestBehavior.AllowGet);
         }
     }
 }

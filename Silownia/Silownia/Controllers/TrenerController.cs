@@ -8,6 +8,7 @@ using Silownia.Models;
 using Silownia.DAL;
 using PagedList;
 using Silownia.Helpers;
+using System.Collections.Generic;
 
 namespace Silownia.Controllers
 {
@@ -16,19 +17,21 @@ namespace Silownia.Controllers
         private SilowniaContext db = new SilowniaContext();
 
         // GET: /Trener/
-        public ActionResult Index( string imieNazwisko, int page = 1, int pageSize = 10, AkcjaEnumTrener akcja = AkcjaEnumTrener.Brak, String info = null)
+        public ActionResult Index(string imieNazwisko, string SilowniaID, string SpecjalizacjaID, int page = 1, int pageSize = 10, AkcjaEnumTrener akcja = AkcjaEnumTrener.Brak, String info = null)
         {
             ViewBag.srchImieNazwisko = imieNazwisko;
 
-            var a = from Osoby in db.Trenerzy select Osoby;
+            ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
+            ViewBag.SpecjalizacjaID = new SelectList(db.Specjalizacje.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
+      
+            var osoby = from Osoby in db.Trenerzy select Osoby;
 
-            if (!String.IsNullOrEmpty(imieNazwisko))
-            {
-                a = a.Where(s => s.Imie.Contains(imieNazwisko) || s.Nazwisko.Contains(imieNazwisko));
-            }
+            osoby = osoby.Search(imieNazwisko, i => i.Imie, i => i.Nazwisko);
+            osoby = osoby.Search(SpecjalizacjaID, i => i.Specjalizacja.Nazwa);
+            osoby = osoby.Search(SilowniaID, i => i.Silownia.Nazwa);
 
-            var final = a.OrderBy(p => p.Imie);
-            var ileWynikow = a.Count();
+            var final = osoby.OrderBy(p => p.Imie);
+            var ileWynikow = osoby.Count();
             if ((ileWynikow / page) <= 1)
             {
                 page = 1;
@@ -85,7 +88,10 @@ namespace Silownia.Controllers
 
             ViewBag.SpecjalizacjaID = new SelectList(db.Specjalizacje, "SpecjalizacjaID", "Nazwa", trener.Specjalizacja);
             ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
-            return View(trener);
+            return View(new Trener
+            {
+                DataZatrudnienia = DateTime.Now
+            });
         }
 
         // GET: /Trener/Edit/5
@@ -101,7 +107,7 @@ namespace Silownia.Controllers
                 return HttpNotFound();
             }
             ViewBag.SpecjalizacjaID = new SelectList(db.Specjalizacje, "SpecjalizacjaID", "Nazwa", trener.Specjalizacja);
-            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
+            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", trener.Silownia);
             return View(trener);
         }
 
@@ -119,7 +125,7 @@ namespace Silownia.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.SpecjalizacjaID = new SelectList(db.Specjalizacje, "SpecjalizacjaID", "Nazwa", trener.Specjalizacja);
-            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
+            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", trener.Silownia);
             return View(trener);
         }
 

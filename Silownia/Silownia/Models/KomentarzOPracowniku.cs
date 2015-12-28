@@ -16,7 +16,7 @@ namespace Silownia.Models
         [MaxLength(250, ErrorMessage = "Wpisany komentarz jest zbyt długi! :(")]
         public string Komentarz { get; set; }
 
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime Data_wystawienia { get; set; }
 
 

@@ -39,6 +39,7 @@ namespace Silownia.Controllers
         // GET: /Sala/Create
         public ActionResult Create()
         {
+            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
             return View();
         }
 
@@ -47,7 +48,7 @@ namespace Silownia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="Numer_sali,Rodzaj,Status,Opis")] Sala sala)
+        public ActionResult Create([Bind(Include="Numer_sali,Rodzaj,Status,Opis, SilowniaID")] Sala sala)
         {
             if (ModelState.IsValid)
             {
@@ -55,7 +56,7 @@ namespace Silownia.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
             return View(sala);
         }
 
@@ -71,6 +72,7 @@ namespace Silownia.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", sala.Silownia);
             return View(sala);
         }
 
@@ -87,6 +89,7 @@ namespace Silownia.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", sala.Silownia);
             return View(sala);
         }
 
