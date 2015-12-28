@@ -26,7 +26,9 @@ namespace Silownia.Controllers
       
             var osoby = from Osoby in db.Trenerzy select Osoby;
 
-            osoby = osoby.Search(imieNazwisko, i => i.Imie, i => i.Nazwisko);
+            if (!String.IsNullOrEmpty(imieNazwisko))
+                foreach (string wyraz in imieNazwisko.Split(' '))
+                    osoby = osoby.Search(wyraz, i => i.Imie, i => i.Nazwisko);
             osoby = osoby.Search(SpecjalizacjaID, i => i.Specjalizacja.Nazwa);
             osoby = osoby.Search(SilowniaID, i => i.Silownia.Nazwa);
 

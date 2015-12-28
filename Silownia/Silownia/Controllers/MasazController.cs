@@ -27,9 +27,19 @@ namespace Silownia.Controllers
 
             var masaze = from Masaze in db.Masaze select Masaze;
 
-            masaze = masaze.Search(imieNazwisko, i => i.Klient.Imie, i => i.Klient.Nazwisko);
+            if (!String.IsNullOrEmpty(imieNazwisko))
+                foreach (string wyraz in imieNazwisko.Split(' '))
+                    masaze = masaze.Search(wyraz, i => i.Klient.Imie, i => i.Klient.Nazwisko);
+
             masaze = masaze.Search(SilowniaID, i => i.Masazysta.Silownia.Nazwa);
-            masaze = masaze.Search(MasazystaID, i => i.Masazysta.Imie, i => i.Masazysta.Nazwisko);
+
+            if (!String.IsNullOrEmpty(MasazystaID))
+                foreach (string wyraz in MasazystaID.Split(' '))
+                    masaze = masaze.Search(wyraz, i => i.Masazysta.Imie, i => i.Masazysta.Nazwisko);
+
+            //previous solution
+            // masaze = masaze.Search(imieNazwisko, i => i.Klient.Imie, i => i.Klient.Nazwisko);
+            // masaze = masaze.Search(MasazystaID, i => i.Masazysta.Imie, i => i.Masazysta.Nazwisko);
 
             var final = masaze.OrderBy(p => p.Klient.Imie);
             var ileWynikow = masaze.Count();
@@ -98,7 +108,8 @@ namespace Silownia.Controllers
             ViewBag.MasazystaID = new SelectList(db.Masazysci, "OsobaID", "imieNazwisko", masaz.MasazystaID);
 
             //if (ModelState.IsValid && !aktywnyMasaz(id, masaz.DataMasazu) && !zajetyMasazysta(masaz.MasazystaID, masaz.DataMasazu))
-                if (ModelState.IsValid && !aktywnyMasaz(id, masaz.DataMasazu) && !zajetyMasazysta(masaz.MasazystaID, masaz.DataMasazu) && !aktywnyMasazLong(id, masaz.DataMasazu, masaz.DataMasazuKoniec))
+            // if (ModelState.IsValid && !aktywnyMasaz(id, masaz.DataMasazu) && !zajetyMasazysta(masaz.MasazystaID, masaz.DataMasazu) && !aktywnyMasazLong(id, masaz.DataMasazu, masaz.DataMasazuKoniec))
+            if (ModelState.IsValid && !aktywnyMasaz(id, masaz.DataMasazu) && !aktywnyMasazLong(id, masaz.DataMasazu, masaz.DataMasazuKoniec))
             {
                 #region Klient
                 Klient klient = db.Klienci.Find(id);
@@ -123,7 +134,7 @@ namespace Silownia.Controllers
 
         bool aktywnyMasaz(long? klientID, DateTime DataMasazu)
         {
-            var check = db.Masaze.Where(o => o.Klient.OsobaID == klientID && o.DataMasazu == DataMasazu.Date).ToList();
+            var check = db.Masaze.Where(o => o.Klient.OsobaID == klientID && o.DataMasazu == DataMasazu).ToList();
 
             if (check.Count == 1)
             {
@@ -132,19 +143,19 @@ namespace Silownia.Controllers
             }
             else return false; // klient nie ma masażu w terminie
         }
+        /*
+                bool zajetyMasazysta(long? MasazystaID, DateTime DataMasazu)
+                {
+                    var check = db.Masaze.Where(o => o.Masazysta.OsobaID == MasazystaID && o.DataMasazu == DataMasazu).ToList();
 
-        bool zajetyMasazysta(long? MasazystaID, DateTime DataMasazu)
-        {
-            var check = db.Masaze.Where(o => o.Klient.OsobaID == MasazystaID && o.DataMasazu == DataMasazu.Date).ToList();
-
-            if (check.Count == 1)
-            {
-                TempData["msg"] = "<script>alert('Masażysta ma już masaż w tym terminie. Spróbuj wybrać innego masażystę.');</script>";
-                return true; // masażysta ma masaż w tym terminie
-            }
-            else return false; // masażysta nie ma masażu w terminie
-        }
-
+                    if (check.Count == 1)
+                    {
+                        TempData["msg"] = "<script>alert('Masażysta ma już masaż w tym terminie. Spróbuj wybrać innego masażystę.');</script>";
+                        return true; // masażysta ma masaż w tym terminie
+                    }
+                    else return false; // masażysta nie ma masażu w terminie
+                }
+                */
         bool aktywnyMasazLong(long? klientID, DateTime masazOd, DateTime masazDo)
         {
 

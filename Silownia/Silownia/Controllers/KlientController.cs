@@ -33,7 +33,10 @@ namespace Silownia.Controllers
    
             var osoby = from Osoby in db.Klienci select Osoby;
 
-            osoby = osoby.Search(imieNazwisko, i => i.Imie, i => i.Nazwisko);
+
+            if (!String.IsNullOrEmpty(imieNazwisko))
+                foreach (string wyraz in imieNazwisko.Split(' '))
+                    osoby = osoby.Search(wyraz, i => i.Imie, i => i.Nazwisko);
             osoby = osoby.Search(Miasto, m => m.Adres.Miasto);
             if(czyUmowa)
             osoby = osoby.Where(u => u.Umowy.Count > 0);

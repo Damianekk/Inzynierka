@@ -24,7 +24,11 @@ namespace Silownia.Controllers
 
             ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
             var recepcjonisci = from Osoby in db.Recepcjonisci.OfType<Recepcjonista>() select Osoby;
-            recepcjonisci = recepcjonisci.Search(imieNazwisko, i => i.Imie, i => i.Nazwisko);
+
+            if (!String.IsNullOrEmpty(imieNazwisko))
+                foreach (string wyraz in imieNazwisko.Split(' '))
+                    recepcjonisci = recepcjonisci.Search(wyraz, i => i.Imie, i => i.Nazwisko);
+            
             recepcjonisci = recepcjonisci.Search(SilowniaID, i => i.Silownia.Nazwa);
 
             var final = recepcjonisci.OrderBy(p => p.Imie);

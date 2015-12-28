@@ -21,13 +21,15 @@ namespace Silownia.Controllers
 
         public ActionResult Index(string imieNazwisko, string SilowniaID, int page = 1, int pageSize = 10, AkcjaEnumMasazysta akcja = AkcjaEnumMasazysta.Brak, String info = null)
         {
-            ViewBag.srchImieNazwisko = imieNazwisko;
+            //ViewBag.srchImieNazwisko = imieNazwisko;
 
             ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
 
             var osoby = from Osoby in db.Masazysci select Osoby;
 
-            osoby = osoby.Search(imieNazwisko, i => i.Imie, i => i.Nazwisko);
+            if (!String.IsNullOrEmpty(imieNazwisko))
+                foreach (string wyraz in imieNazwisko.Split(' '))
+                    osoby = osoby.Search(wyraz, i => i.Imie, i => i.Nazwisko);
             osoby = osoby.Search(SilowniaID, i => i.Silownia.Nazwa);
 
             var final = osoby.OrderBy(p => p.Imie);

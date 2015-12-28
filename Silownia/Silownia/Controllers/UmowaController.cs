@@ -26,7 +26,9 @@ namespace Silownia.Controllers
      
             var umowy = from Umowy in db.Umowy select Umowy;
 
-            umowy = umowy.Search(imieNazwisko, i => i.Klient.Imie, i => i.Klient.Nazwisko);
+            if (!String.IsNullOrEmpty(imieNazwisko))
+                foreach (string wyraz in imieNazwisko.Split(' '))
+                    umowy = umowy.Search(wyraz, i => i.Klient.Imie, i => i.Klient.Nazwisko);
             umowy = umowy.Search(SilowniaID, i => i.Silownia.Nazwa);
 
             var final = umowy.OrderBy(p => p.Klient.Imie);
