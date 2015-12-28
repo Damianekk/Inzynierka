@@ -94,6 +94,14 @@ namespace Silownia.Controllers
             {
                 db.Klienci.Add(klient);
                 db.SaveChanges();
+
+                Uzytkownik uzytkownik = new Uzytkownik();
+                uzytkownik.IDOsoby = klient.OsobaID;
+                uzytkownik.Login = klient.Mail;
+                uzytkownik.Haslo = klient.Imie + klient.Nazwisko;
+                uzytkownik.Rola = "Klient";
+                db.Uzytkownicy.Add(uzytkownik);
+                db.SaveChanges();
                 return RedirectToAction("Index", new { akcja = AkcjaEnum.DodanoKlienta , info = klient.imieNazwisko });
             }
             

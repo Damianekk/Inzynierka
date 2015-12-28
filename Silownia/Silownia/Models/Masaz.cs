@@ -10,18 +10,26 @@ namespace Silownia.Models
 
         public long MasazID { get; set; }
 
+        [CustomDateTimeValidator]
         [Required(ErrorMessage = "Podaj datę masażu")]
-        //[Display(Name = "Pełna data masażu")]
-        //[DataType(DataType.Date)]
-        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+        [Display(Name = "Pełna data masażu")]
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
         public DateTime DataMasazu { get; set; }
 
         [Display(Name = "Czas trwania")]
         public int CzasTrwania { get; set; }
 
-        [Required(ErrorMessage = "Klient jest wymagany!")]
+        public DateTime DataMasazuKoniec
+        {
+            get
+            {
+                return DataMasazu.AddMinutes(System.Convert.ToDouble(CzasTrwania)); 
+            }
+        }
+
+
         public virtual Klient Klient { get; set; }
-        [Required(ErrorMessage = "Masażysta jest wymagany!")]
         public virtual Masazysta Masazysta { get; set; }
     }
 }

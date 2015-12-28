@@ -110,6 +110,14 @@
                            new { @class = "umowaPic" })
                     }
                 </td>
+                <td>
+                    @if (item.Umowy.Count > 0)
+                    {
+
+                        @Html.ActionLink("masaz", "Create", "Masaz", new { id = item.OsobaID },
+                           new { @class = "masazPic" })
+                    }
+                </td>
             </tr>
         </text>
     }

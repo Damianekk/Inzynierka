@@ -1,0 +1,6 @@
+﻿<div class="col-lg-2">
+    <div style="font-size:larger">
+        Szukaj po masażyście:
+    </div>
+    @Html.DropDownList("MasazystaID", (SelectList)ViewBag.MasazystaID, "Wszyscy masażyści", new { onchange = "this.form.submit();", @class = "form-control" }) <br />
+</div>

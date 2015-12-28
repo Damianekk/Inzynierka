@@ -39,6 +39,13 @@ namespace Silownia.Controllers
 
 
             PagedList<Umowa> model = new PagedList<Umowa>(final, page, pageSize);
+
+            if (akcja != AkcjaEnumUmowa.Brak)
+            {
+                ViewBag.info = info;
+                ViewBag.Akcja = akcja;
+            }
+
             return View(model);
         }
 
@@ -107,7 +114,7 @@ namespace Silownia.Controllers
             //    return RedirectToAction("Index", "Klient");
             //}
             ViewBag.RecepcjonistaID = new SelectList(db.Recepcjonisci, "OsobaID", "imieNazwisko", umowa.RecepcjonistaID);
-
+            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", umowa.SilowniaID);
 
             if (ModelState.IsValid && !aktywnaUmowa(id, umowa.DataPodpisania, umowa.DataZakonczenia))
             {
@@ -134,8 +141,7 @@ namespace Silownia.Controllers
                 return RedirectToAction("Index", new { akcja = AkcjaEnumUmowa.DodanoUmowe, info = klient.imieNazwisko });
             }
 
-            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", umowa.SilowniaID);
-           
+            
             return View(umowa);
         }
 
@@ -183,7 +189,7 @@ namespace Silownia.Controllers
             {
                 db.Entry(umowa).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index", new { akcja = AkcjaEnumUmowa.UsunietoUmowe});
+                return RedirectToAction("Index");
             }
             ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", umowa.SilowniaID);
             return View(umowa);
@@ -212,7 +218,7 @@ namespace Silownia.Controllers
             Umowa umowa = db.Umowy.Find(id);
             db.Umowy.Remove(umowa);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { akcja = AkcjaEnumUmowa.UsunietoUmowe});
         }
 
         protected override void Dispose(bool disposing)
