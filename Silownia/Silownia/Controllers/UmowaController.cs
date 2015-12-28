@@ -39,6 +39,13 @@ namespace Silownia.Controllers
 
 
             PagedList<Umowa> model = new PagedList<Umowa>(final, page, pageSize);
+
+            if (akcja != AkcjaEnumUmowa.Brak)
+            {
+                ViewBag.info = info;
+                ViewBag.Akcja = akcja;
+            }
+
             return View(model);
         }
 
@@ -211,7 +218,7 @@ namespace Silownia.Controllers
             Umowa umowa = db.Umowy.Find(id);
             db.Umowy.Remove(umowa);
             db.SaveChanges();
-            return RedirectToAction("Index", new { akcja = AkcjaEnumUmowa.UsunietoUmowe });
+            return RedirectToAction("Index", new { akcja = AkcjaEnumUmowa.UsunietoUmowe});
         }
 
         protected override void Dispose(bool disposing)

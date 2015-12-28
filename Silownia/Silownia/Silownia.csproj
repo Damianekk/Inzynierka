@@ -216,6 +216,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Adres.cs" />
+    <Compile Include="Models\CustomDateTimeValidator.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Instruktor.cs" />
     <Compile Include="Models\Klient.cs" />
@@ -255,8 +256,6 @@
     <Content Include="Content\4.jpg" />
     <Content Include="Content\arrow.gif" />
     <Content Include="Content\Arrow.js" />
-    <Content Include="Content\bootstrap-datetimepicker.css" />
-    <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -301,8 +300,6 @@
     <Content Include="HomeView\js\grayscale.js" />
     <Content Include="HomeView\js\jquery.easing.min.js" />
     <Content Include="HomeView\js\jquery.js" />
-    <Content Include="Scripts\bootstrap-datetimepicker.js" />
-    <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Content\Site.less" />
     <Content Include="HomeView\fonts\glyphicons-halflings-regular.eot" />
@@ -392,8 +389,6 @@
     <Content Include="Content\bootstrap\bootstrap.less" />
     <Content Include="Content\bootstrap\badges.less" />
     <Content Include="Content\bootstrap\alerts.less" />
-    <Content Include="Content\bootstrap-datetimepicker-build.less" />
-    <Content Include="Content\_bootstrap-datetimepicker.less" />
     <None Include="Properties\PublishProfiles\PureMuscles - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\PureMuscles - Web Deploy.pubxml">
       <SubType>Designer</SubType>

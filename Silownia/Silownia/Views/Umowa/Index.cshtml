@@ -5,6 +5,31 @@
     ViewBag.Title = "Umowy: index";
 }
 
+@Scripts.Render("~/Scripts/infoCzynnosc.js")
+
+@if (ViewBag.Akcja != null)
+{
+    if (ViewBag.Akcja == AkcjaEnumUmowa.DodanoUmowe)
+    {
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <div class="alert alert-success">
+            <br />
+            <h4>@PelnaNazwaEnum.GetDescription(@ViewBag.Akcja) @ViewBag.info</h4>
+            <br />
+        </div>
+    }
+
+    if (ViewBag.Akcja == AkcjaEnumUmowa.UsunietoUmowe)
+    {
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <div class="alert alert-danger">
+            <br />
+            <h4>@PelnaNazwaEnum.GetDescription(@ViewBag.Akcja) @ViewBag.info</h4>
+            <br />
+        </div>
+    }
+}
+
 <h2>Lista umów podpisanych w naszej sieci</h2>
 
 @using (Html.BeginForm())

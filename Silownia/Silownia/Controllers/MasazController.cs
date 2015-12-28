@@ -40,6 +40,13 @@ namespace Silownia.Controllers
             var kk = ileWynikow / page;
 
             PagedList<Masaz> model = new PagedList<Masaz>(final, page, pageSize);
+
+            if (akcja != AkcjaEnumMasaz.Brak)
+            {
+                ViewBag.info = info;
+                ViewBag.Akcja = akcja;
+            }
+
             return View(model);
         }
 
@@ -88,15 +95,10 @@ namespace Silownia.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "MasazID,MasazystaID,DataMasazu,CzasTrwania")] long? id, Masaz masaz)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    db.Masaze.Add(masaz);
-            //    db.SaveChanges();
-            //    return RedirectToAction("Index");
-            //}
             ViewBag.MasazystaID = new SelectList(db.Masazysci, "OsobaID", "imieNazwisko", masaz.MasazystaID);
 
-            if (ModelState.IsValid)
+            //if (ModelState.IsValid && !aktywnyMasaz(id, masaz.DataMasazu) && !zajetyMasazysta(masaz.MasazystaID, masaz.DataMasazu))
+                if (ModelState.IsValid && !aktywnyMasaz(id, masaz.DataMasazu) && !zajetyMasazysta(masaz.MasazystaID, masaz.DataMasazu) && !aktywnyMasazLong(id, masaz.DataMasazu, masaz.DataMasazuKoniec))
             {
                 #region Klient
                 Klient klient = db.Klienci.Find(id);
@@ -115,9 +117,45 @@ namespace Silownia.Controllers
 
                 return RedirectToAction("Index", new { akcja = AkcjaEnumMasaz.DodanoMasaz, info = klient.imieNazwisko });
             }
-
-
             return View(masaz);
+        }
+
+
+        bool aktywnyMasaz(long? klientID, DateTime DataMasazu)
+        {
+            var check = db.Masaze.Where(o => o.Klient.OsobaID == klientID && o.DataMasazu == DataMasazu.Date).ToList();
+
+            if (check.Count == 1)
+            {
+                TempData["msg"] = "<script>alert('Klient ma umówiony masaż w tym terminie');</script>";
+                return true; // klient ma masaż w tym terminie
+            }
+            else return false; // klient nie ma masażu w terminie
+        }
+
+        bool zajetyMasazysta(long? MasazystaID, DateTime DataMasazu)
+        {
+            var check = db.Masaze.Where(o => o.Klient.OsobaID == MasazystaID && o.DataMasazu == DataMasazu.Date).ToList();
+
+            if (check.Count == 1)
+            {
+                TempData["msg"] = "<script>alert('Masażysta ma już masaż w tym terminie. Spróbuj wybrać innego masażystę.');</script>";
+                return true; // masażysta ma masaż w tym terminie
+            }
+            else return false; // masażysta nie ma masażu w terminie
+        }
+
+        bool aktywnyMasazLong(long? klientID, DateTime masazOd, DateTime masazDo)
+        {
+
+            var check = db.Masaze.ToList().Where(o => o.Klient.OsobaID == klientID && o.DataMasazu <= masazOd && o.DataMasazuKoniec >= masazDo).ToList();
+
+            if (check.Count == 1)
+            {
+                TempData["msg"] = "<script>alert('Klient posiada umowe w wybranym terminie');</script>";
+                return true; // klient ma umowe w tym terminie
+            }
+            else return false; // klient nie ma umowy
         }
 
         // GET: Masaz/Edit/5
