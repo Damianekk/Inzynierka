@@ -48,7 +48,7 @@ namespace Silownia.Controllers
         public async Task<ActionResult> Login(Uzytkownik model, string returnUrl)
         {
             SilowniaContext db = new SilowniaContext();
-            Uzytkownik uzytkownik = db.Uzytkownicy.Where(w => w.Login == model.Login).FirstOrDefault();
+            Uzytkownik uzytkownik = db.Uzytkownicy.Where(w => w.Login == model.Login).First();
 
                 if (uzytkownik != null)
                 {
@@ -59,14 +59,14 @@ namespace Silownia.Controllers
                         FormsAuthentication.SetAuthCookie(uzytkownik.Login, true);
                       
                     }*/
-                    Klient klient = db.Klienci.Find(uzytkownik.UzytkownikID);
+                    Klient klient = db.Klienci.Find(uzytkownik.IDOsoby);
                     if (klient != null)
                     {
                         FormsAuthentication.SetAuthCookie(uzytkownik.Login, true);
                         return View("~/Views/KlientView/Index.cshtml", klient);
                     }
 
-                    Recepcjonista recepcjonista = db.Recepcjonisci.Find(uzytkownik.UzytkownikID);
+                    Recepcjonista recepcjonista = db.Recepcjonisci.Find(uzytkownik.IDOsoby);
                     if (recepcjonista != null)
                     {
                         FormsAuthentication.SetAuthCookie(uzytkownik.Login, true);

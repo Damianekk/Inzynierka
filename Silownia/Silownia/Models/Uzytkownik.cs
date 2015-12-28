@@ -13,6 +13,9 @@ namespace Silownia.Models
         public long UzytkownikID { get; set; }
 
         [Required]
+        public long IDOsoby { get; set; }
+
+        [Required]
         [Display(Name = "Login")]
         public string Login { get; set; }
 
