@@ -17,16 +17,18 @@ namespace Silownia.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
         public DateTime DataMasazu { get; set; }
 
-        [Display(Name = "Czas trwania")]
+        [Display(Name = "Czas trwania masażu")]
         public int CzasTrwania { get; set; }
 
-        public DateTime DataMasazuKoniec
-        {
-            get
-            {
-                return DataMasazu.AddMinutes(System.Convert.ToDouble(CzasTrwania)); 
-            }
-        }
+
+        [Display(Name = "Data końca masażu")]
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
+        public DateTime DataMasazuKoniec { get; set; }
+
+
+        [Display(Name = "Całkowity koszt masażu")]
+        public int kosztMasazu { get; set; }
 
 
         public virtual Klient Klient { get; set; }

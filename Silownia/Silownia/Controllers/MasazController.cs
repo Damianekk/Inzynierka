@@ -106,10 +106,7 @@ namespace Silownia.Controllers
         public ActionResult Create([Bind(Include = "MasazID,MasazystaID,DataMasazu,CzasTrwania")] long? id, Masaz masaz)
         {
             ViewBag.MasazystaID = new SelectList(db.Masazysci, "OsobaID", "imieNazwisko", masaz.MasazystaID);
-
-            //if (ModelState.IsValid && !aktywnyMasaz(id, masaz.DataMasazu) && !zajetyMasazysta(masaz.MasazystaID, masaz.DataMasazu))
-            // if (ModelState.IsValid && !aktywnyMasaz(id, masaz.DataMasazu) && !zajetyMasazysta(masaz.MasazystaID, masaz.DataMasazu) && !aktywnyMasazLong(id, masaz.DataMasazu, masaz.DataMasazuKoniec))
-            if (ModelState.IsValid && !aktywnyMasaz(id, masaz.DataMasazu) && !aktywnyMasazLong(id, masaz.DataMasazu, masaz.DataMasazuKoniec))
+            if (ModelState.IsValid && !aktywnyMasaz(id, masaz.DataMasazu))
             {
                 #region Klient
                 Klient klient = db.Klienci.Find(id);
@@ -123,6 +120,9 @@ namespace Silownia.Controllers
                 masazysta.Masaze.Add(masaz);
                 #endregion
 
+                masaz.DataMasazuKoniec = masaz.DataMasazu.AddMinutes(System.Convert.ToDouble(masaz.CzasTrwania));
+                masaz.kosztMasazu = masaz.CzasTrwania * masaz.Masazysta.StawkaGodzinowa;
+
                 db.Masaze.Add(masaz);
                 db.SaveChanges();
 
@@ -132,42 +132,29 @@ namespace Silownia.Controllers
         }
 
 
-        bool aktywnyMasaz(long? klientID, DateTime DataMasazu)
+        bool aktywnyMasaz(long? klientID, DateTime dataOd)
         {
-            var check = db.Masaze.Where(o => o.Klient.OsobaID == klientID && o.DataMasazu == DataMasazu).ToList();
+            var check = db.Masaze.Where(o => o.Klient.OsobaID == klientID && dataOd >= o.DataMasazu && dataOd <= o.DataMasazuKoniec).ToList();
 
             if (check.Count == 1)
             {
-                TempData["msg"] = "<script>alert('Klient ma umówiony masaż w tym terminie');</script>";
+                TempData["msg"] = "<script>alert('Klient ma już umówiony masaż w tym terminie');</script>";
                 return true; // klient ma masaż w tym terminie
             }
             else return false; // klient nie ma masażu w terminie
         }
-        /*
-                bool zajetyMasazysta(long? MasazystaID, DateTime DataMasazu)
+
+        bool zajetyMasazysta(long? MasazystaID, DateTime dataOd)
                 {
-                    var check = db.Masaze.Where(o => o.Masazysta.OsobaID == MasazystaID && o.DataMasazu == DataMasazu).ToList();
+                    var check = db.Masaze.Where(o => o.Masazysta.OsobaID == MasazystaID && dataOd >= o.DataMasazu && dataOd <= o.DataMasazuKoniec).ToList();
 
                     if (check.Count == 1)
                     {
-                        TempData["msg"] = "<script>alert('Masażysta ma już masaż w tym terminie. Spróbuj wybrać innego masażystę.');</script>";
+                        TempData["msg"] = "<script>alert('Masażysta ma już zaplanowany masaż w tym terminie.');</script>";
                         return true; // masażysta ma masaż w tym terminie
                     }
                     else return false; // masażysta nie ma masażu w terminie
                 }
-                */
-        bool aktywnyMasazLong(long? klientID, DateTime masazOd, DateTime masazDo)
-        {
-
-            var check = db.Masaze.ToList().Where(o => o.Klient.OsobaID == klientID && o.DataMasazu <= masazOd && o.DataMasazuKoniec >= masazDo).ToList();
-
-            if (check.Count == 1)
-            {
-                TempData["msg"] = "<script>alert('Klient posiada umowe w wybranym terminie');</script>";
-                return true; // klient ma umowe w tym terminie
-            }
-            else return false; // klient nie ma umowy
-        }
 
         // GET: Masaz/Edit/5
         public ActionResult Edit(long? id)
