@@ -180,6 +180,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\SalaController.cs" />
+    <Compile Include="DAL\_Repository.cs" />
     <Compile Include="Helpers\AkcjaEnum.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -206,6 +207,7 @@
     <Compile Include="Helpers\AkcjaEnumRecepcjonista.cs" />
     <Compile Include="Helpers\AkcjaEnumTrener.cs" />
     <Compile Include="Helpers\AkcjaEnumUmowa.cs" />
+    <Compile Include="Helpers\SelectToList.cs" />
     <Compile Include="Helpers\StatusWiadomosciEnum.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -240,7 +242,7 @@
     <Compile Include="Helpers\KomuAdres.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Test.cs" />
-    <Compile Include="ViewModel\SprzetSaleModelView.cs" />
+    <Compile Include="ViewModel\SprzetSaleSilkaModelView.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\13.jpg" />
