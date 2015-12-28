@@ -1,25 +1,28 @@
 ﻿@using Microsoft.AspNet.Identity
-@if (Request.IsAuthenticated)
+@if (Session["User"] != null)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
     @Html.AntiForgeryToken()
-
     <ul class="nav navbar-nav navbar-right">
         <li>
-            @Html.ActionLink("Witaj " + User.Identity.GetUserName() + "!", "Manage", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })
+            @Html.ActionLink("Witaj " + Session["User"] + "!", "Index", "Klient")
         </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+        <li>@Html.ActionLink("Klienci", "Index", "Klient")</li>
+        <li>@Html.ActionLink("Umowy", "Index", "Umowa")</li>
+        <li>@Html.ActionLink("Trenerzy", "Index", "Trener")</li>
+        <li>@Html.ActionLink("Masażyści", "Index", "Masazysta")</li>
+        <li>@Html.ActionLink("Recepcjoniści", "Index", "Recepcjonista")</li>
+        <li>@Html.ActionLink("Siłownie", "Index", "Silownia")</li>
+        <li>@Html.ActionLink("Specjalizacje", "Index", "Specjalizacja")</li>
+      @*<li>@Html.ActionLink("Sale", "Index", "Sala")</li>*@
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">Wyloguj</a></li>
     </ul>
     }
 }
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        @*<li>@Html.ActionLink("Zarejestruj się", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>*@
-        @*<span>
-            <a href="@Url.Action("Log in"<span class="glyphicon glyphicon-plus-sign"></span> Log in</a>
-        </span>*@
         <li>@Html.ActionLink("Zaloguj", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" }) 
     </ul>
 }
