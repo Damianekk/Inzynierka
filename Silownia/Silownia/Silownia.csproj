@@ -179,6 +179,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\MasazController.cs" />
     <Compile Include="Controllers\MasazystaController.cs" />
     <Compile Include="Controllers\PhotoController.cs" />
     <Compile Include="Controllers\SalaController.cs" />
@@ -205,6 +206,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\AkcjaEnumMasaz.cs" />
     <Compile Include="Helpers\AkcjaEnumMasazysta.cs" />
     <Compile Include="Helpers\AkcjaEnumRecepcjonista.cs" />
     <Compile Include="Helpers\AkcjaEnumSilownia.cs" />
@@ -215,6 +217,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Adres.cs" />
+    <Compile Include="Models\CustomDateTimeValidator.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Instruktor.cs" />
     <Compile Include="Models\Klient.cs" />
@@ -415,6 +418,11 @@
     <Content Include="Scripts\webcam.jquery.json" />
     <Content Include="Views\Photo\Index.cshtml" />
     <Content Include="Views\Photo\ChangePhoto.cshtml" />
+    <Content Include="Views\Masaz\Create.cshtml" />
+    <Content Include="Views\Masaz\Delete.cshtml" />
+    <Content Include="Views\Masaz\Details.cshtml" />
+    <Content Include="Views\Masaz\Edit.cshtml" />
+    <Content Include="Views\Masaz\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

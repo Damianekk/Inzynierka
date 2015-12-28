@@ -218,7 +218,6 @@ C:\Users\Łukasz\Source\Inzynierka\Silownia\Silownia.Tests\bin\Debug\Microsoft.O
 C:\Users\Łukasz\Source\Inzynierka\Silownia\Silownia.Tests\bin\Debug\Microsoft.Owin.Security.Cookies.dll
 C:\Users\Łukasz\Source\Inzynierka\Silownia\Silownia.Tests\bin\Debug\Microsoft.Owin.Security.dll
 C:\Users\Łukasz\Source\Inzynierka\Silownia\Silownia.Tests\bin\Debug\Microsoft.AspNet.Identity.Owin.dll
-C:\Users\Łukasz\Source\Inzynierka\Silownia\Silownia.Tests\bin\Debug\Microsoft.Owin.Host.SystemWeb.dll
 C:\Users\Łukasz\Source\Inzynierka\Silownia\Silownia.Tests\bin\Debug\PagedList.dll
 C:\Users\Łukasz\Source\Inzynierka\Silownia\Silownia.Tests\bin\Debug\System.Net.Http.Formatting.dll
 C:\Users\Łukasz\Source\Inzynierka\Silownia\Silownia.Tests\bin\Debug\Microsoft.Owin.Security.OAuth.dll
@@ -239,7 +238,6 @@ C:\Users\Łukasz\Source\Inzynierka\Silownia\Silownia.Tests\bin\Debug\Microsoft.O
 C:\Users\Łukasz\Source\Inzynierka\Silownia\Silownia.Tests\bin\Debug\Microsoft.Owin.Security.Cookies.xml
 C:\Users\Łukasz\Source\Inzynierka\Silownia\Silownia.Tests\bin\Debug\Microsoft.Owin.Security.xml
 C:\Users\Łukasz\Source\Inzynierka\Silownia\Silownia.Tests\bin\Debug\Microsoft.AspNet.Identity.Owin.xml
-C:\Users\Łukasz\Source\Inzynierka\Silownia\Silownia.Tests\bin\Debug\Microsoft.Owin.Host.SystemWeb.xml
 C:\Users\Łukasz\Source\Inzynierka\Silownia\Silownia.Tests\bin\Debug\PagedList.xml
 C:\Users\Łukasz\Source\Inzynierka\Silownia\Silownia.Tests\bin\Debug\System.Net.Http.Formatting.xml
 C:\Users\Łukasz\Source\Inzynierka\Silownia\Silownia.Tests\bin\Debug\Microsoft.Owin.Security.OAuth.xml
