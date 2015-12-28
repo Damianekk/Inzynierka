@@ -180,6 +180,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\MasazystaController.cs" />
+    <Compile Include="Controllers\PhotoController.cs" />
     <Compile Include="Controllers\SalaController.cs" />
     <Compile Include="Helpers\AkcjaEnum.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -308,6 +309,7 @@
     <None Include="Properties\PublishProfiles\PureMuscles - Web Deploy.pubxml">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Scripts\bower.json" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\infoCzynnosc.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -317,6 +319,10 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jquery.webcam.js" />
+    <Content Include="Scripts\jquery.webcam.min.js" />
+    <Content Include="Scripts\jscam.swf" />
+    <Content Include="Scripts\jscam_canvas_only.swf" />
     <Content Include="Scripts\Karuzela.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
@@ -404,6 +410,11 @@
     <Content Include="Views\Masazysta\Details.cshtml" />
     <Content Include="Views\Masazysta\Edit.cshtml" />
     <Content Include="Views\Masazysta\Index.cshtml" />
+    <Content Include="Scripts\Makefile" />
+    <Content Include="Scripts\README.md" />
+    <Content Include="Scripts\webcam.jquery.json" />
+    <Content Include="Views\Photo\Index.cshtml" />
+    <Content Include="Views\Photo\ChangePhoto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

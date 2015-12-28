@@ -316,8 +316,6 @@ C:\Users\Łukasz\Source\Inzynierka\Silownia\Silownia\bin\Microsoft.Owin.Security
 C:\Users\Łukasz\Source\Inzynierka\Silownia\Silownia\obj\Debug\Silownia.csprojResolveAssemblyReference.cache
 C:\Users\Łukasz\Source\Inzynierka\Silownia\Silownia\obj\Debug\Silownia.dll
 C:\Users\Łukasz\Source\Inzynierka\Silownia\Silownia\obj\Debug\Silownia.pdb
-C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.Migrations.pobieraniepinezekzbazy.resources
-C:\Users\Damian\projekt\SilowniaInz\Silownia\Silownia\Silownia\obj\Debug\Silownia.csproj.GenerateResource.Cache
 C:\Users\lcmaj_000\Source\Repos\Inzynierka\Silownia\Silownia\obj\Debug\Silownia.csprojResolveAssemblyReference.cache
 C:\Users\lcmaj_000\Source\Repos\Inzynierka\Silownia\Silownia\obj\Debug\Silownia.dll
 C:\Users\lcmaj_000\Source\Repos\Inzynierka\Silownia\Silownia\obj\Debug\Silownia.pdb
