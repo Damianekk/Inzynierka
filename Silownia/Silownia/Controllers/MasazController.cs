@@ -117,7 +117,6 @@ namespace Silownia.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "MasazID,MasazystaID,DataMasazu,CzasTrwania")] long? id, Masaz masaz)
         {
-<<<<<<< HEAD
             if (Session["User"] != null)
             {
                 ViewBag.MasazystaID = new SelectList(db.Masazysci, "OsobaID", "imieNazwisko", masaz.MasazystaID);
@@ -137,38 +136,37 @@ namespace Silownia.Controllers
 
                     masaz.DataMasazuKoniec = masaz.DataMasazu.AddMinutes(System.Convert.ToDouble(masaz.CzasTrwania));
                     masaz.kosztMasazu = masaz.CzasTrwania * masaz.Masazysta.StawkaGodzinowa;
-=======
-            ViewBag.MasazystaID = new SelectList(db.Masazysci, "OsobaID", "imieNazwisko", masaz.MasazystaID);
-            if (ModelState.IsValid && !aktywnyMasaz(id, masaz.DataMasazu) && !zajetyMasazysta(masaz.MasazystaID, masaz.DataMasazu))
-            {
-                #region Klient
-                Klient klient = db.Klienci.Find(id);
-                masaz.Klient = klient;
-                klient.Masaze.Add(masaz);
-                #endregion
+                    ViewBag.MasazystaID = new SelectList(db.Masazysci, "OsobaID", "imieNazwisko", masaz.MasazystaID);
+                    if (ModelState.IsValid && !aktywnyMasaz(id, masaz.DataMasazu) && !zajetyMasazysta(masaz.MasazystaID, masaz.DataMasazu))
+                    {
+                        #region Klient
+                        Klient klient = db.Klienci.Find(id);
+                        masaz.Klient = klient;
+                        klient.Masaze.Add(masaz);
+                        #endregion
 
-                #region Masazysta
-                Masazysta masazysta = db.Masazysci.Find(masaz.MasazystaID);
-                masaz.Masazysta = masazysta;
-                masazysta.Masaze.Add(masaz);
-                #endregion
+                        #region Masazysta
+                        Masazysta masazysta = db.Masazysci.Find(masaz.MasazystaID);
+                        masaz.Masazysta = masazysta;
+                        masazysta.Masaze.Add(masaz);
+                        #endregion
 
-                masaz.DataMasazuKoniec = masaz.DataMasazu.AddMinutes(System.Convert.ToDouble(masaz.CzasTrwania));
-                masaz.kosztMasazu = (masaz.CzasTrwania * masaz.Masazysta.StawkaGodzinowa)/60;
-                
+                        masaz.DataMasazuKoniec = masaz.DataMasazu.AddMinutes(System.Convert.ToDouble(masaz.CzasTrwania));
+                        masaz.kosztMasazu = (masaz.CzasTrwania * masaz.Masazysta.StawkaGodzinowa) / 60;
 
-                db.Masaze.Add(masaz);
-                db.SaveChanges();
->>>>>>> d63ca8e1ee612555f67a8f971312c34e63130003
 
-                    db.Masaze.Add(masaz);
-                    db.SaveChanges();
+                        db.Masaze.Add(masaz);
+                        db.SaveChanges();
 
-                    return RedirectToAction("Index", new { akcja = AkcjaEnumMasaz.DodanoMasaz, info = klient.imieNazwisko });
+                        db.Masaze.Add(masaz);
+                        db.SaveChanges();
+
+                        return RedirectToAction("Index", new { akcja = AkcjaEnumMasaz.DodanoMasaz, info = klient.imieNazwisko });
+                    }
+                    return View(masaz);
                 }
-                return View(masaz);
+                return HttpNotFound();
             }
-            return HttpNotFound();
         }
 
 
