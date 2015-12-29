@@ -11,14 +11,17 @@ namespace Silownia.Models
         {
             TreningiPersonalne = new List<TreningPersonalny>();
         }
-        
+
+        [Required]
+        [Display(Name = "Stawka za godzinę pracy")]
+        public int StawkaGodzinowa { get; set; }
 
         public long SpecjalizacjaID { get; set; }
-   
+
         public virtual Specjalizacja Specjalizacja { get; set; }
 
         public virtual ICollection<TreningPersonalny> TreningiPersonalne { get; set; }
 
-        
+
     }
 }

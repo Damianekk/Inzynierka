@@ -106,7 +106,7 @@ namespace Silownia.Controllers
         public ActionResult Create([Bind(Include = "MasazID,MasazystaID,DataMasazu,CzasTrwania")] long? id, Masaz masaz)
         {
             ViewBag.MasazystaID = new SelectList(db.Masazysci, "OsobaID", "imieNazwisko", masaz.MasazystaID);
-            if (ModelState.IsValid && !aktywnyMasaz(id, masaz.DataMasazu))
+            if (ModelState.IsValid && !aktywnyMasaz(id, masaz.DataMasazu) && !zajetyMasazysta(masaz.MasazystaID, masaz.DataMasazu))
             {
                 #region Klient
                 Klient klient = db.Klienci.Find(id);
@@ -121,7 +121,8 @@ namespace Silownia.Controllers
                 #endregion
 
                 masaz.DataMasazuKoniec = masaz.DataMasazu.AddMinutes(System.Convert.ToDouble(masaz.CzasTrwania));
-                masaz.kosztMasazu = masaz.CzasTrwania * masaz.Masazysta.StawkaGodzinowa;
+                masaz.kosztMasazu = (masaz.CzasTrwania * masaz.Masazysta.StawkaGodzinowa)/60;
+                
 
                 db.Masaze.Add(masaz);
                 db.SaveChanges();

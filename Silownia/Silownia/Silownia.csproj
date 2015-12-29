@@ -183,6 +183,7 @@
     <Compile Include="Controllers\MasazystaController.cs" />
     <Compile Include="Controllers\PhotoController.cs" />
     <Compile Include="Controllers\SalaController.cs" />
+    <Compile Include="Controllers\TreningPersonalnyController.cs" />
     <Compile Include="Helpers\AkcjaEnum.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -211,6 +212,7 @@
     <Compile Include="Helpers\AkcjaEnumRecepcjonista.cs" />
     <Compile Include="Helpers\AkcjaEnumSilownia.cs" />
     <Compile Include="Helpers\AkcjaEnumTrener.cs" />
+    <Compile Include="Helpers\AkcjaEnumTrening.cs" />
     <Compile Include="Helpers\AkcjaEnumUmowa.cs" />
     <Compile Include="Helpers\StatusWiadomosciEnum.cs" />
     <Compile Include="Helpers\KryteriaSzukania.cs" />
@@ -423,6 +425,13 @@
     <Content Include="Views\Masaz\Details.cshtml" />
     <Content Include="Views\Masaz\Edit.cshtml" />
     <Content Include="Views\Masaz\Index.cshtml" />
+    <Content Include="Views\TreningPersonalny\Create.cshtml" />
+    <Content Include="Views\TreningPersonalny\Delete.cshtml" />
+    <Content Include="Views\TreningPersonalny\Details.cshtml" />
+    <Content Include="Views\TreningPersonalny\Edit.cshtml" />
+    <Content Include="Views\TreningPersonalny\Index.cshtml" />
+    <Content Include="Views\Shared\KryteriaSzukania\_trener.cshtml" />
+    <Content Include="Views\Shared\KryteriaSzukania\_masazysta.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
