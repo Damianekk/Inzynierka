@@ -99,6 +99,15 @@ namespace Silownia.Controllers
                 {
                     db.Trenerzy.Add(trener);
                     db.SaveChanges();
+
+                    Uzytkownik pracownik = new Uzytkownik();
+                    pracownik.IDOsoby = trener.OsobaID;
+                    pracownik.Login = trener.Nazwisko;
+                    pracownik.Haslo = trener.Imie + trener.Nazwisko;
+                    pracownik.Rola = "Trener";
+                    db.Uzytkownicy.Add(pracownik);
+                    db.SaveChanges();
+
                     return RedirectToAction("Index", new { akcja = AkcjaEnumTrener.DodanoTrenera, info = trener.imieNazwisko });
                 }
 

@@ -98,6 +98,15 @@ namespace Silownia.Controllers
                 {
                     db.Recepcjonisci.Add(recepcjonista);
                     db.SaveChanges();
+
+                    Uzytkownik pracownik = new Uzytkownik();
+                    pracownik.IDOsoby = recepcjonista.OsobaID;
+                    pracownik.Login = recepcjonista.Nazwisko;
+                    pracownik.Haslo = recepcjonista.Imie + recepcjonista.Nazwisko;
+                    pracownik.Rola = "Recepcjonista";
+                    db.Uzytkownicy.Add(pracownik);
+                    db.SaveChanges();
+
                     return RedirectToAction("Index", new { akcja = AkcjaEnumRecepcjonista.DodanoRecepcjoniste, info = recepcjonista.imieNazwisko });
                 }
 
