@@ -120,7 +120,7 @@ namespace Silownia.Controllers
             if (Session["User"] != null)
             {
                 ViewBag.MasazystaID = new SelectList(db.Masazysci, "OsobaID", "imieNazwisko", masaz.MasazystaID);
-                if (ModelState.IsValid && !aktywnyMasaz(id, masaz.DataMasazu))
+                if (ModelState.IsValid && !aktywnyMasaz(id, masaz.DataMasazu) && !zajetyMasazysta(masaz.MasazystaID, masaz.DataMasazu))
                 {
                     #region Klient
                     Klient klient = db.Klienci.Find(id);
@@ -135,38 +135,18 @@ namespace Silownia.Controllers
                     #endregion
 
                     masaz.DataMasazuKoniec = masaz.DataMasazu.AddMinutes(System.Convert.ToDouble(masaz.CzasTrwania));
-                    masaz.kosztMasazu = masaz.CzasTrwania * masaz.Masazysta.StawkaGodzinowa;
-                    ViewBag.MasazystaID = new SelectList(db.Masazysci, "OsobaID", "imieNazwisko", masaz.MasazystaID);
-                    if (ModelState.IsValid && !aktywnyMasaz(id, masaz.DataMasazu) && !zajetyMasazysta(masaz.MasazystaID, masaz.DataMasazu))
-                    {
-                        #region Klient
-                        Klient klient = db.Klienci.Find(id);
-                        masaz.Klient = klient;
-                        klient.Masaze.Add(masaz);
-                        #endregion
-
-                        #region Masazysta
-                        Masazysta masazysta = db.Masazysci.Find(masaz.MasazystaID);
-                        masaz.Masazysta = masazysta;
-                        masazysta.Masaze.Add(masaz);
-                        #endregion
-
-                        masaz.DataMasazuKoniec = masaz.DataMasazu.AddMinutes(System.Convert.ToDouble(masaz.CzasTrwania));
-                        masaz.kosztMasazu = (masaz.CzasTrwania * masaz.Masazysta.StawkaGodzinowa) / 60;
+                    masaz.kosztMasazu = (masaz.CzasTrwania * masaz.Masazysta.StawkaGodzinowa) / 60;
 
 
-                        db.Masaze.Add(masaz);
-                        db.SaveChanges();
+                    db.Masaze.Add(masaz);
+                    db.SaveChanges();
 
-                        db.Masaze.Add(masaz);
-                        db.SaveChanges();
-
-                        return RedirectToAction("Index", new { akcja = AkcjaEnumMasaz.DodanoMasaz, info = klient.imieNazwisko });
-                    }
-                    return View(masaz);
+                    return RedirectToAction("Index", new { akcja = AkcjaEnumMasaz.DodanoMasaz, info = klient.imieNazwisko });
                 }
-                return HttpNotFound();
+                return View(masaz);
             }
+            return HttpNotFound();
+
         }
 
 
@@ -183,16 +163,16 @@ namespace Silownia.Controllers
         }
 
         bool zajetyMasazysta(long? MasazystaID, DateTime dataOd)
-                {
-                    var check = db.Masaze.Where(o => o.Masazysta.OsobaID == MasazystaID && dataOd >= o.DataMasazu && dataOd <= o.DataMasazuKoniec).ToList();
+        {
+            var check = db.Masaze.Where(o => o.Masazysta.OsobaID == MasazystaID && dataOd >= o.DataMasazu && dataOd <= o.DataMasazuKoniec).ToList();
 
-                    if (check.Count == 1)
-                    {
-                        TempData["msg"] = "<script>alert('Masażysta ma już zaplanowany masaż w tym terminie.');</script>";
-                        return true; // masażysta ma masaż w tym terminie
-                    }
-                    else return false; // masażysta nie ma masażu w terminie
-                }
+            if (check.Count == 1)
+            {
+                TempData["msg"] = "<script>alert('Masażysta ma już zaplanowany masaż w tym terminie.');</script>";
+                return true; // masażysta ma masaż w tym terminie
+            }
+            else return false; // masażysta nie ma masażu w terminie
+        }
 
         // GET: Masaz/Edit/5
         public ActionResult Edit(long? id)

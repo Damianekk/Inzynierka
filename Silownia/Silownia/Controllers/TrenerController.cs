@@ -38,37 +38,19 @@ namespace Silownia.Controllers
                 var ileWynikow = osoby.Count();
                 if ((ileWynikow / page) <= 1)
                 {
-                    ViewBag.srchImieNazwisko = imieNazwisko;
-
-                    ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
-                    ViewBag.SpecjalizacjaID = new SelectList(db.Specjalizacje.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
-
-                    osoby = from Osoby in db.Trenerzy select Osoby;
-
-                    if (!String.IsNullOrEmpty(imieNazwisko))
-                        foreach (string wyraz in imieNazwisko.Split(' '))
-                            osoby = osoby.Search(wyraz, i => i.Imie, i => i.Nazwisko);
-                    osoby = osoby.Search(SpecjalizacjaID, i => i.Specjalizacja.Nazwa);
-                    osoby = osoby.Search(SilowniaID, i => i.Silownia.Nazwa);
-
-                    var final = osoby.OrderBy(p => p.Imie);
-                    var ileWynikow = osoby.Count();
-                    if ((ileWynikow / page) <= 1)
-                    {
-                        page = 1;
-                    }
-                    var kk = ileWynikow / page;
-
-                    PagedList<Trener> model = new PagedList<Trener>(final, page, pageSize);
-
-                    if (akcja != AkcjaEnumTrener.Brak)
-                    {
-                        ViewBag.info = info;
-                        ViewBag.Akcja = akcja;
-                    }
-
-                    return View(model);
+                    page = 1;
                 }
+                var kk = ileWynikow / page;
+
+                PagedList<Trener> model = new PagedList<Trener>(final, page, pageSize);
+
+                if (akcja != AkcjaEnumTrener.Brak)
+                {
+                    ViewBag.info = info;
+                    ViewBag.Akcja = akcja;
+                }
+
+                return View(model);
             }
             return HttpNotFound();
         }
