@@ -17,11 +17,11 @@ namespace Silownia.Controllers
     {
         private SilowniaContext db = new SilowniaContext();
 
+
         // GET: /Umowa/
         public ActionResult Index(string imieNazwisko, string SilowniaID, int page = 1, int pageSize = 10, AkcjaEnumUmowa akcja = AkcjaEnumUmowa.Brak, String info = null)
         {
-          //  ViewBag.srchImieNazwisko = imieNazwisko;
-            if (Session["User"] != null)
+         //   if (Session["User"] != null)
             {
                 ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
 
@@ -51,13 +51,13 @@ namespace Silownia.Controllers
 
                 return View(model);
             }
-            return HttpNotFound();
+          //  return HttpNotFound();
         }
 
         // GET: /Umowa/Details/5
         public ActionResult Details(long? id)
         {
-            if (Session["User"] != null)
+           // if (Session["User"] != null)
             {
                 if (id == null)
                 {
@@ -70,13 +70,13 @@ namespace Silownia.Controllers
                 }
                 return View(umowa);
             }
-            return HttpNotFound();
+          //  return HttpNotFound();
         }
 
         // GET: /Umowa/Create
         public ActionResult Create(long? id)
         {
-            if (Session["User"] != null)
+        //    if (Session["User"] != null)
             {
                 ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
                 ViewBag.RecepcjonistaID = new SelectList(db.Recepcjonisci, "OsobaID", "imieNazwisko");
@@ -105,7 +105,7 @@ namespace Silownia.Controllers
                     // ,Recepcjonista = recepcjonista 
                 });
             }
-            return HttpNotFound();
+         //   return HttpNotFound();
         }
 
         // POST: /Umowa/Create
@@ -116,17 +116,8 @@ namespace Silownia.Controllers
         // public ActionResult Create([Bind(Include= "UmowaID,SilowniaID,DataPodpisania,DataZakonczenia,Cena,RecepcjonistaID")] long? id, Umowa umowa)
         public ActionResult Create([Bind(Include = "UmowaID,DataPodpisania,DataZakonczenia,RecepcjonistaID,Cena")] long? id, Umowa umowa)
         {
-            if (Session["User"] != null)
+          //  if (Session["User"] != null)
             {
-                //if (ModelState.IsValid)
-                //{
-                //    Osoba osoba = db.Osoby.Find(id);
-                //    db.Adresy.Add(adres);
-                //    osoba.Adres = adres;
-                //    adres.Osoba = osoba;
-                //    db.SaveChanges();
-                //    return RedirectToAction("Index", "Klient");
-                //}
                 ViewBag.RecepcjonistaID = new SelectList(db.Recepcjonisci, "OsobaID", "imieNazwisko", umowa.RecepcjonistaID);
                 ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", umowa.SilowniaID);
 
@@ -158,16 +149,11 @@ namespace Silownia.Controllers
 
                 return View(umowa);
             }
-            return HttpNotFound();
+          //  return HttpNotFound();
         }
 
         bool aktywnaUmowa(long? klientID, DateTime umowaOd, DateTime umowaDo)
         {
-            //var check = from u in db.Umowy
-            //            from k in db.Klienci
-            //            where u.Klient.OsobaID == klientID && (u.DataPodpisania >= umowaOd.Date && u.DataZakonczenia.Date <= umowaDo)
-            //            select u;
-
             var check = db.Umowy.Where(o => o.Klient.OsobaID == klientID && DbFunctions.TruncateTime(o.DataPodpisania) <= umowaOd.Date && DbFunctions.TruncateTime(o.DataZakonczenia) >= umowaDo.Date).ToList();
 
             if (check.Count == 1)
@@ -181,7 +167,7 @@ namespace Silownia.Controllers
         // GET: /Umowa/Edit/5
         public ActionResult Edit(long? id)
         {
-            if (Session["User"] != null)
+        //    if (Session["User"] != null)
             {
                 if (id == null)
                 {
@@ -195,7 +181,7 @@ namespace Silownia.Controllers
                 ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", umowa.SilowniaID);
                 return View(umowa);
             }
-            return HttpNotFound();
+          //  return HttpNotFound();
         }
 
         // POST: /Umowa/Edit/5
@@ -205,7 +191,7 @@ namespace Silownia.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "UmowaID,SilowniaID,DataPodpisania,DataZakonczenia,Cena")] Umowa umowa)
         {
-            if (Session["User"] != null)
+         //   if (Session["User"] != null)
             {
                 if (ModelState.IsValid)
                 {
@@ -216,13 +202,13 @@ namespace Silownia.Controllers
                 ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", umowa.SilowniaID);
                 return View(umowa);
             }
-            return HttpNotFound();
+         //   return HttpNotFound();
         }
 
         // GET: /Umowa/Delete/5
         public ActionResult Delete(long? id)
         {
-            if (Session["User"] != null)
+         //   if (Session["User"] != null)
             {
                 if (id == null)
                 {
@@ -235,7 +221,7 @@ namespace Silownia.Controllers
                 }
                 return View(umowa);
             }
-            return HttpNotFound();
+        //    return HttpNotFound();
         }
 
         // POST: /Umowa/Delete/5

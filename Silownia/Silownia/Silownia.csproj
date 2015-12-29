@@ -179,6 +179,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\InstruktorController.cs" />
     <Compile Include="Controllers\MasazController.cs" />
     <Compile Include="Controllers\MasazystaController.cs" />
     <Compile Include="Controllers\PhotoController.cs" />
@@ -207,6 +208,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\AkcjaEnumInstruktor.cs" />
     <Compile Include="Helpers\AkcjaEnumMasaz.cs" />
     <Compile Include="Helpers\AkcjaEnumMasazysta.cs" />
     <Compile Include="Helpers\AkcjaEnumRecepcjonista.cs" />
@@ -432,6 +434,11 @@
     <Content Include="Views\TreningPersonalny\Index.cshtml" />
     <Content Include="Views\Shared\KryteriaSzukania\_trener.cshtml" />
     <Content Include="Views\Shared\KryteriaSzukania\_masazysta.cshtml" />
+    <Content Include="Views\Instruktor\Create.cshtml" />
+    <Content Include="Views\Instruktor\Delete.cshtml" />
+    <Content Include="Views\Instruktor\Details.cshtml" />
+    <Content Include="Views\Instruktor\Edit.cshtml" />
+    <Content Include="Views\Instruktor\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

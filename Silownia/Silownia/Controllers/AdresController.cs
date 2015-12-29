@@ -17,17 +17,17 @@ namespace Silownia.Controllers
         // GET: /Adres/
         public ActionResult Index()
         {
-            if (Session["USer"] != null)
+            //  if (Session["USer"] != null)
             {
                 return View(db.Adresy.ToList());
             }
-            return HttpNotFound();
+            //   return HttpNotFound();
         }
 
         // GET: /Adres/Details/5
         public ActionResult Details(long? id)
         {
-            if (Session["User"] != null)
+            //   if (Session["User"] != null)
             {
                 if (id == null)
                 {
@@ -40,13 +40,13 @@ namespace Silownia.Controllers
                 }
                 return View(adres);
             }
-            return HttpNotFound();
+            //   return HttpNotFound();
         }
 
         // GET: /Adres/Create
         public ActionResult Create(long? id, KomuAdres komu)
         {
-            if (Session["User"] != null)
+            //  if (Session["User"] != null)
             {
                 if (id != null)
                 {
@@ -66,7 +66,7 @@ namespace Silownia.Controllers
                 }
                 return View();
             }
-            return HttpNotFound();
+            //  return HttpNotFound();
         }
 
         // POST: /Adres/Create
@@ -76,7 +76,7 @@ namespace Silownia.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "AdresID,KodPocztowy,Kraj,Miasto,Ulica,NrBudynku,NrLokalu")] Adres adres, long? id, KomuAdres komu)
         {
-            if (Session["User"] != null)
+            //  if (Session["User"] != null)
             {
                 object redirectTo = null;
                 if (ModelState.IsValid)
@@ -112,13 +112,13 @@ namespace Silownia.Controllers
 
                 return View(adres);
             }
-            return HttpNotFound();
+            //   return HttpNotFound();
         }
 
         // GET: /Adres/Edit/5
         public ActionResult Edit(long? id)
         {
-            if (Session["User"] != null)
+            // if (Session["User"] != null)
             {
                 if (id == null)
                 {
@@ -131,7 +131,7 @@ namespace Silownia.Controllers
                 }
                 return View(adres);
             }
-            return HttpNotFound();
+            //  return HttpNotFound();
         }
 
         // POST: /Adres/Edit/5
@@ -141,7 +141,7 @@ namespace Silownia.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "AdresID,KodPocztowy,Kraj,Miasto,Ulica,NrBudynku,NrLokalu")] Adres adres)
         {
-            if (Session["User"] != null)
+            //   if (Session["User"] != null)
             {
                 if (ModelState.IsValid)
                 {
@@ -151,13 +151,13 @@ namespace Silownia.Controllers
                 }
                 return View(adres);
             }
-            return HttpNotFound();
+            //   return HttpNotFound();
         }
 
         // GET: /Adres/Delete/5
         public ActionResult Delete(long? id)
         {
-            if (Session["User"] != null)
+            //  if (Session["User"] != null)
             {
                 if (id == null)
                 {
@@ -170,7 +170,7 @@ namespace Silownia.Controllers
                 }
                 return View(adres);
             }
-            return HttpNotFound();
+            //   return HttpNotFound();
         }
 
         // POST: /Adres/Delete/5
@@ -178,7 +178,7 @@ namespace Silownia.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            if (Session["User"] != null)
+            //   if (Session["User"] != null)
             {
                 Adres adres = db.Adresy.Find(id);
                 Silownia.Models.Silownia silownia = db.Silownie.Where(w => w.Adres.AdresID == id).FirstOrDefault();
@@ -199,7 +199,7 @@ namespace Silownia.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return HttpNotFound();
+            //  return HttpNotFound();
         }
 
         protected override void Dispose(bool disposing)

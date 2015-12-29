@@ -87,7 +87,7 @@
                 @Html.DisplayFor(modelItem => item.CzasTrwania)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Trener.Specjalizacja)
+                @Html.DisplayFor(modelItem => item.Trener.Specjalizacja.Nazwa)
             </td>
             <td>
                 @Html.ActionLink("Szczegóły", "Details", new { id = item.TreningID }) |
