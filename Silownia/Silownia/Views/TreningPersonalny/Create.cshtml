@@ -1,10 +1,10 @@
-﻿@model Silownia.Models.Masaz
+﻿@model Silownia.Models.TreningPersonalny
 
 @{
-    ViewBag.Title = "Masaż: dodaj";
+    ViewBag.Title = "Trening Personalny: dodaj";
 }
 
-<h2>Dodaj nowy masaż</h2>
+<h2>Dodaj nowy trening personalny</h2>
 
 @using (Html.BeginForm())
 {
@@ -17,18 +17,18 @@
             <tr>
                 <th>
                     <div class="form-group">
-                        @Html.LabelFor(model => model.MasazystaID, "Masażysta", new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model.TrenerID, "Trener", new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.DropDownList("MasazystaID", String.Empty)
-                            @Html.ValidationMessageFor(model => model.MasazystaID)
+                            @Html.DropDownList("TrenerID", String.Empty)
+                            @Html.ValidationMessageFor(model => model.TrenerID)
                         </div>
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.DataMasazu, new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model.TreningStart, new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.DataMasazu)
-                            @Html.ValidationMessageFor(model => model.DataMasazu)
+                            @Html.EditorFor(model => model.TreningStart)
+                            @Html.ValidationMessageFor(model => model.TreningStart)
                         </div>
                     </div>
 
@@ -67,7 +67,7 @@
 
 }
 <div>
-    @Html.ActionLink("Przejdź do listy masaży", "Index")
+    @Html.ActionLink("Przejdź do listy treningów personalnych", "Index")
 </div>
 
 @section Scripts {

@@ -1,0 +1,103 @@
+﻿@model PagedList.PagedList<Silownia.Models.TreningPersonalny>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Treningi personalne: index";
+}
+
+@Scripts.Render("~/Scripts/infoCzynnosc.js")
+
+
+@if (ViewBag.Akcja != null)
+{
+    if (ViewBag.Akcja == AkcjaEnumTrening.DodanoTrening)
+    {
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <div class="alert alert-success">
+            <br />
+            <h4>@PelnaNazwaEnum.GetDescription(@ViewBag.Akcja) @ViewBag.info</h4>
+            <br />
+        </div>
+    }
+
+    if (ViewBag.Akcja == AkcjaEnumTrening.UsunietoTrening)
+    {
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <div class="alert alert-danger">
+            <br />
+            <h4>@PelnaNazwaEnum.GetDescription(@ViewBag.Akcja) @ViewBag.info</h4>
+            <br />
+        </div>
+    }
+}
+
+
+<h2>Lista treningów personalnych zapisanych w naszej bazie:</h2>
+
+@using (Html.BeginForm())
+{
+
+    @Html.Partial("KryteriaSzukania/_imieNazwisko")
+    @Html.Partial("KryteriaSzukania/_silownia")
+    @Html.Partial("KryteriaSzukania/_trener")
+    @Html.Partial("KryteriaSzukania/_specjalizacja")
+
+    <br />
+
+    <input type="submit" value="szukaj" class="btn btn-success" />
+}
+
+<p>
+    @*@Html.ActionLink("Create New", "Create")*@
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.Label("Imię i nazwisko klienta:")
+        </th>
+        <th>
+            @Html.Label("Imię i nazwisko trenera:")
+        </th>
+        <th>
+            @Html.Label("Data masażu:")
+        </th>
+        <th>
+            @Html.Label("Czas trwania:")
+        </th>
+        <th>
+            @Html.Label("Fokus treningu:")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Klient.imieNazwisko)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Trener.imieNazwisko)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TreningStart)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CzasTrwania)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Trener.Specjalizacja)
+            </td>
+            <td>
+                @Html.ActionLink("Szczegóły", "Details", new { id = item.TreningID }) |
+                @Html.ActionLink("Usuń", "Delete", new { id = item.TreningID })
+            </td>
+        </tr>
+    }
+</table>
+
+<div class="center">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, pageSize = Model.PageSize, imieNazwisko = ViewBag.srchImieNazwisko }))
+    Wyświetlam od @Model.FirstItemOnPage do @Model.LastItemOnPage z @Model.TotalItemCount rekordów Trening Personalny
+</div>

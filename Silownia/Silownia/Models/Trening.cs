@@ -12,10 +12,21 @@ namespace Silownia.Models
     {
         [Key, Required]
         public int TreningID { get; set; }
-        [Required]
-        [Display(Name = "Początek")]
-        public DateTime Poczatek { get; set; }
-        [Display(Name = "Koniec")]
-        public DateTime Koniec { get; set; }
+
+        [Required(ErrorMessage = "Podaj datę treningu")]
+        [Display(Name = "Początek treningu")]
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
+        public DateTime TreningStart { get; set; }
+
+
+        [Required(ErrorMessage = "Podaj datę treningu")]
+        [Display(Name = "Koniec treningu")]
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
+        public DateTime TreningKoniec { get; set; }
+
+        [Display(Name = "Czas trwania treningu")]
+        public int CzasTrwania { get; set; }
     }
 }

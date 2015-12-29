@@ -21,12 +21,16 @@ namespace Silownia.Controllers
 
         public ActionResult Index(string imieNazwisko, string SilowniaID, int page = 1, int pageSize = 10, AkcjaEnumMasazysta akcja = AkcjaEnumMasazysta.Brak, String info = null)
         {
+<<<<<<< HEAD
             //ViewBag.srchImieNazwisko = imieNazwisko;
             if (Session["User"] != null)
             {
                 ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
 
                 var osoby = from Osoby in db.Masazysci select Osoby;
+=======
+            ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
+>>>>>>> d63ca8e1ee612555f67a8f971312c34e63130003
 
                 if (!String.IsNullOrEmpty(imieNazwisko))
                     foreach (string wyraz in imieNazwisko.Split(' '))
