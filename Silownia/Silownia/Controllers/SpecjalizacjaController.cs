@@ -14,28 +14,40 @@ namespace Silownia.Controllers
         // GET: /Specjalizacja/
         public ActionResult Index()
         {
-            return View(db.Specjalizacje.ToList());
+            if (Session["User"] != null)
+            {
+                return View(db.Specjalizacje.ToList());
+            }
+            return HttpNotFound();
         }
 
         // GET: /Specjalizacja/Details/5
         public ActionResult Details(long? id)
         {
-            if (id == null)
+            if (Session["User"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Specjalizacja specjalizacja = db.Specjalizacje.Find(id);
+                if (specjalizacja == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(specjalizacja);
             }
-            Specjalizacja specjalizacja = db.Specjalizacje.Find(id);
-            if (specjalizacja == null)
-            {
-                return HttpNotFound();
-            }
-            return View(specjalizacja);
+            return HttpNotFound();
         }
 
         // GET: /Specjalizacja/Create
         public ActionResult Create()
         {
-            return View();
+            if (Session["User"] != null)
+            {
+                return View();
+            }
+            return HttpNotFound();
         }
 
         // POST: /Specjalizacja/Create
@@ -45,29 +57,37 @@ namespace Silownia.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include="SpecjalizacjaID,Nazwa")] Specjalizacja specjalizacja)
         {
-            if (ModelState.IsValid)
+            if (Session["User"] != null)
             {
-                db.Specjalizacje.Add(specjalizacja);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                if (ModelState.IsValid)
+                {
+                    db.Specjalizacje.Add(specjalizacja);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
 
-            return View(specjalizacja);
+                return View(specjalizacja);
+            }
+            return HttpNotFound();
         }
 
         // GET: /Specjalizacja/Edit/5
         public ActionResult Edit(long? id)
         {
-            if (id == null)
+            if (Session["User"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Specjalizacja specjalizacja = db.Specjalizacje.Find(id);
+                if (specjalizacja == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(specjalizacja);
             }
-            Specjalizacja specjalizacja = db.Specjalizacje.Find(id);
-            if (specjalizacja == null)
-            {
-                return HttpNotFound();
-            }
-            return View(specjalizacja);
+            return HttpNotFound();
         }
 
         // POST: /Specjalizacja/Edit/5
@@ -77,28 +97,36 @@ namespace Silownia.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include="SpecjalizacjaID,Nazwa")] Specjalizacja specjalizacja)
         {
-            if (ModelState.IsValid)
+            if (Session["User"] != null)
             {
-                db.Entry(specjalizacja).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(specjalizacja).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(specjalizacja);
             }
-            return View(specjalizacja);
+            return HttpNotFound();
         }
 
         // GET: /Specjalizacja/Delete/5
         public ActionResult Delete(long? id)
         {
-            if (id == null)
+            if (Session["User"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Specjalizacja specjalizacja = db.Specjalizacje.Find(id);
+                if (specjalizacja == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(specjalizacja);
             }
-            Specjalizacja specjalizacja = db.Specjalizacje.Find(id);
-            if (specjalizacja == null)
-            {
-                return HttpNotFound();
-            }
-            return View(specjalizacja);
+            return HttpNotFound();
         }
 
         // POST: /Specjalizacja/Delete/5
@@ -106,10 +134,14 @@ namespace Silownia.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            Specjalizacja specjalizacja = db.Specjalizacje.Find(id);
-            db.Specjalizacje.Remove(specjalizacja);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            if (Session["User"] != null)
+            {
+                Specjalizacja specjalizacja = db.Specjalizacje.Find(id);
+                db.Specjalizacje.Remove(specjalizacja);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return HttpNotFound();
         }
 
         protected override void Dispose(bool disposing)

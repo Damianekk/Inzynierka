@@ -20,57 +20,69 @@ namespace Silownia.Controllers
         // GET: Recepcjonista
         public ActionResult Index(string imieNazwisko, string SilowniaID, int page = 1, int pageSize = 10, AkcjaEnumRecepcjonista akcja = AkcjaEnumRecepcjonista.Brak, String info = null)
         {
-            //ViewBag.srchImieNazwisko = imieNazwisko;
-
-            ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
-            var recepcjonisci = from Osoby in db.Recepcjonisci.OfType<Recepcjonista>() select Osoby;
-
-            if (!String.IsNullOrEmpty(imieNazwisko))
-                foreach (string wyraz in imieNazwisko.Split(' '))
-                    recepcjonisci = recepcjonisci.Search(wyraz, i => i.Imie, i => i.Nazwisko);
-            
-            recepcjonisci = recepcjonisci.Search(SilowniaID, i => i.Silownia.Nazwa);
-
-            var final = recepcjonisci.OrderBy(p => p.Imie);
-            var ileWynikow = recepcjonisci.Count();
-            if ((ileWynikow / page) <= 1)
+            if (Session["User"] != null)
             {
-                page = 1;
+                //ViewBag.srchImieNazwisko = imieNazwisko;
+
+                ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
+                var recepcjonisci = from Osoby in db.Recepcjonisci.OfType<Recepcjonista>() select Osoby;
+
+                if (!String.IsNullOrEmpty(imieNazwisko))
+                    foreach (string wyraz in imieNazwisko.Split(' '))
+                        recepcjonisci = recepcjonisci.Search(wyraz, i => i.Imie, i => i.Nazwisko);
+
+                recepcjonisci = recepcjonisci.Search(SilowniaID, i => i.Silownia.Nazwa);
+
+                var final = recepcjonisci.OrderBy(p => p.Imie);
+                var ileWynikow = recepcjonisci.Count();
+                if ((ileWynikow / page) <= 1)
+                {
+                    page = 1;
+                }
+                var kk = ileWynikow / page;
+
+                PagedList<Recepcjonista> model = new PagedList<Recepcjonista>(final, page, pageSize);
+
+                if (akcja != AkcjaEnumRecepcjonista.Brak)
+                {
+                    ViewBag.info = info;
+                    ViewBag.Akcja = akcja;
+                }
+
+                return View(model);
             }
-            var kk = ileWynikow / page;
-
-            PagedList<Recepcjonista> model = new PagedList<Recepcjonista>(final, page, pageSize);
-
-            if (akcja != AkcjaEnumRecepcjonista.Brak)
-            {
-                ViewBag.info = info;
-                ViewBag.Akcja = akcja;
-            }
-
-            return View(model);
+            return HttpNotFound();
         }
 
         // GET: Recepcjonista/Details/5
         public ActionResult Details(long? id)
         {
-            if (id == null)
+            if (Session["User"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Recepcjonista recepcjonista = db.Recepcjonisci.Find(id);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Recepcjonista recepcjonista = db.Recepcjonisci.Find(id);
 
-            if (recepcjonista == null)
-            {
-                return HttpNotFound();
+                if (recepcjonista == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(recepcjonista);
             }
-            return View(recepcjonista);
+            return HttpNotFound();
         }
 
         // GET: Recepcjonista/Create
         public ActionResult Create()
         {
-            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
-            return View();
+            if (Session["User"] != null)
+            {
+                ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
+                return View();
+            }
+            return HttpNotFound();
         }
 
         // POST: Recepcjonista/Create
@@ -80,31 +92,39 @@ namespace Silownia.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,Pesel,NrTelefonu,DataZatrudnienia,Pensja,SilowniaID")] Recepcjonista recepcjonista)
         {
-            if (ModelState.IsValid)
+            if (Session["User"] != null)
             {
-                db.Recepcjonisci.Add(recepcjonista);
-                db.SaveChanges();
-                return RedirectToAction("Index", new { akcja = AkcjaEnumRecepcjonista.DodanoRecepcjoniste, info = recepcjonista.imieNazwisko });
-            }
+                if (ModelState.IsValid)
+                {
+                    db.Recepcjonisci.Add(recepcjonista);
+                    db.SaveChanges();
+                    return RedirectToAction("Index", new { akcja = AkcjaEnumRecepcjonista.DodanoRecepcjoniste, info = recepcjonista.imieNazwisko });
+                }
 
-            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
-            return View(recepcjonista);
+                ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
+                return View(recepcjonista);
+            }
+            return HttpNotFound();
         }
 
         // GET: Recepcjonista/Edit/5
         public ActionResult Edit(long? id)
         {
-            if (id == null)
+            if (Session["User"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Recepcjonista recepcjonista = db.Recepcjonisci.Find(id);
+                if (recepcjonista == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
+                return View(recepcjonista);
             }
-            Recepcjonista recepcjonista = db.Recepcjonisci.Find(id);
-            if (recepcjonista == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
-            return View(recepcjonista);
+            return HttpNotFound();
         }
 
         // POST: Recepcjonista/Edit/5
@@ -114,29 +134,37 @@ namespace Silownia.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,Pesel,NrTelefonu,DataZatrudnienia,Pensja,SilowniaID")] Recepcjonista recepcjonista)
         {
-            if (ModelState.IsValid)
+            if (Session["User"] != null)
             {
-                db.Entry(recepcjonista).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(recepcjonista).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
+                return View(recepcjonista);
             }
-            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
-            return View(recepcjonista);
+            return HttpNotFound();
         }
 
         // GET: Recepcjonista/Delete/5
         public ActionResult Delete(long? id)
         {
-            if (id == null)
+            if (Session["User"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Recepcjonista recepcjonista = db.Recepcjonisci.Find(id);
+                if (recepcjonista == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(recepcjonista);
             }
-            Recepcjonista recepcjonista = db.Recepcjonisci.Find(id);
-            if (recepcjonista == null)
-            {
-                return HttpNotFound();
-            }
-            return View(recepcjonista);
+            return HttpNotFound();
         }
 
         // POST: Recepcjonista/Delete/5
@@ -144,10 +172,14 @@ namespace Silownia.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            Recepcjonista recepcjonista = db.Recepcjonisci.Find(id);
-            db.Recepcjonisci.Remove(recepcjonista);
-            db.SaveChanges();
-            return RedirectToAction("Index", new { akcja = AkcjaEnumRecepcjonista.UsunietoRecepcjoniste, info = recepcjonista.imieNazwisko });
+            if (Session["User"] != null)
+            {
+                Recepcjonista recepcjonista = db.Recepcjonisci.Find(id);
+                db.Recepcjonisci.Remove(recepcjonista);
+                db.SaveChanges();
+                return RedirectToAction("Index", new { akcja = AkcjaEnumRecepcjonista.UsunietoRecepcjoniste, info = recepcjonista.imieNazwisko });
+            }
+            return HttpNotFound();
         }
 
         protected override void Dispose(bool disposing)

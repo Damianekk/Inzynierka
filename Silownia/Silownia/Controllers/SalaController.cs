@@ -18,29 +18,41 @@ namespace Silownia.Controllers
         // GET: /Sala/
         public ActionResult Index()
         {
-            return View(db.Sale.ToList());
+            if(Session["User"] != null)
+            {
+                return View(db.Sale.ToList());
+            }
+            return HttpNotFound();
         }
 
         // GET: /Sala/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            if (Session["User"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Sala sala = db.Sale.Find(id);
+                if (sala == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(sala);
             }
-            Sala sala = db.Sale.Find(id);
-            if (sala == null)
-            {
-                return HttpNotFound();
-            }
-            return View(sala);
+            return HttpNotFound();
         }
 
         // GET: /Sala/Create
         public ActionResult Create()
         {
-            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
-            return View();
+            if (Session["User"] != null)
+            {
+                ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
+                return View();
+            }
+            return HttpNotFound();
         }
 
         // POST: /Sala/Create
@@ -50,30 +62,38 @@ namespace Silownia.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include="Numer_sali,Rodzaj,Status,Opis, SilowniaID")] Sala sala)
         {
-            if (ModelState.IsValid)
+            if (Session["User"] != null)
             {
-                db.Sale.Add(sala);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Sale.Add(sala);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
+                return View(sala);
             }
-            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
-            return View(sala);
+            return HttpNotFound();
         }
 
         // GET: /Sala/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            if (Session["User"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Sala sala = db.Sale.Find(id);
+                if (sala == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", sala.Silownia);
+                return View(sala);
             }
-            Sala sala = db.Sale.Find(id);
-            if (sala == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", sala.Silownia);
-            return View(sala);
+            return HttpNotFound();
         }
 
         // POST: /Sala/Edit/5
@@ -83,29 +103,37 @@ namespace Silownia.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include="Numer_sali,Rodzaj,Status,Opis")] Sala sala)
         {
-            if (ModelState.IsValid)
+            if (Session["User"] != null)
             {
-                db.Entry(sala).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(sala).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", sala.Silownia);
+                return View(sala);
             }
-            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", sala.Silownia);
-            return View(sala);
+            return HttpNotFound();
         }
 
         // GET: /Sala/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            if (Session["User"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Sala sala = db.Sale.Find(id);
+                if (sala == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(sala);
             }
-            Sala sala = db.Sale.Find(id);
-            if (sala == null)
-            {
-                return HttpNotFound();
-            }
-            return View(sala);
+            return HttpNotFound();
         }
 
         // POST: /Sala/Delete/5
@@ -113,10 +141,14 @@ namespace Silownia.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Sala sala = db.Sale.Find(id);
-            db.Sale.Remove(sala);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            if (Session["User"] != null)
+            {
+                Sala sala = db.Sale.Find(id);
+                db.Sale.Remove(sala);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return HttpNotFound();
         }
 
         protected override void Dispose(bool disposing)

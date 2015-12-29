@@ -19,59 +19,89 @@ namespace Silownia.Controllers
         // GET: /Trener/
         public ActionResult Index(string imieNazwisko, string SilowniaID, string SpecjalizacjaID, int page = 1, int pageSize = 10, AkcjaEnumTrener akcja = AkcjaEnumTrener.Brak, String info = null)
         {
-            //ViewBag.srchImieNazwisko = imieNazwisko;
-
-            ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
-            ViewBag.SpecjalizacjaID = new SelectList(db.Specjalizacje.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
-      
-            var osoby = from Osoby in db.Trenerzy select Osoby;
-
-            if (!String.IsNullOrEmpty(imieNazwisko))
-                foreach (string wyraz in imieNazwisko.Split(' '))
-                    osoby = osoby.Search(wyraz, i => i.Imie, i => i.Nazwisko);
-            osoby = osoby.Search(SpecjalizacjaID, i => i.Specjalizacja.Nazwa);
-            osoby = osoby.Search(SilowniaID, i => i.Silownia.Nazwa);
-
-            var final = osoby.OrderBy(p => p.Imie);
-            var ileWynikow = osoby.Count();
-            if ((ileWynikow / page) <= 1)
+            if (Session["User"] != null)
             {
-                page = 1;
+                //ViewBag.srchImieNazwisko = imieNazwisko;
+
+                ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
+                ViewBag.SpecjalizacjaID = new SelectList(db.Specjalizacje.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
+
+                var osoby = from Osoby in db.Trenerzy select Osoby;
+
+                if (!String.IsNullOrEmpty(imieNazwisko))
+                    foreach (string wyraz in imieNazwisko.Split(' '))
+                        osoby = osoby.Search(wyraz, i => i.Imie, i => i.Nazwisko);
+                osoby = osoby.Search(SpecjalizacjaID, i => i.Specjalizacja.Nazwa);
+                osoby = osoby.Search(SilowniaID, i => i.Silownia.Nazwa);
+
+                var final = osoby.OrderBy(p => p.Imie);
+                var ileWynikow = osoby.Count();
+                if ((ileWynikow / page) <= 1)
+                {
+                    ViewBag.srchImieNazwisko = imieNazwisko;
+
+                    ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
+                    ViewBag.SpecjalizacjaID = new SelectList(db.Specjalizacje.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
+
+                    osoby = from Osoby in db.Trenerzy select Osoby;
+
+                    if (!String.IsNullOrEmpty(imieNazwisko))
+                        foreach (string wyraz in imieNazwisko.Split(' '))
+                            osoby = osoby.Search(wyraz, i => i.Imie, i => i.Nazwisko);
+                    osoby = osoby.Search(SpecjalizacjaID, i => i.Specjalizacja.Nazwa);
+                    osoby = osoby.Search(SilowniaID, i => i.Silownia.Nazwa);
+
+                    var final = osoby.OrderBy(p => p.Imie);
+                    var ileWynikow = osoby.Count();
+                    if ((ileWynikow / page) <= 1)
+                    {
+                        page = 1;
+                    }
+                    var kk = ileWynikow / page;
+
+                    PagedList<Trener> model = new PagedList<Trener>(final, page, pageSize);
+
+                    if (akcja != AkcjaEnumTrener.Brak)
+                    {
+                        ViewBag.info = info;
+                        ViewBag.Akcja = akcja;
+                    }
+
+                    return View(model);
+                }
             }
-            var kk = ileWynikow / page;
-
-            PagedList<Trener> model = new PagedList<Trener>(final, page, pageSize);
-
-            if (akcja != AkcjaEnumTrener.Brak)
-            {
-                ViewBag.info = info;
-                ViewBag.Akcja = akcja;
-            }
-
-            return View(model);
+            return HttpNotFound();
         }
 
         // GET: /Trener/Details/5
         public ActionResult Details(long? id)
         {
-            if (id == null)
+            if (Session["User"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Trener trener = db.Trenerzy.Find(id);
+                if (trener == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(trener);
             }
-            Trener trener = db.Trenerzy.Find(id);
-            if (trener == null)
-            {
-                return HttpNotFound();
-            }
-            return View(trener);
+            return HttpNotFound();
         }
 
         // GET: /Trener/Create
         public ActionResult Create()
         {
-            ViewBag.SpecjalizacjaID = new SelectList(db.Specjalizacje, "SpecjalizacjaID", "Nazwa");
-            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
-            return View();
+            if (Session["User"] != null)
+            {
+                ViewBag.SpecjalizacjaID = new SelectList(db.Specjalizacje, "SpecjalizacjaID", "Nazwa");
+                ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
+                return View();
+            }
+            return HttpNotFound();
         }
 
         // POST: /Trener/Create
@@ -81,36 +111,44 @@ namespace Silownia.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,DataZatrudnienia,Pensja,SilowniaID,SpecjalizacjaID,StawkaGodzinowa")] Trener trener)
         {
-            if (ModelState.IsValid)
+            if (Session["User"] != null)
             {
-                db.Trenerzy.Add(trener);
-                db.SaveChanges();
-                return RedirectToAction("Index", new { akcja = AkcjaEnumTrener.DodanoTrenera, info = trener.imieNazwisko });
-            }
+                if (ModelState.IsValid)
+                {
+                    db.Trenerzy.Add(trener);
+                    db.SaveChanges();
+                    return RedirectToAction("Index", new { akcja = AkcjaEnumTrener.DodanoTrenera, info = trener.imieNazwisko });
+                }
 
-            ViewBag.SpecjalizacjaID = new SelectList(db.Specjalizacje, "SpecjalizacjaID", "Nazwa", trener.Specjalizacja);
-            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
-            return View(new Trener
-            {
-                DataZatrudnienia = DateTime.Now
-            });
+                ViewBag.SpecjalizacjaID = new SelectList(db.Specjalizacje, "SpecjalizacjaID", "Nazwa", trener.Specjalizacja);
+                ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
+                return View(new Trener
+                {
+                    DataZatrudnienia = DateTime.Now
+                });
+            }
+            return HttpNotFound();
         }
 
         // GET: /Trener/Edit/5
         public ActionResult Edit(long? id)
         {
-            if (id == null)
+            if (Session["User"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Trener trener = db.Trenerzy.Find(id);
+                if (trener == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.SpecjalizacjaID = new SelectList(db.Specjalizacje, "SpecjalizacjaID", "Nazwa", trener.Specjalizacja);
+                ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", trener.Silownia);
+                return View(trener);
             }
-            Trener trener = db.Trenerzy.Find(id);
-            if (trener == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.SpecjalizacjaID = new SelectList(db.Specjalizacje, "SpecjalizacjaID", "Nazwa", trener.Specjalizacja);
-            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", trener.Silownia);
-            return View(trener);
+            return HttpNotFound();
         }
 
         // POST: /Trener/Edit/5
@@ -120,30 +158,38 @@ namespace Silownia.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,DataZatrudnienia,Pensja,SilowniaID,SpecjalizacjaID,StawkaGodzinowa")] Trener trener)
         {
-            if (ModelState.IsValid)
+            if (Session["User"] != null)
             {
-                db.Entry(trener).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(trener).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                ViewBag.SpecjalizacjaID = new SelectList(db.Specjalizacje, "SpecjalizacjaID", "Nazwa", trener.Specjalizacja);
+                ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", trener.Silownia);
+                return View(trener);
             }
-            ViewBag.SpecjalizacjaID = new SelectList(db.Specjalizacje, "SpecjalizacjaID", "Nazwa", trener.Specjalizacja);
-            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", trener.Silownia);
-            return View(trener);
+            return HttpNotFound();
         }
 
         // GET: /Trener/Delete/5
         public ActionResult Delete(long? id)
         {
-            if (id == null)
+            if (Session["User"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Trener trener = db.Trenerzy.Find(id);
+                if (trener == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(trener);
             }
-            Trener trener = db.Trenerzy.Find(id);
-            if (trener == null)
-            {
-                return HttpNotFound();
-            }
-            return View(trener);
+            return HttpNotFound();
         }
 
         // POST: /Trener/Delete/5
@@ -151,10 +197,14 @@ namespace Silownia.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            Trener trener = db.Trenerzy.Find(id);
-            db.Trenerzy.Remove(trener);
-            db.SaveChanges();
-            return RedirectToAction("Index", new { akcja = AkcjaEnumTrener.UsunietoTrenera, info = trener.imieNazwisko });
+            if (Session["User"] != null)
+            {
+                Trener trener = db.Trenerzy.Find(id);
+                db.Trenerzy.Remove(trener);
+                db.SaveChanges();
+                return RedirectToAction("Index", new { akcja = AkcjaEnumTrener.UsunietoTrenera, info = trener.imieNazwisko });
+            }
+            return HttpNotFound();
         }
 
         protected override void Dispose(bool disposing)
