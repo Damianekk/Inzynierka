@@ -19,58 +19,69 @@ namespace Silownia.Controllers
         // GET: /Silownia/
         public ActionResult Index(string Miasto, int page = 1, int pageSize = 10, AkcjaEnumSilownia akcja = AkcjaEnumSilownia.Brak, String info = null)
         {
- 
-            var Miasta = db.Silownie.Where(u => (u.SilowniaID != null) && (u.Adres != null)).DistinctBy(a => new { a.Adres.Miasto }).Select(x=>x.Adres);
-
-
-            ViewBag.Miasto = new SelectList(Miasta, "Miasto", "Miasto");
-
-            var silownie = from Silownie in db.Silownie select Silownie;
-            silownie = silownie.Search(Miasto, m => m.Adres.Miasto);
-         
-            var final = silownie.OrderBy(p => p.Nazwa);
-            var ileWynikow = silownie.Count();
-            if ((ileWynikow / page) <= 1)
+            if (Session["User"] != null)
             {
-                page = 1;
+                var Miasta = db.Silownie.Where(u => (u.SilowniaID != null) && (u.Adres != null)).DistinctBy(a => new { a.Adres.Miasto }).Select(x => x.Adres);
+
+
+                ViewBag.Miasto = new SelectList(Miasta, "Miasto", "Miasto");
+
+                var silownie = from Silownie in db.Silownie select Silownie;
+                silownie = silownie.Search(Miasto, m => m.Adres.Miasto);
+
+                var final = silownie.OrderBy(p => p.Nazwa);
+                var ileWynikow = silownie.Count();
+                if ((ileWynikow / page) <= 1)
+                {
+                    page = 1;
+                }
+                var kk = ileWynikow / page;
+
+                PagedList<Models.Silownia> model = new PagedList<Models.Silownia>(final, page, pageSize);
+
+
+                if (akcja != AkcjaEnumSilownia.Brak)
+                {
+                    ViewBag.info = info;
+                    ViewBag.Akcja = akcja;
+                }
+
+                return View(model);
             }
-            var kk = ileWynikow / page;
-
-            PagedList<Models.Silownia> model = new PagedList<Models.Silownia>(final, page, pageSize);
-
-
-            if (akcja != AkcjaEnumSilownia.Brak)
-            {
-                ViewBag.info = info;
-                ViewBag.Akcja = akcja;
-            }
-
-            return View(model);
+            return HttpNotFound();
         }
 
         // GET: /Silownia/Details/5
         public ActionResult Details(long? id, bool? mniejSzczegolow = false, bool? mniejszaMapa = false)
         {
-            if (id == null)
+            if (Session["User"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+
+                Models.Silownia silownia = db.Silownie.Find(id);
+                ViewBag.mniejSzczegolow = mniejSzczegolow;
+                ViewBag.mniejszaMapa = mniejszaMapa;
+
+                if (silownia == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(silownia);
             }
-            
-            Models.Silownia silownia = db.Silownie.Find(id);
-            ViewBag.mniejSzczegolow = mniejSzczegolow;
-            ViewBag.mniejszaMapa = mniejszaMapa;
-          
-            if (silownia == null)
-            {
-                return HttpNotFound();
-            }
-            return View(silownia);
+            return HttpNotFound();
         }
 
         // GET: /Silownia/Create
         public ActionResult Create()
         {
-            return View();
+            if (Session["User"] != null)
+            {
+                return View();
+            }
+            return HttpNotFound();
         }
 
         // POST: /Silownia/Create
@@ -80,33 +91,37 @@ namespace Silownia.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "SilowniaID,Nazwa,GodzinaOtwarcia,GodzinaZamkniecia,Powierzchnia,NrTelefonu,DodatkoweInfo")] Models.Silownia silownia)
         {
-
-            if (ModelState.IsValid)
-            {               
-                db.Silownie.Add(silownia);
-                db.SaveChanges();
-                return RedirectToAction("Create","Adres",new { id = silownia.SilowniaID, komu = KomuAdres.Silownia });
+            if (Session["User"] != null)
+            {
+                if (ModelState.IsValid)
+                {
+                    db.Silownie.Add(silownia);
+                    db.SaveChanges();
+                    return RedirectToAction("Create", "Adres", new { id = silownia.SilowniaID, komu = KomuAdres.Silownia });
+                }
+                return View(silownia);
             }
-           
-
-
-            return View(silownia);
+            return HttpNotFound();
         }
 
         // GET: /Silownia/Edit/5
         public ActionResult Edit(long? id)
         {
-            if (id == null)
+            if (Session["User"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Models.Silownia silownia = db.Silownie.Find(id);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Models.Silownia silownia = db.Silownie.Find(id);
 
-            if (silownia == null)
-            {
-                return HttpNotFound();
+                if (silownia == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(silownia);
             }
-            return View(silownia);
+            return HttpNotFound();
         }
 
         // POST: /Silownia/Edit/5
@@ -116,28 +131,36 @@ namespace Silownia.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "SilowniaID,Nazwa,GodzinaOtwarcia,GodzinaZamkniecia,Powierzchnia,NrTelefonu,DodatkoweInfo")] Models.Silownia silownia)
         {
-            if (ModelState.IsValid)
+            if (Session["User"] != null)
             {
-                db.Entry(silownia).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(silownia).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(silownia);
             }
-            return View(silownia);
+            return HttpNotFound();
         }
 
         // GET: /Silownia/Delete/5
         public ActionResult Delete(long? id)
         {
-            if (id == null)
+            if (Session["User"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Models.Silownia silownia = db.Silownie.Find(id);
+                if (silownia == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(silownia);
             }
-            Models.Silownia silownia = db.Silownie.Find(id);
-            if (silownia == null)
-            {
-                return HttpNotFound();
-            }
-            return View(silownia);
+            return HttpNotFound();
         }
 
         // POST: /Silownia/Delete/5
@@ -145,10 +168,14 @@ namespace Silownia.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            Models.Silownia silownia = db.Silownie.Find(id);
-            db.Silownie.Remove(silownia);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            if (Session["User"] != null)
+            {
+                Models.Silownia silownia = db.Silownie.Find(id);
+                db.Silownie.Remove(silownia);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return HttpNotFound();
         }
 
         protected override void Dispose(bool disposing)
@@ -159,6 +186,7 @@ namespace Silownia.Controllers
             }
             base.Dispose(disposing);
         }
+        
         [HttpPost]
         public JsonResult SilowniaInfoJSON()
         {
