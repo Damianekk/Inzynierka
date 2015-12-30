@@ -254,7 +254,6 @@
     <Compile Include="Startup.cs" />
     <Compile Include="Helpers\SwapExpressionVisitor.cs" />
     <Compile Include="Test.cs" />
-    <Compile Include="ViewModel\SprzetSaleModelView.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\13.jpg" />
@@ -445,6 +444,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="ViewModel\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
