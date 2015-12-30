@@ -20,12 +20,28 @@ namespace Silownia
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
+                      "~/Scripts/bootstrap-datepicker.js",    // ** NEW for Bootstrap Datepicker
                       "~/Scripts/respond.js"));
 
+            //bootstrap datepicker do dat z godzinami
+            bundles.Add(new ScriptBundle("~/bundles/datetime").Include(
+    "~/Scripts/moment*",
+    "~/Scripts/bootstrap-datetimepicker*"));
+
+            bundles.Add(new ScriptBundle("~/bundles/datePicker").Include(
+          "~/Scripts/moment.min.js",
+          "~/Scripts/bootstrap-datetimepicker.min.js"));
+
+            bundles.Add(new StyleBundle("~/Content/datepicker").Include(
+                     "~/Content/bootstrap-datetimepicker.min.css"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/bootstrap-datepicker.css",  // ** NEW for Bootstrap Datepicker
                       "~/Content/site.css"));
+
+
+
 
             bundles.IgnoreList.Clear();
         }

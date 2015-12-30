@@ -40,32 +40,19 @@
                         </div>
                     </div>
 
-
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
                             <input type="submit" value="Utwórz" class="btn btn-default" />
                         </div>
                     </div>
                 </th>
-
-                @if (TempData["msg"] != null)
-                { @Html.Raw(TempData["msg"]) }
-
-                <th>
-                    @if (ViewBag.Osoba != null)
-                    {
-                        <div class="table-bordered">
-                            @Html.Action("Details", "Klient", new { id = ViewBag.Osoba.OsobaID })
-                        </div>
-                    }
-                </th>
-
             </tr>
         </table>
     </div>
 
 
 }
+
 <div>
     @Html.ActionLink("Przejdź do listy masaży", "Index")
 </div>

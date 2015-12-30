@@ -8,11 +8,11 @@ using Silownia.Models;
 using Silownia.DAL;
 using PagedList;
 using System.Collections.Generic;
-
+ 
 
 namespace Silownia.Controllers
 {
-
+   
 
     public class KlientController : Controller
     {
@@ -20,79 +20,65 @@ namespace Silownia.Controllers
 
 
         // GET: /Klient/
-
-        public ActionResult Index(string Miasto, string imieNazwisko, bool czyUmowa = false, int page = 1, int pageSize = 10, AkcjaEnum akcja = AkcjaEnum.Brak, String info = null)
+ 
+        public ActionResult Index(string Miasto,string imieNazwisko, bool czyUmowa =false ,int page=1 ,int pageSize = 10 , AkcjaEnum akcja = AkcjaEnum.Brak , String info = null)
         {
-            // if (Session["User"] != null)
+
+            var Miasta = db.Klienci.Where(u => (u.OsobaID != null) && (u.Adres != null)).DistinctBy(a => new { a.Adres.Miasto }).Select(x => x.Adres);
+
+
+            ViewBag.Miasto = new SelectList(Miasta, "Miasto", "Miasto");
+            //ViewBag.srchImieNazwisko = imieNazwisko;   Póki co niech będzie zakomentowane 
+            //ViewBag.czyUmowa = czyUmowa;
+   
+            var osoby = from Osoby in db.Klienci select Osoby;
+
+            osoby = osoby.Search(imieNazwisko, i => i.Imie, i => i.Nazwisko);
+            osoby = osoby.Search(Miasto, m => m.Adres.Miasto);
+            if(czyUmowa)
+            osoby = osoby.Where(u => u.Umowy.Count > 0);
+          
+            var final = osoby.OrderBy(p => p.Imie);
+            var ileWynikow = osoby.Count();
+            if ((ileWynikow / page) <= 1)
             {
-                var Miasta = db.Klienci.Where(u => (u.OsobaID != null) && (u.Adres != null)).DistinctBy(a => new { a.Adres.Miasto }).Select(x => x.Adres);
-
-
-                ViewBag.Miasto = new SelectList(Miasta, "Miasto", "Miasto");
-                //ViewBag.srchImieNazwisko = imieNazwisko;   Póki co niech będzie zakomentowane 
-                //ViewBag.czyUmowa = czyUmowa;
-
-                var osoby = from Osoby in db.Klienci select Osoby;
-
-
-                if (!String.IsNullOrEmpty(imieNazwisko))
-                    foreach (string wyraz in imieNazwisko.Split(' '))
-                        osoby = osoby.Search(wyraz, i => i.Imie, i => i.Nazwisko);
-                osoby = osoby.Search(Miasto, m => m.Adres.Miasto);
-                if (czyUmowa)
-                    osoby = osoby.Where(u => u.Umowy.Count > 0);
-
-                var final = osoby.OrderBy(p => p.Imie);
-                var ileWynikow = osoby.Count();
-                if ((ileWynikow / page) <= 1)
-                {
-                    page = 1;
-                }
-                var kk = ileWynikow / page;
+                page = 1;
+            }
+            var kk = ileWynikow / page;
 
                 PagedList<Klient> model = new PagedList<Klient>(final, page, pageSize);
 
 
-                if (akcja != AkcjaEnum.Brak)
-                {
-                    ViewBag.info = info;
-                    ViewBag.Akcja = akcja;
-                }
-
-                return View(model);
+            if(akcja != AkcjaEnum.Brak)
+            {
+                ViewBag.info = info;
+                ViewBag.Akcja = akcja;
             }
-            //  return HttpNotFound();
+ 
+            return View(model);
 
         }
-
+       
         // GET: /Klient/Details/5
         public ActionResult Details(long? id)
         {
-            //  if (Session["User"] != null)
+            if (id == null)
             {
-                if (id == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                Klient klient = db.Klienci.Find(id);
-                if (klient == null)
-                {
-                    return HttpNotFound();
-                }
-                var z = klient;
-                return View(z);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            //    return HttpNotFound();
+            Klient klient = db.Klienci.Find(id);
+            if (klient == null)
+            {
+                return HttpNotFound();
+            }
+            var z = klient;
+            return View(z);
         }
 
         // GET: /Klient/Create
         public ActionResult Create()
         {
-            //  if (Session["User"] != null)
-            {
-                return View();
-            }
-            //    return HttpNotFound();
+            return View();
         }
 
         // POST: /Klient/Create
@@ -102,45 +88,31 @@ namespace Silownia.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,Mail,NrTelefonu,Adres")] Klient klient)
         {
-            //  if (Session["User"] != null)
+           
+
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
-                {
-                    db.Klienci.Add(klient);
-                    db.SaveChanges();
-
-                    Uzytkownik uzytkownik = new Uzytkownik();
-                    uzytkownik.IDOsoby = klient.OsobaID;
-                    uzytkownik.Login = klient.Mail;
-                    uzytkownik.Haslo = klient.Imie + klient.Nazwisko;
-                    uzytkownik.Rola = "Klient";
-                    db.Uzytkownicy.Add(uzytkownik);
-                    db.SaveChanges();
-                    return RedirectToAction("Index", new { akcja = AkcjaEnum.DodanoKlienta, info = klient.imieNazwisko });
-                }
-
-                return View(klient);
+                db.Klienci.Add(klient);
+                db.SaveChanges();
+                return RedirectToAction("Index", new { akcja = AkcjaEnum.DodanoKlienta , info = klient.imieNazwisko });
             }
-            //  return HttpNotFound();
+            
+            return View(klient);
         }
 
         // GET: /Klient/Edit/5
         public ActionResult Edit(long? id)
         {
-            //  if (Session["User"] != null)
+            if (id == null)
             {
-                if (id == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                Klient klient = db.Klienci.Find(id);
-                if (klient == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(klient);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            // return HttpNotFound();
+            Klient klient = db.Klienci.Find(id);
+            if (klient == null)
+            {
+                return HttpNotFound();
+            }
+            return View(klient);
         }
 
         // POST: /Klient/Edit/5
@@ -150,36 +122,28 @@ namespace Silownia.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,Mail,NrTelefonu")] Klient klient)
         {
-            //   if (Session["User"] != null)
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
-                {
-                    db.Entry(klient).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-                }
-                return View(klient);
+                db.Entry(klient).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
-            //   return HttpNotFound();
+            return View(klient);
         }
 
         // GET: /Klient/Delete/5
         public ActionResult Delete(long? id)
         {
-            //  if (Session["User"] != null)
+            if (id == null)
             {
-                if (id == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                Klient klient = db.Klienci.Find(id);
-                if (klient == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(klient);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            //  return HttpNotFound();
+            Klient klient = db.Klienci.Find(id);
+            if (klient == null)
+            {
+                return HttpNotFound();
+            }
+            return View(klient);
         }
 
         // POST: /Klient/Delete/5
@@ -187,14 +151,10 @@ namespace Silownia.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            // if (Session["User"] != null)
-            {
-                Klient klient = db.Klienci.Find(id);
-                db.Klienci.Remove(klient);
-                db.SaveChanges();
-                return RedirectToAction("Index", new { akcja = AkcjaEnum.UsunietoKlienta, info = klient.imieNazwisko });
-            }
-            //  return HttpNotFound();
+            Klient klient = db.Klienci.Find(id);
+            db.Klienci.Remove(klient);
+            db.SaveChanges();
+            return RedirectToAction("Index", new { akcja = AkcjaEnum.UsunietoKlienta, info = klient.imieNazwisko });
         }
 
         protected override void Dispose(bool disposing)

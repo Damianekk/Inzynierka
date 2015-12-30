@@ -10,14 +10,6 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Klient.imieNazwisko) Klienta
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Klient.imieNazwisko)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.Masazysta.imieNazwisko)
         </dt>
 
@@ -41,23 +33,9 @@
             @Html.DisplayFor(model => model.CzasTrwania)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Masazysta.StawkaGodzinowa)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Masazysta.StawkaGodzinowa)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.kosztMasazu)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.kosztMasazu)
-        </dd>
-
     </dl>
 </div>
 <p>
+    @Html.ActionLink("Edycja", "Edit", new { id = Model.MasazID }) |
     @Html.ActionLink("Powrót do listy masaży", "Index")
 </p>

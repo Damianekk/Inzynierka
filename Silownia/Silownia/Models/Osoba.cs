@@ -33,8 +33,6 @@ namespace Silownia.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime DataUrodzenia { get; set; }
 
-        public byte[] ZdjecieProfilowe { get; set; }
-
         [Phone]
         [Display(Name = "Numer telefonu")]
         public string NrTelefonu { get; set; }
