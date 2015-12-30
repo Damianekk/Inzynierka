@@ -14,6 +14,9 @@ namespace Silownia.Models
         {
             KlientZajeciaGrupowe = new List<KlientZajeciaGrupowe>();
         }
+
+       // [MaxLength(15, ErrorMessage = " Opis przekracza dozwoloną ilość znaków (15)")]
+       // [Display(Name = "Nazwa treningu")]
         public string NazwaTreningu { get; set; }
 
         [MaxLength(300, ErrorMessage = " Opis przekracza dozwoloną ilość znaków (300)")]

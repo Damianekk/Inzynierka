@@ -5,11 +5,9 @@
     ViewBag.Title = "Siłownia: szczegóły";
 }
 
-
-
 <div>
     <h2>Szczegóły dotyczące wybranej siłowni</h2>
-	<hr />
+    <hr />
     <fieldset>
         <table width="100%">
             <td>
@@ -54,21 +52,19 @@
                         @Html.DisplayFor(model => model.NrTelefonu)
                     </dd>
                     @if (!ViewBag.mniejSzczegolow)
-                        {
+                    {
                         <dt>
-                                         
+
                             @Html.ActionLink("Edytuj", "Edit", new { id = Model.SilowniaID }) |
-                        
+
                         </dt>
                         <dt>
                             @Html.ActionLink("Przejdź do listy siłowni", "Index") |
                         </dt>
-                        }
+                    }
                 </dl>
             </td>
-            <td>
-                
-            </td>
+            <td></td>
             <td>
                 <!-- This is the div that will contain the Google Map -->
                 @if (ViewBag.mniejszaMapa)
@@ -79,61 +75,61 @@
                 {
                     <div id="map_canvas" style="height: 300px; width : 800px"></div>
                 }
-                
+
                 <!-- Enclose the Javascript in a "section" so that it is rendered in the correct order after scripts have been loaded etc -->
             </td>
         </table>
     </fieldset>
-   @if (!ViewBag.mniejSzczegolow)
-   {
+    @if (!ViewBag.mniejSzczegolow)
+    {
 
         //Dodatkowe info ( Umowy )
-    <dl class="table-bordered" style="color:#0099CC">
-        <dt>
-            @Html.Label("Umowy", new { style = "color:#0099CC" })
-        </dt>
-
-        @if (Model.Umowy.Count > 0)
-        {
-            <dd>
-                <table class="table">
-                    <tr>
-                        <th>Klient</th>
-                        <th>Data podpisania umowy</th>
-                        <th>Data końca umowy</th>
-                    </tr>
-                    @foreach (var item in Model.Umowy)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Klient.imieNazwisko)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.DataPodpisania)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.DataZakonczenia)
-                            </td>
-
-                        </tr>
-                    }
-
-                </table>
-            </dd>
-        }
-        else
-        {
+        <dl class="table-bordered" style="color:#0099CC">
             <dt>
-                @Html.Label("Brak klientów", new { style = "color:#D11919" })
+                @Html.Label("Umowy", new { style = "color:#0099CC" })
             </dt>
-        }
 
-    </dl>
-   }
+            @if (Model.Umowy.Count > 0)
+            {
+                <dd>
+                    <table class="table">
+                        <tr>
+                            <th>Klient</th>
+                            <th>Data podpisania umowy</th>
+                            <th>Data końca umowy</th>
+                        </tr>
+                        @foreach (var item in Model.Umowy)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Klient.imieNazwisko)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DataPodpisania)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DataZakonczenia)
+                                </td>
+
+                            </tr>
+                        }
+
+                    </table>
+                </dd>
+            }
+            else
+            {
+                <dt>
+                    @Html.Label("Brak klientów", new { style = "color:#D11919" })
+                </dt>
+            }
+
+        </dl>
+    }
 </div>
 
 
-<script src="http://maps.google.com/maps/api/js?sensor=true" type="text/javascript"></script> 
+<script src="http://maps.google.com/maps/api/js?sensor=true" type="text/javascript"></script>
 <script src="http://maps.google.com/maps/api/js?sensor=true" type="text/javascript"></script>
 
 <!-- This css is to ensure that the google map contols (zoom bar etc) show and size correctly. -->
@@ -211,7 +207,7 @@
                     type: "POST",
                     success: function (json) {
 
-                    //    alert("true")
+                        //    alert("true")
                         $.each(json, function (i, item) {
                             var marker = new google.maps.Marker({
                                 'position': new google.maps.LatLng(item.dlugosc, item.szerokosc),

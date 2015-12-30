@@ -9,17 +9,14 @@ namespace Silownia.Models
 {
     public class TreningPersonalny : Trening
     {
+        [Required(ErrorMessage = "Wybierz trenera z listy")]
+        public long TrenerID { get; set; }
+
+        [Display(Name = "Całkowity koszt treningu")]
+        public int kosztTreningu { get; set; }
+
         public virtual Klient Klient { get; set; }
         public virtual Trener Trener { get; set; }
 
-        public TreningPersonalny()
-        {
-
-        }
-
-        //public virtual IQuerable<Trening> GetAll()
-        //{
-
-        //}
     }
 }

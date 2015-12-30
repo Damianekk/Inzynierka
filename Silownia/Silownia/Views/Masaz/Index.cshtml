@@ -4,6 +4,32 @@
 @{
     ViewBag.Title = "Masaże: index";
 }
+@Scripts.Render("~/Scripts/infoCzynnosc.js")
+
+
+@if (ViewBag.Akcja != null)
+{
+    if (ViewBag.Akcja == AkcjaEnumMasaz.DodanoMasaz)
+    {
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <div class="alert alert-success">
+            <br />
+            <h4>@PelnaNazwaEnum.GetDescription(@ViewBag.Akcja) @ViewBag.info</h4>
+            <br />
+        </div>
+    }
+
+    if (ViewBag.Akcja == AkcjaEnumMasaz.UsunietoMasaz)
+    {
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <div class="alert alert-danger">
+            <br />
+            <h4>@PelnaNazwaEnum.GetDescription(@ViewBag.Akcja) @ViewBag.info</h4>
+            <br />
+        </div>
+    }
+}
+
 
 <h2>Lista masaży zapisanych w naszej bazie:</h2>
 
@@ -57,7 +83,6 @@
                 @Html.DisplayFor(modelItem => item.CzasTrwania)
             </td>
             <td>
-                @Html.ActionLink("Edytuj", "Edit", new { id = item.MasazID }) |
                 @Html.ActionLink("Szczegóły", "Details", new { id = item.MasazID }) |
                 @Html.ActionLink("Usuń", "Delete", new { id = item.MasazID })
             </td>

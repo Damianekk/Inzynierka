@@ -69,6 +69,9 @@
             @Html.Label("Pensja:")
         </th>
         <th>
+            @Html.Label("Stawka godzinowa:")
+        </th>
+        <th>
             @Html.Label("Specjalizacja:")
         </th>
         <th>
@@ -97,6 +100,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Pensja)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StawkaGodzinowa)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Specjalizacja.Nazwa)

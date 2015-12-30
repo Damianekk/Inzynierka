@@ -229,14 +229,14 @@ namespace Silownia.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-          //  if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 Umowa umowa = db.Umowy.Find(id);
                 db.Umowy.Remove(umowa);
                 db.SaveChanges();
                 return RedirectToAction("Index", new { akcja = AkcjaEnumUmowa.UsunietoUmowe });
             }
-          //  return HttpNotFound();
+            return HttpNotFound();
         }
 
         protected override void Dispose(bool disposing)

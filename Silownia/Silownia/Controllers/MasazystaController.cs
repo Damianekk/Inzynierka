@@ -21,7 +21,8 @@ namespace Silownia.Controllers
 
         public ActionResult Index(string imieNazwisko, string SilowniaID, int page = 1, int pageSize = 10, AkcjaEnumMasazysta akcja = AkcjaEnumMasazysta.Brak, String info = null)
         {
-         //   if (Session["User"] != null)
+            //ViewBag.srchImieNazwisko = imieNazwisko;
+            if (Session["User"] != null)
             {
                 ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
 
@@ -51,14 +52,14 @@ namespace Silownia.Controllers
 
                 return View(model);
             }
-          //  return HttpNotFound();
+            return HttpNotFound();
         }
 
 
         // GET: Masazysta/Details/5
         public ActionResult Details(long? id)
         {
-          //  if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 if (id == null)
                 {
@@ -71,18 +72,18 @@ namespace Silownia.Controllers
                 }
                 return View(masazysta);
             }
-         //   return HttpNotFound();
+            return HttpNotFound();
         }
 
         // GET: Masazysta/Create
         public ActionResult Create()
         {
-          //  if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
                 return View();
             }
-          //  return HttpNotFound();
+            return HttpNotFound();
         }
 
         // POST: Masazysta/Create
@@ -92,7 +93,7 @@ namespace Silownia.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,NrTelefonu,Pesel,DataZatrudnienia,Pensja,StawkaGodzinowa,SilowniaID")] Masazysta masazysta)
         {
-          //  if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 if (ModelState.IsValid)
                 {
@@ -108,13 +109,13 @@ namespace Silownia.Controllers
                 }
                 );
             }
-         //   return HttpNotFound();
+            return HttpNotFound();
         }
 
         // GET: Masazysta/Edit/5
         public ActionResult Edit(long? id)
         {
-         //   if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 if (id == null)
                 {
@@ -128,7 +129,7 @@ namespace Silownia.Controllers
                 ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", masazysta.Silownia);
                 return View(masazysta);
             }
-          //  return HttpNotFound();
+            return HttpNotFound();
         }
 
         // POST: Masazysta/Edit/5
@@ -138,7 +139,7 @@ namespace Silownia.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,NrTelefonu,Pesel,DataZatrudnienia,Pensja,StawkaGodzinowa,SilowniaID")] Masazysta masazysta)
         {
-          //  if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 if (ModelState.IsValid)
                 {
@@ -149,13 +150,13 @@ namespace Silownia.Controllers
                 ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", masazysta.SilowniaID);
                 return View(masazysta);
             }
-          //  return HttpNotFound();
+            return HttpNotFound();
         }
 
         // GET: Masazysta/Delete/5
         public ActionResult Delete(long? id)
         {
-          //  if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 if (id == null)
                 {
@@ -168,7 +169,7 @@ namespace Silownia.Controllers
                 }
                 return View(masazysta);
             }
-         //   return HttpNotFound();
+            return HttpNotFound();
         }
 
         // POST: Masazysta/Delete/5
@@ -176,14 +177,14 @@ namespace Silownia.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-          //  if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 Masazysta masazysta = db.Masazysci.Find(id);
                 db.Osoby.Remove(masazysta);
                 db.SaveChanges();
                 return RedirectToAction("Index", new { akcja = AkcjaEnumMasazysta.UsunietoMasazyste, info = masazysta.imieNazwisko });
             }
-          //  return HttpNotFound();
+            return HttpNotFound();
         }
 
         protected override void Dispose(bool disposing)
