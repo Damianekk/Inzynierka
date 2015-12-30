@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Silownia.Models;
 using Silownia.DAL;
+using System.IO;
 
 namespace Silownia.Controllers
 {
@@ -37,8 +38,26 @@ namespace Silownia.Controllers
         }
 
         // GET: /Sala/Create
+        
         public ActionResult Create()
         {
+            //if (foto != null && foto.ContentLength > 0)
+            //  try
+            //    {
+            //      string path = Path.Combine(Server.MapPath("~/Content/Sale"), Path.GetFileName(foto.FileName));
+            //      foto.SaveAs(path);
+            //      ViewBag.Message = "Załadowano plik "+ foto.FileName +".";  
+            //    }
+            //  catch (Exception exc)
+            //  {
+            //      ViewBag.Message = "Błąd: " + exc.Message.ToString();
+            //  }
+            //else
+            //    {  
+            //        ViewBag.Message = "Nie wybrano pliku.";  
+            //    }  
+              
+
             ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
             return View();
         }
@@ -48,14 +67,16 @@ namespace Silownia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="Numer_sali,Rodzaj,Status,Opis, SilowniaID")] Sala sala)
+        public ActionResult Create([Bind(Include="Numer_sali, Rodzaj, Status, Opis, ImageFile, SilowniaID")] Sala sala)
         {
             if (ModelState.IsValid)
             {
+                
                 db.Sale.Add(sala);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            
             ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
             return View(sala);
         }
@@ -81,7 +102,7 @@ namespace Silownia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="Numer_sali,Rodzaj,Status,Opis")] Sala sala)
+        public ActionResult Edit([Bind(Include="Numer_sali,Rodzaj,Status,Opis,ImageFile")] Sala sala)
         {
             if (ModelState.IsValid)
             {

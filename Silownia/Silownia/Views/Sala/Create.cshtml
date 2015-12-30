@@ -4,7 +4,7 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<h2>Dodaj Sale: </h2>
 
 @using (Html.BeginForm()) 
 {
@@ -34,15 +34,24 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Opis, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Opis)
+                @Html.TextAreaFor(model => model.Opis)
                 @Html.ValidationMessageFor(model => model.Opis)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ImageFile, "Zdjecie", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*<input type="file" name="ImageFile" id="ImageFile" />*@
+                @Html.EditorFor(model => model.ImageFile)
+               
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.SilowniaID, "Silownia", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("SilowniaID", String.Empty)
+                @Html.DropDownList("SilowniaID", "Wybierz siłownie")
                 @Html.ValidationMessageFor(model => model.SilowniaID)
             </div>
         </div>
@@ -56,5 +65,5 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Wróć do listy sal", "Index")
 </div>
