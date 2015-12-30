@@ -10,7 +10,6 @@ namespace Silownia.Models
 
         public long MasazID { get; set; }
 
-        [CustomDateTimeValidator]
         [Required(ErrorMessage = "Podaj datę masażu")]
         [Display(Name = "Pełna data masażu")]
         [DataType(DataType.DateTime)]
