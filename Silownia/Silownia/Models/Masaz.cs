@@ -17,6 +17,8 @@ namespace Silownia.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
         public DateTime DataMasazu { get; set; }
 
+        [Required(ErrorMessage = "Podaj czas trwania masażu")]
+        [Range(30, 90, ErrorMessage="Masaż może trwać od 30 do 90 minut")]
         [Display(Name = "Czas trwania masażu")]
         public int CzasTrwania { get; set; }
 

@@ -18,7 +18,7 @@ textarea {
 }
 
 a.umowaPic {
-    background: url(http://www.flatrateansweringservice.com/wp-content/uploads/2015/01/icons-4-service-provided.jpg) no-repeat;
+    background: url('/Content/ikony/ikona_umowa50px.png') no-repeat;
     display: block;
     width: 50px;
     height: 50px;
@@ -26,15 +26,15 @@ a.umowaPic {
 }
 
 a.masazPic {
-    background: url(http://cabrerahotelmalecon.com/wp-content/uploads/2014/11/massage-icon-e1416187871460.png) no-repeat;
+    background: url('/Content/ikony/ikona_masaz50px.png') no-repeat;
     display: block;
     width: 50px;
-    height: 50px;
+    height:50px;
     text-indent: -9999px; /* hides the link text */
 }
 
-a.treningPic {
-    background: url(https://lh3.googleusercontent.com/-nS2VCPJUufQ/AAAAAAAAAAI/AAAAAAAAADo/R67Z1sfzVeA/s46-c-k-no/photo.jpg) no-repeat;
+a.treningPersonalnyPic {
+    background: url('/Content/ikony/ikona_treningPersonalny50px.png') no-repeat;
     display: block;
     width: 50px;
     height: 50px;
@@ -42,10 +42,10 @@ a.treningPic {
 }
 
 a.adresPic {
-    background: url(http://www.resolute.me/img/icon_address.png) no-repeat;
+    background: url('/Content/ikony/ikona_adres50px.png') no-repeat;
     display: block;
-    width: 48px;
-    height: 48px;
+    width: 50px;
+    height: 50px;
     text-indent: -9999px; /* hides the link text */
 }
 /* styles for validation helpers */

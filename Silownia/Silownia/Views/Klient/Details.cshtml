@@ -52,8 +52,6 @@
         </dd>
 
     </dl>
-
-
 </div>
 
 
@@ -61,94 +59,185 @@
     @Html.ActionLink("Edytuj", "Edit", new { id = Model.OsobaID }) |
     @Html.ActionLink("Przejdź do listy klientów", "Index")
 </p>
+<div class="wrap">
+    <img class="show_hide" src="/Content/ikony/ikona_umowa.png" width="90" height="90">
+    <div class="slidingDiv" style="display:none">
 
-@*   ========= Umowy ========= *@
+        <dl , class="table-bordered" ,new style="color:#4039f9">
+            <dt>
+                @Html.Label("Umowy", new { style = "color:#4039f9" })
+            </dt>
 
-<button style="background : no-repeat; border : none;" type="button" id="btnToggle">Umowy<img src="https://cdn3.iconfinder.com/data/icons/files-2/512/sign_contract_file-512.png" width="60" height="60"></button>
-<div id="slidetogglediv" class="slidediv">
-    <div id="hidden" style="display:none">
-        <b>
-
-            <dl , class="table-bordered" ,new style="color:#0099CC">
-                <dt>
-                    @Html.Label("Umowy", new { style = "color:#0099CC" })
-                </dt>
-
-                @if (Model.Umowy.Count > 0)
-                {
-                    <dd>
-                        <table class="table">
+            @if (Model.Umowy.Count > 0)
+            {
+                <dd>
+                    <table class="table">
+                        <tr>
+                            <th>Siłownia</th>
+                            <th>Data podpisania</th>
+                            <th>Data zakończenia</th>
+                            <th>Opłata za miesiąc</th>
+                        </tr>
+                        @foreach (var item in Model.Umowy)
+                        {
                             <tr>
-                                <th>Data podpisania</th>
-                                <th>Data zakończenia</th>
-                                <th>Cena/msc</th>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Silownia.Nazwa)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DataPodpisania)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DataZakonczenia)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Cena) zł
+                                </td>
+
                             </tr>
-                            @foreach (var item in Model.Umowy)
-                            {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.DataPodpisania)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.DataZakonczenia)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Cena) zł
-                                    </td>
+                        }
 
-                                </tr>
-                            }
+                    </table>
+                </dd>
+            }
+            else
+            {
+                <dt>
+                    @Html.Label("Brak umów", new { style = "color:#D11919" })
+                </dt>
+            }
 
-                        </table>
-                    </dd>
-                }
-                else
-                {
-                    <dt>
-                        @Html.Label("Brak umów", new { style = "color:#D11919" })
-                    </dt>
-                }
-        </b>
         </dl>
-    </div><br />
+    </div>
+</div>
 
-    @*   ========= Umowy ========= *@
+<div class="wrap">
+    <img class="show_hide" src="/Content/ikony/ikona_masaz.png" width="90" height="90">
+    <div class="slidingDiv" style="display:none">
+        <dl class="table-bordered" ,new style="color:#B8C932">
+            <dt>
+                @Html.Label("Masaże", new { style = "color:#B8C932" })
+            </dt>
 
+            @if (Model.Masaze.Count > 0)
+            {
+                <dd>
+                    <table class="table">
+                        <tr>
+                            <th>Masażysta</th>
+                            <th>Data masażu</th>
+                            <th>Czas trwania</th>
+                            <th>Całkowity koszt</th>
+                        </tr>
+                        @foreach (var item in Model.Masaze)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Masazysta.imieNazwisko)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DataMasazu)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CzasTrwania)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.kosztMasazu) zł
+                                </td>
+                            </tr>
+                        }
+
+                    </table>
+                </dd>
+            }
+            else
+            {
+                <dt>
+                    @Html.Label("Brak masaży", new { style = "color:#D11919" })
+                </dt>
+            }
+
+        </dl>
+    </div>
 </div>
 
 
-<style type="text/css">
-    .slidediv {
-        width: 360px;
-        height: auto;
-        padding: 0.5em;
-        /*background: #808080;
-        color: aquamarine;*/
+<div class="wrap">
+    <img class="show_hide" src="~/Content/ikony/ikona_treningPersonalny.png" width="90" height="90">
+    <div class="slidingDiv" style="display:none">
+        <dl class="table-bordered" ,new style="color:#782D86">
+            <dt>
+                @Html.Label("Treningi personalne", new { style = "color:#782D86" })
+            </dt>
+
+            @if (Model.TreningiPersonalne.Count > 0)
+            {
+                <dd>
+                    <table class="table">
+                        <tr>
+                            <th>Trener</th>
+                            <th>Fokus treningu</th>
+                            <th>Data treningu</th>
+                            <th>Czas trwania</th>
+                            <th>Całkowity koszt</th>
+                        </tr>
+                        @foreach (var item in Model.TreningiPersonalne)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Trener.imieNazwisko)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Trener.Specjalizacja.Nazwa)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TreningStart)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CzasTrwania)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.kosztTreningu) zł
+                                </td>
+                            </tr>
+                        }
+
+                    </table>
+                </dd>
+            }
+            else
+            {
+                <dt>
+                    @Html.Label("Brak treningów", new { style = "color:#D11919" })
+                </dt>
+            }
+
+        </dl>
+    </div>
+</div>
+
+<style type="text/cs">
+    div.wrap {
+        float: left;
+        width: 500px;
+    }
+
+    img.show_hide {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .slidingDiv {
+        width: 500px;
+        display: none;
     }
 </style>
-
-
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">
 </script>
 
 <script type="text/javascript">
-    // Applying SlideUp effect
-    $("#slideupdiv").click(function () {
-        $(this).slideUp(2000);
+    $('img.show_hide').on("click", function () {
+        $('div.slidingDiv').stop().slideUp('fast');
+        $(this).next('div.slidingDiv').stop().slideToggle('fast');
     });
-    // Applying SlideDown effect
-    $("#slidedowndiv").click(function () {
-        $(this).hide().slideDown(2000);
-    });
-    // Applying SlideToggle effect
-    $("#btnToggle").click(function () {
-        $('div#hidden').slideToggle();
-
-    });
-    // Reset the div's
-    $('#btnReset').click(function () {
-        $('#slideupdiv').fadeIn('slow');
-        $("#slidedowndiv").fadeIn('slow');
-        $("#slidetogglediv").fadeIn('slow');
-    })
 </script>

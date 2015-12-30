@@ -259,11 +259,16 @@
   <ItemGroup>
     <Content Include="Content\13.jpg" />
     <Content Include="Content\4.jpg" />
-    <Content Include="Content\arrow.gif" />
-    <Content Include="Content\Arrow.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\fitnesspremium3.jpg" />
+    <Content Include="Content\ikony\ikona_adres.png" />
+    <Content Include="Content\ikony\ikona_adres50px.png" />
+    <Content Include="Content\ikony\ikona_masaz.png" />
+    <Content Include="Content\ikony\ikona_masaz50px.png" />
+    <Content Include="Content\ikony\ikona_treningPersonalny.png" />
+    <Content Include="Content\ikony\ikona_treningPersonalny50px.png" />
+    <Content Include="Content\ikony\ikona_umowa.png" />
+    <Content Include="Content\ikony\ikona_umowa50px.png" />
     <Content Include="Content\images.jpg" />
     <Content Include="Content\OurTeam\dbudzynowski.jpg" />
     <Content Include="Content\OurTeam\jbielawska.jpg" />
@@ -280,8 +285,6 @@
     <Content Include="Content\Trenerzy\marcin.jpg" />
     <Content Include="Content\Trenerzy\Olga.jpg" />
     <Content Include="Content\PagedList.css" />
-    <Content Include="Content\Pilates_Guelph-060.jpg" />
-    <Content Include="Content\top_fitness.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
