@@ -67,12 +67,12 @@ namespace Silownia.Controllers
                     if (uzytkownik.Rola == "Recepcjonista")
                     {
                         Recepcjonista recepcjonista = db.Recepcjonisci.Find(uzytkownik.IDOsoby);
-                        return View("~/Views/Specjalizacja/Index.cshtml");
+                        //return View("~/Views/Recepcjonista/Index.cshtml");
                     }
                     if(uzytkownik.Rola == "Instruktor")
                     {
                         Trener trener = db.Trenerzy.Find(uzytkownik.IDOsoby);
-                        return View("~/Views/Specjalizacja/Index.cshtml");
+                        //return View("~/Views/Trener/Index.cshtml");
                      }
                 }
                 else
