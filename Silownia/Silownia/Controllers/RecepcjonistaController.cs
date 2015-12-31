@@ -184,6 +184,11 @@ namespace Silownia.Controllers
                 Recepcjonista recepcjonista = db.Recepcjonisci.Find(id);
                 db.Recepcjonisci.Remove(recepcjonista);
                 db.SaveChanges();
+
+                Uzytkownik uzytkownik = db.Uzytkownicy.Where(w => w.IDOsoby == recepcjonista.OsobaID).First();
+                db.Uzytkownicy.Remove(uzytkownik);
+                db.SaveChanges();
+
                 return RedirectToAction("Index", new { akcja = AkcjaEnumRecepcjonista.UsunietoRecepcjoniste, info = recepcjonista.imieNazwisko });
             }
          //   return HttpNotFound();

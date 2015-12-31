@@ -192,6 +192,11 @@ namespace Silownia.Controllers
                 Klient klient = db.Klienci.Find(id);
                 db.Klienci.Remove(klient);
                 db.SaveChanges();
+
+                Uzytkownik uzytkownik = db.Uzytkownicy.Where(w => w.IDOsoby == klient.OsobaID).First();
+                db.Uzytkownicy.Remove(uzytkownik);
+                db.SaveChanges();
+
                 return RedirectToAction("Index", new { akcja = AkcjaEnum.UsunietoKlienta, info = klient.imieNazwisko });
             }
             //  return HttpNotFound();

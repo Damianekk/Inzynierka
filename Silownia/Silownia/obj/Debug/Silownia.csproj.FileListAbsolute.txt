@@ -380,7 +380,6 @@ D:\Dokumenty\Inzynierka\Inzynierka\Silownia\Silownia\bin\Microsoft.Owin.Security
 D:\Dokumenty\Inzynierka\Inzynierka\Silownia\Silownia\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\Dokumenty\Inzynierka\Inzynierka\Silownia\Silownia\obj\Debug\Silownia.dll
 D:\Dokumenty\Inzynierka\Inzynierka\Silownia\Silownia\obj\Debug\Silownia.pdb
-D:\Dokumenty\Inzynierka\Inzynierka\Silownia\Silownia\obj\Debug\Silownia.csprojResolveAssemblyReference.cache
 C:\Users\Łukasz\Source\Inzynierka\Silownia\Silownia\obj\Debug\Silownia.csprojResolveAssemblyReference.cache
 C:\Users\Łukasz\Source\Inzynierka\Silownia\Silownia\bin\Silownia.dll.config
 C:\Users\Łukasz\Source\Inzynierka\Silownia\Silownia\bin\Silownia.dll

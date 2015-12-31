@@ -191,6 +191,11 @@ namespace Silownia.Controllers
                 Trener trener = db.Trenerzy.Find(id);
                 db.Trenerzy.Remove(trener);
                 db.SaveChanges();
+
+                Uzytkownik uzytkownik = db.Uzytkownicy.Where(w => w.IDOsoby == trener.OsobaID).First();
+                db.Uzytkownicy.Remove(uzytkownik);
+                db.SaveChanges();
+
                 return RedirectToAction("Index", new { akcja = AkcjaEnumTrener.UsunietoTrenera, info = trener.imieNazwisko });
             }
          //   return HttpNotFound();

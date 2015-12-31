@@ -59,19 +59,24 @@ namespace Silownia.Controllers
                         FormsAuthentication.SetAuthCookie(uzytkownik.Login, true);
                       
                     }*/
-                    Klient klient = db.Klienci.Find(uzytkownik.IDOsoby);
-                    if (klient != null)
+                    if (uzytkownik.Rola == "Klient")
                     {
                         FormsAuthentication.SetAuthCookie(uzytkownik.Login, true);
+                        Klient klient = db.Klienci.Find(uzytkownik.IDOsoby);
                         return View("~/Views/KlientView/Index.cshtml", klient);
                     }
-
-                    Recepcjonista recepcjonista = db.Recepcjonisci.Find(uzytkownik.IDOsoby);
-                    if (recepcjonista != null)
+                    if (uzytkownik.Rola == "Recepcjonista")
                     {
                         FormsAuthentication.SetAuthCookie(uzytkownik.Login, true);
-                        return View("~/Views/Klient/Index.cshtml");
+                        Recepcjonista recepcjonista = db.Recepcjonisci.Find(uzytkownik.IDOsoby);
+                        return View("~/Views/Recepcjonista/Index.cshtml", recepcjonista);
                     }
+                    if(uzytkownik.Rola == "Instruktor")
+                    {
+                        FormsAuthentication.SetAuthCookie(uzytkownik.Login, true);
+                        Trener trener = db.Trenerzy.Find(uzytkownik.IDOsoby);
+                        return View("~/Views/Trener/Index.cshtml", trener);
+                     }
                 }
                 else
                 {
@@ -79,7 +84,7 @@ namespace Silownia.Controllers
                 }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return View("~/Views/Account/Login.cshtml");
         }
 
         //
