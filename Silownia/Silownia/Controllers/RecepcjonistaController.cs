@@ -67,9 +67,9 @@ namespace Silownia.Controllers
                 {
                     return HttpNotFound();
                 }
-             //   return View(recepcjonista);
+                return View(recepcjonista);
             }
-            return HttpNotFound();
+           // return HttpNotFound();
         }
 
         // GET: Recepcjonista/Create
