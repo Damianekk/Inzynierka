@@ -56,26 +56,23 @@ namespace Silownia.Controllers
                     Session["Rola"] = uzytkownik.Rola;
                    /* if (uzytkownik.Login == "admin")
                     {
-                        FormsAuthentication.SetAuthCookie(uzytkownik.Login, true);
+                       
                       
                     }*/
                     if (uzytkownik.Rola == "Klient")
                     {
-                        FormsAuthentication.SetAuthCookie(uzytkownik.Login, true);
                         Klient klient = db.Klienci.Find(uzytkownik.IDOsoby);
                         return View("~/Views/KlientView/Index.cshtml", klient);
                     }
                     if (uzytkownik.Rola == "Recepcjonista")
                     {
-                        FormsAuthentication.SetAuthCookie(uzytkownik.Login, true);
                         Recepcjonista recepcjonista = db.Recepcjonisci.Find(uzytkownik.IDOsoby);
-                        return View("~/Views/Recepcjonista/Index.cshtml", recepcjonista);
+                        return View("~/Views/Specjalizacja/Index.cshtml");
                     }
                     if(uzytkownik.Rola == "Instruktor")
                     {
-                        FormsAuthentication.SetAuthCookie(uzytkownik.Login, true);
                         Trener trener = db.Trenerzy.Find(uzytkownik.IDOsoby);
-                        return View("~/Views/Trener/Index.cshtml", trener);
+                        return View("~/Views/Specjalizacja/Index.cshtml");
                      }
                 }
                 else
