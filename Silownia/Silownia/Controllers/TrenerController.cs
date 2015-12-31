@@ -88,7 +88,6 @@ namespace Silownia.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,DataZatrudnienia,Pensja,SilowniaID,SpecjalizacjaID,StawkaGodzinowa")] Trener trener)
         {
          //   if (Session["User"] != null)
@@ -144,7 +143,6 @@ namespace Silownia.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,DataZatrudnienia,Pensja,SilowniaID,SpecjalizacjaID,StawkaGodzinowa")] Trener trener)
         {
          //   if (Session["User"] != null)
@@ -183,7 +181,6 @@ namespace Silownia.Controllers
 
         // POST: /Trener/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
          //   if (Session["User"] != null)
@@ -191,6 +188,11 @@ namespace Silownia.Controllers
                 Trener trener = db.Trenerzy.Find(id);
                 db.Trenerzy.Remove(trener);
                 db.SaveChanges();
+
+                Uzytkownik uzytkownik = db.Uzytkownicy.Where(w => w.IDOsoby == trener.OsobaID).First();
+                db.Uzytkownicy.Remove(uzytkownik);
+                db.SaveChanges();
+
                 return RedirectToAction("Index", new { akcja = AkcjaEnumTrener.UsunietoTrenera, info = trener.imieNazwisko });
             }
          //   return HttpNotFound();

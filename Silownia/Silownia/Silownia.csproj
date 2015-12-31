@@ -457,6 +457,8 @@
     <Content Include="Views\Instruktor\Details.cshtml" />
     <Content Include="Views\Instruktor\Edit.cshtml" />
     <Content Include="Views\Instruktor\Index.cshtml" />
+    <Content Include="Views\RecepcjonistaView\Index.cshtml" />
+    <Content Include="Views\TrenerView\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

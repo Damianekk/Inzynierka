@@ -114,7 +114,6 @@ namespace Silownia.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "MasazID,MasazystaID,DataMasazu,CzasTrwania")] long? id, Masaz masaz)
         {
             // if (Session["User"] != null)
@@ -204,7 +203,6 @@ namespace Silownia.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "MasazID,MasazystaID,DataMasazu,CzasTrwania")] Masaz masaz)
         {
             //  if (Session["User"] != null)
@@ -242,7 +240,6 @@ namespace Silownia.Controllers
 
         // POST: Masaz/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
             //  if (Session["User"] != null)
