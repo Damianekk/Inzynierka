@@ -6,28 +6,30 @@
 
 <h2>Lista specjalizacji naszych trenerów</h2>
 
-<p>
-    @Html.ActionLink("Dodaj nową specjalizację", "Create")
-</p>
-<table class="table">
+<button class="btn btn-large btn-block btn-success btn-lg" onclick="location.href='@Url.Action("Create", "Specjalizacja")';return false;">dodaj nową specjalizację</button>
+
+
+
+<table class="table table-hover table-condensed ">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Nazwa)
         </th>
         <th></th>
     </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nazwa)
-        </td>
-        <td>
-            @Html.ActionLink("Edytuj", "Edit", new { id=item.SpecjalizacjaID }) |
-            @Html.ActionLink("Szczegóły", "Details", new { id=item.SpecjalizacjaID }) |
-            @Html.ActionLink("Usuń", "Delete", new { id=item.SpecjalizacjaID })
-        </td>
-    </tr>
-}
-
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nazwa)
+            </td>
+            <td>
+                <div class="btn-group">
+                    <button class="btn-default btn-lg" onclick="location.href='@Url.Action("Edit", "Specjalizacja", new { id = item.SpecjalizacjaID })';return false;">edytuj</button>
+                    <button class="btn-primary btn-lg" onclick="location.href='@Url.Action("Details", "Specjalizacja", new { id = item.SpecjalizacjaID })';return false;">szczegóły</button>
+                    <button class="btn-danger btn-lg" onclick="location.href='@Url.Action("Delete", "Specjalizacja", new { id = item.SpecjalizacjaID })';return false;">usuń</button>
+                </div>
+            </td>
+        </tr>
+    }
 </table>

@@ -32,7 +32,7 @@ namespace Silownia.Controllers
                         umowy = umowy.Search(wyraz, i => i.Klient.Imie, i => i.Klient.Nazwisko);
                 umowy = umowy.Search(SilowniaID, i => i.Silownia.Nazwa);
 
-                var final = umowy.OrderBy(p => p.Klient.Imie);
+                var final = umowy.OrderBy(p => p.Klient.Nazwisko);
                 var ileWynikow = umowy.Count();
                 if ((ileWynikow / page) <= 1)
                 {

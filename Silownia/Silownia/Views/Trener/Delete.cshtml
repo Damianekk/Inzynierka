@@ -1,102 +1,81 @@
 ﻿@model Silownia.Models.Trener
-
 @{
     ViewBag.Title = "Trener: usuń";
 }
-
 <h2>Czy na pewno chcesz usunąć trenera @Model.imieNazwisko?</h2>
 
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Imie)
-        </dt>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
 
-        <dd>
-            @Html.DisplayFor(model => model.Imie)
-        </dd>
+<div class="divDark">
+    <div class="divInner">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Imie)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Imie)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Nazwisko)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Nazwisko)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.DataUrodzenia)
+            </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Pesel)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Pesel)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.NrTelefonu)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.NrTelefonu)
+            </dd>
+            <dd>
+                @Html.DisplayFor(model => model.DataUrodzenia)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.DataZatrudnienia)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.DataZatrudnienia)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Pensja)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Pensja)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.StawkaGodzinowa)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.StawkaGodzinowa)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Specjalizacja.Nazwa)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Specjalizacja.Nazwa)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Silownia.Nazwa)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Silownia.Nazwa)
+            </dd>
+        </dl>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Nazwisko)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Nazwisko)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DataUrodzenia)
-        </dt>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Pesel)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Pesel)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.NrTelefonu)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NrTelefonu)
-        </dd>
-
-        <dd>
-            @Html.DisplayFor(model => model.DataUrodzenia)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DataZatrudnienia)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DataZatrudnienia)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Pensja)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Pensja)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.StawkaGodzinowa)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.StawkaGodzinowa)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Specjalizacja.Nazwa)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Specjalizacja.Nazwa)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Silownia.Nazwa)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Silownia.Nazwa)
-        </dd>
-    </dl>
-
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Usuń" class="btn btn-default" /> |
-            @Html.ActionLink("Powrót do listy trenerów", "Index")
-        </div>
-    }
+        <input type="submit" value="Usuń" class="btn  btn-large btn-lg btn-block btn-danger" />
+    </div>
 </div>
+}
+<button class="btn btn-large btn-block btn-lg btn-primary" onclick="location.href='@Url.Action("Index", "Trener")';return false;">powrót do listy trenerów</button>
+

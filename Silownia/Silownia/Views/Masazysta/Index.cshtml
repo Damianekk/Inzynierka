@@ -1,12 +1,9 @@
 ﻿@model PagedList.PagedList<Silownia.Models.Masazysta>
 @using PagedList.Mvc;
-
 @{
     ViewBag.Title = "Masażyści: index";
 }
-
 @Scripts.Render("~/Scripts/infoCzynnosc.js")
-
 
 @if (ViewBag.Akcja != null)
 {
@@ -30,24 +27,22 @@
         </div>
     }
 }
+<h2 class="textCenter"> masażyści zatrudnieni w naszej sieci</h2>
 
-<h2>Masażyści pracujący w naszej sieci</h2>
+<button class="btn btn-large btn-block btn-success btn-lg" onclick="location.href='@Url.Action("Create", "Masazysta")';return false;">dodaj nowego masażystę</button>
+<div class="divDark">
+    @using (Html.BeginForm())
+    {
 
-<p>
-    @Html.ActionLink("Dodaj nowego masażystę", "Create")
-</p>
-
-@using (Html.BeginForm())
-{
-    <p>
         @Html.Partial("KryteriaSzukania/_imieNazwisko")
         @Html.Partial("KryteriaSzukania/_silownia")
         <br />
-        <input type="submit" value="szukaj" class="btn btn-success" />
-    </p>
-}
-<table class="table">
-<tr>
+        <input type="submit" value="szukaj" class="btn btn-info" style="width:10%" />
+
+    }
+</div>
+<table class="table table-hover table-condensed">
+    <tr>
         <th>
             @Html.Label("Imię:")
         </th>
@@ -71,45 +66,43 @@
         </th>
         <th></th>
     </tr>
-
-@foreach (var item in Model)
-{
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Imie)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nazwisko)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DataUrodzenia)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DataZatrudnienia)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Pensja)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StawkaGodzinowa)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Silownia.Nazwa)
-        </td>
-        <td>
-            @Html.ActionLink("Edytuj", "Edit", new { id = item.OsobaID }) |
-            @Html.ActionLink("Szczegóły", "Details", new { id = item.OsobaID }) |
-            @Html.ActionLink("Usuń", "Delete", new { id = item.OsobaID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Imie)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nazwisko)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataUrodzenia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataZatrudnienia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pensja) zł
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StawkaGodzinowa) zł
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Silownia.Nazwa)
+            </td>
+            <td>
+                <div class="btn-group">
+                    <button class="btn-default btn-lg" onclick="location.href='@Url.Action("Edit", "Masazysta", new { id = item.OsobaID })';return false;">edytuj</button>
+                    <button class="btn-primary btn-lg" onclick="location.href='@Url.Action("Details", "Masazysta", new { id = item.OsobaID })';return false;">szczegóły</button>
+                    <button class="btn-danger btn-lg" onclick="location.href='@Url.Action("Delete", "Masazysta", new { id = item.OsobaID })';return false;">usuń</button>
+                </div>
+            </td>
+        </tr>
+    }
 </table>
-
 <div class="col-sm-10">
-
     <div class="center">
         @Html.PagedListPager(Model, page => Url.Action("Index", new { page, pageSize = Model.PageSize, imieNazwisko = ViewBag.srchImieNazwisko, Miasto = ViewBag.srchMiasto }))
         Wyświetlam od @Model.FirstItemOnPage do @Model.LastItemOnPage z @Model.TotalItemCount rekordów Masażysta
     </div>
-
 </div>

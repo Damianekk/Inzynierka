@@ -1,0 +1,119 @@
+﻿@model Silownia.Models.Instruktor
+@{
+    ViewBag.Title = "Instruktor: szczegóły";
+}
+
+<h2 class="textCenter">szczegóły dotyczące wybranego instruktora</h2>
+<button class="btn btn-large btn-block btn-lg btn-primary btn-success" onclick="location.href='@Url.Action("Edit", "Instruktor", new { id = Model.OsobaID })';return false;">edytuj</button>
+<div class="divDark">
+    <div class="divInner">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Imie)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Imie)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Nazwisko)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Nazwisko)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.DataUrodzenia)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.DataUrodzenia)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Pesel)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Pesel)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.NrTelefonu)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.NrTelefonu)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Pensja)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Pensja)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Silownia.Nazwa)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Silownia.Nazwa)
+            </dd>
+        </dl>
+    </div>
+</div>
+    <div>
+        <button class="btn btn-large btn-lg btn-block btn-primary btn-primary" onclick="location.href='@Url.Action("Index", "Instruktor")';return false;">lista instruktorów</button>
+    </div>
+<div>
+    <div class="wrap">
+        <img class="show_hide" src="~/Content/ikony/ikona_treningGrupowy.png" width="90" height="90">
+        <div class="slidingDiv" style="display:none">
+            <dl class="table-bordered" ,new style="color:#F15B4D">
+                <dt>
+                    @Html.Label("Treningi grupowe", new { style = "color:#F15B4D" })
+                </dt>
+                @if (Model.ZajeciaGrup.Count > 0)
+                {
+                    <dd>
+                        <table class="table">
+                            <tr>
+                                <th>Fokus treningu</th>
+                                <th>Data treningu</th>
+                                <th>Czas trwania</th>
+                                <th>Członkowie</th>
+                            </tr>
+                            @foreach (var item in Model.ZajeciaGrup)
+                            {
+                                
+                            }
+                        </table>
+                    </dd>
+                }
+                else
+                {
+                    <dt>
+                        @Html.Label("Brak treningów grupowych", new { style = "color:#D11919" })
+                    </dt>
+                }
+            </dl>
+        </div>
+    </div>
+
+</div>
+
+    <style type="text/cs">
+        div.wrap {
+            float: left;
+            width: 500px;
+        }
+
+        img.show_hide {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .slidingDiv {
+            width: 500px;
+            display: none;
+        }
+    </style>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">
+    </script>
+    <script type="text/javascript">
+    $('img.show_hide').on("click", function () {
+        $('div.slidingDiv').stop().slideUp('fast');
+        $(this).next('div.slidingDiv').stop().slideToggle('fast');
+    });
+    </script>

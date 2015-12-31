@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Lato:300,400,700");
+url("https://fonts.googleapis.com/css?family=Lato:300,400,700");
 /*!
  * bootswatch v3.3.5
  * Homepage: http://bootswatch.com

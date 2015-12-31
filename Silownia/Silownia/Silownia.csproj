@@ -208,6 +208,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\AkcjaEnumAdres.cs" />
     <Compile Include="Helpers\AkcjaEnumInstruktor.cs" />
     <Compile Include="Helpers\AkcjaEnumMasaz.cs" />
     <Compile Include="Helpers\AkcjaEnumMasazysta.cs" />
@@ -263,10 +264,26 @@
     <Content Include="Content\ikony\ikona_adres50px.png" />
     <Content Include="Content\ikony\ikona_masaz.png" />
     <Content Include="Content\ikony\ikona_masaz50px.png" />
+    <Content Include="Content\ikony\ikona_treningGrupowy.png" />
+    <Content Include="Content\ikony\ikona_treningGrupowy50px.png" />
     <Content Include="Content\ikony\ikona_treningPersonalny.png" />
-    <Content Include="Content\ikony\ikona_treningPersonalny50px.png" />
+    <Content Include="Content\ikony\ikona_treningPersonalny_50x.png" />
     <Content Include="Content\ikony\ikona_umowa.png" />
     <Content Include="Content\ikony\ikona_umowa50px.png" />
+    <Content Include="Content\ikony\persony\ikona_instruktor.png" />
+    <Content Include="Content\ikony\persony\ikona_instruktor50px.png" />
+    <Content Include="Content\ikony\persony\ikona_klient.png" />
+    <Content Include="Content\ikony\persony\ikona_klient50px.png" />
+    <Content Include="Content\ikony\persony\ikona_masazysta.png" />
+    <Content Include="Content\ikony\persony\ikona_masazysta50px.png" />
+    <Content Include="Content\ikony\persony\ikona_pracownicy.png" />
+    <Content Include="Content\ikony\persony\ikona_pracownicy50px.png" />
+    <Content Include="Content\ikony\persony\ikona_recepcjonista.png" />
+    <Content Include="Content\ikony\persony\ikona_recepcjonista50px.png" />
+    <Content Include="Content\ikony\persony\ikona_trenerPersonalny.png" />
+    <Content Include="Content\ikony\persony\ikona_trenerPersonalny50px.png" />
+    <Content Include="Content\ikony\silownia\ikona_silownia.png" />
+    <Content Include="Content\ikony\silownia\ikona_silownia50px.png" />
     <Content Include="Content\images.jpg" />
     <Content Include="Content\OurTeam\dbudzynowski.jpg" />
     <Content Include="Content\OurTeam\jbielawska.jpg" />

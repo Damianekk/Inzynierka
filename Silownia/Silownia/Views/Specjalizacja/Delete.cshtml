@@ -1,29 +1,28 @@
 ﻿@model Silownia.Models.Specjalizacja
-
 @{
     ViewBag.Title = "Specjalizacja: usuń";
 }
-
 <h2>Czy na pewno chcesz usunąć specjalizację @Model.Nazwa?</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
 
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nazwa)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Nazwa)
-        </dd>
+    <div class="divDark">
+        <div class="divInner">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Nazwa)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Nazwa)
+                </dd>
+            </dl>
 
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Usuń" class="btn btn-default" /> |
-            @Html.ActionLink("Powrót do listy specjalizacji", "Index")
+            <div>
+                <input type="submit" value="Usuń" class="btn btn-lg btn-large btn-block btn-danger" />
+            </div>
         </div>
-    }
-</div>
+    </div>
+}
+<button type="submit" class="btn btn-large btn-block btn-lg btn-primary" onclick="location.href='@Url.Action("Index", "Specjalizacja")';return false;">powrót do listy specjalizacji</button>
+

@@ -1,108 +1,87 @@
 ﻿@model Silownia.Models.Adres
-
 @{
     ViewBag.Title = "Adres: dodaj";
 }
-<h2>Dodaj nowy adres</h2>
-
+<h2 class="textCenter">dodaj nowy adres</h2>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
+    @Html.ValidationSummary(true)
 
-        <hr />
-        @Html.ValidationSummary(true)
+    <div class="form-horizontal divDark">
 
-        <table class="table">
-            <tr>
-                <th>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.KodPocztowy, new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.KodPocztowy)
-                            @Html.ValidationMessageFor(model => model.KodPocztowy)
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Kraj, new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.Kraj)
-                            @Html.ValidationMessageFor(model => model.Kraj)
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Miasto, new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.Miasto)
-                            @Html.ValidationMessageFor(model => model.Miasto)
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Ulica, new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.Ulica)
-                            @Html.ValidationMessageFor(model => model.Ulica)
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.NrBudynku, new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.NrBudynku)
-                            @Html.ValidationMessageFor(model => model.NrBudynku)
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.NrLokalu, new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.NrLokalu)
-                            @Html.ValidationMessageFor(model => model.NrLokalu)
-                        </div>
-                    </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.KodPocztowy, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.KodPocztowy)
+                @Html.ValidationMessageFor(model => model.KodPocztowy)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Kraj, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Kraj)
+                @Html.ValidationMessageFor(model => model.Kraj)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Miasto, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Miasto)
+                @Html.ValidationMessageFor(model => model.Miasto)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Ulica, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Ulica)
+                @Html.ValidationMessageFor(model => model.Ulica)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.NrBudynku, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NrBudynku)
+                @Html.ValidationMessageFor(model => model.NrBudynku)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.NrLokalu, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NrLokalu)
+                @Html.ValidationMessageFor(model => model.NrLokalu)
+            </div>
+        </div>
 
 
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Utwórz" class="btn btn-lg btn-large btn-success" />
+            </div>
+        </div>
 
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Utwórz" class="btn btn-default" />
-                        </div>
-                    </div>
-                </th>
-                <th>
-                    @if (ViewBag.Osoba != null)
-                    {
-                        <div class="table-bordered">
-                            @*  @Html.Display("Osoba")*@
-                            @*@Html.Partial("~/Views/Klient/Details.cshtml")*@
-                            @Html.Action("Details", "Klient", new { id = ViewBag.Osoba.OsobaID })
-                            @*<div style="color :darkkhaki" >Imie </div>  @ViewBag.Osoba.Imie
-                                <div style="color :darkkhaki">Nazwisko </div> @ViewBag.Osoba.Nazwisko*@
-                        </div>
-                    }
-                    @if (ViewBag.Silownia != null)
-                    {
-                        <div class="table-bordered">
-                            @Html.Action("Details", "Silownia", new { id = ViewBag.Silownia.SilowniaID, mniejSzczegolow = true, mniejszaMapa = true })
-                            @*@Html.Display("Silownia")*@
-                        </div>
-                    }
-                </th>
-            </tr>
-        </table>
+        @if (ViewBag.Osoba != null)
+        {
+            <div class="table-bordered">
+                @*  @Html.Display("Osoba")*@
+                @*@Html.Partial("~/Views/Klient/Details.cshtml")*@
+                @Html.Action("Details", "Klient", new { id = ViewBag.Osoba.OsobaID })
+                @*<div style="color :darkkhaki" >Imie </div>  @ViewBag.Osoba.Imie
+                    <div style="color :darkkhaki">Nazwisko </div> @ViewBag.Osoba.Nazwisko*@
+            </div>
+        }
+        @if (ViewBag.Silownia != null)
+        {
+            <div class="table-bordered">
+                @Html.Action("Details", "Silownia", new { id = ViewBag.Silownia.SilowniaID, mniejSzczegolow = true, mniejszaMapa = true })
+                @*@Html.Display("Silownia")*@
+            </div>
+        }
+
 
     </div>
 }
-
-<div>
-    @Html.ActionLink("Powrót do listy adresów", "Index")
-</div>
-
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

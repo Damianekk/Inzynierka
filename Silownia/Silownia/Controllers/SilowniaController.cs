@@ -97,7 +97,7 @@ namespace Silownia.Controllers
                 {
                     db.Silownie.Add(silownia);
                     db.SaveChanges();
-                    return RedirectToAction("Create", "Adres", new { id = silownia.SilowniaID, komu = KomuAdres.Silownia });
+                    return RedirectToAction("Create", "Adres", new { id = silownia.SilowniaID, komu = KomuAdres.Silownia,  akcja = AkcjaEnumSilownia.DodanoSilownie, info = silownia.Nazwa });
                 }
                 return View(silownia);
             }
@@ -173,7 +173,7 @@ namespace Silownia.Controllers
                 Models.Silownia silownia = db.Silownie.Find(id);
                 db.Silownie.Remove(silownia);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { akcja = AkcjaEnumSilownia.UsunietoSilownie, info = silownia.Nazwa });
             }
          //   return HttpNotFound();
         }

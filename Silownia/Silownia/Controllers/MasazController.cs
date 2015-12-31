@@ -43,7 +43,7 @@ namespace Silownia.Controllers
                 // masaze = masaze.Search(imieNazwisko, i => i.Klient.Imie, i => i.Klient.Nazwisko);
                 // masaze = masaze.Search(MasazystaID, i => i.Masazysta.Imie, i => i.Masazysta.Nazwisko);
 
-                var final = masaze.OrderBy(p => p.Klient.Imie);
+                var final = masaze.OrderBy(p => p.Klient.Nazwisko);
                 var ileWynikow = masaze.Count();
                 if ((ileWynikow / page) <= 1)
                 {
@@ -120,6 +120,7 @@ namespace Silownia.Controllers
             // if (Session["User"] != null)
             {
                 ViewBag.MasazystaID = new SelectList(db.Masazysci, "OsobaID", "imieNazwisko", masaz.MasazystaID);
+
                 if (ModelState.IsValid && !aktywnyMasaz(id, masaz.DataMasazu) && !zajetyMasazysta(masaz.MasazystaID, masaz.DataMasazu))
                 {
                     #region Klient

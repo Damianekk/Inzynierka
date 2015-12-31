@@ -32,7 +32,7 @@ namespace Silownia.Controllers
                 osoby = osoby.Search(SpecjalizacjaID, i => i.Specjalizacja.Nazwa);
                 osoby = osoby.Search(SilowniaID, i => i.Silownia.Nazwa);
 
-                var final = osoby.OrderBy(p => p.Imie);
+                var final = osoby.OrderBy(p => p.Nazwisko);
                 var ileWynikow = osoby.Count();
                 if ((ileWynikow / page) <= 1)
                 {
@@ -95,6 +95,7 @@ namespace Silownia.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    trener.DataZatrudnienia = DateTime.Now;
                     db.Trenerzy.Add(trener);
                     db.SaveChanges();
 
@@ -111,10 +112,9 @@ namespace Silownia.Controllers
 
                 ViewBag.SpecjalizacjaID = new SelectList(db.Specjalizacje, "SpecjalizacjaID", "Nazwa", trener.Specjalizacja);
                 ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
-                return View(new Trener
-                {
-                    DataZatrudnienia = DateTime.Now
-                });
+
+                
+                return View(trener);
             }
          //   return HttpNotFound();
         }

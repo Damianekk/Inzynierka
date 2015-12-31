@@ -33,7 +33,7 @@ namespace Silownia.Controllers
                         osoby = osoby.Search(wyraz, i => i.Imie, i => i.Nazwisko);
                 osoby = osoby.Search(SilowniaID, i => i.Silownia.Nazwa);
 
-                var final = osoby.OrderBy(p => p.Imie);
+                var final = osoby.OrderBy(p => p.Nazwisko);
                 var ileWynikow = osoby.Count();
                 if ((ileWynikow / page) <= 1)
                 {
@@ -96,6 +96,7 @@ namespace Silownia.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    masazysta.DataZatrudnienia = DateTime.Now;
                     db.Osoby.Add(masazysta);
                     db.SaveChanges();
                     return RedirectToAction("Index", new { akcja = AkcjaEnumMasazysta.DodanoMasazyste, info = masazysta.imieNazwisko });

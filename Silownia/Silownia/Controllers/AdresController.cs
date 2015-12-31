@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using Silownia.Models;
 using Silownia.DAL;
 using GoogleMaps.LocationServices;
+using System;
 
 namespace Silownia.Controllers
 {
@@ -15,10 +16,17 @@ namespace Silownia.Controllers
         KomuAdres komuPrzypisac;
 
         // GET: /Adres/
-        public ActionResult Index()
+        public ActionResult Index(AkcjaEnumAdres akcja = AkcjaEnumAdres.Brak, String info = null)
         {
             //  if (Session["USer"] != null)
             {
+
+                if (akcja != AkcjaEnumAdres.Brak)
+                {
+                    ViewBag.info = info;
+                    ViewBag.Akcja = akcja;
+                }
+
                 return View(db.Adresy.ToList());
             }
             //   return HttpNotFound();

@@ -1,7 +1,6 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
-    background-color: #E0E0E0;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -102,10 +101,21 @@ input[type="checkbox"].input-validation-error {
     background-color: #E0E0E0;
 }
 
+h2{
+    color:#42dca3;
+    padding-bottom: 50px;
+    padding-top: 50px;
+    text-align: center;
+    text-transform: uppercase
+}
 
 h4 {
     font-size: 18px;
     font-weight: bold;
+
+}
+th{
+    color: #ecf0f1;
 }
 
 .fa-spin-custom, .glyphicon-spin {
@@ -141,4 +151,131 @@ h4 {
     height: 270px;
     width: 100%;
     padding-right: 114px;
+}
+
+.divDark{
+    background-color:#272b30;
+    padding-bottom: 50px;
+    padding-top: 50px;
+}
+.divDarkCenter{
+    background-color:#272b30;
+    padding-bottom: 50px;
+    padding-top: 50px;
+    margin: auto;
+    width: 60%;
+}
+
+.textCenter{
+    color:#42dca3;
+    padding-bottom: 50px;
+    padding-top: 50px;
+    text-align: center;
+    text-transform: uppercase
+}
+
+.divInner{
+    width: 20%;
+    margin: 0 auto;
+}
+.btn {
+    border-radius: 0;
+    text-transform: uppercase;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 400;
+    -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
+}
+
+.btn-default {
+    border: 1px solid #42dca3;
+    color: #42dca3;
+    background-color: transparent;
+}
+
+.btn-default:hover{
+    border: 1px solid #42dca3;
+    background-color: #42dca3;
+}
+.btn-default:focus {
+    border: 1px solid #42dca3;
+    outline: 0;
+    background-color: transparent;
+}
+
+.btn-primary {
+    border: 1px solid #3498db;
+    color: #3498db;
+    background-color: transparent;
+}
+
+.btn-primary:hover{
+    border: 1px solid #3498db;
+    background-color: #3498db;
+}
+.btn-primary:focus {
+    border: 1px solid #3498db;
+    outline: 0;
+    background-color: transparent;
+}
+
+.btn-danger {
+    border: 1px solid #c0392b;
+    color: #c0392b;
+    background-color: transparent;
+}
+.btn-danger:hover{
+    border: 1px solid #c0392b;
+    background-color: #c0392b;
+}
+.btn-danger:focus {
+    border: 1px solid #c0392b;
+    outline: 0;
+    background-color: transparent;
+}
+
+.btn-success {
+    border: 1px solid #27ae60;
+    color: #27ae60;
+    background-color: transparent;
+}
+
+.btn-success:hover{
+    border: 1px solid #27ae60;
+    background-color: #27ae60;
+
+}
+.btn-success:focus {
+    border: 1px solid #27ae60;
+    outline: 0;
+    background-color: transparent;
+}
+
+
+.btn-info {
+    border: 1px solid #5bc0de;
+    color: #5bc0de;
+    background-color: transparent;
+}
+
+.btn-info:hover{
+    border: 1px solid #5bc0de;
+    background-color: #5bc0de;
+
+}
+.btn-info:focus {
+    border: 1px solid #5bc0de;
+    outline: 0;
+    background-color: transparent;
+}
+
+.table-hover tbody tr td {
+    vertical-align: middle;
+}
+
+.Centered
+{
+    display: inline-block;
+    vertical-align: middle;
 }

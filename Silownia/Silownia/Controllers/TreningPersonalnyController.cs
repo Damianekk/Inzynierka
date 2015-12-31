@@ -42,7 +42,7 @@ namespace Silownia.Controllers
 
                 treningiPersonalne = treningiPersonalne.Search(SpecjalizacjaID, i => i.Trener.Specjalizacja.Nazwa);
 
-                var final = treningiPersonalne.OrderBy(p => p.Klient.Imie);
+                var final = treningiPersonalne.OrderBy(p => p.Klient.Nazwisko);
                 var ileWynikow = treningiPersonalne.Count();
                 if ((ileWynikow / page) <= 1)
                 {

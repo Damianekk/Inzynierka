@@ -94,6 +94,7 @@ namespace Silownia.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    instruktor.DataZatrudnienia = DateTime.Now;
                     db.Instruktorzy.Add(instruktor);
                     db.SaveChanges();
 
@@ -102,6 +103,7 @@ namespace Silownia.Controllers
                     pracownik.Login = instruktor.Nazwisko;
                     pracownik.Haslo = instruktor.Imie + instruktor.Nazwisko;
                     pracownik.Rola = "Instruktor";
+                    
                     db.Uzytkownicy.Add(pracownik);
                     db.SaveChanges();
 

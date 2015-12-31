@@ -1,11 +1,9 @@
 ﻿@model PagedList.PagedList<Silownia.Models.Masaz>
 @using PagedList.Mvc;
-
 @{
     ViewBag.Title = "Masaże: index";
 }
 @Scripts.Render("~/Scripts/infoCzynnosc.js")
-
 
 @if (ViewBag.Akcja != null)
 {
@@ -30,33 +28,28 @@
     }
 }
 
+<h2>Masaże zaplanowane w naszej sieci</h2>
 
-<h2>Lista masaży zapisanych w naszej bazie:</h2>
+<div class="divDark">
+    @using (Html.BeginForm())
+    {
+        @Html.Partial("KryteriaSzukania/_imieNazwisko")
+        @Html.Partial("KryteriaSzukania/_silownia")
+        @Html.Partial("KryteriaSzukania/_masazysta")
+        <br />
+        <input type="submit" value="szukaj" class="btn btn-info" style="width:10%" />
+        <br />
+    }
 
-@using (Html.BeginForm())
-{
+</div>
 
-    @Html.Partial("KryteriaSzukania/_imieNazwisko")
-    @Html.Partial("KryteriaSzukania/_silownia")
-    @Html.Partial("KryteriaSzukania/_masazysta")
-
-    <br />
-
-    <input type="submit" value="szukaj" class="btn btn-success" />
-}
-
-<p>
-    @*@Html.ActionLink("Create New", "Create")*@
-</p>
-
-
-<table class="table">
+    <table class="table table-hover table-condensed">
     <tr>
         <th>
-            @Html.Label("Imię i nazwisko klienta:")
+            @Html.Label("Klient:")
         </th>
         <th>
-            @Html.Label("Imię i nazwisko masażysty:")
+            @Html.Label("Masażysta:")
         </th>
         <th>
             @Html.Label("Data masażu:")
@@ -66,7 +59,6 @@
         </th>
         <th></th>
     </tr>
-
     @foreach (var item in Model)
     {
         <tr>
@@ -83,14 +75,16 @@
                 @Html.DisplayFor(modelItem => item.CzasTrwania)
             </td>
             <td>
-                @Html.ActionLink("Szczegóły", "Details", new { id = item.MasazID }) |
-                @Html.ActionLink("Usuń", "Delete", new { id = item.MasazID })
+                <div class="btn-group">
+                    <button class="btn-primary btn-lg" onclick="location.href='@Url.Action("Details", "Masaz", new { id = item.MasazID })';return false;">szczegóły</button>
+                    <button class="btn-danger btn-lg" onclick="location.href='@Url.Action("Delete", "Masaz", new { id = item.MasazID })';return false;">usuń</button>
+                </div>
             </td>
         </tr>
     }
 </table>
 
-<div class="center">
-    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, pageSize = Model.PageSize, imieNazwisko = ViewBag.srchImieNazwisko }))
-    Wyświetlam od @Model.FirstItemOnPage do @Model.LastItemOnPage z @Model.TotalItemCount rekordów Masażysta
-</div>
+    <div class="center">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, pageSize = Model.PageSize, imieNazwisko = ViewBag.srchImieNazwisko }))
+        Wyświetlam od @Model.FirstItemOnPage do @Model.LastItemOnPage z @Model.TotalItemCount rekordów Masażysta
+    </div>

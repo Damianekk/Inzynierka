@@ -1,12 +1,20 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 namespace Silownia.Models
 {
     public class Specjalizacja
     {
+        public Specjalizacja()
+        {
+            Trenerzy = new List<Trener>();
+        }
+
         public long SpecjalizacjaID { get; set; }
         [Required]
         [Display(Name = "Nazwa specjalizacji")]
         public string Nazwa { get; set; }
 
+
+        public virtual ICollection<Trener> Trenerzy { get; set; }
     }
 }

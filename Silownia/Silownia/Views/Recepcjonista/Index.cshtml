@@ -1,12 +1,9 @@
 ﻿@model PagedList.PagedList<Silownia.Models.Recepcjonista>
 @using PagedList.Mvc;
-
 @{
     ViewBag.Title = "Recepcjonista: index";
 }
-
 @Scripts.Render("~/Scripts/infoCzynnosc.js")
-
 
 @if (ViewBag.Akcja != null)
 {
@@ -30,21 +27,18 @@
         </div>
     }
 }
+<h2 class="textCenter">Lista recepcjonistów pracujących w naszej sieci</h2>
+<button class="btn btn-large btn-block btn-success btn-lg" onclick="location.href='@Url.Action("Create", "Recepcjonista")';return false;">dodaj nowego recepcjonistę</button>
+<div class="divDark">
+    @using (Html.BeginForm())
+    {
+        @Html.Partial("KryteriaSzukania/_imieNazwisko")
+        @Html.Partial("KryteriaSzukania/_silownia")
+        <br />
 
-<h2>Lista recepcjonistów pracujących w naszej sieci</h2>
-<p>
-    @Html.ActionLink("Dodaj nowego recepcjonistę", "Create")
-</p>
-
-@using (Html.BeginForm())
-{
-    @Html.Partial("KryteriaSzukania/_imieNazwisko")
-    @Html.Partial("KryteriaSzukania/_silownia")
-    <br />
-
-    <input type="submit" value="szukaj" class="btn btn-success" />
-}
-
+        <input type="submit" value="szukaj" class="btn btn-info" style="width:10%" />
+    }
+</div>
 <table class="table">
     <tr>
         <th>
@@ -58,7 +52,6 @@
                 @Html.Label("Data urodzenia:")
             </th>
         *@
-
         <th>
             @Html.Label("Data zatrudnienia:")
         </th>
@@ -70,7 +63,6 @@
         </th>
         <th></th>
     </tr>
-
     @foreach (var item in Model)
     {
         <tr>
@@ -86,7 +78,6 @@
                 </td>
 
             *@
-
             <td>
                 @Html.DisplayFor(modelItem => item.DataZatrudnienia)
             </td>
@@ -97,20 +88,18 @@
                 @Html.DisplayFor(modelItem => item.Silownia.Nazwa)
             </td>
             <td>
-                @Html.ActionLink("Edytuj", "Edit", new { id = item.OsobaID }) |
-                @Html.ActionLink("Szczegóły", "Details", new { id = item.OsobaID }) |
-                @Html.ActionLink("Usuń", "Delete", new { id = item.OsobaID })
+                <div class="btn-group">
+                    <button class="btn-default btn-lg" onclick="location.href='@Url.Action("Edit", "Recepcjonista", new { id = item.OsobaID })';return false;">edytuj</button>
+                    <button class="btn-primary btn-lg" onclick="location.href='@Url.Action("Details", "Recepcjonista", new { id = item.OsobaID })';return false;">szczegóły</button>
+                    <button class="btn-danger btn-lg" onclick="location.href='@Url.Action("Delete", "Recepcjonista", new { id = item.OsobaID })';return false;">usuń</button>
+                </div>
             </td>
         </tr>
     }
-
 </table>
-
 <div class="col-sm-10">
-
     <div class="center">
         @Html.PagedListPager(Model, page => Url.Action("Index", new { page, pageSize = Model.PageSize, imieNazwisko = ViewBag.srchImieNazwisko, Miasto = ViewBag.srchMiasto }))
         Wyświetlam od @Model.FirstItemOnPage do @Model.LastItemOnPage z @Model.TotalItemCount rekordów Recepcjonista
     </div>
-
 </div>

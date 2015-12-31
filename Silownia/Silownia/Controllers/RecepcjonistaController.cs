@@ -31,7 +31,7 @@ namespace Silownia.Controllers
 
                 recepcjonisci = recepcjonisci.Search(SilowniaID, i => i.Silownia.Nazwa);
 
-                var final = recepcjonisci.OrderBy(p => p.Imie);
+                var final = recepcjonisci.OrderBy(p => p.Nazwisko);
                 var ileWynikow = recepcjonisci.Count();
                 if ((ileWynikow / page) <= 1)
                 {
@@ -67,9 +67,9 @@ namespace Silownia.Controllers
                 {
                     return HttpNotFound();
                 }
-             //   return View(recepcjonista);
+                return View(recepcjonista);
             }
-            return HttpNotFound();
+            // return HttpNotFound();
         }
 
         // GET: Recepcjonista/Create
@@ -94,6 +94,7 @@ namespace Silownia.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    recepcjonista.DataZatrudnienia = DateTime.Now;
                     db.Recepcjonisci.Add(recepcjonista);
                     db.SaveChanges();
 

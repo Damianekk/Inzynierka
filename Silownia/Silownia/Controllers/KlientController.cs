@@ -29,8 +29,6 @@ namespace Silownia.Controllers
 
 
                 ViewBag.Miasto = new SelectList(Miasta, "Miasto", "Miasto");
-                //ViewBag.srchImieNazwisko = imieNazwisko;   Póki co niech będzie zakomentowane 
-                //ViewBag.czyUmowa = czyUmowa;
 
                 var osoby = from Osoby in db.Klienci select Osoby;
 
@@ -42,7 +40,7 @@ namespace Silownia.Controllers
                 if (czyUmowa)
                     osoby = osoby.Where(u => u.Umowy.Count > 0);
 
-                var final = osoby.OrderBy(p => p.Imie);
+                var final = osoby.OrderBy(p => p.Nazwisko);
                 var ileWynikow = osoby.Count();
                 if ((ileWynikow / page) <= 1)
                 {
@@ -205,5 +203,6 @@ namespace Silownia.Controllers
             }
             base.Dispose(disposing);
         }
+
     }
 }
