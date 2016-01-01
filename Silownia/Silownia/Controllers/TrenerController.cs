@@ -102,7 +102,7 @@ namespace Silownia.Controllers
                     pracownik.IDOsoby = trener.OsobaID;
                     pracownik.Login = trener.Nazwisko;
                     pracownik.Haslo = trener.Imie + trener.Nazwisko;
-                    pracownik.Rola = "Trener";
+                    pracownik.Rola = RoleEnum.Trener.GetDescription();
                     db.Uzytkownicy.Add(pracownik);
                     db.SaveChanges();
 

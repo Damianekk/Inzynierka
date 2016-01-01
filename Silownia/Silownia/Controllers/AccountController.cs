@@ -35,7 +35,7 @@ namespace Silownia.Controllers
             if (returnUrl == "/Account/LogOff")
             {
                 Session["User"] = null;
-                Session["Rola"] = null;
+                Session["Auth"] = null;
             }
             return View();
         }
@@ -53,26 +53,29 @@ namespace Silownia.Controllers
                 if (uzytkownik != null)
                 {
                     Session["User"] = uzytkownik.Login;
-                    Session["Rola"] = uzytkownik.Rola;
-                   /* if (uzytkownik.Login == "admin")
+                    Session["Auth"] = uzytkownik.Rola;
+                    if (uzytkownik.Login == "admin")
                     {
                        
                       
-                    }*/
-                    if (uzytkownik.Rola == "Klient")
+                    }
+                    if (uzytkownik.Rola == RoleEnum.Klient.GetDescription())
                     {
                         Klient klient = db.Klienci.Find(uzytkownik.IDOsoby);
-                        return View("~/Views/KlientView/Index.cshtml", klient);
+                        //return View("~/Views/KlientView/Index.cshtml", klient);
+                        return RedirectToAction("Index", "KlientView", new {  id = uzytkownik.IDOsoby });
                     }
-                    if (uzytkownik.Rola == "Recepcjonista")
+                    if (uzytkownik.Rola == RoleEnum.Recepcjonista.GetDescription())
                     {
                         Recepcjonista recepcjonista = db.Recepcjonisci.Find(uzytkownik.IDOsoby);
+                        //return RedirectToAction("Index", "RecepcjonistaView", new { id = uzytkownik.IDOsoby });
                         return View("~/Views/RecepcjonistaView/Index.cshtml", recepcjonista);
                     }
-                    if(uzytkownik.Rola == "Trener")
+                    if(uzytkownik.Rola == RoleEnum.Trener.GetDescription())
                     {
                         Trener trener = db.Trenerzy.Find(uzytkownik.IDOsoby);
-                        return View("~/Views/TrenerView/Index.cshtml", trener);
+                        return RedirectToAction("Index", "TrenerView", new { id = uzytkownik.IDOsoby });
+                        //return View("~/Views/TrenerView/Index.cshtml", trener);
                      }
                 }
                 else
