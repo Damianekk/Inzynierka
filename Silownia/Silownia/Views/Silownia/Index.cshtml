@@ -3,7 +3,15 @@
     ViewBag.Title = "Siłownie: index";
 }
 <h2>Siłownie w naszej sieci</h2>
-
+@if (ViewBag.Info != null)
+{
+    <a href="#" class="close" data-dismiss="alert">&times;</a>
+    <div class="alert alert-success">
+        <br />
+        <h4>@ViewBag.info</h4>
+        <br />
+    </div>
+}
 <section id="LOKALIZACJE">
     <br />
     <!-- Map Section -->
