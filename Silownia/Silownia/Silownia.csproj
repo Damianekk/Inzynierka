@@ -272,7 +272,7 @@
     <Content Include="Content\ikony\ikona_treningGrupowy.png" />
     <Content Include="Content\ikony\ikona_treningGrupowy50px.png" />
     <Content Include="Content\ikony\ikona_treningPersonalny.png" />
-    <Content Include="Content\ikony\ikona_treningPersonalny_50x.png" />
+    <Content Include="Content\ikony\ikona_treningPersonalny50px.png" />
     <Content Include="Content\ikony\ikona_umowa.png" />
     <Content Include="Content\ikony\ikona_umowa50px.png" />
     <Content Include="Content\ikony\persony\ikona_instruktor.png" />
