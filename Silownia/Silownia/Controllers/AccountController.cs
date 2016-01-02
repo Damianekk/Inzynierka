@@ -54,6 +54,7 @@ namespace Silownia.Controllers
                 {
                     Session["User"] = uzytkownik.Login;
                     Session["Rola"] = uzytkownik.Rola;
+                    Session["UserID"] = uzytkownik.IDOsoby;
                    /* if (uzytkownik.Login == "admin")
                     {
                        
@@ -61,19 +62,16 @@ namespace Silownia.Controllers
                     }*/
                     if (uzytkownik.Rola == "Klient")
                     {
-                        Klient klient = db.Klienci.Find(uzytkownik.IDOsoby);
-                        return View("~/Views/KlientView/Index.cshtml", klient);
+                        return RedirectToAction("Index","KlientView", new { id = uzytkownik.IDOsoby });
                     }
                     if (uzytkownik.Rola == "Recepcjonista")
                     {
-                        Recepcjonista recepcjonista = db.Recepcjonisci.Find(uzytkownik.IDOsoby);
-                        return View("~/Views/RecepcjonistaView/Index.cshtml", recepcjonista);
+                        return RedirectToAction("Index","RecepcjonistaView", new { id = uzytkownik.IDOsoby });
                     }
                     if(uzytkownik.Rola == "Trener")
                     {
-                        Trener trener = db.Trenerzy.Find(uzytkownik.IDOsoby);
-                        return View("~/Views/TrenerView/Index.cshtml", trener);
-                     }
+                        return RedirectToAction("Index", "TrenerView", new { id = uzytkownik.IDOsoby });
+                    }
                 }
                 else
                 {

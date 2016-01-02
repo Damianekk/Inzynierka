@@ -35,7 +35,7 @@
         var okienko = document.getElementById("WiadomosciOdebrane");
         var osWys ;
 
-        //var array = @Html.Raw(Json.Encode(@ViewBag.Wiad));
+        var array = @Html.Raw(Json.Encode(@ViewBag.Wiad));
 
         for(var i = 0; i < array.length; i++) {
             osWys = array[i].OsobaWysylajaca;
@@ -121,7 +121,7 @@
             @Html.TextArea("WiadomosciOdebrane", htmlAttributes: new { style = "width: 100%; max-width: 100%; height:250px;", @readonly = "readonly" })
         //    @Html.TextArea("WiadomosciOdebrane", new { @style = "width:650px; height:180px" })
             <script type="text/javascript">Odbierz();</script>
-            @*<h3>
+            <h3>
             @{
                 @ViewBag.Wiad[0].Tresc
                 @: |
@@ -129,7 +129,7 @@
                 @: |
                 @ViewBag.Wiad[0].OsobaOdbierajaca
         }
-    </h3>*@
+    </h3>
         }
 
 
@@ -138,7 +138,7 @@
         <div class="col-xs-2" style="border:solid; width:300px; height:320px">
 
             <h3>Wiadomość do trenera</h3>
-           @*@Html.DropDownList("Trenerzy", String.Empty)*@
+          @Html.DropDownList("Trenerzy", String.Empty)
             @Html.TextArea("Wiadomosc",new { @style="width:270px; height:180px" })
             <button type="button" id="Send" class="btn btn-primary" role="button" onclick="Wyslij()" style="width:270px; " >Wyślij</button>
               

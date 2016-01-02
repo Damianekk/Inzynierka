@@ -35,7 +35,7 @@
         var okienko = document.getElementById("WiadomosciOdebrane");
         var osWys ;
 
-        //var array = @Html.Raw(Json.Encode(@ViewBag.Wiad));
+        var array = @Html.Raw(Json.Encode(@ViewBag.Wiad));
 
         for(var i = 0; i < array.length; i++) {
             osWys = array[i].OsobaWysylajaca;
