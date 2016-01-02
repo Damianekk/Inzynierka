@@ -1,0 +1,48 @@
+﻿@model Silownia.Models.TreningPersonalny
+@{
+    ViewBag.Title = "Trening personalny: edycja";
+}
+<h2>Edycja wybranego treningu personalnego</h2>
+<div class="divDark">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.TreningID)
+            <div class="form-group">
+                @Html.LabelFor(model => model.TrenerID, "TrenerID", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("TrenerID", String.Empty)
+                    @Html.ValidationMessageFor(model => model.TrenerID)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.TreningStart, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.TreningStart)
+                    @Html.ValidationMessageFor(model => model.TreningStart)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.CzasTrwania, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CzasTrwania)
+                    @Html.ValidationMessageFor(model => model.CzasTrwania)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Zapisz" class="btn btn-lg btn-large btn-success" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div>
+    <button class="btn btn-large btn-block btn-lg btn-primary btn-primary" onclick="location.href='@Url.Action("Index", "TreningPersonalny")';return false;">powrót do listy treningów personalnych</button>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
