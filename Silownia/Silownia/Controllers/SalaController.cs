@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Silownia.Models;
 using Silownia.DAL;
+using System.IO;
 
 namespace Silownia.Controllers
 {
@@ -18,17 +19,17 @@ namespace Silownia.Controllers
         // GET: /Sala/
         public ActionResult Index()
         {
-            if(Session["User"] != null)
+         //   if(Session["User"] != null)
             {
                 return View(db.Sale.ToList());
             }
-            return HttpNotFound();
+          //  return HttpNotFound();
         }
 
-        // GET: /Sala/Details/5
+         // GET: /Sala/Details/5
         public ActionResult Details(int? id)
         {
-            if (Session["User"] != null)
+         //   if (Session["User"] != null)
             {
                 if (id == null)
                 {
@@ -41,30 +42,59 @@ namespace Silownia.Controllers
                 }
                 return View(sala);
             }
-            return HttpNotFound();
+          //  return HttpNotFound();
         }
 
         // GET: /Sala/Create
         public ActionResult Create()
         {
-            if (Session["User"] != null)
+          //  if (Session["User"] != null)
             {
                 ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
                 return View();
             }
-            return HttpNotFound();
+         //   return HttpNotFound();
         }
 
         // POST: /Sala/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Create([Bind(Include="Numer_sali,Rodzaj,Status,Opis, SilowniaID")] Sala sala)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(Sala sala, HttpPostedFileBase file)
         {
-            if (Session["User"] != null)
+         //   if (Session["User"] != null)
             {
                 if (ModelState.IsValid)
                 {
+                    string FileName = "";
+                    byte[] bytes;
+
+                    int BytesToRead;
+
+                    int numBytesRead;
+
+                    if (file != null)
+                    {
+                        FileName = Path.GetFileName(file.FileName);
+                        bytes = new byte[file.ContentLength];
+                        BytesToRead = (int)file.ContentLength;
+                        numBytesRead = 0;
+
+                        while (BytesToRead > 0)
+                        {
+                            int n = file.InputStream.Read(bytes, numBytesRead, BytesToRead);
+
+                            if (n == 0)
+                            {
+                                break;
+                            }
+                            numBytesRead += n;
+                            BytesToRead -= n;
+                        }
+                        sala.Zdjecie = bytes;
+
+                    }
                     db.Sale.Add(sala);
                     db.SaveChanges();
                     return RedirectToAction("Index");
@@ -72,13 +102,22 @@ namespace Silownia.Controllers
                 ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
                 return View(sala);
             }
-            return HttpNotFound();
+         //   return HttpNotFound();
         }
+
+        public ActionResult Zdjecie(int id, int img)
+        {
+            ViewBag.Pic = img;
+            Sala foto = db.Sale.Find(id);
+            return View(foto);
+        }
+
+
 
         // GET: /Sala/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (Session["User"] != null)
+         //   if (Session["User"] != null)
             {
                 if (id == null)
                 {
@@ -92,16 +131,17 @@ namespace Silownia.Controllers
                 ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", sala.Silownia);
                 return View(sala);
             }
-            return HttpNotFound();
+         //   return HttpNotFound();
         }
 
         // POST: /Sala/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Edit([Bind(Include="Numer_sali,Rodzaj,Status,Opis")] Sala sala)
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include="Numer_sali,Rodzaj,Status,Opis,ImageFile,SilowniaID")] Sala sala)
         {
-            if (Session["User"] != null)
+         //   if (Session["User"] != null)
             {
                 if (ModelState.IsValid)
                 {
@@ -112,13 +152,13 @@ namespace Silownia.Controllers
                 ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", sala.Silownia);
                 return View(sala);
             }
-            return HttpNotFound();
+          //  return HttpNotFound();
         }
 
         // GET: /Sala/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (Session["User"] != null)
+         //   if (Session["User"] != null)
             {
                 if (id == null)
                 {
@@ -131,21 +171,22 @@ namespace Silownia.Controllers
                 }
                 return View(sala);
             }
-            return HttpNotFound();
+          //  return HttpNotFound();
         }
 
         // POST: /Sala/Delete/5
         [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            if (Session["User"] != null)
+         //   if (Session["User"] != null)
             {
                 Sala sala = db.Sale.Find(id);
                 db.Sale.Remove(sala);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-           return HttpNotFound();
+         //   return HttpNotFound();
         }
 
         protected override void Dispose(bool disposing)

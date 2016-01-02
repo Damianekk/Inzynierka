@@ -34,56 +34,17 @@
 @foreach (var item in Model) {
         <div class="col-md-3 col-md-offset-1 portfolio-item">
             <a href="#">
-                <img class="img-responsive" src="@item.ImageFile" alt="no file">
+                <img class="img-responsive" src="@item.Plik" alt="no file">
             </a>
             <h3>
                 @Html.ActionLink("Sala "+ item.Rodzaj, "Details", new { id = item.Numer_sali })
 
             </h3>
             <p>@item.Opis</p>
+            @Html.ActionLink("Usuń", "Delete", new { id=item.Numer_sali })
         </div>
+    </div>
 }
-       
-        </div>
-        @*<table class="table">
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Rodzaj)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Numer_sali)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Opis)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Status)
-                    </th>
-                    <th></th>
-                </tr>
-
-            @foreach (var item in Model) {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Rodzaj)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Numer_sali)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Opis)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Status)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id=item.Numer_sali }) |
-                        @Html.ActionLink("Details", "Details", new { id=item.Numer_sali }) |
-                        @Html.ActionLink("Delete", "Delete", new { id=item.Numer_sali })
-                    </td>
-                </tr>
-            }
-
-            </table>*@
+       </div>
 </body>
 </html>

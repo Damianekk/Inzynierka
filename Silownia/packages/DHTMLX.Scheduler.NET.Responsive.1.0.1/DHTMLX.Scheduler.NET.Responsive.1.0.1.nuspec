@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>DHTMLX.Scheduler.NET.Responsive</id>
+    <version>1.0.1</version>
+    <title>DHTMLX Scheduler .NET - Responsive layout</title>
+    <authors>DHTMLX</authors>
+    <owners>DHTMLX</owners>
+    <licenseUrl>http://scheduler-net.com/license.aspx</licenseUrl>
+    <projectUrl>http://scheduler-net.com/</projectUrl>
+    <iconUrl>http://scheduler-net.com/image/scheduler_64x64.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Code snippets for mobile-friendly layout of calendars and schedulers built with DHTMLX Scheduler .NET web control.</description>
+    <summary>Code snippets for mobile-friendly layout of calendars and schedulers built with DHTMLX Scheduler .NET web control.</summary>
+    <tags>dhtmlx scheduler</tags>
+    <dependencies>
+      <dependency id="DHTMLX.Scheduler.NET" />
+    </dependencies>
+  </metadata>
+</package>

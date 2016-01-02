@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>DHTMLX.Scheduler.NET</id>
+    <version>3.3.11.2</version>
+    <title>DHTMLX Scheduler .NET - ASP.NET event calendar</title>
+    <authors>DHTMLX</authors>
+    <owners>DHTMLX</owners>
+    <licenseUrl>http://scheduler-net.com/license.aspx</licenseUrl>
+    <projectUrl>http://scheduler-net.com/</projectUrl>
+    <iconUrl>http://scheduler-net.com/image/scheduler_64x64.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>DHTMLX Scheduler .NET web control provides rich and flexible APIs to achieve the desired look-and-feel.
+You can change the calendar appearance and configuration according to your app needs. The calendar has basic views (Day, Week, Month), and can also display events in Timeline, Agenda, Year, Grid and Multiple Resource views.
+
+30 day trial version.</description>
+    <summary>DHTMLX Scheduler .NET is a customizable library for creating web-based event and booking calendars in ASP.NET.</summary>
+    <tags>dhtmlx scheduler calendar recurring events</tags>
+  </metadata>
+</package>
