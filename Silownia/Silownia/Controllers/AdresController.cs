@@ -18,7 +18,7 @@ namespace Silownia.Controllers
         // GET: /Adres/
         public ActionResult Index(AkcjaEnumAdres akcja = AkcjaEnumAdres.Brak, String info = null)
         {
-              if (Session["USer"] != null)
+              if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
 
                 if (akcja != AkcjaEnumAdres.Brak)
@@ -35,7 +35,7 @@ namespace Silownia.Controllers
         // GET: /Adres/Details/5
         public ActionResult Details(long? id)
         {
-               if (Session["User"] != null)
+               if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 if (id == null)
                 {
@@ -54,7 +54,7 @@ namespace Silownia.Controllers
         // GET: /Adres/Create
         public ActionResult Create(long? id, KomuAdres komu)
         {
-              if (Session["User"] != null)
+              if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 if (id != null)
                 {
@@ -83,7 +83,7 @@ namespace Silownia.Controllers
         [HttpPost]
         public ActionResult Create([Bind(Include = "AdresID,KodPocztowy,Kraj,Miasto,Ulica,NrBudynku,NrLokalu")] Adres adres, long? id, KomuAdres komu)
         {
-              if (Session["User"] != null)
+              if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 object redirectTo = null;
                 if (ModelState.IsValid)
@@ -136,7 +136,7 @@ namespace Silownia.Controllers
         // GET: /Adres/Edit/5
         public ActionResult Edit(long? id)
         {
-             if (Session["User"] != null)
+             if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 if (id == null)
                 {
@@ -158,7 +158,7 @@ namespace Silownia.Controllers
         [HttpPost]
         public ActionResult Edit([Bind(Include = "AdresID,KodPocztowy,Kraj,Miasto,Ulica,NrBudynku,NrLokalu")] Adres adres)
         {
-               if (Session["User"] != null)
+               if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 if (ModelState.IsValid)
                 {
@@ -174,7 +174,7 @@ namespace Silownia.Controllers
         // GET: /Adres/Delete/5
         public ActionResult Delete(long? id)
         {
-              if (Session["User"] != null)
+              if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 if (id == null)
                 {
@@ -194,7 +194,7 @@ namespace Silownia.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(long id)
         {
-               if (Session["User"] != null)
+               if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 Adres adres = db.Adresy.Find(id);
                 Silownia.Models.Silownia silownia = db.Silownie.Where(w => w.Adres.AdresID == id).FirstOrDefault();

@@ -22,7 +22,7 @@ namespace Silownia.Controllers
         // GET: TreningPersonalny
         public ActionResult Index(string imieNazwisko, string SilowniaID, string TrenerID, string SpecjalizacjaID, int page = 1, int pageSize = 10, AkcjaEnumTrening akcja = AkcjaEnumTrening.Brak, String info = null)
         {
-            if (Session["User"] != null)
+            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
                 ViewBag.TrenerID = new SelectList(db.Trenerzy.DistinctBy(a => new { a.Pesel }), "imieNazwisko", "imieNazwisko");
@@ -66,7 +66,7 @@ namespace Silownia.Controllers
         // GET: TreningPersonalny/Details/5
         public ActionResult Details(int? id)
         {
-            if (Session["User"] != null)
+            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 if (id == null)
                 {
@@ -85,7 +85,7 @@ namespace Silownia.Controllers
         // GET: TreningPersonalny/Create
         public ActionResult Create(long? id)
         {
-            if (Session["User"] != null)
+            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 ViewBag.TrenerID = new SelectList(db.Trenerzy, "OsobaID", "imieNazwisko");
                 var a = from Osoby in db.Trenerzy select Osoby;
@@ -115,7 +115,7 @@ namespace Silownia.Controllers
         [HttpPost]
         public ActionResult Create([Bind(Include = "TreningID,TreningStart,CzasTrwania,TrenerID")] long? id, TreningPersonalny treningPersonalny)
         {
-            if (Session["User"] != null)
+            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 ViewBag.TrenerID = new SelectList(db.Trenerzy, "OsobaID", "imieNazwisko", treningPersonalny.TrenerID);
 
@@ -181,7 +181,7 @@ namespace Silownia.Controllers
         // GET: TreningPersonalny/Edit/5
         public ActionResult Edit(long? id)
         {
-            if (Session["User"] != null)
+            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 if (id == null)
                 {
@@ -204,7 +204,7 @@ namespace Silownia.Controllers
         [HttpPost]
         public ActionResult Edit([Bind(Include = "TreningID,TreningStart,CzasTrwania,TrenerID")] TreningPersonalny treningPersonalny)
         {
-            if (Session["User"] != null)
+            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 if (ModelState.IsValid)
                 {
@@ -221,7 +221,7 @@ namespace Silownia.Controllers
         // GET: TreningPersonalny/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (Session["User"] != null)
+            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 if (id == null)
                 {
@@ -241,7 +241,7 @@ namespace Silownia.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            if (Session["User"] != null)
+            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 TreningPersonalny treningPersonalny = db.TreningiPersonalne.Find(id);
                 db.TreningiPersonalne.Remove(treningPersonalny);
