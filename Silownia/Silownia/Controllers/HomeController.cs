@@ -20,6 +20,8 @@ namespace Silownia.Controllers
 
         public ActionResult Index()
         {
+            Session["Auth"] = "";
+            Session["User"] = "";
             return View();
         }
 
