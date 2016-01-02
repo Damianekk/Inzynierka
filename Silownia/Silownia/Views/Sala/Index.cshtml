@@ -34,7 +34,8 @@
 @foreach (var item in Model) {
         <div class="col-md-3 col-md-offset-1 portfolio-item">
             <a href="#">
-                <img class="img-responsive" src="@item.Plik" alt="no file">
+               @{Html.RenderPartial("Zdjecie")}
+                @*<img class="img-responsive" src="@item.Zdjecie" alt="no file">*@
             </a>
             <h3>
                 @Html.ActionLink("Sala "+ item.Rodzaj, "Details", new { id = item.Numer_sali })
@@ -43,8 +44,9 @@
             <p>@item.Opis</p>
             @Html.ActionLink("Usuń", "Delete", new { id=item.Numer_sali })
         </div>
-    </div>
 }
+    </div>
+
        </div>
 </body>
 </html>
