@@ -65,6 +65,7 @@ namespace Silownia.DAL
             //});
 
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+
         }
 
     }
