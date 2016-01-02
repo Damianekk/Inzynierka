@@ -30,7 +30,7 @@
         <th>
             @Html.DisplayNameFor(model => model.NrTelefonu)
         </th>
-        <th></th>
+
     </tr>
     @foreach (var item in Model)
     {
@@ -61,7 +61,7 @@
                 @if (item.Adres == null)
                 {
                     @Html.ActionLink("adres", "Create", "Adres", new { id = item.SilowniaID, komu = KomuAdres.Silownia },
-                           new { @class = "adresPic" })
+                           new { @class = "adresSilowniaPic" })
                 }
             </td>
         </tr>

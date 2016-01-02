@@ -45,9 +45,31 @@
                 </dd>
             </dl>
 
-            <div>
-                <input type="submit" value="Usuń" class="btn  btn-large btn-lg btn-block btn-danger" />
-            </div>
+            @if (Model.TreningiPersonalne.Count > 0)
+            {
+                <div style="color:red">
+                    Klient jest zapisany na treningi personalne, należy je odwołać przed usunięciem klienta.
+                </div>
+            }
+            else if (Model.Masaze.Count > 0)
+            {
+                <div style="color:red">
+                    Klient jest zapisany na masaże, należy je odwołać przed usunięciem klienta.
+                </div>
+            }
+            else if (Model.Umowy.Count > 0)
+            {
+                <div style="color:red">
+                    Klient posiada aktywne umowy, należy je rozwiązać przed usunięciem klienta.
+                </div>
+            }
+            else
+            {
+                <div>
+                    <input type="submit" value="Usuń" class="btn  btn-large btn-lg btn-block btn-danger" />
+                </div>
+            }
+
         </div>
     </div>
 }

@@ -66,8 +66,18 @@
                     @Html.DisplayFor(model => model.Silownia.Nazwa)
                 </dd>
             </dl>
-
-            <input type="submit" value="Usuń" class="btn  btn-large btn-lg btn-block btn-danger" />
+            @if (Model.Masaze.Count > 0)
+            {
+                <div style="color:red">
+                    Masażysta ma umowione masaże, należy je odwołać przed usunięciem masażysty.
+                </div>
+            }
+            else
+            {
+                <div>
+                    <input type="submit" value="Usuń" class="btn  btn-large btn-lg btn-block btn-danger" />
+                </div>
+            }
         </div>
     </div>
 }

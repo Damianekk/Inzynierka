@@ -10,6 +10,22 @@
     <div class="form-horizontal divDark">
 
         @Html.ValidationSummary(true)
+        @*
+                <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Silownia,
+                  new SelectList(ViewBag.SilowniaList, "SilowniaID", "Nazwa"),
+                  "Wybierz siłownię",
+                  new { @class = "form-control", @onchange = "FillRecepcjonista()" })
+            </div>
+            *@
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SilowniaID, "Siłownia", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("SilowniaID", String.Empty)
+                @Html.ValidationMessageFor(model => model.SilowniaID)
+            </div>
+        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.RecepcjonistaID, "Recepcjonista", new { @class = "control-label col-md-2" })
@@ -18,13 +34,7 @@
                 @Html.ValidationMessageFor(model => model.RecepcjonistaID)
             </div>
         </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.SilowniaID, "Siłownia", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("SilowniaID", String.Empty)
-                @Html.ValidationMessageFor(model => model.SilowniaID)
-            </div>
-        </div>
+
         <div class="form-group">
             @Html.LabelFor(model => model.DataPodpisania, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -75,4 +85,26 @@
 }
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+
+    <script>
+        function FillCity() {
+            var silowniaID = $('#Silownia').val();
+            $.ajax({
+                url: '/Recepcjonista/FillRecepcjonista',
+                type: "GET",
+                dataType: "JSON",
+                data: { Silownia: SilowniaID },
+                success: function (recepcjonisci) {
+                    $("#Recepcjonista").html(""); // clear before appending new list
+                    $.each(recepcjonisci, function (i, recepcjonista) {
+                        $("#Recepcjonista").append(
+                            $('<option></option>').val(recepcjonista.recepcjonistaID).html(recepcjonista.imieNazwisko));
+                    });
+                }
+            });
+        }
+    </script>
 }
+}
+

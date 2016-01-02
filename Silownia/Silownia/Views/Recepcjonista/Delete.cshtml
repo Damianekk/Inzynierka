@@ -60,7 +60,18 @@
                 </dd>
             </dl>
 
-            <input type="submit" value="Usuń" class="btn  btn-large btn-lg btn-block btn-danger" />
+            @if (Model.Umowy.Count > 0)
+            {
+                <div style="color:red">
+                    Recepcjonista ma podpisane umowy, należy je przepisać na innego pracownika.
+                </div>
+            }
+            else
+            {
+                <div>
+                    <input type="submit" value="Usuń" class="btn  btn-large btn-lg btn-block btn-danger" />
+                </div>
+            }
         </div>
     </div>
 }

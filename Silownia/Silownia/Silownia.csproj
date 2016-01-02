@@ -283,6 +283,8 @@
     <Content Include="Content\ikony\persony\ikona_recepcjonista50px.png" />
     <Content Include="Content\ikony\persony\ikona_trenerPersonalny.png" />
     <Content Include="Content\ikony\persony\ikona_trenerPersonalny50px.png" />
+    <Content Include="Content\ikony\silownia\ikona_adres_silownia.png" />
+    <Content Include="Content\ikony\silownia\ikona_adres_silownia_50px.png" />
     <Content Include="Content\ikony\silownia\ikona_silownia.png" />
     <Content Include="Content\ikony\silownia\ikona_silownia50px.png" />
     <Content Include="Content\images.jpg" />
@@ -290,6 +292,7 @@
     <Content Include="Content\OurTeam\jbielawska.jpg" />
     <Content Include="Content\OurTeam\lmajcher.jpg" />
     <Content Include="Content\OurTeam\mbielec.jpg" />
+    <Content Include="Content\PURE MUSCLES.jpg" />
     <Content Include="Content\Sale\crossfit.jpg" />
     <Content Include="Content\Sale\crossfit1.jpg" />
     <Content Include="Content\Sale\fitness.jpg" />

@@ -195,6 +195,13 @@ namespace Silownia.Controllers
          //   return HttpNotFound();
         }
 
+        public ActionResult FillRecepcjonista(int silownia)
+        {
+            var recepcjonisci = db.Recepcjonisci.Where(c => c.SilowniaID == silownia);
+            return Json(recepcjonisci, JsonRequestBehavior.AllowGet);
+        }
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -114,6 +114,13 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Cena) zł
                                     </td>    
+                                    <td>
+                                        @* trzeba dorobić tutaj treningi grupowe po wprowadzeniu ich do aplikacji*@
+                                        @if (Model.Masaze.Count == 0 && Model.TreningiPersonalne.Count == 0)
+                                        {
+                                            <button class="btn-danger btn-lg" onclick="location.href='@Url.Action("Delete", "Umowa", new { id = item.UmowaID})';return false;">usuń</button>
+                                        }
+                                    </td>
                                 </tr>
                             }
                         </table>

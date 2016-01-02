@@ -99,7 +99,7 @@ namespace Silownia.Controllers
                 return View(new Umowa // W ten sposób tworze obiekt nadaje aktualny czas / przypisuje do Daty podpisania umowy i zwracam widok z datą (teraz)
                 {
                     DataPodpisania = DateTime.Now,
-                    // tu przydałoby się dodać datę now + miesiąc
+                    // minimalna umowa na miesiąc
                     DataZakonczenia = (DateTime.Now).AddMonths(1),
 
                     // ,Recepcjonista = recepcjonista 
@@ -117,8 +117,9 @@ namespace Silownia.Controllers
         {
           //  if (Session["User"] != null)
             {
-                ViewBag.RecepcjonistaID = new SelectList(db.Recepcjonisci, "OsobaID", "imieNazwisko", umowa.RecepcjonistaID);
+                
                 ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", umowa.SilowniaID);
+                ViewBag.RecepcjonistaID = new SelectList(db.Recepcjonisci.Where(o => o.SilowniaID == umowa.SilowniaID), "OsobaID", "imieNazwisko", umowa.RecepcjonistaID);
 
                 if (ModelState.IsValid && !aktywnaUmowa(id, umowa.DataPodpisania, umowa.DataZakonczenia))
                 {
@@ -140,6 +141,8 @@ namespace Silownia.Controllers
                     umowa.Silownia = silownia;
                     silownia.Umowy.Add(umowa);
                     #endregion
+
+                    
                     db.Umowy.Add(umowa);
                     db.SaveChanges();
                     return RedirectToAction("Index", new { akcja = AkcjaEnumUmowa.DodanoUmowe, info = klient.imieNazwisko });
