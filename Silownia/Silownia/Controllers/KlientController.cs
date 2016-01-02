@@ -8,6 +8,7 @@ using Silownia.Models;
 using Silownia.DAL;
 using PagedList;
 using System.Collections.Generic;
+using System.Web.Script.Serialization;
 
 
 namespace Silownia.Controllers
@@ -205,6 +206,25 @@ namespace Silownia.Controllers
             }
             base.Dispose(disposing);
         }
+        [HttpPost]
+        public JsonResult KlientInfoJSON()
+        {
 
+            var jsonSerialiser = new JavaScriptSerializer();
+            var klienci = db.Klienci.Where(s => s.Adres != null).ToList<Silownia.Models.Klient>();
+
+            //  klienci.RemoveAll(item => item.Adres != null);
+            var z = klienci.Select(x => new
+            {
+                dlugosc = x.Dlugosc,
+                szerokosc = x.Szerokosc,
+                imieNazwisko = x.imieNazwisko,
+                numerTelefonu = x.NrTelefonu,
+                email = x.Mail
+            });
+            return Json(z);
+
+            //  return Json(new { ok = true, myData = klienci }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

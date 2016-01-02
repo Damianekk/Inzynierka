@@ -27,6 +27,13 @@
         </div>
     }
 }
+<section id="LOKALIZACJE">
+    <br />
+    <!-- Map Section -->
+    <div id="map" style="height:600px"></div>
+
+</section>
+
 <h2 class="textCenter"> Klienci korzystających z usług naszej sieci</h2>
 
 <button class="btn btn-large btn-block btn-success btn-lg" onclick="location.href='@Url.Action("Create", "Klient")';return false;">dodaj nowego klienta</button>
@@ -129,3 +136,209 @@
         Wyświetlam od @Model.FirstItemOnPage do @Model.LastItemOnPage z @Model.TotalItemCount rekordów Klient
     </div>
 </div>
+
+
+
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRngKslUGJTlibkQ3FkfTxj3Xss1UlZDA&sensor=false"></script>
+
+<style>
+    #map_canvas img {
+        max-width: none;
+    }
+</style>
+
+<!-- This css is to give a nice big popup "info window" when a marker is clicked on the map -->
+<style>
+    .infoDiv {
+        height: auto;
+        width: auto;
+        -webkit-user-select: none;
+        background-color: white;
+    }
+</style>
+
+@section scripts {
+    <script>
+        // Google Maps Scripts
+        // When the window has finished loading create our google map below
+        google.maps.event.addDomListener(window, 'load', init);
+
+        function init() {
+            // Basic options for a simple Google Map
+            // For more options see: https://developers.google.com/maps/documentation/javascript/reference#MapOptions
+            var mapOptions = {
+                // How zoomed in you want the map to start at (always required)
+                zoom: 6,
+
+                // The latitude and longitude to center the map (always required)
+                center: new google.maps.LatLng(52.230240, 21.003694), // Warszawa
+
+                // Disables the default Google Maps UI components
+                disableDefaultUI: false,
+                scrollwheel: false,
+                draggable: true,
+
+                // How you would like to style the map.
+                // This is where you would paste any style found on Snazzy Maps.
+                styles: [{
+                    "featureType": "water",
+                    "elementType": "geometry",
+                    "stylers": [{
+                        "color": "#000000"
+                    }, {
+                        "lightness": 17
+                    }]
+                }, {
+                    "featureType": "landscape",
+                    "elementType": "geometry",
+                    "stylers": [{
+                        "color": "#000000"
+                    }, {
+                        "lightness": 20
+                    }]
+                }, {
+                    "featureType": "road.highway",
+                    "elementType": "geometry.fill",
+                    "stylers": [{
+                        "color": "#000000"
+                    }, {
+                        "lightness": 17
+                    }]
+                }, {
+                    "featureType": "road.highway",
+                    "elementType": "geometry.stroke",
+                    "stylers": [{
+                        "color": "#000000"
+                    }, {
+                        "lightness": 29
+                    }, {
+                        "weight": 0.2
+                    }]
+                }, {
+                    "featureType": "road.arterial",
+                    "elementType": "geometry",
+                    "stylers": [{
+                        "color": "#000000"
+                    }, {
+                        "lightness": 18
+                    }]
+                }, {
+                    "featureType": "road.local",
+                    "elementType": "geometry",
+                    "stylers": [{
+                        "color": "#000000"
+                    }, {
+                        "lightness": 16
+                    }]
+                }, {
+                    "featureType": "poi",
+                    "elementType": "geometry",
+                    "stylers": [{
+                        "color": "#000000"
+                    }, {
+                        "lightness": 21
+                    }]
+                }, {
+                    "elementType": "labels.text.stroke",
+                    "stylers": [{
+                        "visibility": "on"
+                    }, {
+                        "color": "#000000"
+                    }, {
+                        "lightness": 16
+                    }]
+                }, {
+                    "elementType": "labels.text.fill",
+                    "stylers": [{
+                        "saturation": 36
+                    }, {
+                        "color": "#000000"
+                    }, {
+                        "lightness": 40
+                    }]
+                }, {
+                    "elementType": "labels.icon",
+                    "stylers": [{
+                        "visibility": "off"
+                    }]
+                }, {
+                    "featureType": "transit",
+                    "elementType": "geometry",
+                    "stylers": [{
+                        "color": "#000000"
+                    }, {
+                        "lightness": 19
+                    }]
+                }, {
+                    "featureType": "administrative",
+                    "elementType": "geometry.fill",
+                    "stylers": [{
+                        "color": "#000000"
+                    }, {
+                        "lightness": 20
+                    }]
+                }, {
+                    "featureType": "administrative",
+                    "elementType": "geometry.stroke",
+                    "stylers": [{
+                        "color": "#000000"
+                    }, {
+                        "lightness": 17
+                    }, {
+                        "weight": 1.2
+                    }]
+                }]
+            };
+
+            // Get the HTML DOM element that will contain your map
+            // We are using a div with id="map" seen below in the <body>
+            var mapElement = document.getElementById('map');
+
+            // Create the Google Map using out element and options defined above
+            var map = new google.maps.Map(mapElement, mapOptions);
+
+            var image = 'Content/ikony/ikona_adres50px';
+            // Using the JQuery "each" selector to iterate through the JSON list and drop marker pins
+            $.ajax({
+                url: '@Url.Action("KlientInfoJSON")',
+                type: "POST",
+                success: function (json) {
+
+                    //    alert("true")
+                    $.each(json, function (i, item) {
+                        var marker = new google.maps.Marker({
+                            'position': new google.maps.LatLng(item.dlugosc, item.szerokosc),
+                            'map': map,
+                            'title': item.nazwa,
+
+                        });
+
+                        marker.setIcon({ url: 'https://cdn1.iconfinder.com/data/icons/Map-Markers-Icons-Demo-PNG/32/Map-Marker-Marker-Outside-Azure.png' });
+
+                        // put in some information about each json object - in this case, the opening hours.
+                        var infowindow = new google.maps.InfoWindow({
+                            content:
+                                    "<div class='h6' style='color:black'><h4>" + item.imieNazwisko + "</h2>"                              
+                                    + "</div> " + "<br/>Numer telefonu:<div style='color:blue'> " + item.NrTelefonu
+                                    + "</div> " + "<br/>Adres e-mail:<div style='color:blue'> " + item.Mail
+
+                        });
+
+                        // finally hook up an "OnClick" listener to the map so it pops up out info-window when the marker-pin is clicked!
+                        google.maps.event.addListener(marker, 'click', function () {
+                            infowindow.open(map, marker);
+                        });
+
+                    })
+
+                },
+                error: function () {
+                    alert("Coś poszło nie tak z mapami");
+                }
+            });
+            // Custom Map Marker Icon - Customize the map-marker.png file to customize your icon
+        }
+    </script>
+}
+
+

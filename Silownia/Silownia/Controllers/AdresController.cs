@@ -94,21 +94,32 @@ namespace Silownia.Controllers
                             Osoba osoba = db.Osoby.Find(id);
                             redirectTo = osoba.GetType().BaseType.Name;
                             osoba.Adres = adres;
+                            //Google Maps
+                            var locationServiceO = new GoogleLocationService();
+                            AddressData adrO = new AddressData();
+                            adrO.Country = adres.Kraj;
+                            adrO.City = adres.Miasto;
+                            adrO.Zip = adres.KodPocztowy;
+                            adrO.Address = adres.Ulica + " " + adres.NrBudynku + " " + adres.NrLokalu;
+                            var pointO = locationServiceO.GetLatLongFromAddress(adrO);
+                            osoba.Szerokosc = pointO.Longitude;
+                            osoba.Dlugosc = pointO.Latitude;
+                            redirectTo = osoba.GetType().BaseType.Name;
 
                             //adres.Osoba = osoba;
                             break;
                         case KomuAdres.Silownia:
                             Silownia.Models.Silownia silownia = db.Silownie.Find(id);
                             silownia.Adres = adres;
-                            var locationService = new GoogleLocationService();
-                            AddressData adr = new AddressData();
-                            adr.Country = adres.Kraj;
-                            adr.City = adres.Miasto;
-                            adr.Zip = adres.KodPocztowy;
-                            adr.Address = adres.Ulica + " " + adres.NrBudynku + " " + adres.NrLokalu;
-                            var point = locationService.GetLatLongFromAddress(adr);
-                            silownia.Szerokosc = point.Longitude;
-                            silownia.Dlugosc = point.Latitude;
+                            var locationServiceS = new GoogleLocationService();
+                            AddressData adrS = new AddressData();
+                            adrS.Country = adres.Kraj;
+                            adrS.City = adres.Miasto;
+                            adrS.Zip = adres.KodPocztowy;
+                            adrS.Address = adres.Ulica + " " + adres.NrBudynku + " " + adres.NrLokalu;
+                            var pointS = locationServiceS.GetLatLongFromAddress(adrS);
+                            silownia.Szerokosc = pointS.Longitude;
+                            silownia.Dlugosc = pointS.Latitude;
                             redirectTo = silownia.GetType().BaseType.Name;
                             break;
                     }
