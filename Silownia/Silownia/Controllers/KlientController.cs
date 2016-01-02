@@ -218,9 +218,6 @@ namespace Silownia.Controllers
             {
                 dlugosc = x.Dlugosc,
                 szerokosc = x.Szerokosc,
-                imieNazwisko = x.imieNazwisko,
-                numerTelefonu = x.NrTelefonu,
-                email = x.Mail
             });
             return Json(z);
 

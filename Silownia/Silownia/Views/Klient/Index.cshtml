@@ -5,6 +5,8 @@
 }
 @Scripts.Render("~/Scripts/infoCzynnosc.js")
 
+<h2 class="textCenter"> Klienci korzystających z usług naszej sieci</h2>
+
 @if (ViewBag.Akcja != null)
 {
     if (ViewBag.Akcja == Silownia.AkcjaEnum.DodanoKlienta)
@@ -34,7 +36,7 @@
 
 </section>
 
-<h2 class="textCenter"> Klienci korzystających z usług naszej sieci</h2>
+
 
 <button class="btn btn-large btn-block btn-success btn-lg" onclick="location.href='@Url.Action("Create", "Klient")';return false;">dodaj nowego klienta</button>
 <div class="divDark">
@@ -316,13 +318,7 @@
                         marker.setIcon({ url: 'https://cdn1.iconfinder.com/data/icons/Map-Markers-Icons-Demo-PNG/32/Map-Marker-Marker-Outside-Azure.png' });
 
                         // put in some information about each json object - in this case, the opening hours.
-                        var infowindow = new google.maps.InfoWindow({
-                            content:
-                                    "<div class='h6' style='color:black'><h4>" + item.imieNazwisko + "</h2>"                              
-                                    + "</div> " + "<br/>Numer telefonu:<div style='color:blue'> " + item.NrTelefonu
-                                    + "</div> " + "<br/>Adres e-mail:<div style='color:blue'> " + item.Mail
-
-                        });
+                       // var infowindow = new google.maps.InfoWindow();
 
                         // finally hook up an "OnClick" listener to the map so it pops up out info-window when the marker-pin is clicked!
                         google.maps.event.addListener(marker, 'click', function () {
