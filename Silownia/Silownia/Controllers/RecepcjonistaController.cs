@@ -42,10 +42,10 @@ namespace Silownia.Controllers
                 PagedList<Recepcjonista> model = new PagedList<Recepcjonista>(final, page, pageSize);
 
                 if (akcja != AkcjaEnumRecepcjonista.Brak)
-                {
-                    ViewBag.info = info;
                     ViewBag.Akcja = akcja;
-                }
+
+                if(info != null)
+                    ViewBag.info = info;
 
                 return View(model);
             }
@@ -73,6 +73,7 @@ namespace Silownia.Controllers
         }
 
         // GET: Recepcjonista/Create
+        [MyAuthorize(RoleEnum.Administrator)]
         public ActionResult Create()
         {
           //  if (Session["User"] != null)
@@ -116,6 +117,7 @@ namespace Silownia.Controllers
         }
 
         // GET: Recepcjonista/Edit/5
+        [MyAuthorize(RoleEnum.Administrator)]
         public ActionResult Edit(long? id)
         {
          //   if (Session["User"] != null)
@@ -140,6 +142,7 @@ namespace Silownia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [MyAuthorize(RoleEnum.Administrator)]
         public ActionResult Edit([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,Pesel,NrTelefonu,DataZatrudnienia,Pensja,SilowniaID")] Recepcjonista recepcjonista)
         {
          //   if (Session["User"] != null)
@@ -157,6 +160,7 @@ namespace Silownia.Controllers
         }
 
         // GET: Recepcjonista/Delete/5
+        [MyAuthorize(RoleEnum.Administrator)]
         public ActionResult Delete(long? id)
         {
          //   if (Session["User"] != null)
@@ -178,6 +182,7 @@ namespace Silownia.Controllers
         // POST: Recepcjonista/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [MyAuthorize(RoleEnum.Administrator)]
         public ActionResult DeleteConfirmed(long id)
         {
         //    if (Session["User"] != null)

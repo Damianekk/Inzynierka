@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using System.Web;
 using System.Web.Security;
+using System.Data.Entity;
 using System.Web.Mvc;
 using System.Linq;
 using Microsoft.AspNet.Identity;
@@ -37,6 +38,10 @@ namespace Silownia.Controllers
                 Session["User"] = null;
                 Session["Auth"] = null;
             }
+            if (returnUrl == "/Account/Manage")
+            {
+                return View("~/Views/Account/Manage.cshtml");
+            }
             return View();
         }
 
@@ -56,26 +61,22 @@ namespace Silownia.Controllers
                     Session["Auth"] = uzytkownik.Rola;
                     if (uzytkownik.Login == "admin")
                     {
-                       
-                      
+                        return RedirectToAction("Index", "Silownia", new { id = 1 });
                     }
                     if (uzytkownik.Rola == RoleEnum.Klient.GetDescription())
                     {
                         Klient klient = db.Klienci.Find(uzytkownik.IDOsoby);
-                        //return View("~/Views/KlientView/Index.cshtml", klient);
                         return RedirectToAction("Index", "KlientView", new {  id = uzytkownik.IDOsoby });
                     }
                     if (uzytkownik.Rola == RoleEnum.Recepcjonista.GetDescription())
                     {
                         Recepcjonista recepcjonista = db.Recepcjonisci.Find(uzytkownik.IDOsoby);
-                        //return RedirectToAction("Index", "RecepcjonistaView", new { id = uzytkownik.IDOsoby });
-                        return View("~/Views/RecepcjonistaView/Index.cshtml", recepcjonista);
+                        return RedirectToAction("Index", "Silownia", new { id = recepcjonista.SilowniaID });
                     }
                     if(uzytkownik.Rola == RoleEnum.Trener.GetDescription())
                     {
                         Trener trener = db.Trenerzy.Find(uzytkownik.IDOsoby);
                         return RedirectToAction("Index", "TrenerView", new { id = uzytkownik.IDOsoby });
-                        //return View("~/Views/TrenerView/Index.cshtml", trener);
                      }
                 }
                 else
@@ -88,6 +89,29 @@ namespace Silownia.Controllers
         }
 
         //
+        //GET: /Account/Manage
+        [AllowAnonymous]
+        public ActionResult Manage()
+        {
+            return View("~/Views/Account/Manage.cshtml");
+        }
+
+        //
+        // POST: /Account/Manage
+        [HttpPost, ActionName("Manage")]
+        public ActionResult Manage([Bind(Include = "Login,Haslo")] Uzytkownik uzytkownik)
+        {
+            if (ModelState.IsValid)
+            {
+                SilowniaContext db = new SilowniaContext();
+                db.Entry(uzytkownik).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Manage");
+            }
+            return View();
+        }
+
+        //
         // POST: /Account/LogOff
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -95,7 +119,6 @@ namespace Silownia.Controllers
         {
             this.Session["User"] = null;
             this.Session["Auth"] = null;
-            FormsAuthentication.SignOut();
             return RedirectToAction("Index", "Home");
         }
 
