@@ -1,144 +1,125 @@
 ﻿@model Silownia.Models.Silownia
 @using System.Globalization;
-
 @{
     ViewBag.Title = "Siłownia: szczegóły";
 }
-
 <div>
     <h2>Szczegóły dotyczące wybranej siłowni</h2>
-    <hr />
-    <fieldset>
-        <table width="100%">
-            <td>
-                <dl class="dl-horizontal">
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Nazwa)
-                    </dt>
+    <button class="btn btn-large btn-block btn-primary btn-lg btn-success" onclick="location.href='@Url.Action("Edit", "Silownia", new { id = Model.SilowniaID })';return false;">edytuj</button>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.Nazwa)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.GodzinaOtwarcia)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.GodzinaOtwarcia)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.GodzinaZamkniecia)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.GodzinaZamkniecia)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Powierzchnia)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.Powierzchnia)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.NrTelefonu)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.NrTelefonu)
-                    </dd>
-                    @if (!ViewBag.mniejSzczegolow)
-                    {
-                        <dt>
-
-                            @Html.ActionLink("Edytuj", "Edit", new { id = Model.SilowniaID }) |
-
-                        </dt>
-                        <dt>
-                            @Html.ActionLink("Przejdź do listy siłowni", "Index") |
-                        </dt>
-                    }
-                </dl>
-            </td>
-            <td></td>
-            <td>
-                <!-- This is the div that will contain the Google Map -->
-                @if (ViewBag.mniejszaMapa)
-                {
-                    <div id="map_canvas" style="height: 200px; width : 200px"></div>
-                }
-                else
-                {
-                    <div id="map_canvas" style="height: 300px; width : 800px"></div>
-                }
-
-                <!-- Enclose the Javascript in a "section" so that it is rendered in the correct order after scripts have been loaded etc -->
-            </td>
-        </table>
-    </fieldset>
-    @if (!ViewBag.mniejSzczegolow)
-    {
-
-        //Dodatkowe info ( Umowy )
-        <dl class="table-bordered" style="color:#0099CC">
-            <dt>
-                @Html.Label("Umowy", new { style = "color:#0099CC" })
-            </dt>
-
-            @if (Model.Umowy.Count > 0)
-            {
-                <dd>
-                    <table class="table">
-                        <tr>
-                            <th>Klient</th>
-                            <th>Data podpisania umowy</th>
-                            <th>Data końca umowy</th>
-                        </tr>
-                        @foreach (var item in Model.Umowy)
+            <fieldset>
+                <table width="100%">
+                    <td>
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Nazwa)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.Nazwa)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.GodzinaOtwarcia)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.GodzinaOtwarcia)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.GodzinaZamkniecia)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.GodzinaZamkniecia)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Powierzchnia)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.Powierzchnia)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.NrTelefonu)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.NrTelefonu)
+                            </dd>
+                            
+                        </dl>
+                    </td>
+                    <td></td>
+                    <td>
+                        <!-- This is the div that will contain the Google Map -->
+                        @if (ViewBag.mniejszaMapa)
                         {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Klient.imieNazwisko)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.DataPodpisania)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.DataZakonczenia)
-                                </td>
-
-                            </tr>
+                        <div id="map_canvas" style="height: 200px; width : 200px"></div>
                         }
+                        else
+                        {
+                        <div id="map_canvas" style="height: 300px; width : 800px"></div>
+                        }
+                        <!-- Enclose the Javascript in a "section" so that it is rendered in the correct order after scripts have been loaded etc -->
+                    </td>
+                </table>
+            </fieldset>
+    <div>
+        <button class="btn btn-large btn-block btn-primary btn-lg btn-primary" onclick="location.href='@Url.Action("Index", "Silownia")';return false;">lista siłowni</button>
+    </div>
 
-                    </table>
-                </dd>
-            }
-            else
+            @if (!ViewBag.mniejSzczegolow)
             {
-                <dt>
-                    @Html.Label("Brak klientów", new { style = "color:#D11919" })
-                </dt>
+                <div class="wrap">
+                    <img class="show_hide" src="~/Content/ikony/persony/ikona_pracownicy.png" width="90" height="90">
+
+                    <div class="slidingDiv" style="display:none">
+                        <dl , class="table-bordered" ,new style="color:#95a5a6">
+                            <dt>
+                                @Html.Label("Pracownicy", new { style = "color:#95a5a6" })
+                            </dt>
+                            @if (Model.Pracownicy.Count > 0)
+                            {
+                                <dd>
+                                    <table class="table">
+                                        <tr>
+                                            <th>Imię i nazwisko</th>
+                                            <th>Pensja</th>
+                                            <th>Pozycja</th>
+                                        </tr>
+                                        @foreach (var item in Model.Pracownicy)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.imieNazwisko)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Pensja) zł
+                                                </td>
+                                                <td>
+                                                   
+                                                </td>
+                                            </tr>
+                                        }
+                                    </table>
+                                </dd>
+                            }
+                            else
+                            {
+                                <dt>
+                                    @Html.Label("Brak pracowników pracujących w tej siłowni", new { style = "color:#D11919" })
+                                </dt>
+                            }
+                        </dl>
+                    </div>
+                </div>
+
             }
-
-        </dl>
-    }
-</div>
-
+        </div>
 
 <script src="http://maps.google.com/maps/api/js?sensor=true" type="text/javascript"></script>
 <script src="http://maps.google.com/maps/api/js?sensor=true" type="text/javascript"></script>
-
 <!-- This css is to ensure that the google map contols (zoom bar etc) show and size correctly. -->
 <style>
     #map_canvas img {
         max-width: none;
     }
 </style>
-
 <!-- This css is to give a nice big popup "info window" when a marker is clicked on the map -->
 <style>
     .infoDiv {
@@ -148,7 +129,6 @@
         background-color: white;
     }
 </style>
-
 @section scripts {
     <section class="scripts">
         <script type="text/javascript">
@@ -250,4 +230,27 @@
     </section>
 }
 
+<style type="text/cs">
+    div.wrap {
+        float: left;
+        width: 500px;
+    }
 
+    img.show_hide {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .slidingDiv {
+        width: 500px;
+        display: none;
+    }
+</style>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">
+</script>
+<script type="text/javascript">
+    $('img.show_hide').on("click", function () {
+        $('div.slidingDiv').stop().slideUp('fast');
+        $(this).next('div.slidingDiv').stop().slideToggle('fast');
+    });
+</script>

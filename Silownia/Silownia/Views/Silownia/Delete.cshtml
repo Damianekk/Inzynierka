@@ -1,62 +1,50 @@
 ﻿@model Silownia.Models.Silownia
-
 @{
     ViewBag.Title = "Siłownia: usuń";
 }
-
 <h2>Czy na pewno chcesz usunąć siłownię @Model.Nazwa?</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
 
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nazwa)
-        </dt>
+    <div class="divDark">
+        <div class="divInner">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Nazwa)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Nazwa)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.GodzinaOtwarcia)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.GodzinaOtwarcia)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.GodzinaZamkniecia)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.GodzinaZamkniecia)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Powierzchnia)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Powierzchnia)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.NrTelefonu)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.NrTelefonu)
+                </dd>
+            </dl>
 
-        <dd>
-            @Html.DisplayFor(model => model.Nazwa)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.GodzinaOtwarcia)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.GodzinaOtwarcia)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.GodzinaZamkniecia)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.GodzinaZamkniecia)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Powierzchnia)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Powierzchnia)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.NrTelefonu)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NrTelefonu)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Usuń" class="btn btn-default" /> |
-            @Html.ActionLink("Powrót do listy siłowni", "Index")
+            <input type="submit" value="Usuń" class="btn  btn-large btn-lg btn-block btn-danger" />
         </div>
-    }
-</div>
+    </div>
+}
+<button class="btn btn-large btn-block btn-lg btn-primary" onclick="location.href='@Url.Action("Index", "Silownia")';return false;">powrót do listy siłowni</button>
+

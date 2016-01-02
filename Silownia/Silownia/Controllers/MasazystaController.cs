@@ -33,7 +33,7 @@ namespace Silownia.Controllers
                         osoby = osoby.Search(wyraz, i => i.Imie, i => i.Nazwisko);
                 osoby = osoby.Search(SilowniaID, i => i.Silownia.Nazwa);
 
-                var final = osoby.OrderBy(p => p.Imie);
+                var final = osoby.OrderBy(p => p.Nazwisko);
                 var ileWynikow = osoby.Count();
                 if ((ileWynikow / page) <= 1)
                 {
@@ -89,13 +89,13 @@ namespace Silownia.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,NrTelefonu,Pesel,DataZatrudnienia,Pensja,StawkaGodzinowa,SilowniaID")] Masazysta masazysta)
         {
           //  if (Session["User"] != null)
             {
                 if (ModelState.IsValid)
                 {
+                    masazysta.DataZatrudnienia = DateTime.Now;
                     db.Osoby.Add(masazysta);
                     db.SaveChanges();
                     return RedirectToAction("Index", new { akcja = AkcjaEnumMasazysta.DodanoMasazyste, info = masazysta.imieNazwisko });
@@ -135,7 +135,6 @@ namespace Silownia.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,NrTelefonu,Pesel,DataZatrudnienia,Pensja,StawkaGodzinowa,SilowniaID")] Masazysta masazysta)
         {
           //  if (Session["User"] != null)
@@ -173,7 +172,6 @@ namespace Silownia.Controllers
 
         // POST: Masazysta/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
           //  if (Session["User"] != null)

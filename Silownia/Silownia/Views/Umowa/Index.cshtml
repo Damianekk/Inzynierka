@@ -1,12 +1,9 @@
 ﻿@model PagedList.PagedList<Silownia.Models.Umowa>
 @using PagedList.Mvc;
-
 @{
     ViewBag.Title = "Umowy: index";
 }
-
 @Scripts.Render("~/Scripts/infoCzynnosc.js")
-
 @if (ViewBag.Akcja != null)
 {
     if (ViewBag.Akcja == AkcjaEnumUmowa.DodanoUmowe)
@@ -29,33 +26,27 @@
         </div>
     }
 }
+<h2>Kontrakty z klientami podpisane w naszej sieci</h2>
+<div class="divDark">
+    @using (Html.BeginForm())
+    {
 
-<h2>Lista umów podpisanych w naszej sieci</h2>
-
-@using (Html.BeginForm())
-{
-    
-       @Html.Partial("KryteriaSzukania/_imieNazwisko")
-       @Html.Partial("KryteriaSzukania/_silownia")
-    
-       
+        @Html.Partial("KryteriaSzukania/_imieNazwisko")
+        @Html.Partial("KryteriaSzukania/_silownia")
         <br />
+        <input type="submit" value="szukaj" class="btn btn-info" style="width:10%" />
+        <br />
+    }
 
-    <input type="submit" value="szukaj" class="btn btn-success" />
-}
+</div>
 
-<p>
-        @*
-        @Html.ActionLink("Dodaj nową umowę", "Create")
-        *@
-</p>
-<table class="table">
+<table class="table table-hover table-condensed">
     <tr>
         <th>
-            @Html.Label("Nazwa siłowni:")
+            @Html.Label("Siłownia:")
         </th>
         <th>
-            @Html.Label("Imię i nazwisko klienta:")
+            @Html.Label("Klient:")
         </th>
         <th>
             @Html.Label("Data początku umowy:")
@@ -68,31 +59,32 @@
         </th>
         <th></th>
     </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Silownia.Nazwa)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Klient.imieNazwisko)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DataPodpisania)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DataZakonczenia)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Cena)
-        </td>
-        <td>
-            @Html.ActionLink("Edytuj", "Edit", new { id=item.UmowaID }) |
-            @Html.ActionLink("Szczegóły", "Details", new { id=item.UmowaID }) |
-            @Html.ActionLink("Usuń", "Delete", new { id=item.UmowaID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Silownia.Nazwa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Klient.imieNazwisko)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataPodpisania)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataZakonczenia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cena) zł
+            </td>
+            <td>
+                <div class="btn-group">
+                    <button class="btn-primary btn-lg" onclick="location.href='@Url.Action("Details", "Umowa", new { id = item.UmowaID })';return false;">szczegóły</button>
+                    <button class="btn-danger btn-lg" onclick="location.href='@Url.Action("Delete", "Umowa", new { id = item.UmowaID })';return false;">usuń</button>
+                </div>
+            </td>
+        </tr>
+    }
 </table>
 
 <div class="center">

@@ -1,18 +1,15 @@
 ﻿@model Silownia.Models.Silownia
-
 @{
     ViewBag.Title = "Siłownia: dodaj";
 }
-
 <h2>Dodaj nową siłownię</h2>
-
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true)
+
+    @Html.ValidationSummary(true)
+
+    <div class="form-horizontal divDark">
 
         <div class="form-group">
             @Html.LabelFor(model => model.Nazwa, new { @class = "control-label col-md-2" })
@@ -21,7 +18,6 @@
                 @Html.ValidationMessageFor(model => model.Nazwa)
             </div>
         </div>
-
         <div class="form-group">
             @Html.LabelFor(model => model.GodzinaOtwarcia, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -29,7 +25,6 @@
                 @Html.ValidationMessageFor(model => model.GodzinaOtwarcia)
             </div>
         </div>
-
         <div class="form-group">
             @Html.LabelFor(model => model.GodzinaZamkniecia, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -37,7 +32,6 @@
                 @Html.ValidationMessageFor(model => model.GodzinaZamkniecia)
             </div>
         </div>
-
         <div class="form-group">
             @Html.LabelFor(model => model.Powierzchnia, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -45,7 +39,6 @@
                 @Html.ValidationMessageFor(model => model.Powierzchnia)
             </div>
         </div>
-
         <div class="form-group">
             @Html.LabelFor(model => model.NrTelefonu, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -53,7 +46,6 @@
                 @Html.ValidationMessageFor(model => model.NrTelefonu)
             </div>
         </div>
-
         <div class="form-group">
             @Html.LabelFor(model => model.DodatkoweInfo, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -61,19 +53,16 @@
                 @Html.ValidationMessageFor(model => model.DodatkoweInfo)
             </div>
         </div>
-
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Utwórz" class="btn btn-default">
+                <input type="submit" value="Utwórz" class="btn btn-lg btn-large btn-success" />
             </div>
         </div>
     </div>
 }
-
 <div>
-    @Html.ActionLink("Powrót do listy siłowni", "Index")
+    <button class="btn btn-large btn-block btn-primary btn-lg btn-primary" onclick="location.href='@Url.Action("Index", "Silownia")';return false;">Powrót do listy siłowni</button>
 </div>
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

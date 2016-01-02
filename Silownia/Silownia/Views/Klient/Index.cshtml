@@ -1,11 +1,9 @@
 ﻿@model PagedList.PagedList<Silownia.Models.Klient>
 @using PagedList.Mvc;
-
 @{
     ViewBag.Title = "Klient: index";
 }
 @Scripts.Render("~/Scripts/infoCzynnosc.js")
-
 
 @if (ViewBag.Akcja != null)
 {
@@ -29,28 +27,22 @@
         </div>
     }
 }
-<h2>Lista klientów korzystających z usług naszej sieci</h2>
+<h2 class="textCenter"> Klienci korzystających z usług naszej sieci</h2>
 
-<p>
-    @Html.ActionLink("Dodaj nowego klienta", "Create")
-</p>
-
-@using (Html.BeginForm())
-{
-    
-
-       
+<button class="btn btn-large btn-block btn-success btn-lg" onclick="location.href='@Url.Action("Create", "Klient")';return false;">dodaj nowego klienta</button>
+<div class="divDark">
+    @using (Html.BeginForm())
+    {
         @Html.Partial("KryteriaSzukania/_imieNazwisko")
         @Html.Partial("KryteriaSzukania/_miasto")
         @Html.Partial("KryteriaSzukania/_tylkoZumowa")
-
         <br />
-    
-        <input type="submit" value="szukaj" class="btn btn-success" style="width:10%" />
-    
-}
+        <input type="submit" value="szukaj" class="btn btn-info" style="width:10%" />
+        <br />
+    }
+</div>
 
-<table class="table">
+<table class="table table-hover table-condensed ">
     <tr>
         <th>
             @Html.Label("Imię:")
@@ -69,75 +61,71 @@
         </th>
         <th></th>
     </tr>
-
     @foreach (var item in Model)
     {
-
-        <text>
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Imie)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nazwisko)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DataUrodzenia)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Mail)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NrTelefonu)
-                </td>
-                <td>
-                    @Html.ActionLink("Edytuj", "Edit", new { id = item.OsobaID }) |
-                    @Html.ActionLink("Szczegóły", "Details", new { id = item.OsobaID }) |
-                    @Html.ActionLink("Usuń", "Delete", new { id = item.OsobaID })
-                </td>
-                <td>
-                    @if (item.Adres == null)
-                    {
-                        @Html.ActionLink("adres", "Create", "Adres", new { id = item.OsobaID, komu = KomuAdres.Osoba },
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Imie)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nazwisko)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataUrodzenia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NrTelefonu)
+            </td>
+            <td>
+                <div class="btn-group">
+                    <button class="btn-default btn-lg" onclick="location.href='@Url.Action("Edit", "Klient", new { id = item.OsobaID })';return false;">edytuj</button>
+                    <button class="btn-primary btn-lg" onclick="location.href='@Url.Action("Details", "Klient", new { id = item.OsobaID })';return false;">szczegóły</button>
+                    <button class="btn-danger btn-lg" onclick="location.href='@Url.Action("Delete", "Klient", new { id = item.OsobaID })';return false;">usuń</button>
+                </div>
+            </td>
+            <td>
+                @if (item.Adres == null)
+                {
+                    @Html.ActionLink("adres", "Create", "Adres", new { id = item.OsobaID, komu = KomuAdres.Osoba },
                            new { @class = "adresPic" })
-                    }
-                </td>
-                <td>
-                    @if (item.Umowy.Count == 0)
-                    {
+                }
+            </td>
+            <td>
+                @if (item.Umowy.Count == 0)
+                {
 
-                        @Html.ActionLink("umowa", "Create", "Umowa", new { id = item.OsobaID },
+                    @Html.ActionLink("umowa", "Create", "Umowa", new { id = item.OsobaID },
                            new { @class = "umowaPic" })
-                    }
-                </td>
-                <td>
-                    @if (item.Umowy.Count > 0)
-                    {
+                }
+            </td>
+            <td>
+                @if (item.Umowy.Count > 0)
+                {
 
-                        @Html.ActionLink("masaz", "Create", "Masaz", new { id = item.OsobaID },
+                    @Html.ActionLink("masaz", "Create", "Masaz", new { id = item.OsobaID },
                            new { @class = "masazPic" })
-                    }
-                </td>
-                <td>
-                    @if (item.Umowy.Count > 0)
-                    {
+                }
+            </td>
+            <td>
+                @if (item.Umowy.Count > 0)
+                {
 
-                        @Html.ActionLink("trening personalny", "Create", "TreningPersonalny", new { id = item.OsobaID },
+                    @Html.ActionLink("trening personalny", "Create", "TreningPersonalny", new { id = item.OsobaID },
                            new { @class = "treningPersonalnyPic" })
-                    }
-                </td>
-            </tr>
-        </text>
-    }
+                }
+            </td>
+        </tr>
 
+    }
 
 </table>
 
 <div class="col-sm-10">
-
     <div class="center">
         @Html.PagedListPager(Model, page => Url.Action("Index", new { page, pageSize = Model.PageSize, imieNazwisko = ViewBag.srchImieNazwisko, Miasto = ViewBag.srchMiasto }))
         Wyświetlam od @Model.FirstItemOnPage do @Model.LastItemOnPage z @Model.TotalItemCount rekordów Klient
     </div>
-
 </div>

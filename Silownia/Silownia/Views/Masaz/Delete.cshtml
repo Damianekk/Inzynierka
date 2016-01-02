@@ -1,53 +1,50 @@
 ﻿@model Silownia.Models.Masaz
-
 @{
     ViewBag.Title = "Masaż: usuń";
 }
-
 <h2>Czy na pewno chcesz usunąć masaż klienta: @Model.Klient.imieNazwisko z masażystą @Model.Masazysta.imieNazwisko?</h2>
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Masazysta.imieNazwisko)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Masazysta.imieNazwisko)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DataMasazu)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DataMasazu)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CzasTrwania)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CzasTrwania)
-        </dd>
-
-        <dd>
-            @Html.DisplayNameFor(model => model.kosztMasazu)
-        </dd>
-
-        <dd>
-            @Html.DisplayFor(model => model.kosztMasazu)
-        </dd>
-    </dl>
-
-    @using (Html.BeginForm())
+@using (Html.BeginForm())
     {
-        @Html.AntiForgeryToken()
+    @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Usuń" class="btn btn-default" /> |
-            @Html.ActionLink("Przejdź do listy masaży", "Index")
+
+        <div class="divDark">
+            <div class="divInner">
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Masazysta.imieNazwisko)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Masazysta.imieNazwisko)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.DataMasazu)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.DataMasazu)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.CzasTrwania)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.CzasTrwania)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.kosztMasazu)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.kosztMasazu)
+                    </dd>
+                </dl>
+
+                <div>
+                    <input type="submit" value="Usuń" class="btn  btn-large btn-lg btn-block btn-danger" />
+                </div>
+            </div>
         </div>
-    }
-</div>
+        }
+      @if (Request.UrlReferrer != null)
+      {
+        <button class="btn btn-large btn-block btn-primary btn-lg btn-primary" onclick="history.go(-1); return false;">powrót</button>
+      }

@@ -42,7 +42,7 @@ namespace Silownia.Controllers
 
                 treningiPersonalne = treningiPersonalne.Search(SpecjalizacjaID, i => i.Trener.Specjalizacja.Nazwa);
 
-                var final = treningiPersonalne.OrderBy(p => p.Klient.Imie);
+                var final = treningiPersonalne.OrderBy(p => p.Klient.Nazwisko);
                 var ileWynikow = treningiPersonalne.Count();
                 if ((ileWynikow / page) <= 1)
                 {
@@ -113,7 +113,6 @@ namespace Silownia.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "TreningID,TreningStart,CzasTrwania,TrenerID")] long? id, TreningPersonalny treningPersonalny)
         {
          //   if (Session["User"] != null)
@@ -203,7 +202,6 @@ namespace Silownia.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "TreningID,TreningStart,CzasTrwania,TrenerID")] TreningPersonalny treningPersonalny)
         {
            // if (Session["User"] != null)
@@ -241,7 +239,6 @@ namespace Silownia.Controllers
 
         // POST: TreningPersonalny/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
          //   if (Session["User"] != null)

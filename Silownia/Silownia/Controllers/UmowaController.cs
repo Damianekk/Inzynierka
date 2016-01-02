@@ -32,7 +32,7 @@ namespace Silownia.Controllers
                         umowy = umowy.Search(wyraz, i => i.Klient.Imie, i => i.Klient.Nazwisko);
                 umowy = umowy.Search(SilowniaID, i => i.Silownia.Nazwa);
 
-                var final = umowy.OrderBy(p => p.Klient.Imie);
+                var final = umowy.OrderBy(p => p.Klient.Nazwisko);
                 var ileWynikow = umowy.Count();
                 if ((ileWynikow / page) <= 1)
                 {
@@ -99,7 +99,7 @@ namespace Silownia.Controllers
                 return View(new Umowa // W ten sposób tworze obiekt nadaje aktualny czas / przypisuje do Daty podpisania umowy i zwracam widok z datą (teraz)
                 {
                     DataPodpisania = DateTime.Now,
-                    // tu przydałoby się dodać datę now + miesiąc
+                    // minimalna umowa na miesiąc
                     DataZakonczenia = (DateTime.Now).AddMonths(1),
 
                     // ,Recepcjonista = recepcjonista 
@@ -112,14 +112,14 @@ namespace Silownia.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         // public ActionResult Create([Bind(Include= "UmowaID,SilowniaID,DataPodpisania,DataZakonczenia,Cena,RecepcjonistaID")] long? id, Umowa umowa)
         public ActionResult Create([Bind(Include = "UmowaID,DataPodpisania,DataZakonczenia,RecepcjonistaID,Cena")] long? id, Umowa umowa)
         {
           //  if (Session["User"] != null)
             {
-                ViewBag.RecepcjonistaID = new SelectList(db.Recepcjonisci, "OsobaID", "imieNazwisko", umowa.RecepcjonistaID);
+                
                 ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", umowa.SilowniaID);
+                ViewBag.RecepcjonistaID = new SelectList(db.Recepcjonisci.Where(o => o.SilowniaID == umowa.SilowniaID), "OsobaID", "imieNazwisko", umowa.RecepcjonistaID);
 
                 if (ModelState.IsValid && !aktywnaUmowa(id, umowa.DataPodpisania, umowa.DataZakonczenia))
                 {
@@ -141,6 +141,8 @@ namespace Silownia.Controllers
                     umowa.Silownia = silownia;
                     silownia.Umowy.Add(umowa);
                     #endregion
+
+                    
                     db.Umowy.Add(umowa);
                     db.SaveChanges();
                     return RedirectToAction("Index", new { akcja = AkcjaEnumUmowa.DodanoUmowe, info = klient.imieNazwisko });
@@ -188,7 +190,6 @@ namespace Silownia.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "UmowaID,SilowniaID,DataPodpisania,DataZakonczenia,Cena")] Umowa umowa)
         {
          //   if (Session["User"] != null)
@@ -226,7 +227,6 @@ namespace Silownia.Controllers
 
         // POST: /Umowa/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
           //  if (Session["User"] != null)

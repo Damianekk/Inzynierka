@@ -13,7 +13,7 @@ namespace Silownia.Models
             Masaze = new List<Masaz>();
         }
         [Required]
-        [Display(Name ="Stawka za godzinę pracy")]
+        [Display(Name ="Stawka godzinowa")]
         public int StawkaGodzinowa { get; set; }
 
         public virtual IList<Masaz> Masaze { get; set; }

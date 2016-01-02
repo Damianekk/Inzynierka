@@ -29,8 +29,6 @@ namespace Silownia.Controllers
 
 
                 ViewBag.Miasto = new SelectList(Miasta, "Miasto", "Miasto");
-                //ViewBag.srchImieNazwisko = imieNazwisko;   Póki co niech będzie zakomentowane 
-                //ViewBag.czyUmowa = czyUmowa;
 
                 var osoby = from Osoby in db.Klienci select Osoby;
 
@@ -42,7 +40,7 @@ namespace Silownia.Controllers
                 if (czyUmowa)
                     osoby = osoby.Where(u => u.Umowy.Count > 0);
 
-                var final = osoby.OrderBy(p => p.Imie);
+                var final = osoby.OrderBy(p => p.Nazwisko);
                 var ileWynikow = osoby.Count();
                 if ((ileWynikow / page) <= 1)
                 {
@@ -99,7 +97,6 @@ namespace Silownia.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,Mail,NrTelefonu,Adres")] Klient klient)
         {
             //  if (Session["User"] != null)
@@ -113,7 +110,7 @@ namespace Silownia.Controllers
                     uzytkownik.IDOsoby = klient.OsobaID;
                     uzytkownik.Login = klient.Mail;
                     uzytkownik.Haslo = klient.Imie + klient.Nazwisko;
-                    uzytkownik.Rola = "Klient";
+                    uzytkownik.Rola = RoleEnum.Klient.GetDescription();
                     db.Uzytkownicy.Add(uzytkownik);
                     db.SaveChanges();
                     return RedirectToAction("Index", new { akcja = AkcjaEnum.DodanoKlienta, info = klient.imieNazwisko });
@@ -147,7 +144,6 @@ namespace Silownia.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,Mail,NrTelefonu")] Klient klient)
         {
             //   if (Session["User"] != null)
@@ -184,7 +180,6 @@ namespace Silownia.Controllers
 
         // POST: /Klient/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
             // if (Session["User"] != null)
@@ -210,5 +205,6 @@ namespace Silownia.Controllers
             }
             base.Dispose(disposing);
         }
+
     }
 }

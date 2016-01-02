@@ -1,24 +1,30 @@
 ﻿@model IEnumerable<Silownia.Models.Silownia>
-
 @{
     ViewBag.Title = "Siłownie: index";
 }
 
-<h2>Lista siłowni w naszej sieci:</h2>
-
-<p>
-    @Html.ActionLink("Dodaj nową siłownię", "Create")
-</p>
-
-@using (Html.BeginForm())
+@if (ViewBag.Info != null)
 {
-      @Html.Partial("KryteriaSzukania/_miasto")      
-        <br />
-
-    <input type="submit" value="szukaj" class="btn btn-success" />
+  <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <div class="alert alert-success">
+            <br />
+            <h4>@ViewBag.info</h4>
+            <br />
+        </div>
 }
 
-<table class="table">
+<h2>Lista siłowni w naszej sieci:</h2>
+<button class="btn btn-large btn-block btn-success btn-lg" onclick="location.href='@Url.Action("Create", "Silownia")';return false;">dodaj nową siłownię</button>
+<div class="divDark">
+    @using (Html.BeginForm())
+    {
+        @Html.Partial("KryteriaSzukania/_miasto")
+        <br />
+        <input type="submit" value="szukaj" class="btn btn-info" style="width:10%" />
+        <br />
+    }
+</div>
+<table class="table table-hover table-condensed ">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Nazwa)
@@ -35,9 +41,8 @@
         <th>
             @Html.DisplayNameFor(model => model.NrTelefonu)
         </th>
-        <th></th>
-    </tr>
 
+    </tr>
     @foreach (var item in Model)
     {
         <tr>
@@ -57,19 +62,19 @@
                 @Html.DisplayFor(modelItem => item.NrTelefonu)
             </td>
             <td>
-                @Html.ActionLink("Edytuj", "Edit", new { id = item.SilowniaID }) |
-                @Html.ActionLink("Szczegóły", "Details", new { id = item.SilowniaID }) |
-                @Html.ActionLink("Usuń", "Delete", new { id = item.SilowniaID })
+                <div class="btn-group">
+                    <button class="btn-default btn-lg" onclick="location.href='@Url.Action("Edit", "Silownia", new { id = item.SilowniaID })';return false;">edytuj</button>
+                    <button class="btn-primary btn-lg" onclick="location.href='@Url.Action("Details", "Silownia", new { id = item.SilowniaID })';return false;">szczegóły</button>
+                    <button class="btn-danger btn-lg" onclick="location.href='@Url.Action("Delete", "Silownia", new { id = item.SilowniaID })';return false;">usuń</button>
+                </div>
             </td>
             <td>
                 @if (item.Adres == null)
                 {
                     @Html.ActionLink("adres", "Create", "Adres", new { id = item.SilowniaID, komu = KomuAdres.Silownia },
-                           new { @class = "adresPic" })
+                           new { @class = "adresSilowniaPic" })
                 }
             </td>
-
         </tr>
     }
-
 </table>

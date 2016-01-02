@@ -1,62 +1,77 @@
 ﻿@model Silownia.Models.Klient
-
 @{
     ViewBag.Title = "Klient: usuń";
 }
 
+<h2 class="textCenter">czy na pewno chcesz usunąć klienta @Model.imieNazwisko?</h2>
 
-<h2>Czy na pewno chcesz usunąć klienta @Model.imieNazwisko?</h2>
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Imie)
-        </dt>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
 
-        <dd>
-            @Html.DisplayFor(model => model.Imie)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Nazwisko)
-        </dt>
+    <div class="divDark">
+        <div class="divInner">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Imie)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Imie)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Nazwisko)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Nazwisko)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.DataUrodzenia)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.DataUrodzenia)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Mail)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Mail)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.NrTelefonu)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.NrTelefonu)
+                </dd>
+            </dl>
 
-        <dd>
-            @Html.DisplayFor(model => model.Nazwisko)
-        </dd>
+            @if (Model.TreningiPersonalne.Count > 0)
+            {
+                <div style="color:red">
+                    Klient jest zapisany na treningi personalne, należy je odwołać przed usunięciem klienta.
+                </div>
+            }
+            else if (Model.Masaze.Count > 0)
+            {
+                <div style="color:red">
+                    Klient jest zapisany na masaże, należy je odwołać przed usunięciem klienta.
+                </div>
+            }
+            else if (Model.Umowy.Count > 0)
+            {
+                <div style="color:red">
+                    Klient posiada aktywne umowy, należy je rozwiązać przed usunięciem klienta.
+                </div>
+            }
+            else
+            {
+                <div>
+                    <input type="submit" value="Usuń" class="btn  btn-large btn-lg btn-block btn-danger" />
+                </div>
+            }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DataUrodzenia)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DataUrodzenia)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Mail)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Mail)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.NrTelefonu)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NrTelefonu)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Usuń" class="btn btn-danger" /> |
-            @Html.ActionLink("Powrót do listy klientów", "Index")
         </div>
-    }
-</div>
+    </div>
+}
+<button class="btn btn-large btn-block btn-lg btn-primary" onclick="location.href='@Url.Action("Index", "Klient")';return false;">powrót do listy klientów</button>
+

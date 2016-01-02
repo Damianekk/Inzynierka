@@ -1,73 +1,63 @@
 ﻿@model Silownia.Models.Klient
-
 @{
     ViewBag.Title = "Klient: edycja";
 }
+<h2 class="textCenter">edycja wybranego klienta</h2>
+<div class="divDark">
 
-<h2>Edycja wybranego klienta</h2>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
 
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true)
-        @Html.HiddenFor(model => model.OsobaID)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Imie, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Imie)
-                @Html.ValidationMessageFor(model => model.Imie)
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.OsobaID)
+            <div class="form-group">
+                @Html.LabelFor(model => model.Imie, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Imie)
+                    @Html.ValidationMessageFor(model => model.Imie)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Nazwisko, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Nazwisko)
+                    @Html.ValidationMessageFor(model => model.Nazwisko)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.DataUrodzenia, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.DataUrodzenia)
+                    @Html.ValidationMessageFor(model => model.DataUrodzenia)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Mail, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Mail)
+                    @Html.ValidationMessageFor(model => model.Mail)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.NrTelefonu, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.NrTelefonu)
+                    @Html.ValidationMessageFor(model => model.NrTelefonu)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Zapisz" class="btn btn-lg btn-large btn-success" />
+                </div>
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Nazwisko, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Nazwisko)
-                @Html.ValidationMessageFor(model => model.Nazwisko)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DataUrodzenia, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DataUrodzenia)
-                @Html.ValidationMessageFor(model => model.DataUrodzenia)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Mail, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Mail)
-                @Html.ValidationMessageFor(model => model.Mail)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.NrTelefonu, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NrTelefonu)
-                @Html.ValidationMessageFor(model => model.NrTelefonu)
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Zapisz" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
-
-<div>
-    @Html.ActionLink("Powrót do listy klientów", "Index")
+    }
 </div>
-
+<div>
+    <button class="btn btn-large btn-block btn-lg btn-primary btn-primary" onclick="location.href='@Url.Action("Index", "Klient")';return false;">powrót do listy klientów</button>
+</div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

@@ -1,14 +1,15 @@
 ﻿@model IEnumerable<Silownia.Models.Adres>
-
 @{
     ViewBag.Title = "Adres: index";
 }
+@Scripts.Render("~/Scripts/infoCzynnosc.js")
+<h2 class="textCenter">lista adresów zapisanych w bazie</h2>
+@*
+    <button class="btn btn-large btn-block btn-success" onclick="location.href='@Url.Action("Create", "Adres")';return false;">dodaj nowy adres</button>
+*@
 
-<h2>Lista adresów zapisanych w bazie:</h2>
-<p>
-    @Html.ActionLink("Dodaj nowy adres", "Create")
-</p>
-<table class="table">
+
+<table class="table table-hover table-condensed">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.KodPocztowy)
@@ -30,33 +31,39 @@
         </th>
         <th></th>
     </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.KodPocztowy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Kraj)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Miasto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ulica)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NrBudynku)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NrLokalu)
+            </td>
+            <td>
+                <div class="btn-group">
+                    @*
+                        <button class="btn-default" onclick="location.href='@Url.Action("Edit", "Adres", new { id = item.AdresID })';return false;">edytuj</button>
+                    *@
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.KodPocztowy)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Kraj)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Miasto)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Ulica)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NrBudynku)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NrLokalu)
-        </td>
-        <td>
-            @Html.ActionLink("Edytuj", "Edit", new { id=item.AdresID }) |
-            @Html.ActionLink("Szczegóły", "Details", new { id=item.AdresID }) |
-            @Html.ActionLink("Usuń", "Delete", new { id=item.AdresID })
-        </td>
-    </tr>
-}
-
+                    <button class="btn-primary btn-lg" onclick="location.href='@Url.Action("Details", "Adres", new { id = item.AdresID })';return false;">szczegóły</button>
+                    @*
+                        <button class="btn-danger" onclick="location.href='@Url.Action("Delete", "Adres", new { id = item.AdresID })';return false;">usuń</button>
+                    *@
+                </div>
+            </td>
+        </tr>
+    }
 </table>

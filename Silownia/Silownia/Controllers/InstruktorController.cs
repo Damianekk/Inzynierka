@@ -87,13 +87,13 @@ namespace Silownia.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,NrTelefonu,Pesel,DataZatrudnienia,Pensja,SilowniaID")] Instruktor instruktor)
         {
          //   if (Session["User"] != null)
             {
                 if (ModelState.IsValid)
                 {
+                    instruktor.DataZatrudnienia = DateTime.Now;
                     db.Instruktorzy.Add(instruktor);
                     db.SaveChanges();
 
@@ -102,6 +102,7 @@ namespace Silownia.Controllers
                     pracownik.Login = instruktor.Nazwisko;
                     pracownik.Haslo = instruktor.Imie + instruktor.Nazwisko;
                     pracownik.Rola = "Instruktor";
+                    
                     db.Uzytkownicy.Add(pracownik);
                     db.SaveChanges();
 
@@ -137,7 +138,6 @@ namespace Silownia.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,NrTelefonu,Pesel,DataZatrudnienia,Pensja,SilowniaID")] Instruktor instruktor)
         {
          //   if (Session["User"] != null)
@@ -175,7 +175,6 @@ namespace Silownia.Controllers
 
         // POST: Instruktor/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
           //  if (Session["User"] != null)

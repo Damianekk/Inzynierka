@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>DHTMLX.Scheduler.MVC.Responsive.Sample</id>
+    <version>1.0.2</version>
+    <title>DHTMLX Scheduler .NET - ASP.NET MVC Responsive layout sample</title>
+    <authors>DHTMLX</authors>
+    <owners>DHTMLX</owners>
+    <licenseUrl>http://scheduler-net.com/license.aspx</licenseUrl>
+    <projectUrl>http://scheduler-net.com/</projectUrl>
+    <iconUrl>http://scheduler-net.com/image/scheduler_64x64.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>This sample demonstrates how to create an event calendar with responsive layout in ASP.NET MVC using code snippets.</description>
+    <tags>dhtmlx scheduler calendar</tags>
+    <dependencies>
+      <dependency id="DHTMLX.Scheduler.NET" />
+      <dependency id="DHTMLX.Scheduler.NET.Responsive" />
+    </dependencies>
+  </metadata>
+</package>

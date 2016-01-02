@@ -40,11 +40,11 @@ namespace Silownia.Controllers
                 PagedList<Models.Silownia> model = new PagedList<Models.Silownia>(final, page, pageSize);
 
 
-                if (akcja != AkcjaEnumSilownia.Brak)
-                {
-                    ViewBag.info = info;
+                if (akcja != AkcjaEnumSilownia.Brak)                  
                     ViewBag.Akcja = akcja;
-                }
+
+                if(info != null)
+                    ViewBag.info = info;
 
                 return View(model);
             }
@@ -75,6 +75,7 @@ namespace Silownia.Controllers
         }
 
         // GET: /Silownia/Create
+        [MyAuthorize(RoleEnum.Administrator)]
         public ActionResult Create()
         {
            // if (Session["User"] != null)
@@ -88,7 +89,7 @@ namespace Silownia.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [MyAuthorize(RoleEnum.Administrator)]
         public ActionResult Create([Bind(Include = "SilowniaID,Nazwa,GodzinaOtwarcia,GodzinaZamkniecia,Powierzchnia,NrTelefonu,DodatkoweInfo")] Models.Silownia silownia)
         {
           //  if (Session["User"] != null)
@@ -97,7 +98,7 @@ namespace Silownia.Controllers
                 {
                     db.Silownie.Add(silownia);
                     db.SaveChanges();
-                    return RedirectToAction("Create", "Adres", new { id = silownia.SilowniaID, komu = KomuAdres.Silownia });
+                    return RedirectToAction("Create", "Adres", new { id = silownia.SilowniaID, komu = KomuAdres.Silownia,  akcja = AkcjaEnumSilownia.DodanoSilownie, info = silownia.Nazwa });
                 }
                 return View(silownia);
             }
@@ -128,7 +129,6 @@ namespace Silownia.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "SilowniaID,Nazwa,GodzinaOtwarcia,GodzinaZamkniecia,Powierzchnia,NrTelefonu,DodatkoweInfo")] Models.Silownia silownia)
         {
          //   if (Session["User"] != null)
@@ -145,6 +145,7 @@ namespace Silownia.Controllers
         }
 
         // GET: /Silownia/Delete/5
+        [MyAuthorize(RoleEnum.Administrator)]
         public ActionResult Delete(long? id)
         {
          //   if (Session["User"] != null)
@@ -165,7 +166,7 @@ namespace Silownia.Controllers
 
         // POST: /Silownia/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        [MyAuthorize(RoleEnum.Administrator)]
         public ActionResult DeleteConfirmed(long id)
         {
          //   if (Session["User"] != null)
@@ -173,7 +174,7 @@ namespace Silownia.Controllers
                 Models.Silownia silownia = db.Silownie.Find(id);
                 db.Silownie.Remove(silownia);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { akcja = AkcjaEnumSilownia.UsunietoSilownie, info = silownia.Nazwa });
             }
          //   return HttpNotFound();
         }

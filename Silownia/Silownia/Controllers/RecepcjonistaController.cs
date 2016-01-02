@@ -31,7 +31,7 @@ namespace Silownia.Controllers
 
                 recepcjonisci = recepcjonisci.Search(SilowniaID, i => i.Silownia.Nazwa);
 
-                var final = recepcjonisci.OrderBy(p => p.Imie);
+                var final = recepcjonisci.OrderBy(p => p.Nazwisko);
                 var ileWynikow = recepcjonisci.Count();
                 if ((ileWynikow / page) <= 1)
                 {
@@ -42,10 +42,10 @@ namespace Silownia.Controllers
                 PagedList<Recepcjonista> model = new PagedList<Recepcjonista>(final, page, pageSize);
 
                 if (akcja != AkcjaEnumRecepcjonista.Brak)
-                {
-                    ViewBag.info = info;
                     ViewBag.Akcja = akcja;
-                }
+
+                if(info != null)
+                    ViewBag.info = info;
 
                 return View(model);
             }
@@ -67,12 +67,13 @@ namespace Silownia.Controllers
                 {
                     return HttpNotFound();
                 }
-             //   return View(recepcjonista);
+                return View(recepcjonista);
             }
-            return HttpNotFound();
+            // return HttpNotFound();
         }
 
         // GET: Recepcjonista/Create
+        [MyAuthorize(RoleEnum.Administrator)]
         public ActionResult Create()
         {
           //  if (Session["User"] != null)
@@ -94,6 +95,7 @@ namespace Silownia.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    recepcjonista.DataZatrudnienia = DateTime.Now;
                     db.Recepcjonisci.Add(recepcjonista);
                     db.SaveChanges();
 
@@ -101,7 +103,7 @@ namespace Silownia.Controllers
                     pracownik.IDOsoby = recepcjonista.OsobaID;
                     pracownik.Login = recepcjonista.Nazwisko;
                     pracownik.Haslo = recepcjonista.Imie + recepcjonista.Nazwisko;
-                    pracownik.Rola = "Recepcjonista";
+                    pracownik.Rola = RoleEnum.Recepcjonista.GetDescription();
                     db.Uzytkownicy.Add(pracownik);
                     db.SaveChanges();
 
@@ -115,6 +117,7 @@ namespace Silownia.Controllers
         }
 
         // GET: Recepcjonista/Edit/5
+        [MyAuthorize(RoleEnum.Administrator)]
         public ActionResult Edit(long? id)
         {
          //   if (Session["User"] != null)
@@ -139,6 +142,7 @@ namespace Silownia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [MyAuthorize(RoleEnum.Administrator)]
         public ActionResult Edit([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,Pesel,NrTelefonu,DataZatrudnienia,Pensja,SilowniaID")] Recepcjonista recepcjonista)
         {
          //   if (Session["User"] != null)
@@ -156,6 +160,7 @@ namespace Silownia.Controllers
         }
 
         // GET: Recepcjonista/Delete/5
+        [MyAuthorize(RoleEnum.Administrator)]
         public ActionResult Delete(long? id)
         {
          //   if (Session["User"] != null)
@@ -177,6 +182,7 @@ namespace Silownia.Controllers
         // POST: Recepcjonista/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [MyAuthorize(RoleEnum.Administrator)]
         public ActionResult DeleteConfirmed(long id)
         {
         //    if (Session["User"] != null)
@@ -193,6 +199,13 @@ namespace Silownia.Controllers
             }
          //   return HttpNotFound();
         }
+
+        public ActionResult FillRecepcjonista(int silownia)
+        {
+            var recepcjonisci = db.Recepcjonisci.Where(c => c.SilowniaID == silownia);
+            return Json(recepcjonisci, JsonRequestBehavior.AllowGet);
+        }
+
 
         protected override void Dispose(bool disposing)
         {

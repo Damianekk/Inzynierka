@@ -32,7 +32,7 @@ namespace Silownia.Controllers
                 osoby = osoby.Search(SpecjalizacjaID, i => i.Specjalizacja.Nazwa);
                 osoby = osoby.Search(SilowniaID, i => i.Silownia.Nazwa);
 
-                var final = osoby.OrderBy(p => p.Imie);
+                var final = osoby.OrderBy(p => p.Nazwisko);
                 var ileWynikow = osoby.Count();
                 if ((ileWynikow / page) <= 1)
                 {
@@ -88,13 +88,13 @@ namespace Silownia.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,DataZatrudnienia,Pensja,SilowniaID,SpecjalizacjaID,StawkaGodzinowa")] Trener trener)
         {
          //   if (Session["User"] != null)
             {
                 if (ModelState.IsValid)
                 {
+                    trener.DataZatrudnienia = DateTime.Now;
                     db.Trenerzy.Add(trener);
                     db.SaveChanges();
 
@@ -102,7 +102,7 @@ namespace Silownia.Controllers
                     pracownik.IDOsoby = trener.OsobaID;
                     pracownik.Login = trener.Nazwisko;
                     pracownik.Haslo = trener.Imie + trener.Nazwisko;
-                    pracownik.Rola = "Trener";
+                    pracownik.Rola = RoleEnum.Trener.GetDescription();
                     db.Uzytkownicy.Add(pracownik);
                     db.SaveChanges();
 
@@ -111,10 +111,9 @@ namespace Silownia.Controllers
 
                 ViewBag.SpecjalizacjaID = new SelectList(db.Specjalizacje, "SpecjalizacjaID", "Nazwa", trener.Specjalizacja);
                 ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
-                return View(new Trener
-                {
-                    DataZatrudnienia = DateTime.Now
-                });
+
+                
+                return View(trener);
             }
          //   return HttpNotFound();
         }
@@ -144,7 +143,6 @@ namespace Silownia.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,DataZatrudnienia,Pensja,SilowniaID,SpecjalizacjaID,StawkaGodzinowa")] Trener trener)
         {
          //   if (Session["User"] != null)
@@ -183,7 +181,6 @@ namespace Silownia.Controllers
 
         // POST: /Trener/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
          //   if (Session["User"] != null)

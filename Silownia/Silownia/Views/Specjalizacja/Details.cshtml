@@ -1,24 +1,98 @@
 ﻿@model Silownia.Models.Specjalizacja
-
 @{
     ViewBag.Title = "Specjalizacja: szczegóły";
 }
-
 <h2>Szczegóły dotyczące wybranej specjalizacji:</h2>
+<button class="btn btn-large btn-lg btn-block btn-primary btn-success" onclick="location.href='@Url.Action("Edit", "Specjalizacja", new { id = Model.SpecjalizacjaID })';return false;">edytuj</button>
+<div class="divDark">
+    <div class="divInner">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Nazwa)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Nazwa)
+            </dd>
+        </dl>
+    </div>
+</div>
+<div>
+    <button class="btn btn-large btn-lg btn-block btn-primary btn-primary" onclick="location.href='@Url.Action("Index", "Specjalizacja")';return false;">lista specjalizacji</button>
+</div>
+
 
 <div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nazwa)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Nazwa)
-        </dd>
+    <div class="wrap">
+        <img class="show_hide" src="~/Content/ikony/persony/ikona_trenerPersonalny.png" width="90" height="90">
 
-    </dl>
+        <div class="slidingDiv" style="display:none">
+            <dl , class="table-bordered" ,new style="color:#782D86">
+                <dt>
+                    @Html.Label("Trenerzy", new { style = "color:#782D86" })
+                </dt>
+                @if (Model.Trenerzy.Count > 0)
+                {
+                    <dd>
+                        <table class="table">
+                            <tr>
+                                <th>Imię i nazwisko</th>
+                                <th>Numer telefonu</th>
+                                <th>Siłownia</th>
+                                <th>Pensja</th>
+                            </tr>
+                            @foreach (var item in Model.Trenerzy)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.imieNazwisko)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NrTelefonu)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Silownia.Nazwa)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Pensja) zł
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </dd>
+                }
+                else
+                {
+                    <dt>
+                        @Html.Label("Brak trenerów o tej specjalizacji", new { style = "color:#D11919" })
+                    </dt>
+                }
+            </dl>
+        </div>
+    </div>
+
 </div>
-<p>
-    @Html.ActionLink("Edycja", "Edit", new { id = Model.SpecjalizacjaID }) |
-    @Html.ActionLink("Przejdź do listy specjalizacji", "Index")
-</p>
+
+<style type="text/cs">
+    div.wrap {
+        float: left;
+        width: 500px;
+    }
+
+    img.show_hide {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .slidingDiv {
+        width: 500px;
+        display: none;
+    }
+</style>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">
+</script>
+<script type="text/javascript">
+    $('img.show_hide').on("click", function () {
+        $('div.slidingDiv').stop().slideUp('fast');
+        $(this).next('div.slidingDiv').stop().slideToggle('fast');
+    });
+</script>

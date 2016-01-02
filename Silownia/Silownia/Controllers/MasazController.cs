@@ -43,7 +43,7 @@ namespace Silownia.Controllers
                 // masaze = masaze.Search(imieNazwisko, i => i.Klient.Imie, i => i.Klient.Nazwisko);
                 // masaze = masaze.Search(MasazystaID, i => i.Masazysta.Imie, i => i.Masazysta.Nazwisko);
 
-                var final = masaze.OrderBy(p => p.Klient.Imie);
+                var final = masaze.OrderBy(p => p.Klient.Nazwisko);
                 var ileWynikow = masaze.Count();
                 if ((ileWynikow / page) <= 1)
                 {
@@ -114,12 +114,12 @@ namespace Silownia.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "MasazID,MasazystaID,DataMasazu,CzasTrwania")] long? id, Masaz masaz)
         {
             // if (Session["User"] != null)
             {
                 ViewBag.MasazystaID = new SelectList(db.Masazysci, "OsobaID", "imieNazwisko", masaz.MasazystaID);
+
                 if (ModelState.IsValid && !aktywnyMasaz(id, masaz.DataMasazu) && !zajetyMasazysta(masaz.MasazystaID, masaz.DataMasazu))
                 {
                     #region Klient
@@ -203,7 +203,6 @@ namespace Silownia.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "MasazID,MasazystaID,DataMasazu,CzasTrwania")] Masaz masaz)
         {
             //  if (Session["User"] != null)
@@ -241,7 +240,6 @@ namespace Silownia.Controllers
 
         // POST: Masaz/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
             //  if (Session["User"] != null)

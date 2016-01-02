@@ -1,90 +1,187 @@
 ﻿@model Silownia.Models.Masazysta
-
 @{
     ViewBag.Title = "Masażysta: szczegóły";
 }
+<h2>Szczegóły dotyczące wybranego masażysty</h2>
+<button class="btn btn-large btn-block btn-primary btn-lg btn-success" onclick="location.href='@Url.Action("Edit", "Masazysta", new { id = Model.OsobaID })';return false;">edytuj</button>
+<div class="divDark">
+    <div class="divInner">
+        <dl class="dl-horizontal">
 
-<h2>Szczegóły dotyczące wybranego masażysty:</h2>
+            <dt>
+                @Html.DisplayNameFor(model => model.Imie)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Imie)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Nazwisko)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Nazwisko)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.DataUrodzenia)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.DataUrodzenia)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Pesel)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Pesel)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.NrTelefonu)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.NrTelefonu)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.DataZatrudnienia)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.DataZatrudnienia)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Pensja)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Pensja) zł
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.StawkaGodzinowa)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.StawkaGodzinowa) zł
+            </dd>
+        </dl>
+    </div>
+</div>
+<div>
+    <button class="btn btn-large btn-block btn-primary btn-lg btn-primary" onclick="location.href='@Url.Action("Index", "Masazysta")';return false;">lista masażystów</button>
+</div>
+
 
 <div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Imie)
-        </dt>
+    <div class="wrap">
+        <img class="show_hide" src="~/Content/ikony/silownia/ikona_silownia.png" width="90" height="90">
 
-        <dd>
-            @Html.DisplayFor(model => model.Imie)
-        </dd>
+        <div class="slidingDiv" style="display:none">
+            <dl , class="table-bordered" ,new style="color:#5BABD5">
+                <dt>
+                    @Html.Label("Siłownia", new { style = "color:#5BABD5" })
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Nazwisko)
-        </dt>
+                <dd>
+                    <table class="table">
+                        <tr>
+                            <th>Nazwa siłowni</th>
+                            <th>Adres e-mail</th>
+                            <th>Numer telefonu</th>
+                            <th>Miasto</th>
+                            <th></th>
+                        </tr>
 
-        <dd>
-            @Html.DisplayFor(model => model.Nazwisko)
-        </dd>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(model => model.Silownia.Nazwa)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.Silownia.infoDodatkowe)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.Silownia.NrTelefonu)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.Silownia.Adres.Miasto)
+                            </td>
+                        </tr>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DataUrodzenia)
-        </dt>
+                    </table>
+                </dd>
+            </dl>
+        </div>
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.DataUrodzenia)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Pesel)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Pesel)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.NrTelefonu)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NrTelefonu)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DataZatrudnienia)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DataZatrudnienia)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Pensja)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Pensja)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.StawkaGodzinowa)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.StawkaGodzinowa)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Silownia.Nazwa)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Silownia.Nazwa)
-        </dd>
-
-    </dl>
+    <div class="wrap">
+        <img class="show_hide" src="/Content/ikony/ikona_masaz.png" width="90" height="90">
+        <div class="slidingDiv" style="display:none">
+            <dl class="table-bordered" ,new style="color:#B8C932">
+                <dt>
+                    @Html.Label("Masaże", new { style = "color:#B8C932" })
+                </dt>
+                @if (Model.Masaze.Count > 0)
+                {
+                    <dd>
+                        <table class="table">
+                            <tr>
+                                <th>Klient</th>
+                                <th>Data masażu</th>
+                                <th>Czas trwania</th>
+                                <th>Koszt</th>
+                                <th></th>
+                            </tr>
+                            @foreach (var item in Model.Masaze)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Klient.imieNazwisko)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DataMasazu)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CzasTrwania)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.kosztMasazu) zł
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn-primary btn-lg" onclick="location.href='@Url.Action("Details", "Masaz", new { id = item.MasazID })';return false;">szczegóły</button>
+                                            <button class="btn-danger btn-lg" onclick="location.href='@Url.Action("Delete", "Masaz", new { id = item.MasazID})';return false;">usuń</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </dd>
+                }
+                else
+                {
+                    <dt>
+                        @Html.Label("Brak masaży", new { style = "color:#D11919" })
+                    </dt>
+                }
+            </dl>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edytuj", "Edit", new { id = Model.OsobaID }) |
-    @Html.ActionLink("Przejdź do listy masażystów", "Index")
-</p>
 
+
+<style type="text/cs">
+    div.wrap {
+        float: left;
+        width: 500px;
+    }
+
+    img.show_hide {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .slidingDiv {
+        width: 500px;
+        display: none;
+    }
+</style>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">
+</script>
+<script type="text/javascript">
+    $('img.show_hide').on("click", function () {
+        $('div.slidingDiv').stop().slideUp('fast');
+        $(this).next('div.slidingDiv').stop().slideToggle('fast');
+    });
+</script>

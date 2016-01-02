@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using Silownia.Models;
 using Silownia.DAL;
 using GoogleMaps.LocationServices;
+using System;
 
 namespace Silownia.Controllers
 {
@@ -15,10 +16,17 @@ namespace Silownia.Controllers
         KomuAdres komuPrzypisac;
 
         // GET: /Adres/
-        public ActionResult Index()
+        public ActionResult Index(AkcjaEnumAdres akcja = AkcjaEnumAdres.Brak, String info = null)
         {
             //  if (Session["USer"] != null)
             {
+
+                if (akcja != AkcjaEnumAdres.Brak)
+                {
+                    ViewBag.info = info;
+                    ViewBag.Akcja = akcja;
+                }
+
                 return View(db.Adresy.ToList());
             }
             //   return HttpNotFound();
@@ -73,7 +81,6 @@ namespace Silownia.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "AdresID,KodPocztowy,Kraj,Miasto,Ulica,NrBudynku,NrLokalu")] Adres adres, long? id, KomuAdres komu)
         {
             //  if (Session["User"] != null)
@@ -138,7 +145,6 @@ namespace Silownia.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "AdresID,KodPocztowy,Kraj,Miasto,Ulica,NrBudynku,NrLokalu")] Adres adres)
         {
             //   if (Session["User"] != null)
@@ -175,7 +181,6 @@ namespace Silownia.Controllers
 
         // POST: /Adres/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
             //   if (Session["User"] != null)
