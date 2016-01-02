@@ -20,34 +20,37 @@ namespace Silownia.Controllers
         // GET: Recepcjonista
         public ActionResult Index(string imieNazwisko, string SilowniaID, int page = 1, int pageSize = 10, AkcjaEnumRecepcjonista akcja = AkcjaEnumRecepcjonista.Brak, String info = null)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
-                var recepcjonisci = from Osoby in db.Recepcjonisci.OfType<Recepcjonista>() select Osoby;
-
-                if (!String.IsNullOrEmpty(imieNazwisko))
-                    foreach (string wyraz in imieNazwisko.Split(' '))
-                        recepcjonisci = recepcjonisci.Search(wyraz, i => i.Imie, i => i.Nazwisko);
-
-                recepcjonisci = recepcjonisci.Search(SilowniaID, i => i.Silownia.Nazwa);
-
-                var final = recepcjonisci.OrderBy(p => p.Nazwisko);
-                var ileWynikow = recepcjonisci.Count();
-                if ((ileWynikow / page) <= 1)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    page = 1;
+                    ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
+                    var recepcjonisci = from Osoby in db.Recepcjonisci.OfType<Recepcjonista>() select Osoby;
+
+                    if (!String.IsNullOrEmpty(imieNazwisko))
+                        foreach (string wyraz in imieNazwisko.Split(' '))
+                            recepcjonisci = recepcjonisci.Search(wyraz, i => i.Imie, i => i.Nazwisko);
+
+                    recepcjonisci = recepcjonisci.Search(SilowniaID, i => i.Silownia.Nazwa);
+
+                    var final = recepcjonisci.OrderBy(p => p.Nazwisko);
+                    var ileWynikow = recepcjonisci.Count();
+                    if ((ileWynikow / page) <= 1)
+                    {
+                        page = 1;
+                    }
+                    var kk = ileWynikow / page;
+
+                    PagedList<Recepcjonista> model = new PagedList<Recepcjonista>(final, page, pageSize);
+
+                    if (akcja != AkcjaEnumRecepcjonista.Brak)
+                        ViewBag.Akcja = akcja;
+
+                    if (info != null)
+                        ViewBag.info = info;
+
+                    return View(model);
                 }
-                var kk = ileWynikow / page;
-
-                PagedList<Recepcjonista> model = new PagedList<Recepcjonista>(final, page, pageSize);
-
-                if (akcja != AkcjaEnumRecepcjonista.Brak)
-                    ViewBag.Akcja = akcja;
-
-                if(info != null)
-                    ViewBag.info = info;
-
-                return View(model);
             }
             return HttpNotFound();
         }
@@ -55,19 +58,22 @@ namespace Silownia.Controllers
         // GET: Recepcjonista/Details/5
         public ActionResult Details(long? id)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                if (id == null)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                Recepcjonista recepcjonista = db.Recepcjonisci.Find(id);
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    Recepcjonista recepcjonista = db.Recepcjonisci.Find(id);
 
-                if (recepcjonista == null)
-                {
-                    return HttpNotFound();
+                    if (recepcjonista == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(recepcjonista);
                 }
-                return View(recepcjonista);
             }
              return HttpNotFound();
         }
@@ -76,10 +82,13 @@ namespace Silownia.Controllers
         [MyAuthorize(RoleEnum.Administrator)]
         public ActionResult Create()
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
-                return View();
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                {
+                    ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
+                    return View();
+                }
             }
             return HttpNotFound();
         }
@@ -91,27 +100,30 @@ namespace Silownia.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,Pesel,NrTelefonu,DataZatrudnienia,Pensja,SilowniaID")] Recepcjonista recepcjonista)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                if (ModelState.IsValid)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    recepcjonista.DataZatrudnienia = DateTime.Now;
-                    db.Recepcjonisci.Add(recepcjonista);
-                    db.SaveChanges();
+                    if (ModelState.IsValid)
+                    {
+                        recepcjonista.DataZatrudnienia = DateTime.Now;
+                        db.Recepcjonisci.Add(recepcjonista);
+                        db.SaveChanges();
 
-                    Uzytkownik pracownik = new Uzytkownik();
-                    pracownik.IDOsoby = recepcjonista.OsobaID;
-                    pracownik.Login = recepcjonista.Nazwisko;
-                    pracownik.Haslo = recepcjonista.Imie + recepcjonista.Nazwisko;
-                    pracownik.Rola = RoleEnum.Recepcjonista.GetDescription();
-                    db.Uzytkownicy.Add(pracownik);
-                    db.SaveChanges();
+                        Uzytkownik pracownik = new Uzytkownik();
+                        pracownik.IDOsoby = recepcjonista.OsobaID;
+                        pracownik.Login = recepcjonista.Nazwisko;
+                        pracownik.Haslo = recepcjonista.Imie + recepcjonista.Nazwisko;
+                        pracownik.Rola = RoleEnum.Recepcjonista.GetDescription();
+                        db.Uzytkownicy.Add(pracownik);
+                        db.SaveChanges();
 
-                    return RedirectToAction("Index", new { akcja = AkcjaEnumRecepcjonista.DodanoRecepcjoniste, info = recepcjonista.imieNazwisko });
+                        return RedirectToAction("Index", new { akcja = AkcjaEnumRecepcjonista.DodanoRecepcjoniste, info = recepcjonista.imieNazwisko });
+                    }
+
+                    ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
+                    return View(recepcjonista);
                 }
-
-                ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
-                return View(recepcjonista);
             }
             return HttpNotFound();
         }
@@ -120,19 +132,22 @@ namespace Silownia.Controllers
         [MyAuthorize(RoleEnum.Administrator)]
         public ActionResult Edit(long? id)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                if (id == null)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    Recepcjonista recepcjonista = db.Recepcjonisci.Find(id);
+                    if (recepcjonista == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
+                    return View(recepcjonista);
                 }
-                Recepcjonista recepcjonista = db.Recepcjonisci.Find(id);
-                if (recepcjonista == null)
-                {
-                    return HttpNotFound();
-                }
-                ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
-                return View(recepcjonista);
             }
             return HttpNotFound();
         }
@@ -145,16 +160,19 @@ namespace Silownia.Controllers
         [MyAuthorize(RoleEnum.Administrator)]
         public ActionResult Edit([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,Pesel,NrTelefonu,DataZatrudnienia,Pensja,SilowniaID")] Recepcjonista recepcjonista)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                if (ModelState.IsValid)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    db.Entry(recepcjonista).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
+                    if (ModelState.IsValid)
+                    {
+                        db.Entry(recepcjonista).State = EntityState.Modified;
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
+                    ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
+                    return View(recepcjonista);
                 }
-                ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
-                return View(recepcjonista);
             }
             return HttpNotFound();
         }
@@ -163,18 +181,21 @@ namespace Silownia.Controllers
         [MyAuthorize(RoleEnum.Administrator)]
         public ActionResult Delete(long? id)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                if (id == null)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    Recepcjonista recepcjonista = db.Recepcjonisci.Find(id);
+                    if (recepcjonista == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(recepcjonista);
                 }
-                Recepcjonista recepcjonista = db.Recepcjonisci.Find(id);
-                if (recepcjonista == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(recepcjonista);
             }
             return HttpNotFound();
         }
@@ -185,17 +206,20 @@ namespace Silownia.Controllers
         [MyAuthorize(RoleEnum.Administrator)]
         public ActionResult DeleteConfirmed(long id)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                Recepcjonista recepcjonista = db.Recepcjonisci.Find(id);
-                db.Recepcjonisci.Remove(recepcjonista);
-                db.SaveChanges();
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                {
+                    Recepcjonista recepcjonista = db.Recepcjonisci.Find(id);
+                    db.Recepcjonisci.Remove(recepcjonista);
+                    db.SaveChanges();
 
-                Uzytkownik uzytkownik = db.Uzytkownicy.Where(w => w.IDOsoby == recepcjonista.OsobaID).First();
-                db.Uzytkownicy.Remove(uzytkownik);
-                db.SaveChanges();
+                    Uzytkownik uzytkownik = db.Uzytkownicy.Where(w => w.IDOsoby == recepcjonista.OsobaID).First();
+                    db.Uzytkownicy.Remove(uzytkownik);
+                    db.SaveChanges();
 
-                return RedirectToAction("Index", new { akcja = AkcjaEnumRecepcjonista.UsunietoRecepcjoniste, info = recepcjonista.imieNazwisko });
+                    return RedirectToAction("Index", new { akcja = AkcjaEnumRecepcjonista.UsunietoRecepcjoniste, info = recepcjonista.imieNazwisko });
+                }
             }
             return HttpNotFound();
         }

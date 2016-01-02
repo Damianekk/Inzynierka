@@ -21,35 +21,38 @@ namespace Silownia.Controllers
         // GET: /Umowa/
         public ActionResult Index(string imieNazwisko, string SilowniaID, int page = 1, int pageSize = 10, AkcjaEnumUmowa akcja = AkcjaEnumUmowa.Brak, String info = null)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
-
-                var umowy = from Umowy in db.Umowy select Umowy;
-
-                if (!String.IsNullOrEmpty(imieNazwisko))
-                    foreach (string wyraz in imieNazwisko.Split(' '))
-                        umowy = umowy.Search(wyraz, i => i.Klient.Imie, i => i.Klient.Nazwisko);
-                umowy = umowy.Search(SilowniaID, i => i.Silownia.Nazwa);
-
-                var final = umowy.OrderBy(p => p.Klient.Nazwisko);
-                var ileWynikow = umowy.Count();
-                if ((ileWynikow / page) <= 1)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    page = 1;
+                    ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
+
+                    var umowy = from Umowy in db.Umowy select Umowy;
+
+                    if (!String.IsNullOrEmpty(imieNazwisko))
+                        foreach (string wyraz in imieNazwisko.Split(' '))
+                            umowy = umowy.Search(wyraz, i => i.Klient.Imie, i => i.Klient.Nazwisko);
+                    umowy = umowy.Search(SilowniaID, i => i.Silownia.Nazwa);
+
+                    var final = umowy.OrderBy(p => p.Klient.Nazwisko);
+                    var ileWynikow = umowy.Count();
+                    if ((ileWynikow / page) <= 1)
+                    {
+                        page = 1;
+                    }
+                    var kk = ileWynikow / page;
+
+
+                    PagedList<Umowa> model = new PagedList<Umowa>(final, page, pageSize);
+
+                    if (akcja != AkcjaEnumUmowa.Brak)
+                    {
+                        ViewBag.info = info;
+                        ViewBag.Akcja = akcja;
+                    }
+
+                    return View(model);
                 }
-                var kk = ileWynikow / page;
-
-
-                PagedList<Umowa> model = new PagedList<Umowa>(final, page, pageSize);
-
-                if (akcja != AkcjaEnumUmowa.Brak)
-                {
-                    ViewBag.info = info;
-                    ViewBag.Akcja = akcja;
-                }
-
-                return View(model);
             }
             return HttpNotFound();
         }
@@ -57,18 +60,21 @@ namespace Silownia.Controllers
         // GET: /Umowa/Details/5
         public ActionResult Details(long? id)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                if (id == null)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    Umowa umowa = db.Umowy.Find(id);
+                    if (umowa == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(umowa);
                 }
-                Umowa umowa = db.Umowy.Find(id);
-                if (umowa == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(umowa);
             }
             return HttpNotFound();
         }
@@ -76,34 +82,37 @@ namespace Silownia.Controllers
         // GET: /Umowa/Create
         public ActionResult Create(long? id)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
-                ViewBag.RecepcjonistaID = new SelectList(db.Recepcjonisci, "OsobaID", "imieNazwisko");
-                var a = from Osoby in db.Recepcjonisci select Osoby;
-
-                Recepcjonista recepcjonista = null;
-                var user = User.Identity.GetUserName();
-                foreach (Recepcjonista rec in a)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    if (rec.imieNazwisko.Replace(" ", "") == user)
+                    ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
+                    ViewBag.RecepcjonistaID = new SelectList(db.Recepcjonisci, "OsobaID", "imieNazwisko");
+                    var a = from Osoby in db.Recepcjonisci select Osoby;
+
+                    Recepcjonista recepcjonista = null;
+                    var user = User.Identity.GetUserName();
+                    foreach (Recepcjonista rec in a)
                     {
-                        recepcjonista = rec;
-                        break;
+                        if (rec.imieNazwisko.Replace(" ", "") == user)
+                        {
+                            recepcjonista = rec;
+                            break;
+                        }
+
+                        Osoba osoba = db.Osoby.Find(id);
+                        ViewBag.Osoba = osoba;
                     }
 
-                    Osoba osoba = db.Osoby.Find(id);
-                    ViewBag.Osoba = osoba;
+                    return View(new Umowa // W ten sposób tworze obiekt nadaje aktualny czas / przypisuje do Daty podpisania umowy i zwracam widok z datą (teraz)
+                    {
+                        DataPodpisania = DateTime.Now,
+                        // minimalna umowa na miesiąc
+                        DataZakonczenia = (DateTime.Now).AddMonths(1),
+
+                        // ,Recepcjonista = recepcjonista 
+                    });
                 }
-
-                return View(new Umowa // W ten sposób tworze obiekt nadaje aktualny czas / przypisuje do Daty podpisania umowy i zwracam widok z datą (teraz)
-                {
-                    DataPodpisania = DateTime.Now,
-                    // minimalna umowa na miesiąc
-                    DataZakonczenia = (DateTime.Now).AddMonths(1),
-
-                    // ,Recepcjonista = recepcjonista 
-                });
             }
             return HttpNotFound();
         }
@@ -115,41 +124,44 @@ namespace Silownia.Controllers
         // public ActionResult Create([Bind(Include= "UmowaID,SilowniaID,DataPodpisania,DataZakonczenia,Cena,RecepcjonistaID")] long? id, Umowa umowa)
         public ActionResult Create([Bind(Include = "UmowaID,DataPodpisania,DataZakonczenia,RecepcjonistaID,Cena")] long? id, Umowa umowa)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                
-                ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", umowa.SilowniaID);
-                ViewBag.RecepcjonistaID = new SelectList(db.Recepcjonisci.Where(o => o.SilowniaID == umowa.SilowniaID), "OsobaID", "imieNazwisko", umowa.RecepcjonistaID);
-
-                if (ModelState.IsValid && !aktywnaUmowa(id, umowa.DataPodpisania, umowa.DataZakonczenia))
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
 
-                    #region Klient
-                    Klient klient = db.Klienci.Find(id);
-                    umowa.Klient = klient;
-                    klient.Umowy.Add(umowa);
-                    #endregion
+                    ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", umowa.SilowniaID);
+                    ViewBag.RecepcjonistaID = new SelectList(db.Recepcjonisci.Where(o => o.SilowniaID == umowa.SilowniaID), "OsobaID", "imieNazwisko", umowa.RecepcjonistaID);
 
-                    #region Recepcjonista
-                    Recepcjonista recepcjonista = db.Recepcjonisci.Find(umowa.RecepcjonistaID);
-                    umowa.Recepcjonista = recepcjonista;
-                    recepcjonista.Umowy.Add(umowa);
-                    #endregion
+                    if (ModelState.IsValid && !aktywnaUmowa(id, umowa.DataPodpisania, umowa.DataZakonczenia))
+                    {
 
-                    #region Silownia
-                    Models.Silownia silownia = db.Silownie.Find(umowa.SilowniaID);
-                    umowa.Silownia = silownia;
-                    silownia.Umowy.Add(umowa);
-                    #endregion
+                        #region Klient
+                        Klient klient = db.Klienci.Find(id);
+                        umowa.Klient = klient;
+                        klient.Umowy.Add(umowa);
+                        #endregion
 
-                    
-                    db.Umowy.Add(umowa);
-                    db.SaveChanges();
-                    return RedirectToAction("Index", new { akcja = AkcjaEnumUmowa.DodanoUmowe, info = klient.imieNazwisko });
+                        #region Recepcjonista
+                        Recepcjonista recepcjonista = db.Recepcjonisci.Find(umowa.RecepcjonistaID);
+                        umowa.Recepcjonista = recepcjonista;
+                        recepcjonista.Umowy.Add(umowa);
+                        #endregion
+
+                        #region Silownia
+                        Models.Silownia silownia = db.Silownie.Find(umowa.SilowniaID);
+                        umowa.Silownia = silownia;
+                        silownia.Umowy.Add(umowa);
+                        #endregion
+
+
+                        db.Umowy.Add(umowa);
+                        db.SaveChanges();
+                        return RedirectToAction("Index", new { akcja = AkcjaEnumUmowa.DodanoUmowe, info = klient.imieNazwisko });
+                    }
+
+
+                    return View(umowa);
                 }
-
-
-                return View(umowa);
             }
             return HttpNotFound();
         }
@@ -169,19 +181,22 @@ namespace Silownia.Controllers
         // GET: /Umowa/Edit/5
         public ActionResult Edit(long? id)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                if (id == null)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    Umowa umowa = db.Umowy.Find(id);
+                    if (umowa == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", umowa.SilowniaID);
+                    return View(umowa);
                 }
-                Umowa umowa = db.Umowy.Find(id);
-                if (umowa == null)
-                {
-                    return HttpNotFound();
-                }
-                ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", umowa.SilowniaID);
-                return View(umowa);
             }
             return HttpNotFound();
         }
@@ -192,16 +207,19 @@ namespace Silownia.Controllers
         [HttpPost]
         public ActionResult Edit([Bind(Include = "UmowaID,SilowniaID,DataPodpisania,DataZakonczenia,Cena")] Umowa umowa)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                if (ModelState.IsValid)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    db.Entry(umowa).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
+                    if (ModelState.IsValid)
+                    {
+                        db.Entry(umowa).State = EntityState.Modified;
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
+                    ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", umowa.SilowniaID);
+                    return View(umowa);
                 }
-                ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", umowa.SilowniaID);
-                return View(umowa);
             }
             return HttpNotFound();
         }
@@ -209,18 +227,21 @@ namespace Silownia.Controllers
         // GET: /Umowa/Delete/5
         public ActionResult Delete(long? id)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                if (id == null)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    Umowa umowa = db.Umowy.Find(id);
+                    if (umowa == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(umowa);
                 }
-                Umowa umowa = db.Umowy.Find(id);
-                if (umowa == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(umowa);
             }
             return HttpNotFound();
         }
@@ -229,12 +250,15 @@ namespace Silownia.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(long id)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                Umowa umowa = db.Umowy.Find(id);
-                db.Umowy.Remove(umowa);
-                db.SaveChanges();
-                return RedirectToAction("Index", new { akcja = AkcjaEnumUmowa.UsunietoUmowe });
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                {
+                    Umowa umowa = db.Umowy.Find(id);
+                    db.Umowy.Remove(umowa);
+                    db.SaveChanges();
+                    return RedirectToAction("Index", new { akcja = AkcjaEnumUmowa.UsunietoUmowe });
+                }
             }
             return HttpNotFound();
         }

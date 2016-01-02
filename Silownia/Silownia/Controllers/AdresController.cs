@@ -18,16 +18,19 @@ namespace Silownia.Controllers
         // GET: /Adres/
         public ActionResult Index(AkcjaEnumAdres akcja = AkcjaEnumAdres.Brak, String info = null)
         {
-              if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-
-                if (akcja != AkcjaEnumAdres.Brak)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    ViewBag.info = info;
-                    ViewBag.Akcja = akcja;
-                }
 
-                return View(db.Adresy.ToList());
+                    if (akcja != AkcjaEnumAdres.Brak)
+                    {
+                        ViewBag.info = info;
+                        ViewBag.Akcja = akcja;
+                    }
+
+                    return View(db.Adresy.ToList());
+                }
             }
                return HttpNotFound();
         }
@@ -35,18 +38,21 @@ namespace Silownia.Controllers
         // GET: /Adres/Details/5
         public ActionResult Details(long? id)
         {
-               if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                if (id == null)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    Adres adres = db.Adresy.Find(id);
+                    if (adres == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(adres);
                 }
-                Adres adres = db.Adresy.Find(id);
-                if (adres == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(adres);
             }
                return HttpNotFound();
         }
@@ -54,25 +60,28 @@ namespace Silownia.Controllers
         // GET: /Adres/Create
         public ActionResult Create(long? id, KomuAdres komu)
         {
-              if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                if (id != null)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    switch (komu)
+                    if (id != null)
                     {
-                        case KomuAdres.Osoba:
-                            Osoba osoba = db.Osoby.Find(id);
-                            ViewBag.Osoba = osoba;
-                            komuPrzypisac = komu;
-                            break;
-                        case KomuAdres.Silownia:
-                            Silownia.Models.Silownia silownia = db.Silownie.Find(id);
-                            ViewBag.Silownia = silownia;
-                            komuPrzypisac = komu;
-                            break;
+                        switch (komu)
+                        {
+                            case KomuAdres.Osoba:
+                                Osoba osoba = db.Osoby.Find(id);
+                                ViewBag.Osoba = osoba;
+                                komuPrzypisac = komu;
+                                break;
+                            case KomuAdres.Silownia:
+                                Silownia.Models.Silownia silownia = db.Silownie.Find(id);
+                                ViewBag.Silownia = silownia;
+                                komuPrzypisac = komu;
+                                break;
+                        }
                     }
+                    return View();
                 }
-                return View();
             }
               return HttpNotFound();
         }
@@ -83,52 +92,55 @@ namespace Silownia.Controllers
         [HttpPost]
         public ActionResult Create([Bind(Include = "AdresID,KodPocztowy,Kraj,Miasto,Ulica,NrBudynku,NrLokalu")] Adres adres, long? id, KomuAdres komu)
         {
-              if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                object redirectTo = null;
-                if (ModelState.IsValid)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    switch (komu)
+                    object redirectTo = null;
+                    if (ModelState.IsValid)
                     {
-                        case KomuAdres.Osoba:
-                            Osoba osoba = db.Osoby.Find(id);
-                            redirectTo = osoba.GetType().BaseType.Name;
-                            osoba.Adres = adres;
-                            //Google Maps
-                            var locationServiceO = new GoogleLocationService();
-                            AddressData adrO = new AddressData();
-                            adrO.Country = adres.Kraj;
-                            adrO.City = adres.Miasto;
-                            adrO.Zip = adres.KodPocztowy;
-                            adrO.Address = adres.Ulica + " " + adres.NrBudynku + " " + adres.NrLokalu;
-                            var pointO = locationServiceO.GetLatLongFromAddress(adrO);
-                            osoba.Szerokosc = pointO.Longitude;
-                            osoba.Dlugosc = pointO.Latitude;
-                            redirectTo = osoba.GetType().BaseType.Name;
+                        switch (komu)
+                        {
+                            case KomuAdres.Osoba:
+                                Osoba osoba = db.Osoby.Find(id);
+                                redirectTo = osoba.GetType().BaseType.Name;
+                                osoba.Adres = adres;
+                                //Google Maps
+                                var locationServiceO = new GoogleLocationService();
+                                AddressData adrO = new AddressData();
+                                adrO.Country = adres.Kraj;
+                                adrO.City = adres.Miasto;
+                                adrO.Zip = adres.KodPocztowy;
+                                adrO.Address = adres.Ulica + " " + adres.NrBudynku + " " + adres.NrLokalu;
+                                var pointO = locationServiceO.GetLatLongFromAddress(adrO);
+                                osoba.Szerokosc = pointO.Longitude;
+                                osoba.Dlugosc = pointO.Latitude;
+                                redirectTo = osoba.GetType().BaseType.Name;
 
-                            //adres.Osoba = osoba;
-                            break;
-                        case KomuAdres.Silownia:
-                            Silownia.Models.Silownia silownia = db.Silownie.Find(id);
-                            silownia.Adres = adres;
-                            var locationServiceS = new GoogleLocationService();
-                            AddressData adrS = new AddressData();
-                            adrS.Country = adres.Kraj;
-                            adrS.City = adres.Miasto;
-                            adrS.Zip = adres.KodPocztowy;
-                            adrS.Address = adres.Ulica + " " + adres.NrBudynku + " " + adres.NrLokalu;
-                            var pointS = locationServiceS.GetLatLongFromAddress(adrS);
-                            silownia.Szerokosc = pointS.Longitude;
-                            silownia.Dlugosc = pointS.Latitude;
-                            redirectTo = silownia.GetType().BaseType.Name;
-                            break;
+                                //adres.Osoba = osoba;
+                                break;
+                            case KomuAdres.Silownia:
+                                Silownia.Models.Silownia silownia = db.Silownie.Find(id);
+                                silownia.Adres = adres;
+                                var locationServiceS = new GoogleLocationService();
+                                AddressData adrS = new AddressData();
+                                adrS.Country = adres.Kraj;
+                                adrS.City = adres.Miasto;
+                                adrS.Zip = adres.KodPocztowy;
+                                adrS.Address = adres.Ulica + " " + adres.NrBudynku + " " + adres.NrLokalu;
+                                var pointS = locationServiceS.GetLatLongFromAddress(adrS);
+                                silownia.Szerokosc = pointS.Longitude;
+                                silownia.Dlugosc = pointS.Latitude;
+                                redirectTo = silownia.GetType().BaseType.Name;
+                                break;
+                        }
+                        db.Adresy.Add(adres);
+                        db.SaveChanges();
+                        return RedirectToAction("Index", redirectTo.ToString());
                     }
-                    db.Adresy.Add(adres);
-                    db.SaveChanges();
-                    return RedirectToAction("Index", redirectTo.ToString());
-                }
 
-                return View(adres);
+                    return View(adres);
+                }
             }
                return HttpNotFound();
         }
@@ -136,18 +148,21 @@ namespace Silownia.Controllers
         // GET: /Adres/Edit/5
         public ActionResult Edit(long? id)
         {
-             if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                if (id == null)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    Adres adres = db.Adresy.Find(id);
+                    if (adres == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(adres);
                 }
-                Adres adres = db.Adresy.Find(id);
-                if (adres == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(adres);
             }
               return HttpNotFound();
         }
@@ -158,15 +173,18 @@ namespace Silownia.Controllers
         [HttpPost]
         public ActionResult Edit([Bind(Include = "AdresID,KodPocztowy,Kraj,Miasto,Ulica,NrBudynku,NrLokalu")] Adres adres)
         {
-               if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                if (ModelState.IsValid)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    db.Entry(adres).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
+                    if (ModelState.IsValid)
+                    {
+                        db.Entry(adres).State = EntityState.Modified;
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
+                    return View(adres);
                 }
-                return View(adres);
             }
                return HttpNotFound();
         }
@@ -174,18 +192,21 @@ namespace Silownia.Controllers
         // GET: /Adres/Delete/5
         public ActionResult Delete(long? id)
         {
-              if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                if (id == null)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    Adres adres = db.Adresy.Find(id);
+                    if (adres == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(adres);
                 }
-                Adres adres = db.Adresy.Find(id);
-                if (adres == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(adres);
             }
                return HttpNotFound();
         }
@@ -194,26 +215,29 @@ namespace Silownia.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(long id)
         {
-               if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                Adres adres = db.Adresy.Find(id);
-                Silownia.Models.Silownia silownia = db.Silownie.Where(w => w.Adres.AdresID == id).FirstOrDefault();
-                Osoba osoba;
-
-                if (silownia != null)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    silownia.Adres = null;
-                }
-                else
-                {
-                    osoba = db.Osoby.Where(o => o.Adres.AdresID == id).FirstOrDefault();
-                    if (osoba != null)
-                        osoba.Adres = null;
-                }
+                    Adres adres = db.Adresy.Find(id);
+                    Silownia.Models.Silownia silownia = db.Silownie.Where(w => w.Adres.AdresID == id).FirstOrDefault();
+                    Osoba osoba;
 
-                db.Adresy.Remove(adres);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                    if (silownia != null)
+                    {
+                        silownia.Adres = null;
+                    }
+                    else
+                    {
+                        osoba = db.Osoby.Where(o => o.Adres.AdresID == id).FirstOrDefault();
+                        if (osoba != null)
+                            osoba.Adres = null;
+                    }
+
+                    db.Adresy.Remove(adres);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
               return HttpNotFound();
         }
