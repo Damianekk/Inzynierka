@@ -14,17 +14,17 @@ namespace Silownia.Controllers
         // GET: /Specjalizacja/
         public ActionResult Index()
         {
-         //   if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 return View(db.Specjalizacje.ToList());
             }
-          //  return HttpNotFound();
+            return HttpNotFound();
         }
 
         // GET: /Specjalizacja/Details/5
         public ActionResult Details(long? id)
         {
-         //   if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 if (id == null)
                 {
@@ -37,17 +37,17 @@ namespace Silownia.Controllers
                 }
                 return View(specjalizacja);
             }
-         //   return HttpNotFound();
+            return HttpNotFound();
         }
 
         // GET: /Specjalizacja/Create
         public ActionResult Create()
         {
-         //   if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 return View();
             }
-         //   return HttpNotFound();
+            return HttpNotFound();
         }
 
         // POST: /Specjalizacja/Create
@@ -56,7 +56,7 @@ namespace Silownia.Controllers
         [HttpPost]
         public ActionResult Create([Bind(Include="SpecjalizacjaID,Nazwa")] Specjalizacja specjalizacja)
         {
-         //   if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 if (ModelState.IsValid)
                 {
@@ -67,13 +67,13 @@ namespace Silownia.Controllers
 
                 return View(specjalizacja);
             }
-         //   return HttpNotFound();
+            return HttpNotFound();
         }
 
         // GET: /Specjalizacja/Edit/5
         public ActionResult Edit(long? id)
         {
-          //  if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 if (id == null)
                 {
@@ -86,7 +86,7 @@ namespace Silownia.Controllers
                 }
                 return View(specjalizacja);
             }
-          //  return HttpNotFound();
+            return HttpNotFound();
         }
 
         // POST: /Specjalizacja/Edit/5
@@ -95,7 +95,7 @@ namespace Silownia.Controllers
         [HttpPost]
         public ActionResult Edit([Bind(Include="SpecjalizacjaID,Nazwa")] Specjalizacja specjalizacja)
         {
-          //  if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 if (ModelState.IsValid)
                 {
@@ -105,13 +105,13 @@ namespace Silownia.Controllers
                 }
                 return View(specjalizacja);
             }
-          //  return HttpNotFound();
+            return HttpNotFound();
         }
 
         // GET: /Specjalizacja/Delete/5
         public ActionResult Delete(long? id)
         {
-          //  if (Session["User"] != null)
+           if (Session["User"] != null)
             {
                 if (id == null)
                 {
@@ -124,21 +124,21 @@ namespace Silownia.Controllers
                 }
                 return View(specjalizacja);
             }
-          //  return HttpNotFound();
+            return HttpNotFound();
         }
 
         // POST: /Specjalizacja/Delete/5
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(long id)
         {
-          //  if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 Specjalizacja specjalizacja = db.Specjalizacje.Find(id);
                 db.Specjalizacje.Remove(specjalizacja);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-          //  return HttpNotFound();
+            return HttpNotFound();
         }
 
         protected override void Dispose(bool disposing)

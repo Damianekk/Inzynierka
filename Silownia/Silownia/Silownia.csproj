@@ -208,6 +208,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\AkcjaEnumAdres.cs" />
     <Compile Include="Helpers\AkcjaEnumInstruktor.cs" />
     <Compile Include="Helpers\AkcjaEnumMasaz.cs" />
     <Compile Include="Helpers\AkcjaEnumMasazysta.cs" />
@@ -216,6 +217,8 @@
     <Compile Include="Helpers\AkcjaEnumTrener.cs" />
     <Compile Include="Helpers\AkcjaEnumTrening.cs" />
     <Compile Include="Helpers\AkcjaEnumUmowa.cs" />
+    <Compile Include="Helpers\MyAuthorize.cs" />
+    <Compile Include="Helpers\RoleEnum.cs" />
     <Compile Include="Helpers\StatusWiadomosciEnum.cs" />
     <Compile Include="Helpers\KryteriaSzukania.cs" />
     <Compile Include="Migrations\Configuration.cs" />
@@ -261,17 +264,38 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\ikony\ikona_adres.png" />
     <Content Include="Content\ikony\ikona_adres50px.png" />
+    <Content Include="Content\ikony\ikona_adres_rectangular_blue_40px.png" />
     <Content Include="Content\ikony\ikona_masaz.png" />
     <Content Include="Content\ikony\ikona_masaz50px.png" />
+    <Content Include="Content\ikony\ikona_treningGrupowy.png" />
+    <Content Include="Content\ikony\ikona_treningGrupowy50px.png" />
     <Content Include="Content\ikony\ikona_treningPersonalny.png" />
-    <Content Include="Content\ikony\ikona_treningPersonalny50px.png" />
+    <Content Include="Content\ikony\ikona_treningPersonalny_50x.png" />
     <Content Include="Content\ikony\ikona_umowa.png" />
     <Content Include="Content\ikony\ikona_umowa50px.png" />
+    <Content Include="Content\ikony\persony\ikona_instruktor.png" />
+    <Content Include="Content\ikony\persony\ikona_instruktor50px.png" />
+    <Content Include="Content\ikony\persony\ikona_klient.png" />
+    <Content Include="Content\ikony\persony\ikona_klient50px.png" />
+    <Content Include="Content\ikony\persony\ikona_masazysta.png" />
+    <Content Include="Content\ikony\persony\ikona_masazysta50px.png" />
+    <Content Include="Content\ikony\persony\ikona_pracownicy.png" />
+    <Content Include="Content\ikony\persony\ikona_pracownicy50px.png" />
+    <Content Include="Content\ikony\persony\ikona_recepcjonista.png" />
+    <Content Include="Content\ikony\persony\ikona_recepcjonista50px.png" />
+    <Content Include="Content\ikony\persony\ikona_trenerPersonalny.png" />
+    <Content Include="Content\ikony\persony\ikona_trenerPersonalny50px.png" />
+    <Content Include="Content\ikony\silownia\ikona_adres_silownia.png" />
+    <Content Include="Content\ikony\silownia\ikona_adres_silownia_50px.png" />
+    <Content Include="Content\ikony\silownia\ikona_adres_silownia_blue_40px.png" />
+    <Content Include="Content\ikony\silownia\ikona_silownia.png" />
+    <Content Include="Content\ikony\silownia\ikona_silownia50px.png" />
     <Content Include="Content\images.jpg" />
     <Content Include="Content\OurTeam\dbudzynowski.jpg" />
     <Content Include="Content\OurTeam\jbielawska.jpg" />
     <Content Include="Content\OurTeam\lmajcher.jpg" />
     <Content Include="Content\OurTeam\mbielec.jpg" />
+    <Content Include="Content\PURE MUSCLES.jpg" />
     <Content Include="Content\Sale\crossfit.jpg" />
     <Content Include="Content\Sale\crossfit1.jpg" />
     <Content Include="Content\Sale\fitness.jpg" />
@@ -421,30 +445,31 @@
     <Content Include="Scripts\Makefile" />
     <Content Include="Scripts\README.md" />
     <Content Include="Scripts\webcam.jquery.json" />
-    <Content Include="Views\Photo\Index.cshtml" />
-    <Content Include="Views\Photo\ChangePhoto.cshtml" />
     <Content Include="Views\Masaz\Create.cshtml" />
     <Content Include="Views\Masaz\Delete.cshtml" />
     <Content Include="Views\Masaz\Details.cshtml" />
     <Content Include="Views\Masaz\Edit.cshtml" />
     <Content Include="Views\Masaz\Index.cshtml" />
-    <Content Include="Views\TreningPersonalny\Create.cshtml" />
     <Content Include="Views\TreningPersonalny\Delete.cshtml" />
+    <Content Include="Views\Shared\KryteriaSzukania\_masazysta.cshtml" />
+    <Content Include="Views\Instruktor\Delete.cshtml" />
+    <Content Include="Views\Instruktor\Details.cshtml" />
+    <Content Include="Views\RecepcjonistaView\Index.cshtml" />
+    <Content Include="Views\TrenerView\Index.cshtml" />
+    <Content Include="Views\Instruktor\Create.cshtml" />
+    <Content Include="Views\Instruktor\Edit.cshtml" />
+    <Content Include="Views\Instruktor\Index.cshtml" />
+    <Content Include="Views\Photo\ChangePhoto.cshtml" />
+    <Content Include="Views\Photo\Index.cshtml" />
+    <Content Include="Views\Shared\KryteriaSzukania\_trener.cshtml" />
+    <Content Include="Views\TreningPersonalny\Create.cshtml" />
     <Content Include="Views\TreningPersonalny\Details.cshtml" />
     <Content Include="Views\TreningPersonalny\Edit.cshtml" />
     <Content Include="Views\TreningPersonalny\Index.cshtml" />
-    <Content Include="Views\Shared\KryteriaSzukania\_trener.cshtml" />
-    <Content Include="Views\Shared\KryteriaSzukania\_masazysta.cshtml" />
-    <Content Include="Views\Instruktor\Create.cshtml" />
-    <Content Include="Views\Instruktor\Delete.cshtml" />
-    <Content Include="Views\Instruktor\Details.cshtml" />
-    <Content Include="Views\Instruktor\Edit.cshtml" />
-    <Content Include="Views\Instruktor\Index.cshtml" />
-    <Content Include="Views\Sala\Zdjecie.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\SalaFoto\" />
+    <Folder Include="ViewModel\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

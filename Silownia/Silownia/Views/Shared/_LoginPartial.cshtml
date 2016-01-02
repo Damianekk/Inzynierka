@@ -5,9 +5,6 @@
     {
     @Html.AntiForgeryToken()
     <ul class="nav navbar-nav navbar-right">
-        <li>
-            @Html.ActionLink("Witaj " + Session["User"] + "!", "Index", "Klient")
-        </li>
         @if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
         {
         <li>@Html.ActionLink("Klienci", "Index", "Klient")</li>
