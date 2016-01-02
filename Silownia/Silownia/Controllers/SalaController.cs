@@ -18,17 +18,17 @@ namespace Silownia.Controllers
         // GET: /Sala/
         public ActionResult Index()
         {
-         //   if(Session["User"] != null)
+            if(Session["User"] != null)
             {
                 return View(db.Sale.ToList());
             }
-          //  return HttpNotFound();
+            return HttpNotFound();
         }
 
         // GET: /Sala/Details/5
         public ActionResult Details(int? id)
         {
-         //   if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 if (id == null)
                 {
@@ -41,18 +41,18 @@ namespace Silownia.Controllers
                 }
                 return View(sala);
             }
-          //  return HttpNotFound();
+            return HttpNotFound();
         }
 
         // GET: /Sala/Create
         public ActionResult Create()
         {
-          //  if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
                 return View();
             }
-         //   return HttpNotFound();
+            return HttpNotFound();
         }
 
         // POST: /Sala/Create
@@ -61,7 +61,7 @@ namespace Silownia.Controllers
         [HttpPost]
         public ActionResult Create([Bind(Include="Numer_sali,Rodzaj,Status,Opis, SilowniaID")] Sala sala)
         {
-         //   if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 if (ModelState.IsValid)
                 {
@@ -72,13 +72,13 @@ namespace Silownia.Controllers
                 ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
                 return View(sala);
             }
-         //   return HttpNotFound();
+            return HttpNotFound();
         }
 
         // GET: /Sala/Edit/5
         public ActionResult Edit(int? id)
         {
-         //   if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 if (id == null)
                 {
@@ -92,7 +92,7 @@ namespace Silownia.Controllers
                 ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", sala.Silownia);
                 return View(sala);
             }
-         //   return HttpNotFound();
+            return HttpNotFound();
         }
 
         // POST: /Sala/Edit/5
@@ -101,7 +101,7 @@ namespace Silownia.Controllers
         [HttpPost]
         public ActionResult Edit([Bind(Include="Numer_sali,Rodzaj,Status,Opis")] Sala sala)
         {
-         //   if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 if (ModelState.IsValid)
                 {
@@ -112,13 +112,13 @@ namespace Silownia.Controllers
                 ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", sala.Silownia);
                 return View(sala);
             }
-          //  return HttpNotFound();
+            return HttpNotFound();
         }
 
         // GET: /Sala/Delete/5
         public ActionResult Delete(int? id)
         {
-         //   if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 if (id == null)
                 {
@@ -131,21 +131,21 @@ namespace Silownia.Controllers
                 }
                 return View(sala);
             }
-          //  return HttpNotFound();
+            return HttpNotFound();
         }
 
         // POST: /Sala/Delete/5
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-         //   if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 Sala sala = db.Sale.Find(id);
                 db.Sale.Remove(sala);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-         //   return HttpNotFound();
+           return HttpNotFound();
         }
 
         protected override void Dispose(bool disposing)

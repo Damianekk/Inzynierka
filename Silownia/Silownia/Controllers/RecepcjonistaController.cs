@@ -20,7 +20,7 @@ namespace Silownia.Controllers
         // GET: Recepcjonista
         public ActionResult Index(string imieNazwisko, string SilowniaID, int page = 1, int pageSize = 10, AkcjaEnumRecepcjonista akcja = AkcjaEnumRecepcjonista.Brak, String info = null)
         {
-       //     if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
                 var recepcjonisci = from Osoby in db.Recepcjonisci.OfType<Recepcjonista>() select Osoby;
@@ -49,13 +49,13 @@ namespace Silownia.Controllers
 
                 return View(model);
             }
-          //  return HttpNotFound();
+            return HttpNotFound();
         }
 
         // GET: Recepcjonista/Details/5
         public ActionResult Details(long? id)
         {
-         //   if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 if (id == null)
                 {
@@ -69,19 +69,19 @@ namespace Silownia.Controllers
                 }
                 return View(recepcjonista);
             }
-            // return HttpNotFound();
+             return HttpNotFound();
         }
 
         // GET: Recepcjonista/Create
         [MyAuthorize(RoleEnum.Administrator)]
         public ActionResult Create()
         {
-          //  if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
                 return View();
             }
-          //  return HttpNotFound();
+            return HttpNotFound();
         }
 
         // POST: Recepcjonista/Create
@@ -91,7 +91,7 @@ namespace Silownia.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,Pesel,NrTelefonu,DataZatrudnienia,Pensja,SilowniaID")] Recepcjonista recepcjonista)
         {
-         //   if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 if (ModelState.IsValid)
                 {
@@ -113,14 +113,14 @@ namespace Silownia.Controllers
                 ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
                 return View(recepcjonista);
             }
-         //   return HttpNotFound();
+            return HttpNotFound();
         }
 
         // GET: Recepcjonista/Edit/5
         [MyAuthorize(RoleEnum.Administrator)]
         public ActionResult Edit(long? id)
         {
-         //   if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 if (id == null)
                 {
@@ -134,7 +134,7 @@ namespace Silownia.Controllers
                 ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
                 return View(recepcjonista);
             }
-          //  return HttpNotFound();
+            return HttpNotFound();
         }
 
         // POST: Recepcjonista/Edit/5
@@ -145,7 +145,7 @@ namespace Silownia.Controllers
         [MyAuthorize(RoleEnum.Administrator)]
         public ActionResult Edit([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,Pesel,NrTelefonu,DataZatrudnienia,Pensja,SilowniaID")] Recepcjonista recepcjonista)
         {
-         //   if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 if (ModelState.IsValid)
                 {
@@ -156,14 +156,14 @@ namespace Silownia.Controllers
                 ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
                 return View(recepcjonista);
             }
-        //    return HttpNotFound();
+            return HttpNotFound();
         }
 
         // GET: Recepcjonista/Delete/5
         [MyAuthorize(RoleEnum.Administrator)]
         public ActionResult Delete(long? id)
         {
-         //   if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 if (id == null)
                 {
@@ -176,7 +176,7 @@ namespace Silownia.Controllers
                 }
                 return View(recepcjonista);
             }
-         //   return HttpNotFound();
+            return HttpNotFound();
         }
 
         // POST: Recepcjonista/Delete/5
@@ -185,7 +185,7 @@ namespace Silownia.Controllers
         [MyAuthorize(RoleEnum.Administrator)]
         public ActionResult DeleteConfirmed(long id)
         {
-        //    if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 Recepcjonista recepcjonista = db.Recepcjonisci.Find(id);
                 db.Recepcjonisci.Remove(recepcjonista);
@@ -197,7 +197,7 @@ namespace Silownia.Controllers
 
                 return RedirectToAction("Index", new { akcja = AkcjaEnumRecepcjonista.UsunietoRecepcjoniste, info = recepcjonista.imieNazwisko });
             }
-         //   return HttpNotFound();
+            return HttpNotFound();
         }
 
         public ActionResult FillRecepcjonista(int silownia)
