@@ -20,7 +20,7 @@ namespace Silownia.Controllers
         // GET: Instruktor
         public ActionResult Index(string imieNazwisko, string SilowniaID, int page = 1, int pageSize = 10, AkcjaEnumInstruktor akcja = AkcjaEnumInstruktor.Brak, String info = null)
         {
-            if (Session["User"] != null)
+            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
                 var instruktorzy = from Osoby in db.Instruktorzy.OfType<Instruktor>() select Osoby;
@@ -55,7 +55,7 @@ namespace Silownia.Controllers
         // GET: Instruktor/Details/5
         public ActionResult Details(long? id)
         {
-            if (Session["User"] != null)
+            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 if (id == null)
                 {
@@ -75,7 +75,7 @@ namespace Silownia.Controllers
         // GET: Instruktor/Create
         public ActionResult Create()
         {
-            if (Session["User"] != null)
+            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
                 return View();
@@ -89,7 +89,7 @@ namespace Silownia.Controllers
         [HttpPost]
         public ActionResult Create([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,NrTelefonu,Pesel,DataZatrudnienia,Pensja,SilowniaID")] Instruktor instruktor)
         {
-            if (Session["User"] != null)
+            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 if (ModelState.IsValid)
                 {
@@ -118,7 +118,7 @@ namespace Silownia.Controllers
         // GET: Instruktor/Edit/5
         public ActionResult Edit(long? id)
         {
-            if (Session["User"] != null)
+            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 if (id == null)
                 {
@@ -140,7 +140,7 @@ namespace Silownia.Controllers
         [HttpPost]
         public ActionResult Edit([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,NrTelefonu,Pesel,DataZatrudnienia,Pensja,SilowniaID")] Instruktor instruktor)
         {
-            if (Session["User"] != null)
+            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 if (ModelState.IsValid)
                 {
@@ -157,7 +157,7 @@ namespace Silownia.Controllers
         // GET: Instruktor/Delete/5
         public ActionResult Delete(long? id)
         {
-            if (Session["User"] != null)
+            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 if (id == null)
                 {
@@ -177,7 +177,7 @@ namespace Silownia.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(long id)
         {
-            if (Session["User"] != null)
+            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 Instruktor instruktor = db.Instruktorzy.Find(id);
                 db.Osoby.Remove(instruktor);
