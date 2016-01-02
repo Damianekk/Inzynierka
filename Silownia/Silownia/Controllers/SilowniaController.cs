@@ -40,11 +40,11 @@ namespace Silownia.Controllers
                 PagedList<Models.Silownia> model = new PagedList<Models.Silownia>(final, page, pageSize);
 
 
-                if (akcja != AkcjaEnumSilownia.Brak)
-                {
-                    ViewBag.info = info;
+                if (akcja != AkcjaEnumSilownia.Brak)                  
                     ViewBag.Akcja = akcja;
-                }
+
+                if(info != null)
+                    ViewBag.info = info;
 
                 return View(model);
             }
@@ -75,6 +75,7 @@ namespace Silownia.Controllers
         }
 
         // GET: /Silownia/Create
+        [MyAuthorize(RoleEnum.Administrator)]
         public ActionResult Create()
         {
            // if (Session["User"] != null)
@@ -88,6 +89,7 @@ namespace Silownia.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [MyAuthorize(RoleEnum.Administrator)]
         public ActionResult Create([Bind(Include = "SilowniaID,Nazwa,GodzinaOtwarcia,GodzinaZamkniecia,Powierzchnia,NrTelefonu,DodatkoweInfo")] Models.Silownia silownia)
         {
           //  if (Session["User"] != null)
@@ -143,6 +145,7 @@ namespace Silownia.Controllers
         }
 
         // GET: /Silownia/Delete/5
+        [MyAuthorize(RoleEnum.Administrator)]
         public ActionResult Delete(long? id)
         {
          //   if (Session["User"] != null)
@@ -163,6 +166,7 @@ namespace Silownia.Controllers
 
         // POST: /Silownia/Delete/5
         [HttpPost, ActionName("Delete")]
+        [MyAuthorize(RoleEnum.Administrator)]
         public ActionResult DeleteConfirmed(long id)
         {
          //   if (Session["User"] != null)

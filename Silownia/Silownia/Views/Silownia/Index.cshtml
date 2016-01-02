@@ -2,6 +2,17 @@
 @{
     ViewBag.Title = "Siłownie: index";
 }
+
+@if (ViewBag.Info != null)
+{
+  <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <div class="alert alert-success">
+            <br />
+            <h4>@ViewBag.info</h4>
+            <br />
+        </div>
+}
+
 <h2>Lista siłowni w naszej sieci:</h2>
 <button class="btn btn-large btn-block btn-success btn-lg" onclick="location.href='@Url.Action("Create", "Silownia")';return false;">dodaj nową siłownię</button>
 <div class="divDark">
