@@ -4,14 +4,13 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<h2>Edytuj sale</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Sala</h4>
         <hr />
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.Numer_sali)
@@ -41,9 +40,18 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.ImageFile,"Zdjęcie", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.ValidationSummary(true)
+                @Html.EditorFor(model => model.ImageFile)
+                @Html.ValidationMessageFor(model => model.ImageFile, "Musi byćto ścieżka do pliku ze zdjęciem!")
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.SilowniaID, "Siłownia", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("SilowniaID", String.Empty)
+                @Html.DropDownList("SilowniaID", "Wybierz siłownie")
                 @Html.ValidationMessageFor(model => model.SilowniaID)
             </div>
         </div>
@@ -57,5 +65,5 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Wróć do listy sal", "Index")
 </div>

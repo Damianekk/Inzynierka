@@ -21,9 +21,13 @@ namespace Silownia.Models
        
         [Display(Name="Nr sali")]
         public int Numer_sali { get; set; }
-        public string ImageFile { get; set; }
+
+        public byte[] Zdjecie { get; set; }
+        
+        [Required]
         public string Rodzaj { get; set; }
         public string Status { get; set; }
+        [DataType(DataType.MultilineText)]
         public string Opis { get; set; }
 
         public virtual ICollection<Sprzet> Sprzety { get; set; }

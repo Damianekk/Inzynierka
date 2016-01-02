@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Silownia.Models;
 using Silownia.DAL;
+using System.IO;
 
 namespace Silownia.Controllers
 {
@@ -25,7 +26,7 @@ namespace Silownia.Controllers
           //  return HttpNotFound();
         }
 
-        // GET: /Sala/Details/5
+         // GET: /Sala/Details/5
         public ActionResult Details(int? id)
         {
          //   if (Session["User"] != null)
@@ -60,12 +61,40 @@ namespace Silownia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="Numer_sali,Rodzaj,Status,Opis, SilowniaID")] Sala sala)
+        public ActionResult Create(Sala sala, HttpPostedFileBase file)
         {
          //   if (Session["User"] != null)
             {
                 if (ModelState.IsValid)
                 {
+                    string FileName = "";
+                    byte[] bytes;
+
+                    int BytesToRead;
+
+                    int numBytesRead;
+
+                    if (file != null)
+                    {
+                        FileName = Path.GetFileName(file.FileName);
+                        bytes = new byte[file.ContentLength];
+                        BytesToRead = (int)file.ContentLength;
+                        numBytesRead = 0;
+
+                        while (BytesToRead > 0)
+                        {
+                            int n = file.InputStream.Read(bytes, numBytesRead, BytesToRead);
+
+                            if (n == 0)
+                            {
+                                break;
+                            }
+                            numBytesRead += n;
+                            BytesToRead -= n;
+                        }
+                        sala.Zdjecie = bytes;
+
+                    }
                     db.Sale.Add(sala);
                     db.SaveChanges();
                     return RedirectToAction("Index");
@@ -75,6 +104,15 @@ namespace Silownia.Controllers
             }
          //   return HttpNotFound();
         }
+
+        public ActionResult Zdjecie(int id, int img)
+        {
+            ViewBag.Pic = img;
+            Sala foto = db.Sale.Find(id);
+            return View(foto);
+        }
+
+
 
         // GET: /Sala/Edit/5
         public ActionResult Edit(int? id)
@@ -101,7 +139,7 @@ namespace Silownia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="Numer_sali,Rodzaj,Status,Opis")] Sala sala)
+        public ActionResult Edit([Bind(Include="Numer_sali,Rodzaj,Status,Opis,ImageFile,SilowniaID")] Sala sala)
         {
          //   if (Session["User"] != null)
             {

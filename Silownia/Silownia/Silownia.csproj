@@ -440,10 +440,11 @@
     <Content Include="Views\Instruktor\Details.cshtml" />
     <Content Include="Views\Instruktor\Edit.cshtml" />
     <Content Include="Views\Instruktor\Index.cshtml" />
+    <Content Include="Views\Sala\Zdjecie.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="ViewModel\" />
+    <Folder Include="Views\SalaFoto\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
