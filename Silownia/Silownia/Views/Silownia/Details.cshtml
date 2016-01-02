@@ -7,110 +7,112 @@
     <h2>Szczegóły dotyczące wybranej siłowni</h2>
     <button class="btn btn-large btn-block btn-primary btn-lg btn-success" onclick="location.href='@Url.Action("Edit", "Silownia", new { id = Model.SilowniaID })';return false;">edytuj</button>
 
-            <fieldset>
-                <table width="100%">
-                    <td>
-                        <dl class="dl-horizontal">
-                            <dt>
-                                @Html.DisplayNameFor(model => model.Nazwa)
-                            </dt>
-                            <dd>
-                                @Html.DisplayFor(model => model.Nazwa)
-                            </dd>
-                            <dt>
-                                @Html.DisplayNameFor(model => model.GodzinaOtwarcia)
-                            </dt>
-                            <dd>
-                                @Html.DisplayFor(model => model.GodzinaOtwarcia)
-                            </dd>
-                            <dt>
-                                @Html.DisplayNameFor(model => model.GodzinaZamkniecia)
-                            </dt>
-                            <dd>
-                                @Html.DisplayFor(model => model.GodzinaZamkniecia)
-                            </dd>
-                            <dt>
-                                @Html.DisplayNameFor(model => model.Powierzchnia)
-                            </dt>
-                            <dd>
-                                @Html.DisplayFor(model => model.Powierzchnia)
-                            </dd>
-                            <dt>
-                                @Html.DisplayNameFor(model => model.NrTelefonu)
-                            </dt>
-                            <dd>
-                                @Html.DisplayFor(model => model.NrTelefonu)
-                            </dd>
-                            
-                        </dl>
-                    </td>
-                    <td></td>
-                    <td>
-                        <!-- This is the div that will contain the Google Map -->
-                        @if (ViewBag.mniejszaMapa)
-                        {
+    <fieldset>
+        <table width="100%">
+            <td>
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Nazwa)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Nazwa)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.GodzinaOtwarcia)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.GodzinaOtwarcia)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.GodzinaZamkniecia)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.GodzinaZamkniecia)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Powierzchnia)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Powierzchnia)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.NrTelefonu)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.NrTelefonu)
+                    </dd>
+
+                </dl>
+            </td>
+            <td></td>
+            <td>
+                @if (Model.Adres != null)
+                { <div>
+                    <!-- This is the div that will contain the Google Map -->
+                    @if (ViewBag.mniejszaMapa)
+                    {
                         <div id="map_canvas" style="height: 200px; width : 200px"></div>
-                        }
-                        else
-                        {
+                    }
+                    else
+                    {
                         <div id="map_canvas" style="height: 300px; width : 800px"></div>
-                        }
+                    }
+                </div>
                         <!-- Enclose the Javascript in a "section" so that it is rendered in the correct order after scripts have been loaded etc -->
-                    </td>
-                </table>
-            </fieldset>
+                }
+            </td>
+        </table>
+    </fieldset>
     <div>
         <button class="btn btn-large btn-block btn-primary btn-lg btn-primary" onclick="location.href='@Url.Action("Index", "Silownia")';return false;">lista siłowni</button>
     </div>
 
-            @if (!ViewBag.mniejSzczegolow)
-            {
-                <div class="wrap">
-                    <img class="show_hide" src="~/Content/ikony/persony/ikona_pracownicy.png" width="90" height="90">
+    @if (!ViewBag.mniejSzczegolow)
+    {
+        <div class="wrap">
+            <img class="show_hide" src="~/Content/ikony/persony/ikona_pracownicy.png" width="90" height="90">
 
-                    <div class="slidingDiv" style="display:none">
-                        <dl , class="table-bordered" ,new style="color:#95a5a6">
-                            <dt>
-                                @Html.Label("Pracownicy", new { style = "color:#95a5a6" })
-                            </dt>
-                            @if (Model.Pracownicy.Count > 0)
-                            {
-                                <dd>
-                                    <table class="table">
-                                        <tr>
-                                            <th>Imię i nazwisko</th>
-                                            <th>Pensja</th>
-                                            <th>Pozycja</th>
-                                        </tr>
-                                        @foreach (var item in Model.Pracownicy)
-                                        {
-                                            <tr>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.imieNazwisko)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Pensja) zł
-                                                </td>
-                                                <td>
-                                                   
-                                                </td>
-                                            </tr>
-                                        }
-                                    </table>
-                                </dd>
-                            }
-                            else
-                            {
-                                <dt>
-                                    @Html.Label("Brak pracowników pracujących w tej siłowni", new { style = "color:#D11919" })
-                                </dt>
-                            }
-                        </dl>
-                    </div>
-                </div>
-
-            }
+            <div class="slidingDiv" style="display:none">
+                <dl , class="table-bordered" ,new style="color:#95a5a6">
+                    <dt>
+                        @Html.Label("Pracownicy", new { style = "color:#95a5a6" })
+                    </dt>
+                    @if (Model.Pracownicy.Count > 0)
+                    {
+                        <dd>
+                            <table class="table">
+                                <tr>
+                                    <th>Imię i nazwisko</th>
+                                    <th>Pensja</th>
+                                    <th>Pozycja</th>
+                                </tr>
+                                @foreach (var item in Model.Pracownicy)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.imieNazwisko)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Pensja) zł
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                }
+                            </table>
+                        </dd>
+                    }
+                    else
+                    {
+                        <dt>
+                            @Html.Label("Brak pracowników pracujących w tej siłowni", new { style = "color:#D11919" })
+                        </dt>
+                    }
+                </dl>
+            </div>
         </div>
+
+    }
+</div>
 
 <script src="http://maps.google.com/maps/api/js?sensor=true" type="text/javascript"></script>
 <script src="http://maps.google.com/maps/api/js?sensor=true" type="text/javascript"></script>
