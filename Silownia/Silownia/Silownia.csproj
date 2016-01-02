@@ -265,6 +265,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\ikony\ikona_adres.png" />
     <Content Include="Content\ikony\ikona_adres50px.png" />
+    <Content Include="Content\ikony\ikona_adres_rectangular_blue.png" />
     <Content Include="Content\ikony\ikona_adres_rectangular_blue_40px.png" />
     <Content Include="Content\ikony\ikona_masaz.png" />
     <Content Include="Content\ikony\ikona_masaz50px.png" />
@@ -288,6 +289,7 @@
     <Content Include="Content\ikony\persony\ikona_trenerPersonalny50px.png" />
     <Content Include="Content\ikony\silownia\ikona_adres_silownia.png" />
     <Content Include="Content\ikony\silownia\ikona_adres_silownia_50px.png" />
+    <Content Include="Content\ikony\silownia\ikona_adres_silownia_blue.png" />
     <Content Include="Content\ikony\silownia\ikona_adres_silownia_blue_40px.png" />
     <Content Include="Content\ikony\silownia\ikona_silownia.png" />
     <Content Include="Content\ikony\silownia\ikona_silownia50px.png" />
