@@ -22,7 +22,7 @@ namespace Silownia.Controllers
         // GET: Masaz
         public ActionResult Index(string imieNazwisko, string SilowniaID, string MasazystaID, int page = 1, int pageSize = 10, AkcjaEnumMasaz akcja = AkcjaEnumMasaz.Brak, String info = null)
         {
-             if (Session["User"] != null)
+            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
                 ViewBag.MasazystaID = new SelectList(db.Masazysci.DistinctBy(a => new { a.Pesel }), "imieNazwisko", "imieNazwisko");
@@ -67,7 +67,7 @@ namespace Silownia.Controllers
         // GET: Masaz/Details/5
         public ActionResult Details(long? id)
         {
-             if (Session["User"] != null)
+            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 if (id == null)
                 {
@@ -86,7 +86,7 @@ namespace Silownia.Controllers
         // GET: Masaz/Create
         public ActionResult Create(long? id)
         {
-              if (Session["User"] != null)
+            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 ViewBag.MasazystaID = new SelectList(db.Masazysci, "OsobaID", "imieNazwisko");
                 var a = from Osoby in db.Masazysci select Osoby;
@@ -116,7 +116,7 @@ namespace Silownia.Controllers
         [HttpPost]
         public ActionResult Create([Bind(Include = "MasazID,MasazystaID,DataMasazu,MasazStart,CzasTrwania")] long? id, Masaz masaz)
         {
-             if (Session["User"] != null)
+            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 ViewBag.MasazystaID = new SelectList(db.Masazysci, "OsobaID", "imieNazwisko", masaz.MasazystaID);
 
@@ -185,7 +185,7 @@ namespace Silownia.Controllers
         // GET: Masaz/Edit/5
         public ActionResult Edit(long? id)
         {
-              if (Session["User"] != null)
+            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 if (id == null)
                 {
@@ -208,7 +208,7 @@ namespace Silownia.Controllers
         [HttpPost]
         public ActionResult Edit([Bind(Include = "MasazID,MasazystaID,DataMasazu,DataMasazu,CzasTrwania")] Masaz masaz)
         {
-              if (Session["User"] != null)
+            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 if (ModelState.IsValid)
                 {
@@ -225,7 +225,7 @@ namespace Silownia.Controllers
         // GET: Masaz/Delete/5
         public ActionResult Delete(long? id)
         {
-               if (Session["User"] != null)
+            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 if (id == null)
                 {
@@ -245,7 +245,7 @@ namespace Silownia.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(long id)
         {
-              if (Session["User"] != null)
+            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 Masaz masaz = db.Masaze.Find(id);
                 db.Masaze.Remove(masaz);
