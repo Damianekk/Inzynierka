@@ -70,7 +70,7 @@
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(model => model.SpecjalizacjaID, "Siłownia", new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.SpecjalizacjaID, "Specjalizacja", new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.DropDownList("SpecjalizacjaID")
                     @Html.ValidationMessageFor(model => model.SpecjalizacjaID)
@@ -79,7 +79,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.SilowniaID, "Siłownia", new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList("SilowniaID", String.Empty)
+                    @Html.DropDownList("SilowniaID")
                     @Html.ValidationMessageFor(model => model.SilowniaID)
                 </div>
             </div>

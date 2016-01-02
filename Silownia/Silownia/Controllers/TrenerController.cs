@@ -19,7 +19,7 @@ namespace Silownia.Controllers
         // GET: /Trener/
         public ActionResult Index(string imieNazwisko, string SilowniaID, string SpecjalizacjaID, int page = 1, int pageSize = 10, AkcjaEnumTrener akcja = AkcjaEnumTrener.Brak, String info = null)
         {
-         //   if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
                 ViewBag.SpecjalizacjaID = new SelectList(db.Specjalizacje.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
@@ -50,13 +50,13 @@ namespace Silownia.Controllers
 
                 return View(model);
             }
-         //   return HttpNotFound();
+            return HttpNotFound();
         }
 
         // GET: /Trener/Details/5
         public ActionResult Details(long? id)
         {
-         //   if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 if (id == null)
                 {
@@ -69,19 +69,19 @@ namespace Silownia.Controllers
                 }
                 return View(trener);
             }
-         //   return HttpNotFound();
+            return HttpNotFound();
         }
 
         // GET: /Trener/Create
         public ActionResult Create()
         {
-          //  if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 ViewBag.SpecjalizacjaID = new SelectList(db.Specjalizacje, "SpecjalizacjaID", "Nazwa");
                 ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
                 return View();
             }
-         //   return HttpNotFound();
+            return HttpNotFound();
         }
 
         // POST: /Trener/Create
@@ -90,7 +90,7 @@ namespace Silownia.Controllers
         [HttpPost]
         public ActionResult Create([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,DataZatrudnienia,Pensja,SilowniaID,SpecjalizacjaID,StawkaGodzinowa")] Trener trener)
         {
-         //   if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 if (ModelState.IsValid)
                 {
@@ -102,7 +102,7 @@ namespace Silownia.Controllers
                     pracownik.IDOsoby = trener.OsobaID;
                     pracownik.Login = trener.Nazwisko;
                     pracownik.Haslo = trener.Imie + trener.Nazwisko;
-                    pracownik.Rola = "Trener";
+                    pracownik.Rola = RoleEnum.Trener.GetDescription();
                     db.Uzytkownicy.Add(pracownik);
                     db.SaveChanges();
 
@@ -115,13 +115,13 @@ namespace Silownia.Controllers
                 
                 return View(trener);
             }
-         //   return HttpNotFound();
+            return HttpNotFound();
         }
 
         // GET: /Trener/Edit/5
         public ActionResult Edit(long? id)
         {
-         //   if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 if (id == null)
                 {
@@ -136,7 +136,7 @@ namespace Silownia.Controllers
                 ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", trener.Silownia);
                 return View(trener);
             }
-        //    return HttpNotFound();
+            return HttpNotFound();
         }
 
         // POST: /Trener/Edit/5
@@ -145,7 +145,7 @@ namespace Silownia.Controllers
         [HttpPost]
         public ActionResult Edit([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,DataZatrudnienia,Pensja,SilowniaID,SpecjalizacjaID,StawkaGodzinowa")] Trener trener)
         {
-         //   if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 if (ModelState.IsValid)
                 {
@@ -157,13 +157,13 @@ namespace Silownia.Controllers
                 ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", trener.Silownia);
                 return View(trener);
             }
-        //    return HttpNotFound();
+            return HttpNotFound();
         }
 
         // GET: /Trener/Delete/5
         public ActionResult Delete(long? id)
         {
-         //   if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 if (id == null)
                 {
@@ -176,14 +176,14 @@ namespace Silownia.Controllers
                 }
                 return View(trener);
             }
-        //    return HttpNotFound();
+            return HttpNotFound();
         }
 
         // POST: /Trener/Delete/5
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(long id)
         {
-         //   if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 Trener trener = db.Trenerzy.Find(id);
                 db.Trenerzy.Remove(trener);
@@ -195,7 +195,7 @@ namespace Silownia.Controllers
 
                 return RedirectToAction("Index", new { akcja = AkcjaEnumTrener.UsunietoTrenera, info = trener.imieNazwisko });
             }
-         //   return HttpNotFound();
+            return HttpNotFound();
         }
 
         protected override void Dispose(bool disposing)

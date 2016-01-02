@@ -47,6 +47,15 @@ a.adresPic {
     height: 50px;
     text-indent: -9999px; /* hides the link text */
 }
+
+a.adresSilowniaPic {
+    background: url('/Content/ikony/silownia/ikona_adres_silownia_50px.png') no-repeat;
+    display: block;
+    width: 50px;
+    height: 50px;
+    text-indent: -9999px; /* hides the link text */
+}
+
 /* styles for validation helpers */
 .field-validation-error {
     color: #b94a48;

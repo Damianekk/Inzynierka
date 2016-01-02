@@ -53,9 +53,9 @@
         </dl>
     </div>
 </div>
-    <div>
-        <button class="btn btn-large btn-lg btn-block btn-primary btn-primary" onclick="location.href='@Url.Action("Index", "Instruktor")';return false;">lista instruktorów</button>
-    </div>
+<div>
+    <button class="btn btn-large btn-lg btn-block btn-primary btn-primary" onclick="location.href='@Url.Action("Index", "Instruktor")';return false;">lista instruktorów</button>
+</div>
 <div>
     <div class="wrap">
         <img class="show_hide" src="~/Content/ikony/ikona_treningGrupowy.png" width="90" height="90">
@@ -76,7 +76,11 @@
                             </tr>
                             @foreach (var item in Model.ZajeciaGrup)
                             {
-                                
+                                <tr>
+                                    <td>
+                                        TODO (po zrobieniu treningów grupowych: Jagoda)
+                                    </td>
+                                </tr>
                             }
                         </table>
                     </dd>
@@ -93,27 +97,27 @@
 
 </div>
 
-    <style type="text/cs">
-        div.wrap {
-            float: left;
-            width: 500px;
-        }
+<style type="text/cs">
+    div.wrap {
+        float: left;
+        width: 500px;
+    }
 
-        img.show_hide {
-            margin-left: auto;
-            margin-right: auto;
-        }
+    img.show_hide {
+        margin-left: auto;
+        margin-right: auto;
+    }
 
-        .slidingDiv {
-            width: 500px;
-            display: none;
-        }
-    </style>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">
-    </script>
-    <script type="text/javascript">
+    .slidingDiv {
+        width: 500px;
+        display: none;
+    }
+</style>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">
+</script>
+<script type="text/javascript">
     $('img.show_hide').on("click", function () {
         $('div.slidingDiv').stop().slideUp('fast');
         $(this).next('div.slidingDiv').stop().slideToggle('fast');
     });
-    </script>
+</script>

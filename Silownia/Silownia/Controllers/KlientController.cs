@@ -8,6 +8,7 @@ using Silownia.Models;
 using Silownia.DAL;
 using PagedList;
 using System.Collections.Generic;
+using System.Web.Script.Serialization;
 
 
 namespace Silownia.Controllers
@@ -23,7 +24,7 @@ namespace Silownia.Controllers
 
         public ActionResult Index(string Miasto, string imieNazwisko, bool czyUmowa = false, int page = 1, int pageSize = 10, AkcjaEnum akcja = AkcjaEnum.Brak, String info = null)
         {
-            // if (Session["User"] != null)
+             if (Session["User"] != null)
             {
                 var Miasta = db.Klienci.Where(u => (u.OsobaID != null) && (u.Adres != null)).DistinctBy(a => new { a.Adres.Miasto }).Select(x => x.Adres);
 
@@ -59,14 +60,14 @@ namespace Silownia.Controllers
 
                 return View(model);
             }
-            //  return HttpNotFound();
+              return HttpNotFound();
 
         }
 
         // GET: /Klient/Details/5
         public ActionResult Details(long? id)
         {
-            //  if (Session["User"] != null)
+              if (Session["User"] != null)
             {
                 if (id == null)
                 {
@@ -80,17 +81,17 @@ namespace Silownia.Controllers
                 var z = klient;
                 return View(z);
             }
-            //    return HttpNotFound();
+                return HttpNotFound();
         }
 
         // GET: /Klient/Create
         public ActionResult Create()
         {
-            //  if (Session["User"] != null)
+              if (Session["User"] != null)
             {
                 return View();
             }
-            //    return HttpNotFound();
+                return HttpNotFound();
         }
 
         // POST: /Klient/Create
@@ -99,7 +100,7 @@ namespace Silownia.Controllers
         [HttpPost]
         public ActionResult Create([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,Mail,NrTelefonu,Adres")] Klient klient)
         {
-            //  if (Session["User"] != null)
+              if (Session["User"] != null)
             {
                 if (ModelState.IsValid)
                 {
@@ -110,7 +111,7 @@ namespace Silownia.Controllers
                     uzytkownik.IDOsoby = klient.OsobaID;
                     uzytkownik.Login = klient.Mail;
                     uzytkownik.Haslo = klient.Imie + klient.Nazwisko;
-                    uzytkownik.Rola = "Klient";
+                    uzytkownik.Rola = RoleEnum.Klient.GetDescription();
                     db.Uzytkownicy.Add(uzytkownik);
                     db.SaveChanges();
                     return RedirectToAction("Index", new { akcja = AkcjaEnum.DodanoKlienta, info = klient.imieNazwisko });
@@ -118,13 +119,13 @@ namespace Silownia.Controllers
 
                 return View(klient);
             }
-            //  return HttpNotFound();
+              return HttpNotFound();
         }
 
         // GET: /Klient/Edit/5
         public ActionResult Edit(long? id)
         {
-            //  if (Session["User"] != null)
+              if (Session["User"] != null)
             {
                 if (id == null)
                 {
@@ -137,7 +138,7 @@ namespace Silownia.Controllers
                 }
                 return View(klient);
             }
-            // return HttpNotFound();
+             return HttpNotFound();
         }
 
         // POST: /Klient/Edit/5
@@ -146,7 +147,7 @@ namespace Silownia.Controllers
         [HttpPost]
         public ActionResult Edit([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,Mail,NrTelefonu")] Klient klient)
         {
-            //   if (Session["User"] != null)
+               if (Session["User"] != null)
             {
                 if (ModelState.IsValid)
                 {
@@ -156,13 +157,13 @@ namespace Silownia.Controllers
                 }
                 return View(klient);
             }
-            //   return HttpNotFound();
+               return HttpNotFound();
         }
 
         // GET: /Klient/Delete/5
         public ActionResult Delete(long? id)
         {
-            //  if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 if (id == null)
                 {
@@ -175,14 +176,14 @@ namespace Silownia.Controllers
                 }
                 return View(klient);
             }
-            //  return HttpNotFound();
+              return HttpNotFound();
         }
 
         // POST: /Klient/Delete/5
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(long id)
         {
-            // if (Session["User"] != null)
+             if (Session["User"] != null)
             {
                 Klient klient = db.Klienci.Find(id);
                 db.Klienci.Remove(klient);
@@ -194,7 +195,7 @@ namespace Silownia.Controllers
 
                 return RedirectToAction("Index", new { akcja = AkcjaEnum.UsunietoKlienta, info = klient.imieNazwisko });
             }
-            //  return HttpNotFound();
+              return HttpNotFound();
         }
 
         protected override void Dispose(bool disposing)
@@ -205,6 +206,22 @@ namespace Silownia.Controllers
             }
             base.Dispose(disposing);
         }
+        [HttpPost]
+        public JsonResult KlientInfoJSON()
+        {
 
+            var jsonSerialiser = new JavaScriptSerializer();
+            var klienci = db.Klienci.Where(s => s.Adres != null).ToList<Silownia.Models.Klient>();
+
+            //  klienci.RemoveAll(item => item.Adres != null);
+            var z = klienci.Select(x => new
+            {
+                dlugosc = x.Dlugosc,
+                szerokosc = x.Szerokosc,
+            });
+            return Json(z);
+
+            //  return Json(new { ok = true, myData = klienci }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

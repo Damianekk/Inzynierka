@@ -72,8 +72,18 @@
                 @Html.DisplayFor(model => model.Silownia.Nazwa)
             </dd>
         </dl>
-
-        <input type="submit" value="Usuń" class="btn  btn-large btn-lg btn-block btn-danger" />
+        @if (Model.TreningiPersonalne.Count > 0)
+        {
+            <div style="color:red">
+                Ten trener ma umowione treningi personalne, należy je odwołać przed usunięciem trenera.
+            </div>
+        }
+        else
+        {
+            <div>
+                <input type="submit" value="Usuń" class="btn  btn-large btn-lg btn-block btn-danger" />
+            </div>
+        }
     </div>
 </div>
 }

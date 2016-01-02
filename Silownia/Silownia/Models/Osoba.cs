@@ -33,6 +33,10 @@ namespace Silownia.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime DataUrodzenia { get; set; }
 
+        // do Google Maps
+        public double Dlugosc { get; set; }
+        public double Szerokosc { get; set; }
+
         public byte[] ZdjecieProfilowe { get; set; }
 
         [Phone]

@@ -22,7 +22,7 @@ namespace Silownia.Controllers
         // GET: Masaz
         public ActionResult Index(string imieNazwisko, string SilowniaID, string MasazystaID, int page = 1, int pageSize = 10, AkcjaEnumMasaz akcja = AkcjaEnumMasaz.Brak, String info = null)
         {
-            // if (Session["User"] != null)
+             if (Session["User"] != null)
             {
                 ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
                 ViewBag.MasazystaID = new SelectList(db.Masazysci.DistinctBy(a => new { a.Pesel }), "imieNazwisko", "imieNazwisko");
@@ -61,13 +61,13 @@ namespace Silownia.Controllers
 
                 return View(model);
             }
-            //  return HttpNotFound();
+              return HttpNotFound();
         }
 
         // GET: Masaz/Details/5
         public ActionResult Details(long? id)
         {
-            // if (Session["User"] != null)
+             if (Session["User"] != null)
             {
                 if (id == null)
                 {
@@ -80,13 +80,13 @@ namespace Silownia.Controllers
                 }
                 return View(masaz);
             }
-            // return HttpNotFound();
+             return HttpNotFound();
         }
 
         // GET: Masaz/Create
         public ActionResult Create(long? id)
         {
-            //  if (Session["User"] != null)
+              if (Session["User"] != null)
             {
                 ViewBag.MasazystaID = new SelectList(db.Masazysci, "OsobaID", "imieNazwisko");
                 var a = from Osoby in db.Masazysci select Osoby;
@@ -107,7 +107,7 @@ namespace Silownia.Controllers
 
                 return View();
             }
-            // return HttpNotFound();
+             return HttpNotFound();
         }
 
         // POST: Masaz/Create
@@ -116,7 +116,7 @@ namespace Silownia.Controllers
         [HttpPost]
         public ActionResult Create([Bind(Include = "MasazID,MasazystaID,DataMasazu,CzasTrwania")] long? id, Masaz masaz)
         {
-            // if (Session["User"] != null)
+             if (Session["User"] != null)
             {
                 ViewBag.MasazystaID = new SelectList(db.Masazysci, "OsobaID", "imieNazwisko", masaz.MasazystaID);
 
@@ -145,7 +145,7 @@ namespace Silownia.Controllers
                 }
                 return View(masaz);
             }
-            // return HttpNotFound();
+             return HttpNotFound();
 
         }
 
@@ -182,7 +182,7 @@ namespace Silownia.Controllers
         // GET: Masaz/Edit/5
         public ActionResult Edit(long? id)
         {
-            //  if (Session["User"] != null)
+              if (Session["User"] != null)
             {
                 if (id == null)
                 {
@@ -196,7 +196,7 @@ namespace Silownia.Controllers
                 ViewBag.MasazystaID = new SelectList(db.Masazysci, "OsobaID", "imieNazwisko", masaz.MasazystaID);
                 return View(masaz);
             }
-            //  return HttpNotFound();
+              return HttpNotFound();
         }
 
         // POST: Masaz/Edit/5
@@ -205,7 +205,7 @@ namespace Silownia.Controllers
         [HttpPost]
         public ActionResult Edit([Bind(Include = "MasazID,MasazystaID,DataMasazu,CzasTrwania")] Masaz masaz)
         {
-            //  if (Session["User"] != null)
+              if (Session["User"] != null)
             {
                 if (ModelState.IsValid)
                 {
@@ -216,13 +216,13 @@ namespace Silownia.Controllers
                 ViewBag.MasazystaID = new SelectList(db.Masazysci, "OsobaID", "imieNazwisko", masaz.MasazystaID);
                 return View(masaz);
             }
-            //  return HttpNotFound();
+              return HttpNotFound();
         }
 
         // GET: Masaz/Delete/5
         public ActionResult Delete(long? id)
         {
-            //   if (Session["User"] != null)
+               if (Session["User"] != null)
             {
                 if (id == null)
                 {
@@ -235,21 +235,21 @@ namespace Silownia.Controllers
                 }
                 return View(masaz);
             }
-            //  return HttpNotFound();
+              return HttpNotFound();
         }
 
         // POST: Masaz/Delete/5
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(long id)
         {
-            //  if (Session["User"] != null)
+              if (Session["User"] != null)
             {
                 Masaz masaz = db.Masaze.Find(id);
                 db.Masaze.Remove(masaz);
                 db.SaveChanges();
                 return RedirectToAction("Index", new { akcja = AkcjaEnumMasaz.UsunietoMasaz });
             }
-            //  return HttpNotFound();
+              return HttpNotFound();
         }
 
         protected override void Dispose(bool disposing)

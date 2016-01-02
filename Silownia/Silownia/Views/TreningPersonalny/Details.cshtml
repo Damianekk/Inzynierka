@@ -1,0 +1,157 @@
+﻿@model Silownia.Models.TreningPersonalny
+@{
+    ViewBag.Title = "Trening personalny: szczegóły";
+}
+<h2>Szczegóły dotyczące wybranego treningu personalnego:</h2>
+<div class="divDark">
+    <div class="divInner">
+        <dl class="dl-horizontal">
+            <dt>
+                Klient
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Klient.imieNazwisko)
+            </dd>
+            <dt>
+                Trener
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Trener.imieNazwisko)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.TreningStart)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.TreningStart)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.CzasTrwania)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.CzasTrwania) minut
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.kosztTreningu)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.kosztTreningu) zł
+            </dd>
+        </dl>
+    </div>
+</div>
+
+
+<div>
+    @if (Request.UrlReferrer != null)
+    {
+        <button class="btn btn-large btn-block btn-primary btn-lg btn-primary" onclick="history.go(-1); return false;">powrót</button>
+    }
+</div>
+
+<div>
+
+    <div class="wrap">
+        <img class="show_hide" src="~/Content/ikony/persony/ikona_klient.png" width="90" height="90">
+
+        <div class="slidingDiv" style="display:none">
+            <dl , class="table-bordered" ,new style="color:#76C3D7">
+                <dt>
+                    @Html.Label("Klient", new { style = "color:#76C3D7" })
+                </dt>
+
+                <dd>
+                    <table class="table">
+                        <tr>
+                            <th>Imię i nazwisko</th>
+                            <th>Adres e-mail</th>
+                            <th>Numer telefonu</th>
+                            <th></th>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(model => model.Klient.imieNazwisko)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.Klient.Mail)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.Klient.NrTelefonu)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.Klient.ZdjecieProfilowe)
+                            </td>
+                        </tr>
+
+                    </table>
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="wrap">
+        <img class="show_hide" src="~/Content/ikony/persony/ikona_trenerPersonalny.png" width="90" height="90">
+
+        <div class="slidingDiv" style="display:none">
+            <dl , class="table-bordered" ,new style="color:#782D86">
+                <dt>
+                    @Html.Label("Trener personalny", new { style = "color:#782D86" })
+                </dt>
+
+                <dd>
+                    <table class="table">
+                        <tr>
+                            <th>Imię i nazwisko</th>
+                            <th>Numer telefonu</th>
+                            <th>Stawka godzinowa</th>
+                            <th></th>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(model => model.Trener.imieNazwisko)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.Trener.NrTelefonu)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.Trener.StawkaGodzinowa) (pln)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.Trener.ZdjecieProfilowe)
+                            </td>
+                        </tr>
+
+                    </table>
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+</div>
+
+
+<style type="text/cs">
+    div.wrap {
+        float: left;
+        width: 500px;
+    }
+
+    img.show_hide {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .slidingDiv {
+        width: 500px;
+        display: none;
+    }
+</style>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">
+</script>
+<script type="text/javascript">
+    $('img.show_hide').on("click", function () {
+        $('div.slidingDiv').stop().slideUp('fast');
+        $(this).next('div.slidingDiv').stop().slideToggle('fast');
+    });
+</script>

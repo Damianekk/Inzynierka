@@ -19,7 +19,7 @@ namespace Silownia.Controllers
         // GET: /Silownia/
         public ActionResult Index(string Miasto, int page = 1, int pageSize = 10, AkcjaEnumSilownia akcja = AkcjaEnumSilownia.Brak, String info = null)
         {
-         //   if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 var Miasta = db.Silownie.Where(u => (u.SilowniaID != null) && (u.Adres != null)).DistinctBy(a => new { a.Adres.Miasto }).Select(x => x.Adres);
 
@@ -40,21 +40,21 @@ namespace Silownia.Controllers
                 PagedList<Models.Silownia> model = new PagedList<Models.Silownia>(final, page, pageSize);
 
 
-                if (akcja != AkcjaEnumSilownia.Brak)
-                {
-                    ViewBag.info = info;
+                if (akcja != AkcjaEnumSilownia.Brak)                  
                     ViewBag.Akcja = akcja;
-                }
+
+                if(info != null)
+                    ViewBag.info = info;
 
                 return View(model);
             }
-           // return HttpNotFound();
+            return HttpNotFound();
         }
 
         // GET: /Silownia/Details/5
         public ActionResult Details(long? id, bool? mniejSzczegolow = false, bool? mniejszaMapa = false)
         {
-         //   if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 if (id == null)
                 {
@@ -71,26 +71,28 @@ namespace Silownia.Controllers
                 }
                 return View(silownia);
             }
-         //   return HttpNotFound();
+            return HttpNotFound();
         }
 
         // GET: /Silownia/Create
+        [MyAuthorize(RoleEnum.Administrator)]
         public ActionResult Create()
         {
-           // if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 return View();
             }
-         //   return HttpNotFound();
+            return HttpNotFound();
         }
 
         // POST: /Silownia/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [MyAuthorize(RoleEnum.Administrator)]
         public ActionResult Create([Bind(Include = "SilowniaID,Nazwa,GodzinaOtwarcia,GodzinaZamkniecia,Powierzchnia,NrTelefonu,DodatkoweInfo")] Models.Silownia silownia)
         {
-          //  if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 if (ModelState.IsValid)
                 {
@@ -100,13 +102,13 @@ namespace Silownia.Controllers
                 }
                 return View(silownia);
             }
-         //   return HttpNotFound();
+            return HttpNotFound();
         }
 
         // GET: /Silownia/Edit/5
         public ActionResult Edit(long? id)
         {
-           // if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 if (id == null)
                 {
@@ -120,7 +122,7 @@ namespace Silownia.Controllers
                 }
                 return View(silownia);
             }
-          //  return HttpNotFound();
+            return HttpNotFound();
         }
 
         // POST: /Silownia/Edit/5
@@ -129,7 +131,7 @@ namespace Silownia.Controllers
         [HttpPost]
         public ActionResult Edit([Bind(Include = "SilowniaID,Nazwa,GodzinaOtwarcia,GodzinaZamkniecia,Powierzchnia,NrTelefonu,DodatkoweInfo")] Models.Silownia silownia)
         {
-         //   if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 if (ModelState.IsValid)
                 {
@@ -139,13 +141,14 @@ namespace Silownia.Controllers
                 }
                 return View(silownia);
             }
-          //  return HttpNotFound();
+            return HttpNotFound();
         }
 
         // GET: /Silownia/Delete/5
+        [MyAuthorize(RoleEnum.Administrator)]
         public ActionResult Delete(long? id)
         {
-         //   if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 if (id == null)
                 {
@@ -158,21 +161,22 @@ namespace Silownia.Controllers
                 }
                 return View(silownia);
             }
-         //   return HttpNotFound();
+            return HttpNotFound();
         }
 
         // POST: /Silownia/Delete/5
         [HttpPost, ActionName("Delete")]
+        [MyAuthorize(RoleEnum.Administrator)]
         public ActionResult DeleteConfirmed(long id)
         {
-         //   if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 Models.Silownia silownia = db.Silownie.Find(id);
                 db.Silownie.Remove(silownia);
                 db.SaveChanges();
                 return RedirectToAction("Index", new { akcja = AkcjaEnumSilownia.UsunietoSilownie, info = silownia.Nazwa });
             }
-         //   return HttpNotFound();
+            return HttpNotFound();
         }
 
         protected override void Dispose(bool disposing)

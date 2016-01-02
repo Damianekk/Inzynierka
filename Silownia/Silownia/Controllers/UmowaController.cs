@@ -21,7 +21,7 @@ namespace Silownia.Controllers
         // GET: /Umowa/
         public ActionResult Index(string imieNazwisko, string SilowniaID, int page = 1, int pageSize = 10, AkcjaEnumUmowa akcja = AkcjaEnumUmowa.Brak, String info = null)
         {
-         //   if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
 
@@ -51,13 +51,13 @@ namespace Silownia.Controllers
 
                 return View(model);
             }
-          //  return HttpNotFound();
+            return HttpNotFound();
         }
 
         // GET: /Umowa/Details/5
         public ActionResult Details(long? id)
         {
-           // if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 if (id == null)
                 {
@@ -70,13 +70,13 @@ namespace Silownia.Controllers
                 }
                 return View(umowa);
             }
-          //  return HttpNotFound();
+            return HttpNotFound();
         }
 
         // GET: /Umowa/Create
         public ActionResult Create(long? id)
         {
-        //    if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
                 ViewBag.RecepcjonistaID = new SelectList(db.Recepcjonisci, "OsobaID", "imieNazwisko");
@@ -99,13 +99,13 @@ namespace Silownia.Controllers
                 return View(new Umowa // W ten sposób tworze obiekt nadaje aktualny czas / przypisuje do Daty podpisania umowy i zwracam widok z datą (teraz)
                 {
                     DataPodpisania = DateTime.Now,
-                    // tu przydałoby się dodać datę now + miesiąc
+                    // minimalna umowa na miesiąc
                     DataZakonczenia = (DateTime.Now).AddMonths(1),
 
                     // ,Recepcjonista = recepcjonista 
                 });
             }
-         //   return HttpNotFound();
+            return HttpNotFound();
         }
 
         // POST: /Umowa/Create
@@ -115,10 +115,11 @@ namespace Silownia.Controllers
         // public ActionResult Create([Bind(Include= "UmowaID,SilowniaID,DataPodpisania,DataZakonczenia,Cena,RecepcjonistaID")] long? id, Umowa umowa)
         public ActionResult Create([Bind(Include = "UmowaID,DataPodpisania,DataZakonczenia,RecepcjonistaID,Cena")] long? id, Umowa umowa)
         {
-          //  if (Session["User"] != null)
+            if (Session["User"] != null)
             {
-                ViewBag.RecepcjonistaID = new SelectList(db.Recepcjonisci, "OsobaID", "imieNazwisko", umowa.RecepcjonistaID);
+                
                 ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", umowa.SilowniaID);
+                ViewBag.RecepcjonistaID = new SelectList(db.Recepcjonisci.Where(o => o.SilowniaID == umowa.SilowniaID), "OsobaID", "imieNazwisko", umowa.RecepcjonistaID);
 
                 if (ModelState.IsValid && !aktywnaUmowa(id, umowa.DataPodpisania, umowa.DataZakonczenia))
                 {
@@ -140,6 +141,8 @@ namespace Silownia.Controllers
                     umowa.Silownia = silownia;
                     silownia.Umowy.Add(umowa);
                     #endregion
+
+                    
                     db.Umowy.Add(umowa);
                     db.SaveChanges();
                     return RedirectToAction("Index", new { akcja = AkcjaEnumUmowa.DodanoUmowe, info = klient.imieNazwisko });
@@ -148,7 +151,7 @@ namespace Silownia.Controllers
 
                 return View(umowa);
             }
-          //  return HttpNotFound();
+            return HttpNotFound();
         }
 
         bool aktywnaUmowa(long? klientID, DateTime umowaOd, DateTime umowaDo)
@@ -166,7 +169,7 @@ namespace Silownia.Controllers
         // GET: /Umowa/Edit/5
         public ActionResult Edit(long? id)
         {
-        //    if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 if (id == null)
                 {
@@ -180,7 +183,7 @@ namespace Silownia.Controllers
                 ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", umowa.SilowniaID);
                 return View(umowa);
             }
-          //  return HttpNotFound();
+            return HttpNotFound();
         }
 
         // POST: /Umowa/Edit/5
@@ -189,7 +192,7 @@ namespace Silownia.Controllers
         [HttpPost]
         public ActionResult Edit([Bind(Include = "UmowaID,SilowniaID,DataPodpisania,DataZakonczenia,Cena")] Umowa umowa)
         {
-         //   if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 if (ModelState.IsValid)
                 {
@@ -200,13 +203,13 @@ namespace Silownia.Controllers
                 ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", umowa.SilowniaID);
                 return View(umowa);
             }
-         //   return HttpNotFound();
+            return HttpNotFound();
         }
 
         // GET: /Umowa/Delete/5
         public ActionResult Delete(long? id)
         {
-         //   if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 if (id == null)
                 {
@@ -219,21 +222,21 @@ namespace Silownia.Controllers
                 }
                 return View(umowa);
             }
-        //    return HttpNotFound();
+            return HttpNotFound();
         }
 
         // POST: /Umowa/Delete/5
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(long id)
         {
-          //  if (Session["User"] != null)
+            if (Session["User"] != null)
             {
                 Umowa umowa = db.Umowy.Find(id);
                 db.Umowy.Remove(umowa);
                 db.SaveChanges();
                 return RedirectToAction("Index", new { akcja = AkcjaEnumUmowa.UsunietoUmowe });
             }
-          //  return HttpNotFound();
+            return HttpNotFound();
         }
 
         protected override void Dispose(bool disposing)
