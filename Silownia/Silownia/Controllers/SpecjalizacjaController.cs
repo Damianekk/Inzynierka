@@ -14,7 +14,7 @@ namespace Silownia.Controllers
         // GET: /Specjalizacja/
         public ActionResult Index()
         {
-            if (Session["User"] != null)
+            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 return View(db.Specjalizacje.ToList());
             }
@@ -24,7 +24,7 @@ namespace Silownia.Controllers
         // GET: /Specjalizacja/Details/5
         public ActionResult Details(long? id)
         {
-            if (Session["User"] != null)
+            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 if (id == null)
                 {
@@ -43,7 +43,7 @@ namespace Silownia.Controllers
         // GET: /Specjalizacja/Create
         public ActionResult Create()
         {
-            if (Session["User"] != null)
+            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 return View();
             }
@@ -56,7 +56,7 @@ namespace Silownia.Controllers
         [HttpPost]
         public ActionResult Create([Bind(Include="SpecjalizacjaID,Nazwa")] Specjalizacja specjalizacja)
         {
-            if (Session["User"] != null)
+            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 if (ModelState.IsValid)
                 {
@@ -73,7 +73,7 @@ namespace Silownia.Controllers
         // GET: /Specjalizacja/Edit/5
         public ActionResult Edit(long? id)
         {
-            if (Session["User"] != null)
+            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 if (id == null)
                 {
@@ -95,7 +95,7 @@ namespace Silownia.Controllers
         [HttpPost]
         public ActionResult Edit([Bind(Include="SpecjalizacjaID,Nazwa")] Specjalizacja specjalizacja)
         {
-            if (Session["User"] != null)
+            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 if (ModelState.IsValid)
                 {
@@ -111,7 +111,7 @@ namespace Silownia.Controllers
         // GET: /Specjalizacja/Delete/5
         public ActionResult Delete(long? id)
         {
-           if (Session["User"] != null)
+           if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 if (id == null)
                 {
@@ -131,7 +131,7 @@ namespace Silownia.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(long id)
         {
-            if (Session["User"] != null)
+            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 Specjalizacja specjalizacja = db.Specjalizacje.Find(id);
                 db.Specjalizacje.Remove(specjalizacja);

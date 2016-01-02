@@ -21,6 +21,11 @@ namespace Silownia.Models
         [Display(Name = "Czas trwania masażu")]
         public int CzasTrwania { get; set; }
 
+       // [Required(ErrorMessage = "Podaj czas rozpoczęcia masażu")]
+        [DataType(DataType.Time)]
+        [Display(Name = "Godzina masażu")]
+        public DateTime MasazStart { get; set; }
+
 
         [Display(Name = "Data końca masażu")]
         [DataType(DataType.DateTime)]

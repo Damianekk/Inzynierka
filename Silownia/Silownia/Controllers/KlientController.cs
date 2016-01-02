@@ -24,7 +24,7 @@ namespace Silownia.Controllers
 
         public ActionResult Index(string Miasto, string imieNazwisko, bool czyUmowa = false, int page = 1, int pageSize = 10, AkcjaEnum akcja = AkcjaEnum.Brak, String info = null)
         {
-             if (Session["User"] != null)
+             if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 var Miasta = db.Klienci.Where(u => (u.OsobaID != null) && (u.Adres != null)).DistinctBy(a => new { a.Adres.Miasto }).Select(x => x.Adres);
 
@@ -67,7 +67,7 @@ namespace Silownia.Controllers
         // GET: /Klient/Details/5
         public ActionResult Details(long? id)
         {
-              if (Session["User"] != null)
+              if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 if (id == null)
                 {
@@ -87,7 +87,7 @@ namespace Silownia.Controllers
         // GET: /Klient/Create
         public ActionResult Create()
         {
-              if (Session["User"] != null)
+              if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 return View();
             }
@@ -100,7 +100,7 @@ namespace Silownia.Controllers
         [HttpPost]
         public ActionResult Create([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,Mail,NrTelefonu,Adres")] Klient klient)
         {
-              if (Session["User"] != null)
+              if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 if (ModelState.IsValid)
                 {
@@ -125,7 +125,7 @@ namespace Silownia.Controllers
         // GET: /Klient/Edit/5
         public ActionResult Edit(long? id)
         {
-              if (Session["User"] != null)
+              if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 if (id == null)
                 {
@@ -147,7 +147,7 @@ namespace Silownia.Controllers
         [HttpPost]
         public ActionResult Edit([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,Mail,NrTelefonu")] Klient klient)
         {
-               if (Session["User"] != null)
+               if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 if (ModelState.IsValid)
                 {
@@ -163,7 +163,7 @@ namespace Silownia.Controllers
         // GET: /Klient/Delete/5
         public ActionResult Delete(long? id)
         {
-            if (Session["User"] != null)
+            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 if (id == null)
                 {
@@ -183,7 +183,7 @@ namespace Silownia.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(long id)
         {
-             if (Session["User"] != null)
+             if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
                 Klient klient = db.Klienci.Find(id);
                 db.Klienci.Remove(klient);

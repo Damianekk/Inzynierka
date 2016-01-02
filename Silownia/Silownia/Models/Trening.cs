@@ -19,6 +19,11 @@ namespace Silownia.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
         public DateTime TreningStart { get; set; }
 
+        //[Required(ErrorMessage = "Podaj datę treningu")]
+        [DataType(DataType.Time)]
+        [Display(Name = "Godzina treningu")]
+        public DateTime TreningStartGodzina { get; set; }
+
 
         [Required(ErrorMessage = "Podaj datę treningu")]
         [Display(Name = "Koniec treningu")]
