@@ -10,7 +10,7 @@ namespace Silownia.Models
         [Key, Required]
         public long Pesel { get; set; }
         [Required]
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
         [Display(Name = "Data zatrudnienia")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime DataZatrudnienia { get; set; }

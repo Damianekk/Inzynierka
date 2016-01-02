@@ -119,6 +119,7 @@
                             <tr>
                                 <th>Klient</th>
                                 <th>Data masażu</th>
+                                <th>Godzina</th>
                                 <th>Czas trwania</th>
                                 <th>Koszt</th>
                                 <th></th>
@@ -131,6 +132,9 @@
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.DataMasazu)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.MasazStart)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.CzasTrwania)

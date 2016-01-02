@@ -55,6 +55,9 @@
             @Html.Label("Data masażu:")
         </th>
         <th>
+            @Html.Label("Godzina masażu:")
+        </th>
+        <th>
             @Html.Label("Czas trwania:")
         </th>
         <th></th>
@@ -70,6 +73,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DataMasazu)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MasazStart)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CzasTrwania)
