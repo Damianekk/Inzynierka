@@ -6,6 +6,7 @@
 <div>
     <h2>Szczegóły dotyczące wybranej siłowni</h2>
     <button class="btn btn-large btn-block btn-primary btn-lg btn-success" onclick="location.href='@Url.Action("Edit", "Silownia", new { id = Model.SilowniaID })';return false;">edytuj</button>
+    <button class="btn btn-large btn-lg btn-block btn-primary btn-info" onclick="location.href='@Url.Action("Create", "Sala", new { id = Model.SilowniaID })';return false;">dodaj salę</button>
 
     <fieldset>
         <table width="100%">

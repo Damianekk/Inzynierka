@@ -64,7 +64,7 @@ namespace Silownia.Controllers
                     return View(model);
                 }
             }
-              return HttpNotFound();
+            return HttpNotFound();
         }
 
         // GET: Masaz/Details/5
@@ -86,7 +86,7 @@ namespace Silownia.Controllers
                     return View(masaz);
                 }
             }
-             return HttpNotFound();
+            return HttpNotFound();
         }
 
         // GET: Masaz/Create
@@ -116,7 +116,7 @@ namespace Silownia.Controllers
                     return View();
                 }
             }
-             return HttpNotFound();
+            return HttpNotFound();
         }
 
         // POST: Masaz/Create
@@ -160,8 +160,7 @@ namespace Silownia.Controllers
                     return View(masaz);
                 }
             }
-             return HttpNotFound();
-
+            return HttpNotFound();
         }
 
 
@@ -214,7 +213,7 @@ namespace Silownia.Controllers
                     return View(masaz);
                 }
             }
-              return HttpNotFound();
+            return HttpNotFound();
         }
 
         // POST: Masaz/Edit/5
@@ -237,7 +236,7 @@ namespace Silownia.Controllers
                     return View(masaz);
                 }
             }
-              return HttpNotFound();
+            return HttpNotFound();
         }
 
         // GET: Masaz/Delete/5
@@ -259,7 +258,7 @@ namespace Silownia.Controllers
                     return View(masaz);
                 }
             }
-              return HttpNotFound();
+            return HttpNotFound();
         }
 
         // POST: Masaz/Delete/5
@@ -276,7 +275,7 @@ namespace Silownia.Controllers
                     return RedirectToAction("Index", new { akcja = AkcjaEnumMasaz.UsunietoMasaz });
                 }
             }
-              return HttpNotFound();
+            return HttpNotFound();
         }
 
         protected override void Dispose(bool disposing)

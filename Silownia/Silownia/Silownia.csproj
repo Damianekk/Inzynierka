@@ -185,6 +185,7 @@
     <Compile Include="Controllers\MasazystaController.cs" />
     <Compile Include="Controllers\PhotoController.cs" />
     <Compile Include="Controllers\SalaController.cs" />
+    <Compile Include="Controllers\SprzetController.cs" />
     <Compile Include="Controllers\TrenerViewController.cs" />
     <Compile Include="Controllers\TreningPersonalnyController.cs" />
     <Compile Include="Helpers\AkcjaEnum.cs" />
@@ -217,6 +218,7 @@
     <Compile Include="Helpers\AkcjaEnumMasazysta.cs" />
     <Compile Include="Helpers\AkcjaEnumRecepcjonista.cs" />
     <Compile Include="Helpers\AkcjaEnumSilownia.cs" />
+    <Compile Include="Helpers\AkcjaEnumSprzet.cs" />
     <Compile Include="Helpers\AkcjaEnumTrener.cs" />
     <Compile Include="Helpers\AkcjaEnumTrening.cs" />
     <Compile Include="Helpers\AkcjaEnumUmowa.cs" />
@@ -269,8 +271,12 @@
     <Content Include="Content\ikony\ikona_adres50px.png" />
     <Content Include="Content\ikony\ikona_adres_rectangular_blue.png" />
     <Content Include="Content\ikony\ikona_adres_rectangular_blue_40px.png" />
+    <Content Include="Content\ikony\ikona_konserwacja.png" />
+    <Content Include="Content\ikony\ikona_konserwacja50px.png" />
     <Content Include="Content\ikony\ikona_masaz.png" />
     <Content Include="Content\ikony\ikona_masaz50px.png" />
+    <Content Include="Content\ikony\ikona_sprzet.png" />
+    <Content Include="Content\ikony\ikona_sprzet50px.png" />
     <Content Include="Content\ikony\ikona_treningGrupowy.png" />
     <Content Include="Content\ikony\ikona_treningGrupowy50px.png" />
     <Content Include="Content\ikony\ikona_treningPersonalny.png" />
@@ -281,6 +287,8 @@
     <Content Include="Content\ikony\persony\ikona_instruktor50px.png" />
     <Content Include="Content\ikony\persony\ikona_klient.png" />
     <Content Include="Content\ikony\persony\ikona_klient50px.png" />
+    <Content Include="Content\ikony\persony\ikona_konserwator.png" />
+    <Content Include="Content\ikony\persony\ikona_konserwator50px.png" />
     <Content Include="Content\ikony\persony\ikona_masazysta.png" />
     <Content Include="Content\ikony\persony\ikona_masazysta50px.png" />
     <Content Include="Content\ikony\persony\ikona_pracownicy.png" />
@@ -476,6 +484,12 @@
     <Content Include="Views\Konserwator\Details.cshtml" />
     <Content Include="Views\Konserwator\Edit.cshtml" />
     <Content Include="Views\Konserwator\Index.cshtml" />
+    <Content Include="Views\Sprzet\Create.cshtml" />
+    <Content Include="Views\Sprzet\Delete.cshtml" />
+    <Content Include="Views\Sprzet\Details.cshtml" />
+    <Content Include="Views\Sprzet\Edit.cshtml" />
+    <Content Include="Views\Sprzet\Index.cshtml" />
+    <Content Include="Views\Shared\KryteriaSzukania\_sprzet.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

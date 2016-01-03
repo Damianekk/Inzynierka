@@ -6,51 +6,134 @@
 
 <h2>Szczegóły dotyczące sal</h2>
 
-<div>
-    
-	<hr />
-    <dl class="dl-horizontal">
-       
-        <dd>
-            <img alt="no file" src="@Url.Content("/Sala/Zdjecie?id =" + Model.Zdjecie+ "&img=1")" />  
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Rodzaj)
-        </dt>
+<button class="btn btn-large btn-lg btn-block btn-primary btn-success" onclick="location.href='@Url.Action("Edit", "Sala", new { id = Model.Numer_sali })';return false;">edytuj</button>
+<button class="btn btn-large btn-lg btn-block btn-primary btn-info" onclick="location.href='@Url.Action("Create", "Sprzet", new { id = Model.Numer_sali })';return false;">dodaj sprzęt</button>
 
-        <dd>
-            @Html.DisplayFor(model => model.Rodzaj)
-        </dd>
+<div class="divDark">
+    <div class="divInner">
+        <dl class="dl-horizontal">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
+            <dd>
+                <img alt="no file" src="@Url.Content("/Sala/Zdjecie?id =" + Model.Zdjecie+ "&img=1")" />
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Rodzaj)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Status)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Rodzaj)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Opis)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Status)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Opis)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Silownia.Nazwa)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Status)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Silownia.Nazwa)
-        </dd>
-    </dl>
-</div>
-<div class="container col-md-offset-1 col-md-2" >
-    <div class="active">
-        <button class="btn-default btn-lg" onclick="location.href='@Url.Action("Edit", "Sala", new { id = Model.Numer_sali })';return false;">edytuj</button>
+            <dt>
+                @Html.DisplayNameFor(model => model.Opis)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Opis)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Silownia.Nazwa)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Silownia.Nazwa)
+            </dd>
+        </dl>
     </div>
 </div>
-<div class="container col-md-offset-3 col-md-2">
-    <button class="btn btn-large btn-block btn-primary btn-lg btn-primary" onclick="location.href='@Url.Action("Index", "Sala")';return false;">lista Sal</button>  
+<div>
+    @if (Request.UrlReferrer != null)
+    {
+        <button class="btn btn-large btn-block btn-primary btn-lg btn-primary" onclick="history.go(-1); return false;">powrót</button>
+    }
 </div>
+
+<div>
+
+    <div class="wrap">
+        <img class="show_hide" src="~/Content/ikony/ikona_sprzet.png" width="90" height="90">
+
+        <div class="slidingDiv" style="display:none">
+            <dl , class="table-bordered" ,new style="color:#1ABC9C">
+                <dt>
+                    @Html.Label("Sprzęty", new { style = "color:#1ABC9C" })
+                </dt>
+
+                @if (Model.Sprzety.Count > 0)
+                {
+                    <dd>
+                        <table class="table">
+                            <tr>
+                                <th>Nazwa</th>
+                                <th>Data zakupu</th>
+                                <th>Cena zakupu</th>
+                                <th></th>
+                            </tr>
+                            @foreach (var item in Model.Sprzety)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Nazwa)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Data_zakupu)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Cena_zakupu)
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn-primary btn-lg" onclick="location.href='@Url.Action("Details", "Sprzet", new { id = item.SprzetID })';return false;">szczegóły</button>
+                                            <button class="btn-danger btn-lg" onclick="location.href='@Url.Action("Delete", "Sprzet", new { id = item.SprzetID })';return false;">usuń</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </dd>
+                }
+                else
+                {
+                    <dt>
+                        @Html.Label("Brak sprzętów", new { style = "color:#D11919" })
+                    </dt>
+                }
+            </dl>
+        </div>
+    </div>
+
+</div>
+
+
+<style type="text/cs">
+    div.wrap {
+        float: left;
+        width: 500px;
+    }
+
+    img.show_hide {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .slidingDiv {
+        width: 500px;
+        display: none;
+    }
+</style>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">
+</script>
+<script type="text/javascript">
+    $('img.show_hide').on("click", function () {
+        $('div.slidingDiv').stop().slideUp('fast');
+        $(this).next('div.slidingDiv').stop().slideToggle('fast');
+    });
+</script>

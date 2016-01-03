@@ -1,69 +1,72 @@
 ﻿@model Silownia.Models.Sala
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Sala: edycja";
 }
+<h2>Edycja wybranej sali</h2>
+<div class="divDark">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
 
-<h2>Edytuj sale</h2>
+        <div class="form-horizontal">
 
-@using (Html.BeginForm())
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.Numer_sali)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Rodzaj, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Rodzaj)
+                    @Html.ValidationMessageFor(model => model.Rodzaj)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Status, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Status)
+                    @Html.ValidationMessageFor(model => model.Status)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Opis, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Opis)
+                    @Html.ValidationMessageFor(model => model.Opis)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Zdjecie, "Zdjęcie", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="file" id="file1" name="file1" />
+                    @*@Html.EditorFor(model => model.ImageFile)
+                        @Html.ValidationMessageFor(model => model.ImageFile)*@
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.SilowniaID, "Siłownia", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("SilowniaID")
+                    @Html.ValidationMessageFor(model => model.SilowniaID)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Zapisz" class="btn btn-lg btn-large btn-success" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+@if (Request.UrlReferrer != null)
 {
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true)
-        @Html.HiddenFor(model => model.Numer_sali)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Rodzaj, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Rodzaj)
-                @Html.ValidationMessageFor(model => model.Rodzaj)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Status, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Status)
-                @Html.ValidationMessageFor(model => model.Status)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Opis, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Opis)
-                @Html.ValidationMessageFor(model => model.Opis)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Zdjecie, "Zdjęcie", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="file" id="file1" name="file1" />
-                @*@Html.EditorFor(model => model.ImageFile)
-                @Html.ValidationMessageFor(model => model.ImageFile)*@
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.SilowniaID, "Siłownia", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("SilowniaID")
-                @Html.ValidationMessageFor(model => model.SilowniaID)
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-2">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-            <div class="col-md-3">
-                <button class="btn btn-large btn-block btn-primary btn-lg btn-primary" onclick="location.href='@Url.Action("Index", "Sala")';return false;">lista sal</button>
-            </div>
-        </div>
-    </div>
+    <button class="btn btn-large btn-block btn-primary btn-lg btn-primary" onclick="history.go(-1); return false;">powrót</button>
 }
-
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
