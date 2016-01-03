@@ -25,7 +25,7 @@
             <div class="col-lg-12">
                 <h1 class="page-header text-center">
                     Nasze sale 
-                    <small><font color="black">Tak wygladaja nasze sale do ćwiczeń.</font></small>
+                    <small><font color="Black">Tak wygladaja nasze sale do ćwiczeń.</font></small>
                 </h1>
             </div>
         </div>
@@ -33,16 +33,17 @@
     <div class="row center-block">
 @foreach (var item in Model) {
         <div class="col-md-3 col-md-offset-1 portfolio-item">
-            <a href="#">
-               @{Html.RenderPartial("Zdjecie")}
-                @*<img class="img-responsive" src="@item.Zdjecie" alt="no file">*@
-            </a>
+          
+                @*@Html.Partial("~/Views/Sala/Zdjecie.cshtml", Model)*@
+                <img class="img-responsive" src="@item.Zdjecie" alt="no file">
+            
             <h3>
                 @Html.ActionLink("Sala "+ item.Rodzaj, "Details", new { id = item.Numer_sali })
 
             </h3>
             <p>@item.Opis</p>
-            @Html.ActionLink("Usuń", "Delete", new { id=item.Numer_sali })
+            <button class="btn-danger btn-lg" onclick="location.href='@Url.Action("Delete", "Sala", new { id = item.Numer_sali })';return false;">usuń</button>
+            
         </div>
 }
     </div>

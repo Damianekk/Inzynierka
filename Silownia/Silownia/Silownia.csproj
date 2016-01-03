@@ -467,6 +467,7 @@
     <Content Include="Views\TreningPersonalny\Details.cshtml" />
     <Content Include="Views\TreningPersonalny\Edit.cshtml" />
     <Content Include="Views\TreningPersonalny\Index.cshtml" />
+    <Content Include="Views\Sala\Zdjecie.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

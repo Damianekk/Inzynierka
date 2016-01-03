@@ -4,11 +4,12 @@
     ViewBag.Title = "Delete";
 }
 
-<h2>Delete</h2>
+<h2>Usuwasz Sale</h2>
+<div class="col-md-offset-2">
+    <h3>Napewno chcesz usunąć tą sale?</h3>
+</div>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Sala</h4>
+<div class="col-md-offset-2">
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -40,9 +41,11 @@
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+        <div class="form-actions no-color col-md-offset-2">
+            <button class="btn-danger btn-lg" onclick="location.href='@Url.Action("Delete", "Sala", new { id = Model.Numer_sali })';return false;">usuń</button>
+            <div class="col-md-3">
+                <button class="btn btn-large btn-block btn-primary btn-lg btn-primary" onclick="location.href='@Url.Action("Index", "Sala")';return false;">lista sal</button>
+            </div>
         </div>
     }
 </div>

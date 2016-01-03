@@ -61,7 +61,7 @@ namespace Silownia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Sala sala, HttpPostedFileBase file)
+        public ActionResult Create([Bind(Include = "Numer_sali,Rodzaj,Status,Opis,SilowniaID")] Sala sala, HttpPostedFileBase file)
         {
             if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
             {
@@ -92,6 +92,7 @@ namespace Silownia.Controllers
                             numBytesRead += n;
                             BytesToRead -= n;
                         }
+
                         sala.Zdjecie = bytes;
 
                     }
