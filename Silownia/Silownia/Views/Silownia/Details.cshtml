@@ -68,8 +68,7 @@
         <button class="btn btn-large btn-block btn-primary btn-lg btn-primary" onclick="location.href='@Url.Action("Index", "Silownia")';return false;">lista siłowni</button>
     </div>
 
-    @if (!ViewBag.mniejSzczegolow)
-    {
+    <div>
         <div class="wrap">
             <img class="show_hide" src="~/Content/ikony/persony/ikona_pracownicy.png" width="90" height="90">
 
@@ -111,8 +110,42 @@
                 </dl>
             </div>
         </div>
+        <div class="wrap">
+            <img class="show_hide" src="~/Content/ikony/sala/ikona_sala.png" width="90" height="90">
 
-    }
+            <div class="slidingDiv" style="display:none">
+                <dl , class="table-bordered" ,new style="color:#34495e">
+                    <dt>
+                        @Html.Label("Sale", new { style = "color:#34495e" })
+                    </dt>
+                    @if (Model.Sale.Count > 0)
+                    {
+                        <dd>
+                            <table class="table">
+                                <tr>
+                                    
+                                </tr>
+                                @foreach (var item in Model.Sale)
+                                {
+                                    <tr>
+                                       
+                                    </tr>
+                                }
+                            </table>
+                        </dd>
+                    }
+                    else
+                    {
+                        <dt>
+                            @Html.Label("Brak sal przypisanych do tej siłowni", new { style = "color:#D11919" })
+                        </dt>
+                    }
+                </dl>
+            </div>
+        </div>
+    </div>
+        
+
 </div>
 
 <script src="http://maps.google.com/maps/api/js?sensor=true" type="text/javascript"></script>
