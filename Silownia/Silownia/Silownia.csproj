@@ -180,6 +180,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\InstruktorController.cs" />
+    <Compile Include="Controllers\KonserwatorController.cs" />
     <Compile Include="Controllers\MasazController.cs" />
     <Compile Include="Controllers\MasazystaController.cs" />
     <Compile Include="Controllers\PhotoController.cs" />
@@ -211,6 +212,7 @@
     </Compile>
     <Compile Include="Helpers\AkcjaEnumAdres.cs" />
     <Compile Include="Helpers\AkcjaEnumInstruktor.cs" />
+    <Compile Include="Helpers\AkcjaEnumKonserwator.cs" />
     <Compile Include="Helpers\AkcjaEnumMasaz.cs" />
     <Compile Include="Helpers\AkcjaEnumMasazysta.cs" />
     <Compile Include="Helpers\AkcjaEnumRecepcjonista.cs" />
@@ -469,6 +471,11 @@
     <Content Include="Views\TreningPersonalny\Details.cshtml" />
     <Content Include="Views\TreningPersonalny\Edit.cshtml" />
     <Content Include="Views\TreningPersonalny\Index.cshtml" />
+    <Content Include="Views\Konserwator\Create.cshtml" />
+    <Content Include="Views\Konserwator\Delete.cshtml" />
+    <Content Include="Views\Konserwator\Details.cshtml" />
+    <Content Include="Views\Konserwator\Edit.cshtml" />
+    <Content Include="Views\Konserwator\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
