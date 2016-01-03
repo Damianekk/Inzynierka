@@ -30,12 +30,20 @@
                         <li role="separator" class="divider"></li>
                         <li><img src="~/Content/ikony/persony/ikona_recepcjonista50px.png" height="50" width="50" style="float:right">@Html.ActionLink("Recepcjoniści", "Index", "Recepcjonista")</li>
                         <li role="separator" class="divider"></li>
-                        <li>@Html.ActionLink("Konserwatorzy", "Index", "Konserwator")</li>
+                        <li><img src="~/Content/ikony/persony/ikona_konserwator50px.png" height="50" width="50" style="float:right">@Html.ActionLink("Konserwatorzy", "Index", "Konserwator")</li>
                     </ul>
                 </li>
-                <li>@Html.ActionLink("Treningi personalne", "Index", "TreningPersonalny")</li>
-                <li>@Html.ActionLink("Masaże", "Index", "Masaz")</li>
-                @*<li>@Html.ActionLink("Zajęcia grupowe", "Index", "TreningGrupowy")</li>*@
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Zajęcia <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><img src="~/Content/ikony/ikona_treningGrupowy50px.png" height="50" width="50" style="float:right">@Html.ActionLink("Treningi grupowe", "Index", "TreningGrupowy")</li>
+                        <li role="separator" class="divider"></li>
+                        <li><img src="~/Content/ikony/ikona_treningPersonalny50px.png" height="50" width="50" style="float:right">@Html.ActionLink("Treningi personalne", "Index", "TreningPersonalny")</li>
+                        <li role="separator" class="divider"></li>
+                        <li><img src="~/Content/ikony/ikona_masaz50px.png" height="50" width="50" style="float:right">@Html.ActionLink("Masaże", "Index", "Masaz")</li>
+                    </ul>
+                </li>
 
                 @*<li>@Html.ActionLink("Sale", "Index", "Sala")</li>*@
             }
