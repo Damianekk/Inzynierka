@@ -1,13 +1,14 @@
-﻿@model PagedList.PagedList<Silownia.Models.Masaz>
+﻿@model PagedList.PagedList<Silownia.Models.Sprzet>
 @using PagedList.Mvc;
+
 @{
-    ViewBag.Title = "Masaże: index";
+    ViewBag.Title = "Sprzęt: index";
 }
 @Scripts.Render("~/Scripts/infoCzynnosc.js")
 
 @if (ViewBag.Akcja != null)
 {
-    if (ViewBag.Akcja == AkcjaEnumMasaz.DodanoMasaz)
+    if (ViewBag.Akcja == AkcjaEnumSprzet.DodanoSprzet)
     {
         <a href="#" class="close" data-dismiss="alert">&times;</a>
         <div class="alert alert-success">
@@ -17,7 +18,7 @@
         </div>
     }
 
-    if (ViewBag.Akcja == AkcjaEnumMasaz.UsunietoMasaz)
+    if (ViewBag.Akcja == AkcjaEnumSprzet.UsunietoSprzet)
     {
         <a href="#" class="close" data-dismiss="alert">&times;</a>
         <div class="alert alert-danger">
@@ -28,14 +29,14 @@
     }
 }
 
-<h2>Masaże zaplanowane w naszej sieci</h2>
+<h2>Inwentarz sprzętu</h2>
+
 
 <div class="divDark">
     @using (Html.BeginForm())
     {
-        @Html.Partial("KryteriaSzukania/_imieNazwisko")
+        @Html.Partial("KryteriaSzukania/_sprzet")
         @Html.Partial("KryteriaSzukania/_silownia")
-        @Html.Partial("KryteriaSzukania/_masazysta")
         <br />
         <input type="submit" value="szukaj" class="btn btn-info" style="width:10%" />
         <br />
@@ -46,45 +47,51 @@
 <table class="table table-hover table-condensed">
     <tr>
         <th>
-            @Html.Label("Klient:")
+            @Html.Label("Nazwa:")
         </th>
         <th>
-            @Html.Label("Masażysta:")
+            @Html.Label("Siłownia:")
         </th>
         <th>
-            @Html.Label("Data masażu:")
+            @Html.Label("Sala:")
         </th>
         <th>
-            @Html.Label("Godzina masażu:")
+            @Html.Label("Data zakupu:")
         </th>
         <th>
-            @Html.Label("Czas trwania:")
+            @Html.Label("Cena zakupu:")
         </th>
         <th></th>
     </tr>
+
+
     @foreach (var item in Model)
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Klient.imieNazwisko)
+                @Html.DisplayFor(modelItem => item.Nazwa)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Masazysta.imieNazwisko)
+                @Html.DisplayFor(modelItem => item.Sala.Silownia.Nazwa)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DataMasazu)
+                @Html.DisplayFor(modelItem => item.Sala.Numer_sali)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.MasazStart)
+                @Html.DisplayFor(modelItem => item.Data_zakupu)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CzasTrwania)
+                @Html.DisplayFor(modelItem => item.Cena_zakupu)
             </td>
             <td>
                 <div class="btn-group">
-                    <button class="btn-primary btn-lg" onclick="location.href='@Url.Action("Details", "Masaz", new { id = item.MasazID })';return false;">szczegóły</button>
-                    <button class="btn-danger btn-lg" onclick="location.href='@Url.Action("Delete", "Masaz", new { id = item.MasazID })';return false;">usuń</button>
+                    <button class="btn-primary btn-lg" onclick="location.href='@Url.Action("Details", "Sprzet", new { id = item.SprzetID })';return false;">szczegóły</button>
+                    <button class="btn-danger btn-lg" onclick="location.href='@Url.Action("Delete", "Sprzet", new { id = item.SprzetID })';return false;">usuń</button>
                 </div>
+            </td>
+            <td>
+                @Html.ActionLink("konserwacja", "Create", "Konserwacja", new { id = item.SprzetID },
+                           new { @class = "konserwacjaPic" })
             </td>
         </tr>
     }
@@ -92,5 +99,5 @@
 
 <div class="center">
     @Html.PagedListPager(Model, page => Url.Action("Index", new { page, pageSize = Model.PageSize, imieNazwisko = ViewBag.srchImieNazwisko }))
-    Wyświetlam od @Model.FirstItemOnPage do @Model.LastItemOnPage z @Model.TotalItemCount rekordów Masażysta
+    Wyświetlam od @Model.FirstItemOnPage do @Model.LastItemOnPage z @Model.TotalItemCount rekordów Sprzęt
 </div>
