@@ -179,6 +179,11 @@ th{
     padding-right: 114px;
 }
 
+.divCenter{
+     margin: auto;
+    width: 60%;
+}
+
 .divDark{
     background-color:#272b30;
     padding-bottom: 50px;
@@ -188,8 +193,7 @@ th{
     background-color:#272b30;
     padding-bottom: 50px;
     padding-top: 50px;
-    margin: auto;
-    width: 60%;
+   
 }
 
 .textCenter{
@@ -375,4 +379,30 @@ th{
     ul.nav li.dropdown:hover > ul.dropdown-menu {
         display: block;
      }
+}
+
+.intro .intro-body {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.intro {
+    display: table;
+    width: 100%;
+    height: auto;
+    padding: 100px 0;
+    text-align: center;
+    color: #fff;
+    background: url('/Content/PURE MUSCLES.jpg') no-repeat bottom center scroll;
+    background-color: #000;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+@media (min-width: 768px)
+.intro {
+    height: 100%;
+    padding: 0;
 }

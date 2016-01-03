@@ -5,10 +5,6 @@
     {
         @Html.AntiForgeryToken()
         <ul class="nav navbar-nav navbar-right">
-            @if (Session["Auth"].ToString() == "Klient")
-            {
-                <li>@Html.ActionLink("Panel klienta", "Index", "KlientView")</li>
-            }
 
 
             @if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
