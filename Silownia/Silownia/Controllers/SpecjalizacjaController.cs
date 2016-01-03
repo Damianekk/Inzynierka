@@ -14,9 +14,12 @@ namespace Silownia.Controllers
         // GET: /Specjalizacja/
         public ActionResult Index()
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                return View(db.Specjalizacje.ToList());
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                {
+                    return View(db.Specjalizacje.ToList());
+                }
             }
             return HttpNotFound();
         }
@@ -24,18 +27,21 @@ namespace Silownia.Controllers
         // GET: /Specjalizacja/Details/5
         public ActionResult Details(long? id)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                if (id == null)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    Specjalizacja specjalizacja = db.Specjalizacje.Find(id);
+                    if (specjalizacja == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(specjalizacja);
                 }
-                Specjalizacja specjalizacja = db.Specjalizacje.Find(id);
-                if (specjalizacja == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(specjalizacja);
             }
             return HttpNotFound();
         }
@@ -43,9 +49,12 @@ namespace Silownia.Controllers
         // GET: /Specjalizacja/Create
         public ActionResult Create()
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                return View();
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                {
+                    return View();
+                }
             }
             return HttpNotFound();
         }
@@ -56,16 +65,19 @@ namespace Silownia.Controllers
         [HttpPost]
         public ActionResult Create([Bind(Include="SpecjalizacjaID,Nazwa")] Specjalizacja specjalizacja)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                if (ModelState.IsValid)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    db.Specjalizacje.Add(specjalizacja);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-                }
+                    if (ModelState.IsValid)
+                    {
+                        db.Specjalizacje.Add(specjalizacja);
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
 
-                return View(specjalizacja);
+                    return View(specjalizacja);
+                }
             }
             return HttpNotFound();
         }
@@ -73,18 +85,21 @@ namespace Silownia.Controllers
         // GET: /Specjalizacja/Edit/5
         public ActionResult Edit(long? id)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                if (id == null)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    Specjalizacja specjalizacja = db.Specjalizacje.Find(id);
+                    if (specjalizacja == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(specjalizacja);
                 }
-                Specjalizacja specjalizacja = db.Specjalizacje.Find(id);
-                if (specjalizacja == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(specjalizacja);
             }
             return HttpNotFound();
         }
@@ -95,15 +110,18 @@ namespace Silownia.Controllers
         [HttpPost]
         public ActionResult Edit([Bind(Include="SpecjalizacjaID,Nazwa")] Specjalizacja specjalizacja)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                if (ModelState.IsValid)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    db.Entry(specjalizacja).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
+                    if (ModelState.IsValid)
+                    {
+                        db.Entry(specjalizacja).State = EntityState.Modified;
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
+                    return View(specjalizacja);
                 }
-                return View(specjalizacja);
             }
             return HttpNotFound();
         }
@@ -111,18 +129,21 @@ namespace Silownia.Controllers
         // GET: /Specjalizacja/Delete/5
         public ActionResult Delete(long? id)
         {
-           if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                if (id == null)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    Specjalizacja specjalizacja = db.Specjalizacje.Find(id);
+                    if (specjalizacja == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(specjalizacja);
                 }
-                Specjalizacja specjalizacja = db.Specjalizacje.Find(id);
-                if (specjalizacja == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(specjalizacja);
             }
             return HttpNotFound();
         }
@@ -131,12 +152,15 @@ namespace Silownia.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(long id)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                Specjalizacja specjalizacja = db.Specjalizacje.Find(id);
-                db.Specjalizacje.Remove(specjalizacja);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                {
+                    Specjalizacja specjalizacja = db.Specjalizacje.Find(id);
+                    db.Specjalizacje.Remove(specjalizacja);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
             return HttpNotFound();
         }

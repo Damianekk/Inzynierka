@@ -3,26 +3,60 @@
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
-    @Html.AntiForgeryToken()
-    <ul class="nav navbar-nav navbar-right">
-        @if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
-        {
-        <li>@Html.ActionLink("Klienci", "Index", "Klient")</li>
-        <li>@Html.ActionLink("Umowy", "Index", "Umowa")</li>
-        <li>@Html.ActionLink("Trenerzy", "Index", "Trener")</li>
-        <li>@Html.ActionLink("Masażyści", "Index", "Masazysta")</li>
-        <li>@Html.ActionLink("Recepcjoniści", "Index", "Recepcjonista")</li>
-        <li>@Html.ActionLink("Siłownie", "Index", "Silownia")</li>
-        <li>@Html.ActionLink("Specjalizacje", "Index", "Specjalizacja")</li>
-      @*<li>@Html.ActionLink("Sale", "Index", "Sala")</li>*@
-        }
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Wyloguj</a></li>
-    </ul>
+        @Html.AntiForgeryToken()
+        <ul class="nav navbar-nav navbar-right">
+            @if (Session["Auth"].ToString() == "Klient")
+            {
+                <li>@Html.ActionLink("Panel klienta", "Index", "KlientView")</li>
+            }
+
+
+            @if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            {
+
+                <li>@Html.ActionLink("Siłownie", "Index", "Silownia")</li>
+
+                <li>@Html.ActionLink("Klienci", "Index", "Klient")</li>
+                <li>@Html.ActionLink("Umowy", "Index", "Umowa")</li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pracownicy <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><img src="~/Content/ikony/persony/ikona_instruktor50px.png" height="50" width="50" style="float:right">@Html.ActionLink("Instruktorzy", "Index", "Instruktor")</li>
+                        <li role="separator" class="divider"></li>
+                        <li><img src="~/Content/ikony/persony/ikona_trenerPersonalny50px.png" height="50" width="50" style="float:right">@Html.ActionLink("Trenerzy", "Index", "Trener")</li>
+                        <li role="separator" class="divider"></li>
+                        <li><img src="~/Content/ikony/persony/ikona_masazysta50px.png" height="50" width="50" style="float:right">@Html.ActionLink("Masażyści", "Index", "Masazysta") </li>
+                        <li role="separator" class="divider"></li>
+                        <li><img src="~/Content/ikony/persony/ikona_recepcjonista50px.png" height="50" width="50" style="float:right">@Html.ActionLink("Recepcjoniści", "Index", "Recepcjonista")</li>
+                        <li role="separator" class="divider"></li>
+                        <li>@Html.ActionLink("Konserwatorzy", "Index", "Konserwator")</li>
+                    </ul>
+                </li>
+                <li>@Html.ActionLink("Treningi personalne", "Index", "TreningPersonalny")</li>
+                <li>@Html.ActionLink("Masaże", "Index", "Masaz")</li>
+                @*<li>@Html.ActionLink("Zajęcia grupowe", "Index", "TreningGrupowy")</li>*@
+
+                @*<li>@Html.ActionLink("Sale", "Index", "Sala")</li>*@
+            }
+            else if (Session["Auth"].ToString() == "Klient")
+            {
+                <li>@Html.ActionLink("Panel klienta", "Index", "KlientView")</li>
+            }
+            else if (Session["Auth"].ToString() == "Trener" | Session["Auth"].ToString() == "Instruktor")
+            {
+                <li>@Html.ActionLink("Panel trenera", "Index", "TrenerView")</li>
+            }
+
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Wyloguj</a></li>
+        </ul>
+
     }
 }
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Zaloguj", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" }) 
+        <li>@Html.ActionLink("Zaloguj", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
     </ul>
 }
+

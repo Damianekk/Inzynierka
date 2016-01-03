@@ -1,13 +1,12 @@
-﻿@model Silownia.Models.Masazysta
+﻿@model Silownia.Models.Konserwator
 @{
-    ViewBag.Title = "Masażysta: szczegóły";
+    ViewBag.Title = "Konserwator: szczegóły";
 }
-<h2>Szczegóły dotyczące wybranego masażysty</h2>
-<button class="btn btn-large btn-block btn-primary btn-lg btn-success" onclick="location.href='@Url.Action("Edit", "Masazysta", new { id = Model.OsobaID })';return false;">edytuj</button>
+<h2>szczegóły dotyczące wybranego konserwatora</h2>
+<button class="btn btn-large btn-block btn-primary btn-lg btn-success" onclick="location.href='@Url.Action("Edit", "Konserwator", new { id = Model.OsobaID })';return false;">edytuj</button>
 <div class="divDark">
     <div class="divInner">
         <dl class="dl-horizontal">
-
             <dt>
                 @Html.DisplayNameFor(model => model.Imie)
             </dt>
@@ -51,20 +50,20 @@
                 @Html.DisplayFor(model => model.Pensja) zł
             </dd>
             <dt>
-                @Html.DisplayNameFor(model => model.StawkaGodzinowa)
+                @Html.DisplayNameFor(model => model.Silownia.Nazwa)
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.StawkaGodzinowa) zł
+                @Html.DisplayFor(model => model.Silownia.Nazwa)
             </dd>
         </dl>
     </div>
 </div>
 <div>
-    <button class="btn btn-large btn-block btn-primary btn-lg btn-primary" onclick="location.href='@Url.Action("Index", "Masazysta")';return false;">lista masażystów</button>
+    <button class="btn btn-large btn-block btn-primary btn-lg btn-primary" onclick="location.href='@Url.Action("Index", "Konserwator")';return false;">lista konserwatorów</button>
 </div>
 
-
 <div>
+
     <div class="wrap">
         <img class="show_hide" src="~/Content/ikony/silownia/ikona_silownia.png" width="90" height="90">
 
@@ -78,7 +77,7 @@
                     <table class="table">
                         <tr>
                             <th>Nazwa siłowni</th>
-                            <th>Adres e-mail</th>
+                            <th>Info</th>
                             <th>Numer telefonu</th>
                             <th>Miasto</th>
                             <th></th>
@@ -106,47 +105,41 @@
     </div>
 
     <div class="wrap">
-        <img class="show_hide" src="/Content/ikony/ikona_masaz.png" width="90" height="90">
+        <img class="show_hide" src="/Content/ikony/ikona_konserwacja.png" width="90" height="90">
+
         <div class="slidingDiv" style="display:none">
-            <dl class="table-bordered" ,new style="color:#B8C932">
+            <dl , class="table-bordered" ,new style="color:#f1c40f">
                 <dt>
-                    @Html.Label("Masaże", new { style = "color:#B8C932" })
+                    @Html.Label("Naprawy", new { style = "color:#f1c40f" })
                 </dt>
-                @if (Model.Masaze.Count > 0)
+                @if (Model.Konserwacje.Count > 0)
                 {
                     <dd>
                         <table class="table">
                             <tr>
-                                <th>Klient</th>
-                                <th>Data masażu</th>
-                                <th>Godzina</th>
-                                <th>Czas trwania</th>
-                                <th>Koszt</th>
-                                <th></th>
+                                <th>Sprzęt</th>
+                                <th>Sala w siłowni</th>
+                                <th>Data zgłoszenia</th>
+                                <th>Data zakończenia naprawy</th>
+                                <th>Opis usterki</th>
                             </tr>
-                            @foreach (var item in Model.Masaze)
+                            @foreach (var item in Model.Konserwacje)
                             {
                                 <tr>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Klient.imieNazwisko)
+                                        @Html.DisplayFor(modelItem => item.Sprzet.Nazwa)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.DataMasazu)
+                                        @Html.DisplayFor(modelItem => item.Sprzet.Sala.Rodzaj)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.MasazStart)
+                                        @Html.DisplayFor(modelItem => item.Data_zgłoszenia)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.CzasTrwania)
+                                        @Html.DisplayFor(modelItem => item.Data_naprawy)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.kosztMasazu) zł
-                                    </td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button class="btn-primary btn-lg" onclick="location.href='@Url.Action("Details", "Masaz", new { id = item.MasazID })';return false;">szczegóły</button>
-                                            <button class="btn-danger btn-lg" onclick="location.href='@Url.Action("Delete", "Masaz", new { id = item.MasazID})';return false;">usuń</button>
-                                        </div>
+                                        @Html.DisplayFor(modelItem => item.Opis_usterki)
                                     </td>
                                 </tr>
                             }
@@ -156,7 +149,7 @@
                 else
                 {
                     <dt>
-                        @Html.Label("Brak masaży", new { style = "color:#D11919" })
+                        @Html.Label("Brak napraw", new { style = "color:#D11919" })
                     </dt>
                 }
             </dl>

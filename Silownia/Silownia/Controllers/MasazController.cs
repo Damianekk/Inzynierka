@@ -22,44 +22,47 @@ namespace Silownia.Controllers
         // GET: Masaz
         public ActionResult Index(string imieNazwisko, string SilowniaID, string MasazystaID, int page = 1, int pageSize = 10, AkcjaEnumMasaz akcja = AkcjaEnumMasaz.Brak, String info = null)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
-                ViewBag.MasazystaID = new SelectList(db.Masazysci.DistinctBy(a => new { a.Pesel }), "imieNazwisko", "imieNazwisko");
-
-                var masaze = from Masaze in db.Masaze select Masaze;
-
-                if (!String.IsNullOrEmpty(imieNazwisko))
-                    foreach (string wyraz in imieNazwisko.Split(' '))
-                        masaze = masaze.Search(wyraz, i => i.Klient.Imie, i => i.Klient.Nazwisko);
-
-                masaze = masaze.Search(SilowniaID, i => i.Masazysta.Silownia.Nazwa);
-
-                if (!String.IsNullOrEmpty(MasazystaID))
-                    foreach (string wyraz in MasazystaID.Split(' '))
-                        masaze = masaze.Search(wyraz, i => i.Masazysta.Imie, i => i.Masazysta.Nazwisko);
-
-                //previous solution
-                // masaze = masaze.Search(imieNazwisko, i => i.Klient.Imie, i => i.Klient.Nazwisko);
-                // masaze = masaze.Search(MasazystaID, i => i.Masazysta.Imie, i => i.Masazysta.Nazwisko);
-
-                var final = masaze.OrderBy(p => p.Klient.Nazwisko);
-                var ileWynikow = masaze.Count();
-                if ((ileWynikow / page) <= 1)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    page = 1;
+                    ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
+                    ViewBag.MasazystaID = new SelectList(db.Masazysci.DistinctBy(a => new { a.Pesel }), "imieNazwisko", "imieNazwisko");
+
+                    var masaze = from Masaze in db.Masaze select Masaze;
+
+                    if (!String.IsNullOrEmpty(imieNazwisko))
+                        foreach (string wyraz in imieNazwisko.Split(' '))
+                            masaze = masaze.Search(wyraz, i => i.Klient.Imie, i => i.Klient.Nazwisko);
+
+                    masaze = masaze.Search(SilowniaID, i => i.Masazysta.Silownia.Nazwa);
+
+                    if (!String.IsNullOrEmpty(MasazystaID))
+                        foreach (string wyraz in MasazystaID.Split(' '))
+                            masaze = masaze.Search(wyraz, i => i.Masazysta.Imie, i => i.Masazysta.Nazwisko);
+
+                    //previous solution
+                    // masaze = masaze.Search(imieNazwisko, i => i.Klient.Imie, i => i.Klient.Nazwisko);
+                    // masaze = masaze.Search(MasazystaID, i => i.Masazysta.Imie, i => i.Masazysta.Nazwisko);
+
+                    var final = masaze.OrderBy(p => p.Klient.Nazwisko);
+                    var ileWynikow = masaze.Count();
+                    if ((ileWynikow / page) <= 1)
+                    {
+                        page = 1;
+                    }
+                    var kk = ileWynikow / page;
+
+                    PagedList<Masaz> model = new PagedList<Masaz>(final, page, pageSize);
+
+                    if (akcja != AkcjaEnumMasaz.Brak)
+                    {
+                        ViewBag.info = info;
+                        ViewBag.Akcja = akcja;
+                    }
+
+                    return View(model);
                 }
-                var kk = ileWynikow / page;
-
-                PagedList<Masaz> model = new PagedList<Masaz>(final, page, pageSize);
-
-                if (akcja != AkcjaEnumMasaz.Brak)
-                {
-                    ViewBag.info = info;
-                    ViewBag.Akcja = akcja;
-                }
-
-                return View(model);
             }
               return HttpNotFound();
         }
@@ -67,18 +70,21 @@ namespace Silownia.Controllers
         // GET: Masaz/Details/5
         public ActionResult Details(long? id)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                if (id == null)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    Masaz masaz = db.Masaze.Find(id);
+                    if (masaz == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(masaz);
                 }
-                Masaz masaz = db.Masaze.Find(id);
-                if (masaz == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(masaz);
             }
              return HttpNotFound();
         }
@@ -86,26 +92,29 @@ namespace Silownia.Controllers
         // GET: Masaz/Create
         public ActionResult Create(long? id)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                ViewBag.MasazystaID = new SelectList(db.Masazysci, "OsobaID", "imieNazwisko");
-                var a = from Osoby in db.Masazysci select Osoby;
-
-                Masazysta masazysta = null;
-                var user = User.Identity.GetUserName();
-                foreach (Masazysta mas in a)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    if (mas.imieNazwisko.Replace(" ", "") == user)
+                    ViewBag.MasazystaID = new SelectList(db.Masazysci, "OsobaID", "imieNazwisko");
+                    var a = from Osoby in db.Masazysci select Osoby;
+
+                    Masazysta masazysta = null;
+                    var user = User.Identity.GetUserName();
+                    foreach (Masazysta mas in a)
                     {
-                        masazysta = mas;
-                        break;
+                        if (mas.imieNazwisko.Replace(" ", "") == user)
+                        {
+                            masazysta = mas;
+                            break;
+                        }
+
+                        Osoba osoba = db.Osoby.Find(id);
+                        ViewBag.Osoba = osoba;
                     }
 
-                    Osoba osoba = db.Osoby.Find(id);
-                    ViewBag.Osoba = osoba;
+                    return View();
                 }
-
-                return View();
             }
              return HttpNotFound();
         }
@@ -116,37 +125,40 @@ namespace Silownia.Controllers
         [HttpPost]
         public ActionResult Create([Bind(Include = "MasazID,MasazystaID,DataMasazu,MasazStart,CzasTrwania")] long? id, Masaz masaz)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                ViewBag.MasazystaID = new SelectList(db.Masazysci, "OsobaID", "imieNazwisko", masaz.MasazystaID);
-
-                if (ModelState.IsValid && !aktywnyMasaz(id, masaz.DataMasazu) && !zajetyMasazysta(masaz.MasazystaID, masaz.DataMasazu))
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    #region Klient
-                    Klient klient = db.Klienci.Find(id);
-                    masaz.Klient = klient;
-                    klient.Masaze.Add(masaz);
-                    #endregion
+                    ViewBag.MasazystaID = new SelectList(db.Masazysci, "OsobaID", "imieNazwisko", masaz.MasazystaID);
 
-                    #region Masazysta
-                    Masazysta masazysta = db.Masazysci.Find(masaz.MasazystaID);
-                    masaz.Masazysta = masazysta;
-                    masazysta.Masaze.Add(masaz);
-                    #endregion
+                    if (ModelState.IsValid && !aktywnyMasaz(id, masaz.DataMasazu) && !zajetyMasazysta(masaz.MasazystaID, masaz.DataMasazu))
+                    {
+                        #region Klient
+                        Klient klient = db.Klienci.Find(id);
+                        masaz.Klient = klient;
+                        klient.Masaze.Add(masaz);
+                        #endregion
 
-                    masaz.DataMasazu = masaz.DataMasazu.AddHours(System.Convert.ToDouble(masaz.MasazStart.Hour));
-                    masaz.DataMasazu = masaz.DataMasazu.AddMinutes(System.Convert.ToDouble(masaz.MasazStart.Minute));
-                    masaz.DataMasazuKoniec = masaz.DataMasazu.AddMinutes(System.Convert.ToDouble(masaz.CzasTrwania));
-                    masaz.kosztMasazu = (masaz.CzasTrwania * masaz.Masazysta.StawkaGodzinowa) / 60;
+                        #region Masazysta
+                        Masazysta masazysta = db.Masazysci.Find(masaz.MasazystaID);
+                        masaz.Masazysta = masazysta;
+                        masazysta.Masaze.Add(masaz);
+                        #endregion
 
-                    
+                        masaz.DataMasazu = masaz.DataMasazu.AddHours(System.Convert.ToDouble(masaz.MasazStart.Hour));
+                        masaz.DataMasazu = masaz.DataMasazu.AddMinutes(System.Convert.ToDouble(masaz.MasazStart.Minute));
+                        masaz.DataMasazuKoniec = masaz.DataMasazu.AddMinutes(System.Convert.ToDouble(masaz.CzasTrwania));
+                        masaz.kosztMasazu = (masaz.CzasTrwania * masaz.Masazysta.StawkaGodzinowa) / 60;
 
-                    db.Masaze.Add(masaz);
-                    db.SaveChanges();
 
-                    return RedirectToAction("Index", new { akcja = AkcjaEnumMasaz.DodanoMasaz, info = klient.imieNazwisko });
+
+                        db.Masaze.Add(masaz);
+                        db.SaveChanges();
+
+                        return RedirectToAction("Index", new { akcja = AkcjaEnumMasaz.DodanoMasaz, info = klient.imieNazwisko });
+                    }
+                    return View(masaz);
                 }
-                return View(masaz);
             }
              return HttpNotFound();
 
@@ -185,19 +197,22 @@ namespace Silownia.Controllers
         // GET: Masaz/Edit/5
         public ActionResult Edit(long? id)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                if (id == null)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    Masaz masaz = db.Masaze.Find(id);
+                    if (masaz == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    ViewBag.MasazystaID = new SelectList(db.Masazysci, "OsobaID", "imieNazwisko", masaz.MasazystaID);
+                    return View(masaz);
                 }
-                Masaz masaz = db.Masaze.Find(id);
-                if (masaz == null)
-                {
-                    return HttpNotFound();
-                }
-                ViewBag.MasazystaID = new SelectList(db.Masazysci, "OsobaID", "imieNazwisko", masaz.MasazystaID);
-                return View(masaz);
             }
               return HttpNotFound();
         }
@@ -208,16 +223,19 @@ namespace Silownia.Controllers
         [HttpPost]
         public ActionResult Edit([Bind(Include = "MasazID,MasazystaID,DataMasazu,DataMasazu,CzasTrwania")] Masaz masaz)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                if (ModelState.IsValid)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    db.Entry(masaz).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
+                    if (ModelState.IsValid)
+                    {
+                        db.Entry(masaz).State = EntityState.Modified;
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
+                    ViewBag.MasazystaID = new SelectList(db.Masazysci, "OsobaID", "imieNazwisko", masaz.MasazystaID);
+                    return View(masaz);
                 }
-                ViewBag.MasazystaID = new SelectList(db.Masazysci, "OsobaID", "imieNazwisko", masaz.MasazystaID);
-                return View(masaz);
             }
               return HttpNotFound();
         }
@@ -225,18 +243,21 @@ namespace Silownia.Controllers
         // GET: Masaz/Delete/5
         public ActionResult Delete(long? id)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                if (id == null)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    Masaz masaz = db.Masaze.Find(id);
+                    if (masaz == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(masaz);
                 }
-                Masaz masaz = db.Masaze.Find(id);
-                if (masaz == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(masaz);
             }
               return HttpNotFound();
         }
@@ -245,12 +266,15 @@ namespace Silownia.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(long id)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                Masaz masaz = db.Masaze.Find(id);
-                db.Masaze.Remove(masaz);
-                db.SaveChanges();
-                return RedirectToAction("Index", new { akcja = AkcjaEnumMasaz.UsunietoMasaz });
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                {
+                    Masaz masaz = db.Masaze.Find(id);
+                    db.Masaze.Remove(masaz);
+                    db.SaveChanges();
+                    return RedirectToAction("Index", new { akcja = AkcjaEnumMasaz.UsunietoMasaz });
+                }
             }
               return HttpNotFound();
         }

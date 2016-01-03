@@ -8,44 +8,55 @@
     <title>@ViewBag.Title - Silownie</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
+    <link href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    @Styles.Render("~/HomeView/font-awesome/css/font-awesome.min.css")
 
 </head>
 <body style="background-color: black; z-index: 0;">
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
         <div class="container">
             <div class="navbar-header">
-                <div class="divider">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-
-                    @Html.ActionLink("Sieć siłowni", "Index", "Home", null, new { @class = "navbar-brand" })
-                </div>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">
+                    <i class="fa fa-play-circle"></i>  <span class="light">PURE</span> MUSCLES
+                </a>
             </div>
-            <div class="navbar-collapse collapse">
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
                 <ul class="nav navbar-nav">
-                    @*<li>@Html.ActionLink("Home", "Index", "Home")</li>*@
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+
+                    <li>
+                        @*<li>@Html.ActionLink("Home", "Index", "Home")</li>*@
                     <li>@Html.ActionLink("O nas", "About", "Home")</li>
                     @*<li>@Html.ActionLink("Kontakt", "Contact", "Home")</li>*@
+
+                    @Html.Partial("_LoginPartial")
                 </ul>
-                @Html.Partial("_LoginPartial")
             </div>
+            <!-- /.navbar-collapse -->
         </div>
-    </div>
-
+        <!-- /.container -->
+    </nav>
     @RenderBody()
+</body>
+@*    @Html.Partial("_Footer")*@
 
-    @*    @Html.Partial("_Footer")*@
-
-
+</html>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/scripts/Karuzel.js")
     @Scripts.Render("~/scripts/Arrow.js")
+    @Scripts.Render("~/HomeView/js/jquery.js")
+    @Scripts.Render("~/HomeView/js/bootstrap.min.js")
+    @Scripts.Render("~/HomeView/js/jquery.easing.min.js")
+    @Scripts.Render("~/HomeView/js/grayscale.js")
     @RenderSection("scripts", required: false)
-</body>
-</html>
+
+

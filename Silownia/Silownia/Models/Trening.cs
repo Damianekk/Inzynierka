@@ -15,17 +15,17 @@ namespace Silownia.Models
 
         [Required(ErrorMessage = "Podaj datę treningu")]
         [Display(Name = "Początek treningu")]
-        [DataType(DataType.DateTime)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime TreningStart { get; set; }
 
-        //[Required(ErrorMessage = "Podaj datę treningu")]
+        [Required(ErrorMessage = "Podaj godzinę treningu")]
         [DataType(DataType.Time)]
         [Display(Name = "Godzina treningu")]
         public DateTime TreningStartGodzina { get; set; }
 
 
-        [Required(ErrorMessage = "Podaj datę treningu")]
+        //[Required(ErrorMessage = "Podaj datę treningu")]
         [Display(Name = "Koniec treningu")]
         [DataType(DataType.DateTime)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd HH:mm}")]

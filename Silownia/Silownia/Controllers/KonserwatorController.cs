@@ -8,46 +8,47 @@ using System.Web;
 using System.Web.Mvc;
 using Silownia.DAL;
 using Silownia.Models;
-using PagedList;
 using Silownia.Helpers;
+using PagedList;
+
 
 namespace Silownia.Controllers
 {
-    public class InstruktorController : Controller
+    public class KonserwatorController : Controller
     {
         private SilowniaContext db = new SilowniaContext();
 
-        // GET: Instruktor
-        public ActionResult Index(string imieNazwisko, string SilowniaID, int page = 1, int pageSize = 10, AkcjaEnumInstruktor akcja = AkcjaEnumInstruktor.Brak, String info = null)
+        // GET: Recepcjonista
+        public ActionResult Index(string imieNazwisko, string SilowniaID, int page = 1, int pageSize = 10, AkcjaEnumKonserwator akcja = AkcjaEnumKonserwator.Brak, String info = null)
         {
             if (Session["Auth"] != null)
             {
                 if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
                     ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
-                    var instruktorzy = from Osoby in db.Instruktorzy.OfType<Instruktor>() select Osoby;
+                    var konserwatorzy = from Osoby in db.Konserwatorzy.OfType<Konserwator>() select Osoby;
 
                     if (!String.IsNullOrEmpty(imieNazwisko))
                         foreach (string wyraz in imieNazwisko.Split(' '))
-                            instruktorzy = instruktorzy.Search(wyraz, i => i.Imie, i => i.Nazwisko);
+                            konserwatorzy = konserwatorzy.Search(wyraz, i => i.Imie, i => i.Nazwisko);
 
-                    instruktorzy = instruktorzy.Search(SilowniaID, i => i.Silownia.Nazwa);
+                    konserwatorzy = konserwatorzy.Search(SilowniaID, i => i.Silownia.Nazwa);
 
-                    var final = instruktorzy.OrderBy(p => p.Imie);
-                    var ileWynikow = instruktorzy.Count();
+                    var final = konserwatorzy.OrderBy(p => p.Nazwisko);
+                    var ileWynikow = konserwatorzy.Count();
                     if ((ileWynikow / page) <= 1)
                     {
                         page = 1;
                     }
                     var kk = ileWynikow / page;
 
-                    PagedList<Instruktor> model = new PagedList<Instruktor>(final, page, pageSize);
+                    PagedList<Konserwator> model = new PagedList<Konserwator>(final, page, pageSize);
 
-                    if (akcja != AkcjaEnumInstruktor.Brak)
-                    {
-                        ViewBag.info = info;
+                    if (akcja != AkcjaEnumKonserwator.Brak)
                         ViewBag.Akcja = akcja;
-                    }
+
+                    if (info != null)
+                        ViewBag.info = info;
 
                     return View(model);
                 }
@@ -55,7 +56,7 @@ namespace Silownia.Controllers
             return HttpNotFound();
         }
 
-        // GET: Instruktor/Details/5
+        // GET: Recepcjonista/Details/5
         public ActionResult Details(long? id)
         {
             if (Session["Auth"] != null)
@@ -66,19 +67,20 @@ namespace Silownia.Controllers
                     {
                         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                     }
-                    Instruktor instruktor = db.Instruktorzy.Find(id);
+                    Konserwator konserwator = db.Konserwatorzy.Find(id);
 
-                    if (instruktor == null)
+                    if (konserwator == null)
                     {
                         return HttpNotFound();
                     }
-                    return View(instruktor);
+                    return View(konserwator);
                 }
             }
             return HttpNotFound();
         }
 
-        // GET: Instruktor/Create
+        // GET: Recepcjonista/Create
+        [MyAuthorize(RoleEnum.Administrator)]
         public ActionResult Create()
         {
             if (Session["Auth"] != null)
@@ -92,11 +94,12 @@ namespace Silownia.Controllers
             return HttpNotFound();
         }
 
-        // POST: Instruktor/Create
+        // POST: Recepcjonista/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Create([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,NrTelefonu,Pesel,DataZatrudnienia,Pensja,SilowniaID")] Instruktor instruktor)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,Pesel,NrTelefonu,DataZatrudnienia,Pensja,SilowniaID")] Konserwator konserwator)
         {
             if (Session["Auth"] != null)
             {
@@ -104,30 +107,31 @@ namespace Silownia.Controllers
                 {
                     if (ModelState.IsValid)
                     {
-                        instruktor.DataZatrudnienia = DateTime.Now;
-                        db.Instruktorzy.Add(instruktor);
+                        konserwator.DataZatrudnienia = DateTime.Now;
+                        db.Konserwatorzy.Add(konserwator);
                         db.SaveChanges();
 
                         Uzytkownik pracownik = new Uzytkownik();
-                        pracownik.IDOsoby = instruktor.OsobaID;
-                        pracownik.Login = instruktor.Nazwisko;
-                        pracownik.Haslo = instruktor.Imie + instruktor.Nazwisko;
-                        pracownik.Rola = "Instruktor";
-
+                        pracownik.IDOsoby = konserwator.OsobaID;
+                        pracownik.Login = konserwator.Nazwisko;
+                        pracownik.Haslo = konserwator.Imie + konserwator.Nazwisko;
+                        pracownik.Rola = RoleEnum.Recepcjonista.GetDescription();
                         db.Uzytkownicy.Add(pracownik);
                         db.SaveChanges();
 
-                        return RedirectToAction("Index", new { akcja = AkcjaEnumInstruktor.DodanoInstruktora, info = instruktor.imieNazwisko });
+                        return RedirectToAction("Index", new { akcja = AkcjaEnumKonserwator.DodanoKonserwatora, info = konserwator.imieNazwisko });
                     }
 
                     ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
-                    return View(instruktor);
+                    return View(konserwator);
                 }
             }
             return HttpNotFound();
         }
 
-        // GET: Instruktor/Edit/5
+
+        // GET: Recepcjonista/Edit/5
+        [MyAuthorize(RoleEnum.Administrator)]
         public ActionResult Edit(long? id)
         {
             if (Session["Auth"] != null)
@@ -138,41 +142,38 @@ namespace Silownia.Controllers
                     {
                         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                     }
-                    Instruktor instruktor = db.Instruktorzy.Find(id);
-                    if (instruktor == null)
+                    Konserwator konserwator = db.Konserwatorzy.Find(id);
+                    if (konserwator == null)
                     {
                         return HttpNotFound();
                     }
                     ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
-                    return View(instruktor);
-                }
-            }
-            return HttpNotFound();
-        }
-        // POST: Instruktor/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        public ActionResult Edit([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,NrTelefonu,Pesel,DataZatrudnienia,Pensja,SilowniaID")] Instruktor instruktor)
-        {
-            if (Session["Auth"] != null)
-            {
-                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
-                {
-                    if (ModelState.IsValid)
-                    {
-                        db.Entry(instruktor).State = EntityState.Modified;
-                        db.SaveChanges();
-                        return RedirectToAction("Index");
-                    }
-                    ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
-                    return View(instruktor);
+                    return View(konserwator);
                 }
             }
             return HttpNotFound();
         }
 
-        // GET: Instruktor/Delete/5
+        // POST: Konserwator/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,Dlugosc,Szerokosc,ZdjecieProfilowe,NrTelefonu,Pesel,DataZatrudnienia,Pensja,SilowniaID")] Konserwator konserwator)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(konserwator).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", konserwator.SilowniaID);
+            return View(konserwator);
+        }
+
+
+        // GET: Konserwator/Delete/5
+        [MyAuthorize(RoleEnum.Administrator)]
         public ActionResult Delete(long? id)
         {
             if (Session["Auth"] != null)
@@ -183,34 +184,41 @@ namespace Silownia.Controllers
                     {
                         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                     }
-                    Instruktor instruktor = db.Instruktorzy.Find(id);
-                    if (instruktor == null)
+                    Konserwator konserwator = db.Konserwatorzy.Find(id);
+                    if (konserwator == null)
                     {
                         return HttpNotFound();
                     }
-                    return View(instruktor);
+                    return View(konserwator);
                 }
             }
             return HttpNotFound();
         }
 
-        // POST: Instruktor/Delete/5
+        // POST: Konserwator/Delete/5
         [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        [MyAuthorize(RoleEnum.Administrator)]
         public ActionResult DeleteConfirmed(long id)
         {
             if (Session["Auth"] != null)
             {
                 if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    Instruktor instruktor = db.Instruktorzy.Find(id);
-                    db.Osoby.Remove(instruktor);
+                    Konserwator konserwator = db.Konserwatorzy.Find(id);
+                    db.Konserwatorzy.Remove(konserwator);
                     db.SaveChanges();
-                    return RedirectToAction("Index", new { akcja = AkcjaEnumInstruktor.UsunietoInstruktora, info = instruktor.imieNazwisko });
+
+                    Uzytkownik uzytkownik = db.Uzytkownicy.Where(w => w.IDOsoby == konserwator.OsobaID).First();
+                    db.Uzytkownicy.Remove(uzytkownik);
+                    db.SaveChanges();
+
+                    return RedirectToAction("Index", new { akcja = AkcjaEnumKonserwator.UsunietoKonserwatora, info = konserwator.imieNazwisko });
                 }
             }
             return HttpNotFound();
         }
-
+ 
 
         protected override void Dispose(bool disposing)
         {

@@ -1,15 +1,11 @@
-﻿@model Silownia.Models.Instruktor
-
+﻿@model Silownia.Models.Konserwator
 @{
-    ViewBag.Title = "Instruktor: dodaj";
+    ViewBag.Title = "Konserwator: dodaj";
 }
-
-<h2 class="textCenter">dodaj nowego instruktora</h2>
-
+<h2>Dodaj nowego konserwatora</h2>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-
     <div class="form-horizontal divDark">
         <div class="form-horizontal">
             @Html.ValidationSummary(true)
@@ -35,14 +31,14 @@
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(model => model.Pesel, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.Pesel, new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.Pesel)
                     @Html.ValidationMessageFor(model => model.Pesel)
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(model => model.NrTelefonu, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.NrTelefonu, new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.NrTelefonu)
                     @Html.ValidationMessageFor(model => model.NrTelefonu)
@@ -57,15 +53,16 @@
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(model => model.SilowniaID, "Siłownia", new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.SilowniaID, "Silownia", new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.DropDownList("SilowniaID", String.Empty)
                     @Html.ValidationMessageFor(model => model.SilowniaID)
                 </div>
             </div>
+
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Utwórz" class="btn btn-large btn-lgn btn-success" />
+                    <input type="submit" value="Utwórz" class="btn btn-large btn-lg btn-success" />
                 </div>
             </div>
         </div>
@@ -73,9 +70,8 @@
 }
 
 <div>
-    <button class="btn btn-large btn-lg btn-block btn-primary btn-primary" onclick="location.href='@Url.Action("Index", "Instruktor")';return false;">Powrót do listy instruktorów</button>
+    <button class="btn btn-large btn-block btn-primary btn-lg btn-primary" onclick="location.href='@Url.Action("Index", "Konserwator")';return false;">Powrót do listy konserwatorów</button>
 </div>
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
