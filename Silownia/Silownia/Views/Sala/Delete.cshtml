@@ -1,51 +1,50 @@
 ﻿@model Silownia.Models.Sala
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Sprzęt: usuń";
 }
+<h2>Czy na pewno chcesz usunąć salę o numerze: @Model.Numer_sali z siłowni @Model.Silownia.Nazwa?</h2>
 
-<h2>Usuwasz Sale</h2>
-<div class="col-md-offset-2">
-    <h3>Napewno chcesz usunąć tą sale?</h3>
-</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
 
-<div class="col-md-offset-2">
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Rodzaj)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Rodzaj)
-        </dd>
+    <div class="divDark">
+        <div class="divInner">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Rodzaj)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Rodzaj)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Status)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Status)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Opis)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Status)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Opis)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Opis)
+                </dt>
 
-    </dl>
+                <dd>
+                    @Html.DisplayFor(model => model.Opis)
+                </dd>
 
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color col-md-offset-2">
-            <button class="btn-danger btn-lg" onclick="location.href='@Url.Action("Delete", "Sala", new { id = Model.Numer_sali })';return false;">usuń</button>
-            <div class="col-md-3">
-                <button class="btn btn-large btn-block btn-primary btn-lg btn-primary" onclick="location.href='@Url.Action("Index", "Sala")';return false;">lista sal</button>
+            </dl>
+            <div>
+                <input type="submit" value="Usuń" class="btn  btn-large btn-lg btn-block btn-danger" />
             </div>
         </div>
-    }
-</div>
+    </div>
+}
+@if (Request.UrlReferrer != null)
+{
+    <button class="btn btn-large btn-block btn-primary btn-lg btn-primary" onclick="history.go(-1); return false;">powrót</button>
+}
