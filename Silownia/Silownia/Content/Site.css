@@ -17,58 +17,58 @@ textarea {
 }
 
 a.umowaPic {
-    background: url('/Content/ikony/ikona_umowa50px.png') no-repeat;
+    background: url('/Content/ikony/ikona_umowa60px.png') no-repeat;
     display: block;
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     text-indent: -9999px; /* hides the link text */
 }
 
 a.konserwacjaPic {
-    background: url('/Content/ikony/ikona_konserwacja50px.png') no-repeat;
+    background: url('/Content/ikony/ikona_konserwacja60px.png') no-repeat;
     display: block;
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     text-indent: -9999px; /* hides the link text */
 }
 
 a.masazPic {
-    background: url('/Content/ikony/ikona_masaz50px.png') no-repeat;
+    background: url('/Content/ikony/ikona_masaz60px.png') no-repeat;
     display: block;
-    width: 50px;
-    height:50px;
+    width: 60px;
+    height: 60px;
     text-indent: -9999px; /* hides the link text */
 }
 
 a.treningPersonalnyPic {
-    background: url('/Content/ikony/ikona_treningPersonalny50px.png') no-repeat;
+    background: url('/Content/ikony/ikona_treningPersonalny60px.png') no-repeat;
     display: block;
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     text-indent: -9999px; /* hides the link text */
 }
 
 a.adresPic {
-    background: url('/Content/ikony/ikona_adres50px.png') no-repeat;
+    background: url('/Content/ikony/ikona_adres60px.png') no-repeat;
     display: block;
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     text-indent: -9999px; /* hides the link text */
 }
 
 a.adresSilowniaPic {
-    background: url('/Content/ikony/silownia/ikona_adres_silownia_50px.png') no-repeat;
+    background: url('/Content/ikony/silownia/ikona_adres_silownia_60px.png') no-repeat;
     display: block;
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     text-indent: -9999px; /* hides the link text */
 }
 
 a.instruktorPic{
-    background: url('/Content/ikony/persony/ikona_instruktor50px.png') no-repeat;
+    background: url('/Content/ikony/persony/ikona_instruktor60px.png') no-repeat;
     display: block;
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     text-indent: -9999px; /* hides the link text */
 
 }
