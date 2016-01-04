@@ -509,6 +509,9 @@
     <Content Include="Views\ZajeciaGrup\Index.cshtml" />
     <Content Include="Views\Shared\KryteriaSzukania\_konserwator.cshtml" />
     <Content Include="Views\Shared\KryteriaSzukania\_sprzetNazwa.cshtml" />
+    <Content Include="Views\MasazystaView\index.cshtml" />
+    <Content Include="Views\InstruktorView\index.cshtml" />
+    <Content Include="Views\KonserwatorView\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

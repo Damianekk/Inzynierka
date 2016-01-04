@@ -110,9 +110,9 @@ namespace Silownia.Controllers
 
                         Uzytkownik pracownik = new Uzytkownik();
                         pracownik.IDOsoby = instruktor.OsobaID;
-                        pracownik.Login = instruktor.Nazwisko;
+                        pracownik.Login = instruktor.Pesel.ToString();
                         pracownik.Haslo = instruktor.Imie + instruktor.Nazwisko;
-                        pracownik.Rola = "Instruktor";
+                        pracownik.Rola = RoleEnum.Instruktor.GetDescription();
 
                         db.Uzytkownicy.Add(pracownik);
                         db.SaveChanges();

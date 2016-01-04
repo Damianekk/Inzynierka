@@ -47,9 +47,21 @@
             {
                 <li>@Html.ActionLink("Panel klienta", "Index", "KlientView")</li>
             }
-            else if (Session["Auth"].ToString() == "Trener" | Session["Auth"].ToString() == "Instruktor")
+            else if (Session["Auth"].ToString() == "Trener")
             {
                 <li>@Html.ActionLink("Panel trenera", "Index", "TrenerView")</li>
+            }
+            else if (Session["Auth"].ToString() == "Instruktor")
+            {
+                <li>@Html.ActionLink("Panel instruktora", "Index", "InstruktorView")</li>
+            }
+            else if (Session["Auth"].ToString() == "Masazysta")
+            {
+                <li>@Html.ActionLink("Panel masażysty", "Index", "MasazystaView")</li>
+            }
+            else if (Session["Auth"].ToString() == "Konserwator")
+            {
+                <li>@Html.ActionLink("Panel konserwatora", "Index", "MasazystaView")</li>
             }
 
             <li><a href="javascript:document.getElementById('logoutForm').submit()">Wyloguj</a></li>
