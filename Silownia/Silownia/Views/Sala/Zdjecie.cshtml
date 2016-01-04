@@ -1,19 +1,15 @@
 ﻿@model Silownia.Models.Sala
 
-<div>
-    @{
-        if (ViewBag.Pic != null)
+@{
+    if (ViewBag.Pic == 1)
+    { 
+        
+        if (Model.Zdjecie != null)
         {
+            WebImage foto = new WebImage(Model.Zdjecie);
 
-            if (Model.Zdjecie != null)
-            {
-                WebImage foto = new WebImage(Model.Zdjecie);
-
-                foto.Resize(600, 600, true, true);
-
-                foto.Write();
-            }
+            foto.Resize(600, 600, true, true);
+            foto.Write();
         }
     }
-</div>
-
+}

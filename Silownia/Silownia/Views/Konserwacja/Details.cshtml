@@ -1,0 +1,282 @@
+﻿@model Silownia.Models.Konserwacja
+
+@{
+    ViewBag.Title = "Konserwacja: szczegóły";
+}
+<h2>Szczegóły dotyczące wybranej konserwacji</h2>
+
+<div class="divDark">
+    <div class="divInner">
+        <dl class="dl-horizontal">
+            <dt>
+                Siłownia
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Sprzet.Sala.Silownia.Nazwa)
+            </dd>
+            <dt>
+                Sala
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Sprzet.Sala.Rodzaj)
+            </dd>
+
+            <dt>
+                Sprzęt
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Sprzet.Nazwa)
+            </dd>
+
+            <dt>
+                Konserwator
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Konserwator.imieNazwisko)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Opis_usterki)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Opis_usterki)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Data_zgłoszenia)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Data_zgłoszenia)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Data_naprawy)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Data_naprawy)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Status)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Status)
+            </dd>
+        </dl>
+    </div>
+</div>
+
+<div>
+    @if (Request.UrlReferrer != null)
+    {
+        <button class="btn btn-large btn-block btn-primary btn-lg btn-primary" onclick="history.go(-1); return false;">powrót</button>
+    }
+</div>
+
+<div>
+
+    <div class="wrap">
+        <img class="show_hide" src="~/Content/ikony/silownia/ikona_silownia.png" width="90" height="90">
+
+        <div class="slidingDiv" style="display:none">
+            <dl , class="table-bordered" ,new style="color: #3498db">
+                <dt>
+                    @Html.Label("Siłownia", new { style = "color:#3498db" })
+                </dt>
+                <dd>
+                    <table class="table">
+                        <tr>
+                            <th>Nazwa</th>
+                            <th>Miasto</th>
+                            <th>Numer telefonu</th>
+                            <th>Info</th>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(model => model.Sprzet.Sala.Silownia.Nazwa)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.Sprzet.Sala.Silownia.Adres.Miasto)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.Sprzet.Sala.Silownia.NrTelefonu)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.Sprzet.Sala.Silownia.infoDodatkowe)
+                            </td>
+                            <td>
+
+                                <div class="btn-group">
+                                    <button class="btn-primary btn-lg" onclick="location.href='@Url.Action("Details", "Silownia", new { id = Model.Sprzet.Sala.Silownia.SilowniaID })';return false;">szczegóły</button>
+                                </div>
+
+                            </td>
+                        </tr>
+
+                    </table>
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="wrap">
+        <img class="show_hide" src="~/Content/ikony/sala/ikona_sala.png" width="90" height="90">
+
+        <div class="slidingDiv" style="display:none">
+            <dl , class="table-bordered" ,new style="color: #ecf0f1">
+                <dt>
+                    @Html.Label("Sala", new { style = "color:#ecf0f1" })
+                </dt>
+                <dd>
+                    <table class="table">
+                        <tr>
+                            <th>Rodzaj</th>
+                            <th>Numer Sali</th>
+                            <th>Opis</th>
+                            <th>Status</th>
+
+                        </tr>
+
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(model => model.Sprzet.Sala.Rodzaj)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.Sprzet.Sala.Numer_sali)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.Sprzet.Sala.Opis)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.Sprzet.Sala.Status)
+                            </td>
+                            <td>
+
+                                <div class="btn-group">
+                                    <button class="btn-primary btn-lg" onclick="location.href='@Url.Action("Details", "Sala", new { id = Model.Sprzet.Sala.Numer_sali })';return false;">szczegóły</button>
+                                </div>
+
+                            </td>
+                        </tr>
+
+                    </table>
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="wrap">
+        <img class="show_hide" src="~/Content/ikony/ikona_sprzet.png" width="90" height="90">
+
+        <div class="slidingDiv" style="display:none">
+            <dl , class="table-bordered" ,new style="color: #1ABC9C">
+                <dt>
+                    @Html.Label("Sala", new { style = "color:#1ABC9C" })
+                </dt>
+                <dd>
+                    <table class="table">
+                        <tr>
+                            <th>Nazwa</th>
+                            <th>Data zakupu</th>
+                            <th>Wartość</th>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(model => model.Sprzet.Nazwa)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.Sprzet.Data_zakupu)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.Sprzet.Cena_zakupu)
+                            </td>
+
+                            <td>
+
+                                <div class="btn-group">
+                                    <button class="btn-primary btn-lg" onclick="location.href='@Url.Action("Details", "Sprzet", new { id = Model.Sprzet.SprzetID })';return false;">szczegóły</button>
+                                </div>
+
+                            </td>
+                        </tr>
+
+                    </table>
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="wrap">
+        <img class="show_hide" src="~/Content/ikony/persony/ikona_konserwator.png" width="90" height="90">
+
+        <div class="slidingDiv" style="display:none">
+            <dl , class="table-bordered" ,new style="color: #f1c40f">
+                <dt>
+                    @Html.Label("Konserwator", new { style = "color:#f1c40f" })
+                </dt>
+                <dd>
+                    <table class="table">
+                        <tr>
+                            <th>Imię i nazwisko</th>
+                            <th>Numer telefonu</th>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(model => model.Konserwator.imieNazwisko)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.Konserwator.NrTelefonu)
+                            </td>
+                            <td>
+
+                                <div class="btn-group">
+                                    <button class="btn-primary btn-lg" onclick="location.href='@Url.Action("Details", "Konserwator", new { id = Model.Konserwator.OsobaID })';return false;">szczegóły</button>
+                                </div>
+
+                            </td>
+                        </tr>
+
+                    </table>
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+</div>
+
+
+<style type="text/cs">
+    div.wrap {
+        float: left;
+        width: 500px;
+    }
+
+    img.show_hide {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .slidingDiv {
+        width: 500px;
+        display: none;
+    }
+</style>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">
+</script>
+<script type="text/javascript">
+    $('img.show_hide').on("click", function () {
+        $('div.slidingDiv').stop().slideUp('fast');
+        $(this).next('div.slidingDiv').stop().slideToggle('fast');
+    });
+</script>

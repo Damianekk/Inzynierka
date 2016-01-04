@@ -1,0 +1,103 @@
+﻿@model PagedList.PagedList<Silownia.Models.Sprzet>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Sprzęt: index";
+}
+@Scripts.Render("~/Scripts/infoCzynnosc.js")
+
+@if (ViewBag.Akcja != null)
+{
+    if (ViewBag.Akcja == AkcjaEnumSprzet.DodanoSprzet)
+    {
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <div class="alert alert-success">
+            <br />
+            <h4>@PelnaNazwaEnum.GetDescription(@ViewBag.Akcja) @ViewBag.info</h4>
+            <br />
+        </div>
+    }
+
+    if (ViewBag.Akcja == AkcjaEnumSprzet.UsunietoSprzet)
+    {
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <div class="alert alert-danger">
+            <br />
+            <h4>@PelnaNazwaEnum.GetDescription(@ViewBag.Akcja) @ViewBag.info</h4>
+            <br />
+        </div>
+    }
+}
+
+<h2>Inwentarz sprzętu</h2>
+
+
+<div class="divDark">
+    @using (Html.BeginForm())
+    {
+        @Html.Partial("KryteriaSzukania/_sprzet")
+        @Html.Partial("KryteriaSzukania/_silownia")
+        <br />
+        <input type="submit" value="szukaj" class="btn btn-info" style="width:10%" />
+        <br />
+    }
+
+</div>
+
+<table class="table table-hover table-condensed">
+    <tr>
+        <th>
+            @Html.Label("Nazwa:")
+        </th>
+        <th>
+            @Html.Label("Siłownia:")
+        </th>
+        <th>
+            @Html.Label("Sala:")
+        </th>
+        <th>
+            @Html.Label("Data zakupu:")
+        </th>
+        <th>
+            @Html.Label("Cena zakupu:")
+        </th>
+        <th></th>
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nazwa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sala.Silownia.Nazwa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sala.Numer_sali)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Data_zakupu)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cena_zakupu)
+            </td>
+            <td>
+                <div class="btn-group">
+                    <button class="btn-primary btn-lg" onclick="location.href='@Url.Action("Details", "Sprzet", new { id = item.SprzetID })';return false;">szczegóły</button>
+                    <button class="btn-danger btn-lg" onclick="location.href='@Url.Action("Delete", "Sprzet", new { id = item.SprzetID })';return false;">usuń</button>
+                </div>
+            </td>
+            <td>
+                @Html.ActionLink("konserwacja", "Create", "Konserwacja", new { id = item.SprzetID },
+                           new { @class = "konserwacjaPic" })
+            </td>
+        </tr>
+    }
+</table>
+
+<div class="center">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, pageSize = Model.PageSize, imieNazwisko = ViewBag.srchImieNazwisko }))
+    Wyświetlam od @Model.FirstItemOnPage do @Model.LastItemOnPage z @Model.TotalItemCount rekordów Sprzęt
+</div>

@@ -1,48 +1,50 @@
 ﻿@model Silownia.Models.Sala
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Sprzęt: usuń";
 }
+<h2>Czy na pewno chcesz usunąć salę   @Model.Rodzaj  z siłowni @Model.Silownia.Nazwa?</h2>
 
-<h2>Delete</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Sala</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Rodzaj)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Rodzaj)
-        </dd>
+    <div class="divDark">
+        <div class="divInner">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Rodzaj)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Rodzaj)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Status)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Status)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Opis)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Status)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Opis)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Opis)
+                </dt>
 
-    </dl>
+                <dd>
+                    @Html.DisplayFor(model => model.Opis)
+                </dd>
 
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            </dl>
+            <div>
+                <input type="submit" value="Usuń" class="btn  btn-large btn-lg btn-block btn-danger" />
+            </div>
         </div>
-    }
-</div>
+    </div>
+}
+@if (Request.UrlReferrer != null)
+{
+    <button class="btn btn-large btn-block btn-primary btn-lg btn-primary" onclick="history.go(-1); return false;">powrót</button>
+}

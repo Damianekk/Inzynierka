@@ -24,41 +24,44 @@ namespace Silownia.Controllers
 
         public ActionResult Index(string Miasto, string imieNazwisko, bool czyUmowa = false, int page = 1, int pageSize = 10, AkcjaEnum akcja = AkcjaEnum.Brak, String info = null)
         {
-             if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                var Miasta = db.Klienci.Where(u => (u.OsobaID != null) && (u.Adres != null)).DistinctBy(a => new { a.Adres.Miasto }).Select(x => x.Adres);
-
-
-                ViewBag.Miasto = new SelectList(Miasta, "Miasto", "Miasto");
-
-                var osoby = from Osoby in db.Klienci select Osoby;
-
-
-                if (!String.IsNullOrEmpty(imieNazwisko))
-                    foreach (string wyraz in imieNazwisko.Split(' '))
-                        osoby = osoby.Search(wyraz, i => i.Imie, i => i.Nazwisko);
-                osoby = osoby.Search(Miasto, m => m.Adres.Miasto);
-                if (czyUmowa)
-                    osoby = osoby.Where(u => u.Umowy.Count > 0);
-
-                var final = osoby.OrderBy(p => p.Nazwisko);
-                var ileWynikow = osoby.Count();
-                if ((ileWynikow / page) <= 1)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    page = 1;
+                    var Miasta = db.Klienci.Where(u => (u.OsobaID != null) && (u.Adres != null)).DistinctBy(a => new { a.Adres.Miasto }).Select(x => x.Adres);
+
+
+                    ViewBag.Miasto = new SelectList(Miasta, "Miasto", "Miasto");
+
+                    var osoby = from Osoby in db.Klienci select Osoby;
+
+
+                    if (!String.IsNullOrEmpty(imieNazwisko))
+                        foreach (string wyraz in imieNazwisko.Split(' '))
+                            osoby = osoby.Search(wyraz, i => i.Imie, i => i.Nazwisko);
+                    osoby = osoby.Search(Miasto, m => m.Adres.Miasto);
+                    if (czyUmowa)
+                        osoby = osoby.Where(u => u.Umowy.Count > 0);
+
+                    var final = osoby.OrderBy(p => p.Nazwisko);
+                    var ileWynikow = osoby.Count();
+                    if ((ileWynikow / page) <= 1)
+                    {
+                        page = 1;
+                    }
+                    var kk = ileWynikow / page;
+
+                    PagedList<Klient> model = new PagedList<Klient>(final, page, pageSize);
+
+
+                    if (akcja != AkcjaEnum.Brak)
+                    {
+                        ViewBag.info = info;
+                        ViewBag.Akcja = akcja;
+                    }
+
+                    return View(model);
                 }
-                var kk = ileWynikow / page;
-
-                PagedList<Klient> model = new PagedList<Klient>(final, page, pageSize);
-
-
-                if (akcja != AkcjaEnum.Brak)
-                {
-                    ViewBag.info = info;
-                    ViewBag.Akcja = akcja;
-                }
-
-                return View(model);
             }
               return HttpNotFound();
 
@@ -67,19 +70,22 @@ namespace Silownia.Controllers
         // GET: /Klient/Details/5
         public ActionResult Details(long? id)
         {
-              if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                if (id == null)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    Klient klient = db.Klienci.Find(id);
+                    if (klient == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    var z = klient;
+                    return View(z);
                 }
-                Klient klient = db.Klienci.Find(id);
-                if (klient == null)
-                {
-                    return HttpNotFound();
-                }
-                var z = klient;
-                return View(z);
             }
                 return HttpNotFound();
         }
@@ -87,9 +93,12 @@ namespace Silownia.Controllers
         // GET: /Klient/Create
         public ActionResult Create()
         {
-              if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                return View();
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                {
+                    return View();
+                }
             }
                 return HttpNotFound();
         }
@@ -100,24 +109,27 @@ namespace Silownia.Controllers
         [HttpPost]
         public ActionResult Create([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,Mail,NrTelefonu,Adres")] Klient klient)
         {
-              if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                if (ModelState.IsValid)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    db.Klienci.Add(klient);
-                    db.SaveChanges();
+                    if (ModelState.IsValid)
+                    {
+                        db.Klienci.Add(klient);
+                        db.SaveChanges();
 
-                    Uzytkownik uzytkownik = new Uzytkownik();
-                    uzytkownik.IDOsoby = klient.OsobaID;
-                    uzytkownik.Login = klient.Mail;
-                    uzytkownik.Haslo = klient.Imie + klient.Nazwisko;
-                    uzytkownik.Rola = RoleEnum.Klient.GetDescription();
-                    db.Uzytkownicy.Add(uzytkownik);
-                    db.SaveChanges();
-                    return RedirectToAction("Index", new { akcja = AkcjaEnum.DodanoKlienta, info = klient.imieNazwisko });
+                        Uzytkownik uzytkownik = new Uzytkownik();
+                        uzytkownik.IDOsoby = klient.OsobaID;
+                        uzytkownik.Login = klient.Mail;
+                        uzytkownik.Haslo = klient.Imie + klient.Nazwisko;
+                        uzytkownik.Rola = RoleEnum.Klient.GetDescription();
+                        db.Uzytkownicy.Add(uzytkownik);
+                        db.SaveChanges();
+                        return RedirectToAction("Index", new { akcja = AkcjaEnum.DodanoKlienta, info = klient.imieNazwisko });
+                    }
+
+                    return View(klient);
                 }
-
-                return View(klient);
             }
               return HttpNotFound();
         }
@@ -125,18 +137,21 @@ namespace Silownia.Controllers
         // GET: /Klient/Edit/5
         public ActionResult Edit(long? id)
         {
-              if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                if (id == null)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    Klient klient = db.Klienci.Find(id);
+                    if (klient == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(klient);
                 }
-                Klient klient = db.Klienci.Find(id);
-                if (klient == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(klient);
             }
              return HttpNotFound();
         }
@@ -147,15 +162,18 @@ namespace Silownia.Controllers
         [HttpPost]
         public ActionResult Edit([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,Mail,NrTelefonu")] Klient klient)
         {
-               if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                if (ModelState.IsValid)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    db.Entry(klient).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
+                    if (ModelState.IsValid)
+                    {
+                        db.Entry(klient).State = EntityState.Modified;
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
+                    return View(klient);
                 }
-                return View(klient);
             }
                return HttpNotFound();
         }
@@ -163,18 +181,21 @@ namespace Silownia.Controllers
         // GET: /Klient/Delete/5
         public ActionResult Delete(long? id)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                if (id == null)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    Klient klient = db.Klienci.Find(id);
+                    if (klient == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(klient);
                 }
-                Klient klient = db.Klienci.Find(id);
-                if (klient == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(klient);
             }
               return HttpNotFound();
         }
@@ -183,17 +204,20 @@ namespace Silownia.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(long id)
         {
-             if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                Klient klient = db.Klienci.Find(id);
-                db.Klienci.Remove(klient);
-                db.SaveChanges();
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                {
+                    Klient klient = db.Klienci.Find(id);
+                    db.Klienci.Remove(klient);
+                    db.SaveChanges();
 
-                Uzytkownik uzytkownik = db.Uzytkownicy.Where(w => w.IDOsoby == klient.OsobaID).First();
-                db.Uzytkownicy.Remove(uzytkownik);
-                db.SaveChanges();
+                    Uzytkownik uzytkownik = db.Uzytkownicy.Where(w => w.IDOsoby == klient.OsobaID).First();
+                    db.Uzytkownicy.Remove(uzytkownik);
+                    db.SaveChanges();
 
-                return RedirectToAction("Index", new { akcja = AkcjaEnum.UsunietoKlienta, info = klient.imieNazwisko });
+                    return RedirectToAction("Index", new { akcja = AkcjaEnum.UsunietoKlienta, info = klient.imieNazwisko });
+                }
             }
               return HttpNotFound();
         }

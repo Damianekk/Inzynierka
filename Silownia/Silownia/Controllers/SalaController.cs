@@ -9,6 +9,8 @@ using System.Web.Mvc;
 using Silownia.Models;
 using Silownia.DAL;
 using System.IO;
+using PagedList;
+using Silownia.Helpers;
 
 namespace Silownia.Controllers
 {
@@ -17,30 +19,58 @@ namespace Silownia.Controllers
         private SilowniaContext db = new SilowniaContext();
 
         // GET: /Sala/
-        public ActionResult Index()
+        public ActionResult Index(string nazwa, string SilowniaID, int page = 1, int pageSize = 10, AkcjaEnumSala akcja = AkcjaEnumSala.Brak, String info = null)
         {
-            if(Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                return View(db.Sale.ToList());
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                {
+                    ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
+
+                    var sala = from Sale in db.Sale select Sale;
+
+                    sala = sala.Search(SilowniaID, i => i.Silownia.Nazwa);
+
+                    var final = sala.OrderBy(p => p.Rodzaj);
+                    var ileWynikow = sala.Count();
+                    if ((ileWynikow / page) <= 1)
+                    {
+                        page = 1;
+                    }
+                    var kk = ileWynikow / page;
+
+                    PagedList<Sala> model = new PagedList<Sala>(final, page, pageSize);
+
+                    if (akcja != AkcjaEnumSala.Brak)
+                    {
+                        ViewBag.info = info;
+                        ViewBag.Akcja = akcja;
+                    }
+
+                    return View(model);
+                }
             }
             return HttpNotFound();
         }
 
          // GET: /Sala/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(long? id)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                if (id == null)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    Sala sala = db.Sale.Find(id);
+                    if (sala == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(sala);
                 }
-                Sala sala = db.Sale.Find(id);
-                if (sala == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(sala);
             }
             return HttpNotFound();
         }
@@ -48,10 +78,13 @@ namespace Silownia.Controllers
         // GET: /Sala/Create
         public ActionResult Create()
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
-                return View();
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                {
+                    ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
+                    return View();
+                }
             }
             return HttpNotFound();
         }
@@ -61,55 +94,75 @@ namespace Silownia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Sala sala, HttpPostedFileBase file)
+        public ActionResult Create([Bind(Include = "Numer_sali,Rodzaj,Status,Opis,Zdjecie")] long? id, Sala sala, HttpPostedFileBase file)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                if (ModelState.IsValid)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    string FileName = "";
-                    byte[] bytes;
-
-                    int BytesToRead;
-
-                    int numBytesRead;
-
-                    if (file != null)
+                    if (ModelState.IsValid)
                     {
-                        FileName = Path.GetFileName(file.FileName);
-                        bytes = new byte[file.ContentLength];
-                        BytesToRead = (int)file.ContentLength;
-                        numBytesRead = 0;
+                        ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
+                        
+                        #region Silownia
+                        Models.Silownia silownia = db.Silownie.Find(id);
+                        sala.Silownia = silownia;
+                        silownia.Sale.Add(sala);
+                        #endregion
 
-                        while (BytesToRead > 0)
+                        string FileName = "";
+                        byte[] bytes;
+
+                        int BytesToRead;
+
+                        int numBytesRead;
+
+                        if (file != null)
                         {
-                            int n = file.InputStream.Read(bytes, numBytesRead, BytesToRead);
+                            FileName = Path.GetFileName(file.FileName);
+                            bytes = new byte[file.ContentLength];
+                            BytesToRead = (int)file.ContentLength;
+                            numBytesRead = 0;
 
-                            if (n == 0)
+                            while (BytesToRead > 0)
                             {
-                                break;
-                            }
-                            numBytesRead += n;
-                            BytesToRead -= n;
-                        }
-                        sala.Zdjecie = bytes;
+                                int n = file.InputStream.Read(bytes, numBytesRead, BytesToRead);
 
+                                if (n == 0)
+                                {
+                                    break;
+                                }
+                                numBytesRead += n;
+                                BytesToRead -= n;
+                            }
+                            sala.Zdjecie = bytes;
+
+                        }
+                        db.Sale.Add(sala);
+                        db.SaveChanges();
+
+                        return RedirectToAction("Index", new { akcja = AkcjaEnumSala.DodanoSale, info = sala.Numer_sali });
                     }
-                    db.Sale.Add(sala);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
+                    
+                    
+                    return View(sala);
                 }
-                ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
-                return View(sala);
             }
             return HttpNotFound();
         }
 
         public ActionResult Zdjecie(int id, int img)
         {
-            ViewBag.Pic = img;
-            Sala foto = db.Sale.Find(id);
-            return View(foto);
+            if (Session["Auth"] != null)
+            {
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                {
+                    ViewBag.Pic = img;
+                    Sala foto = db.Sale.Find(id);
+                    return View(foto);
+                }
+            }
+            return HttpNotFound();
         }
 
 
@@ -117,19 +170,22 @@ namespace Silownia.Controllers
         // GET: /Sala/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                if (id == null)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    Sala sala = db.Sale.Find(id);
+                    if (sala == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", sala.Silownia);
+                    return View(sala);
                 }
-                Sala sala = db.Sale.Find(id);
-                if (sala == null)
-                {
-                    return HttpNotFound();
-                }
-                ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", sala.Silownia);
-                return View(sala);
             }
             return HttpNotFound();
         }
@@ -139,18 +195,20 @@ namespace Silownia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="Numer_sali,Rodzaj,Status,Opis,ImageFile,SilowniaID")] Sala sala)
+        public ActionResult Edit([Bind(Include="Numer_sali,Rodzaj,Status,Opis,Zdjecie")] Sala sala)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                if (ModelState.IsValid)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    db.Entry(sala).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
+                    if (ModelState.IsValid)
+                    {
+                        db.Entry(sala).State = EntityState.Modified;
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
+                    return View(sala);
                 }
-                ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", sala.Silownia);
-                return View(sala);
             }
             return HttpNotFound();
         }
@@ -158,18 +216,21 @@ namespace Silownia.Controllers
         // GET: /Sala/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                if (id == null)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    Sala sala = db.Sale.Find(id);
+                    if (sala == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(sala);
                 }
-                Sala sala = db.Sale.Find(id);
-                if (sala == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(sala);
             }
             return HttpNotFound();
         }
@@ -179,12 +240,15 @@ namespace Silownia.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                Sala sala = db.Sale.Find(id);
-                db.Sale.Remove(sala);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                {
+                    Sala sala = db.Sale.Find(id);
+                    db.Sale.Remove(sala);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
             return HttpNotFound();
         }

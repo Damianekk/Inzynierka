@@ -48,7 +48,10 @@
             @Html.Label("Trener:")
         </th>
         <th>
-            @Html.Label("Data masażu:")
+            @Html.Label("Data treningu:")
+        </th>
+        <th>
+            @Html.Label("Godzina:")
         </th>
         <th>
             @Html.Label("Czas trwania:")
@@ -69,6 +72,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TreningStart)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TreningStartGodzina)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CzasTrwania)

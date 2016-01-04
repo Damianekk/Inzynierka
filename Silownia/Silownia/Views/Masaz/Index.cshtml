@@ -43,7 +43,7 @@
 
 </div>
 
-    <table class="table table-hover table-condensed">
+<table class="table table-hover table-condensed">
     <tr>
         <th>
             @Html.Label("Klient:")
@@ -53,6 +53,9 @@
         </th>
         <th>
             @Html.Label("Data masażu:")
+        </th>
+        <th>
+            @Html.Label("Godzina masażu:")
         </th>
         <th>
             @Html.Label("Czas trwania:")
@@ -72,6 +75,9 @@
                 @Html.DisplayFor(modelItem => item.DataMasazu)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.MasazStart)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.CzasTrwania)
             </td>
             <td>
@@ -84,7 +90,7 @@
     }
 </table>
 
-    <div class="center">
-        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, pageSize = Model.PageSize, imieNazwisko = ViewBag.srchImieNazwisko }))
-        Wyświetlam od @Model.FirstItemOnPage do @Model.LastItemOnPage z @Model.TotalItemCount rekordów Masażysta
-    </div>
+<div class="center">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, pageSize = Model.PageSize, imieNazwisko = ViewBag.srchImieNazwisko }))
+    Wyświetlam od @Model.FirstItemOnPage do @Model.LastItemOnPage z @Model.TotalItemCount rekordów Masażysta
+</div>

@@ -1,0 +1,79 @@
+﻿@model Silownia.Models.Konserwacja
+
+@{
+    ViewBag.Title = "Konserwacja: edycja";
+}
+<h2>Edycja wybranej konserwacji</h2>
+<div class="divDark">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.KonserwacjaID)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.KonserwatorID, "Konserwator", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("KonserwatorID")
+                    @Html.ValidationMessageFor(model => model.KonserwatorID)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Opis_usterki, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Opis_usterki)
+                    @Html.ValidationMessageFor(model => model.Opis_usterki)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Data_zgłoszenia, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Data_zgłoszenia)
+                    @Html.ValidationMessageFor(model => model.Data_zgłoszenia)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Data_naprawy, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Data_naprawy)
+                    @Html.ValidationMessageFor(model => model.Data_naprawy)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(m => m.Status, new SelectList(new List<Object>
+           {
+                new { value = 0, text = "przyjęta"},
+                new { value = 1, text = "w naprawie"},
+                new { value = 2, text = "zakończona"}
+           }, "text", "text"))
+                    @Html.ValidationMessageFor(model => model.Status)
+                </div>
+            </div>
+
+            
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Zapisz" class="btn btn-lg btn-large btn-success" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@if (Request.UrlReferrer != null)
+{
+    <button class="btn btn-large btn-block btn-primary btn-lg btn-primary" onclick="history.go(-1); return false;">powrót</button>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

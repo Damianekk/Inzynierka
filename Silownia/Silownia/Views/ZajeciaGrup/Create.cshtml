@@ -1,0 +1,86 @@
+﻿@model Silownia.Models.ZajeciaGrupowe
+@{
+    ViewBag.Title = "Zajecia grupowe: dodaj";
+}
+<h2>Dodaj nowe zajęcia grupowe</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal divDark">
+
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.InstruktorID, "Instruktor", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("InstruktorID", String.Empty)
+                @Html.ValidationMessageFor(model => model.InstruktorID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SalaID, "Sala", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("SalaID", String.Empty)
+                @Html.ValidationMessageFor(model => model.SalaID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TreningStart, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TreningStart)
+                @Html.ValidationMessageFor(model => model.TreningStart)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.TreningStartGodzina, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TreningStartGodzina)
+                @Html.ValidationMessageFor(model => model.TreningStartGodzina)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CzasTrwania, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CzasTrwania)
+                @Html.ValidationMessageFor(model => model.CzasTrwania)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NazwaTreningu, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NazwaTreningu)
+                @Html.ValidationMessageFor(model => model.NazwaTreningu)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.OpisTreningu, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.OpisTreningu)
+                @Html.ValidationMessageFor(model => model.OpisTreningu)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Utwórz" class="btn btn-lg btn-large btn-success" />
+            </div>
+        </div>
+
+        @if (Request.UrlReferrer != null)
+        {
+            <button class="btn btn-large btn-block btn-primary btn-lg btn-primary" onclick="history.go(-1); return false;">powrót</button>
+        }
+
+        @if (TempData["msg"] != null)
+        { @Html.Raw(TempData["msg"]) }
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

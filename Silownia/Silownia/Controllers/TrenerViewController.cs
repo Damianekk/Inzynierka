@@ -16,38 +16,41 @@ namespace Silownia.Controllers
         private SilowniaContext db = new SilowniaContext();
         public ActionResult Index(long? id)
         {
-            if (Session["User"] != null)
+            if (Session["Auth"] != null)
             {
-                if (id == null)
+                if (Session["Auth"].ToString() == "Trener")
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    ViewBag.Trenerzy = new SelectList(db.Klienci, "OsobaID", "imieNazwisko");
+                    Osoba os = db.Osoby.Find(id);
+
+                    var wiad = db.Wiadomosci.Where(o => o.OsobaOdbierajaca.OsobaID == id);
+
+
+
+                    foreach (Wiadomosc w in wiad)
+                    {
+                        w.Status = StatusWiadomosciEnum.Odebrany;
+                        w.Odebrano = DateTime.Now;
+                    }
+
+                    if (wiad.Count() > 0)
+                        ViewBag.Wiad = wiad.ToList<Wiadomosc>();
+
+                    else
+                        ViewBag.Wiad = null;
+
+                    if (os == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    var z = os;
+
+                    return View(z);
                 }
-                ViewBag.Trenerzy = new SelectList(db.Klienci, "OsobaID", "imieNazwisko");
-                Osoba os = db.Osoby.Find(id);
-
-                var wiad = db.Wiadomosci.Where(o => o.OsobaOdbierajaca.OsobaID == id);
-
-              
-
-                foreach (Wiadomosc w in wiad)
-                {
-                    w.Status = StatusWiadomosciEnum.Odebrany;
-                    w.Odebrano = DateTime.Now;
-                }
-
-                if (wiad.Count() > 0)
-                    ViewBag.Wiad = wiad.ToList<Wiadomosc>();
-
-                else
-                    ViewBag.Wiad = null;
-
-                if (os == null)
-                {
-                    return HttpNotFound();
-                }
-                var z = os;
-
-                return View(z);
             }
             return HttpNotFound();
 
@@ -58,27 +61,29 @@ namespace Silownia.Controllers
 
 
 
-            if (Session["User"] != null)
+            if (Session["Auth"] != null)
             {
-
-                var osWys = db.Osoby.Find(Session["UserID"]);
-                var osOdb = db.Osoby.Find(trenerID);
-
-                Wiadomosc wiadomosc = new Wiadomosc
+                if (Session["Auth"].ToString() == "Trener")
                 {
-                    OsobaWysylajaca = osWys,
-                    OsobaOdbierajaca = osOdb,
-                    Tresc = username,
-                    Wyslano = DateTime.Now,
-                    Odebrano = null,
-                    Status = StatusWiadomosciEnum.Wyslany
-                };
+                    var osWys = db.Osoby.Find(Session["UserID"]);
+                    var osOdb = db.Osoby.Find(trenerID);
 
-                db.Wiadomosci.Add(wiadomosc);
-                db.SaveChanges();
+                    Wiadomosc wiadomosc = new Wiadomosc
+                    {
+                        OsobaWysylajaca = osWys,
+                        OsobaOdbierajaca = osOdb,
+                        Tresc = username,
+                        Wyslano = DateTime.Now,
+                        Odebrano = null,
+                        Status = StatusWiadomosciEnum.Wyslany
+                    };
+
+                    db.Wiadomosci.Add(wiadomosc);
+                    db.SaveChanges();
 
 
-                return null;
+                    return null;
+                }
             }
             return HttpNotFound();
         }

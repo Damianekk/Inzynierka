@@ -149,6 +149,7 @@
                             <tr>
                                 <th>Masażysta</th>
                                 <th>Data masażu</th>
+                                <th>Godzina</th>
                                 <th>Czas trwania</th>
                                 <th>Całkowity koszt</th>
                                 <th></th>
@@ -161,6 +162,9 @@
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.DataMasazu)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.MasazStart)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.CzasTrwania)
@@ -203,6 +207,7 @@
                                 <th>Trener</th>
                                 <th>Fokus treningu</th>
                                 <th>Data treningu</th>
+                                <th>Godzina</th>
                                 <th>Czas trwania</th>
                                 <th>Całkowity koszt</th>
                                 <th></th>
@@ -218,6 +223,9 @@
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.TreningStart)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TreningStartGodzina)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.CzasTrwania)
@@ -258,13 +266,24 @@
                         <table class="table">
                             <tr>
                                 <th>Fokus treningu</th>
-                                <th>Data treningu</th>
+                                <th>Opis treningu</th>
+                                <th>Instruktor prowadzący</th>
+                                <th>Sala</th>
                                 <th>Czas trwania</th>
-                                <th>Członkowie</th>
+                                <th>Data treningu</th>
+                                <th>Ilosc osób</th>
                             </tr>
                             @foreach (var item in Model.KlienciTreningiGrupowe)
                             {
-
+                             <tr>
+                                    <td>@Html.DisplayFor(model => item.ZajeciaGrupowe.NazwaTreningu)</td>
+                                    <td>@Html.DisplayFor(model => item.ZajeciaGrupowe.OpisTreningu)</td>
+                                    <td>@Html.DisplayFor(model => item.ZajeciaGrupowe.Instruktor.imieNazwisko)</td>
+                                    <td>@Html.DisplayFor(model => item.ZajeciaGrupowe.Sala.Numer_sali)</td>
+                                    <td>@Html.DisplayFor(model => item.ZajeciaGrupowe.CzasTrwania)</td> 
+                                    <td>@Html.DisplayFor(model => item.ZajeciaGrupowe.TreningStart)</td>
+                                    <td>@Html.DisplayFor(model => item.ZajeciaGrupowe.KlientZajeciaGrupowe.Count)</td>
+                            </tr>
                             }
                         </table>
                     </dd>

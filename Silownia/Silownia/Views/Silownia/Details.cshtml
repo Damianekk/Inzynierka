@@ -6,6 +6,7 @@
 <div>
     <h2>Szczegóły dotyczące wybranej siłowni</h2>
     <button class="btn btn-large btn-block btn-primary btn-lg btn-success" onclick="location.href='@Url.Action("Edit", "Silownia", new { id = Model.SilowniaID })';return false;">edytuj</button>
+    <button class="btn btn-large btn-lg btn-block btn-primary btn-info" onclick="location.href='@Url.Action("Create", "Sala", new { id = Model.SilowniaID })';return false;">dodaj salę</button>
 
     <fieldset>
         <table width="100%">
@@ -67,8 +68,7 @@
         <button class="btn btn-large btn-block btn-primary btn-lg btn-primary" onclick="location.href='@Url.Action("Index", "Silownia")';return false;">lista siłowni</button>
     </div>
 
-    @if (!ViewBag.mniejSzczegolow)
-    {
+    <div>
         <div class="wrap">
             <img class="show_hide" src="~/Content/ikony/persony/ikona_pracownicy.png" width="90" height="90">
 
@@ -110,8 +110,66 @@
                 </dl>
             </div>
         </div>
+        <div class="wrap">
+            <img class="show_hide" src="~/Content/ikony/sala/ikona_sala.png" width="90" height="90">
 
-    }
+            <div class="slidingDiv" style="display:none">
+                <dl , class="table-bordered" ,new style="color: #ecf0f1">
+                    <dt>
+                        @Html.Label("Sale", new { style = "color:#ecf0f1" })
+                    </dt>
+                    @if (Model.Sale.Count > 0)
+                    {
+                        <dd>
+                            <table class="table">
+                                <tr>
+                                    <th>Rodzaj</th>
+                                    <th>Numer Sali</th>
+                                    <th>Opis</th>
+                                    <th>Status</th>
+                                  
+                                </tr>
+                                @foreach (var item in Model.Sale)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Rodzaj)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Numer_sali)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Opis)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Status)
+                                        </td>
+                                        <td>
+
+                                            <div class="btn-group">
+                                                <button class="btn-success btn-lg" onclick="location.href='@Url.Action("Edit", "Sala", new { id = item.Numer_sali })';return false;">edytuj</button>
+                                                <button class="btn-primary btn-lg" onclick="location.href='@Url.Action("Details", "Sala", new { id = item.Numer_sali })';return false;">szczegóły</button>
+                                                <button class="btn-danger btn-lg" onclick="location.href='@Url.Action("Delete", "Sala", new { id = item.Numer_sali })';return false;">usuń</button>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                        </dd>
+                    }
+                    else
+                    {
+                        <dt>
+                            @Html.Label("Brak sal przypisanych do tej siłowni", new { style = "color:#D11919" })
+                        </dt>
+                    }
+                </dl>
+            </div>
+        </div>
+    </div>
+        
+
 </div>
 
 <script src="http://maps.google.com/maps/api/js?sensor=true" type="text/javascript"></script>

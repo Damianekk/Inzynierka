@@ -1,0 +1,136 @@
+﻿@model Silownia.Models.Sprzet
+
+@{
+    ViewBag.Title = "Masaż: szczegóły";
+}
+<h2>Szczegóły dotyczące wybranego sprzętu</h2>
+
+<button class="btn btn-large btn-lg btn-block btn-primary btn-success" onclick="location.href='@Url.Action("Edit", "Sprzet", new { id = Model.SprzetID })';return false;">edytuj</button>
+<button class="btn btn-large btn-lg btn-block btn-primary btn-danger" onclick="location.href='@Url.Action("Create", "Konserwacja", new { id = Model.SprzetID })';return false;">zgłoś konserwację</button>
+<div class="divDark">
+    <div class="divInner">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Nazwa)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Nazwa)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Data_zakupu)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Data_zakupu)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Cena_zakupu)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Cena_zakupu)
+            </dd>
+
+        </dl>
+    </div>
+</div>
+<div>
+    @if (Request.UrlReferrer != null)
+    {
+        <button class="btn btn-large btn-block btn-primary btn-lg btn-primary" onclick="history.go(-1); return false;">powrót</button>
+    }
+</div>
+
+
+<div>
+
+    <div class="wrap">
+        <img class="show_hide" src="~/Content/ikony/ikona_konserwacja.png" width="90" height="90">
+
+        <div class="slidingDiv" style="display:none">
+            <dl , class="table-bordered" ,new style="color:#f1c40f">
+                <dt>
+                    @Html.Label("Naprawy", new { style = "color:#f1c40f" })
+                </dt>
+
+                @if (Model.Konserwacje.Count > 0)
+                {
+                    <dd>
+                        <table class="table">
+                            <tr>
+                                <th>Konserwator</th>
+                                <th>Data zgłoszenia</th>
+                                <th>Opis usterki</th>
+                                <th>Status</th>
+                                <th>Data naprawy</th>
+                                <th></th>
+                            </tr>
+                            @foreach (var item in Model.Konserwacje)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Konserwator.imieNazwisko)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Data_zgłoszenia)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Opis_usterki)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Status)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Data_naprawy) zł
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn-primary btn-lg" onclick="location.href='@Url.Action("Details", "Konserwacja", new { id = item.KonserwacjaID })';return false;">szczegóły</button>
+                                            <button class="btn-danger btn-lg" onclick="location.href='@Url.Action("Delete", "Konserwacja", new { id = item.KonserwacjaID })';return false;">usuń</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </dd>
+                }
+                else
+                {
+                    <dt>
+                        @Html.Label("Brak napraw", new { style = "color:#D11919" })
+                    </dt>
+                }
+            </dl>
+        </div>
+    </div>
+
+</div>
+
+
+<style type="text/cs">
+    div.wrap {
+        float: left;
+        width: 500px;
+    }
+
+    img.show_hide {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .slidingDiv {
+        width: 500px;
+        display: none;
+    }
+</style>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">
+</script>
+<script type="text/javascript">
+    $('img.show_hide').on("click", function () {
+        $('div.slidingDiv').stop().slideUp('fast');
+        $(this).next('div.slidingDiv').stop().slideToggle('fast');
+    });
+</script>

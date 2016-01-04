@@ -1,0 +1,103 @@
+﻿@model PagedList.PagedList<Silownia.Models.ZajeciaGrupowe>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Zajecia grupowe: index";
+}
+@Scripts.Render("~/Scripts/infoCzynnosc.js")
+@if (ViewBag.Akcja != null)
+{
+    if (ViewBag.Akcja == AkcjaZapisEnum.DodanoZapis)
+    {
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <div class="alert alert-success">
+            <br />
+            <h4>@PelnaNazwaEnum.GetDescription(@ViewBag.Akcja)</h4>
+            <br />
+        </div>
+    }
+
+     if (ViewBag.Akcja == AkcjaZapisEnum.JuzZapis)
+    {
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <div class="alert alert-success">
+            <br />
+            <h4>@PelnaNazwaEnum.GetDescription(@ViewBag.Akcja)</h4>
+            <br />
+        </div>
+    }
+
+    if (ViewBag.Akcja == AkcjaZapisEnum.UsunietoZapis)
+    {
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <div class="alert alert-danger">
+            <br />
+            <h4>@PelnaNazwaEnum.GetDescription(@ViewBag.Akcja)</h4>
+            <br />
+        </div>
+    }
+
+    if (ViewBag.Akcja == AkcjaZapisEnum.NieDaSieZapis)
+    {
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <div class="alert alert-danger">
+            <br />
+            <h4>@PelnaNazwaEnum.GetDescription(@ViewBag.Akcja)</h4>
+            <br />
+        </div>
+    }
+}
+<h2>Lista zajęć grupowych:</h2>
+<table class="table table-hover table-condensed">
+    <tr>
+        <th>
+            @Html.Label("Instruktor:")
+        </th>
+        <th>
+            @Html.Label("Sala:")
+        </th>
+         <th>
+            @Html.Label("Początek treningu:")
+        </th>
+        <th>
+            @Html.Label("Czas trwania treningu:")
+        </th>
+        <th>
+            @Html.Label("Nazwa treningu:")
+        </th>
+        <th>
+            @Html.Label("Opis treningu:")
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Instruktor.imieNazwisko)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sala.Numer_sali)
+            </td>
+             <td>
+                @Html.DisplayFor(modelItem => item.TreningStart)
+            </td>
+             <td>
+                @Html.DisplayFor(modelItem => item.CzasTrwania)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NazwaTreningu)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OpisTreningu)
+            </td>
+            <td>
+                <div class="btn-group">
+                    <button class="btn-default btn-lg" onclick="location.href='@Url.Action("Save", "Zapis", new { id = item.TreningID })';return false;">zapisz się</button>
+                     <button class="btn-default btn-lg" onclick="location.href='@Url.Action("Remove", "Zapis", new { id = item.TreningID })';return false;">wypisz się</button>
+                    <button class="btn-primary btn-lg" onclick="location.href='@Url.Action("Details", "Zapis", new { id = item.TreningID })';return false;">szczegóły</button>
+                </div>
+            </td>
+        </tr>
+    }
+</table>
+

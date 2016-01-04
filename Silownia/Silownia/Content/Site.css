@@ -17,43 +17,60 @@ textarea {
 }
 
 a.umowaPic {
-    background: url('/Content/ikony/ikona_umowa50px.png') no-repeat;
+    background: url('/Content/ikony/ikona_umowa60px.png') no-repeat;
     display: block;
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
+    text-indent: -9999px; /* hides the link text */
+}
+
+a.konserwacjaPic {
+    background: url('/Content/ikony/ikona_konserwacja60px.png') no-repeat;
+    display: block;
+    width: 60px;
+    height: 60px;
     text-indent: -9999px; /* hides the link text */
 }
 
 a.masazPic {
-    background: url('/Content/ikony/ikona_masaz50px.png') no-repeat;
+    background: url('/Content/ikony/ikona_masaz60px.png') no-repeat;
     display: block;
-    width: 50px;
-    height:50px;
+    width: 60px;
+    height: 60px;
     text-indent: -9999px; /* hides the link text */
 }
 
 a.treningPersonalnyPic {
-    background: url('/Content/ikony/ikona_treningPersonalny50px.png') no-repeat;
+    background: url('/Content/ikony/ikona_treningPersonalny60px.png') no-repeat;
     display: block;
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     text-indent: -9999px; /* hides the link text */
 }
 
 a.adresPic {
-    background: url('/Content/ikony/ikona_adres50px.png') no-repeat;
+    background: url('/Content/ikony/ikona_adres60px.png') no-repeat;
     display: block;
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     text-indent: -9999px; /* hides the link text */
 }
 
 a.adresSilowniaPic {
-    background: url('/Content/ikony/silownia/ikona_adres_silownia_50px.png') no-repeat;
+    background: url('/Content/ikony/silownia/ikona_adres_silownia_60px.png') no-repeat;
     display: block;
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     text-indent: -9999px; /* hides the link text */
+}
+
+a.instruktorPic{
+    background: url('/Content/ikony/persony/ikona_instruktor60px.png') no-repeat;
+    display: block;
+    width: 60px;
+    height: 60px;
+    text-indent: -9999px; /* hides the link text */
+
 }
 
 /* styles for validation helpers */
@@ -162,6 +179,11 @@ th{
     padding-right: 114px;
 }
 
+.divCenter{
+     margin: auto;
+    width: 60%;
+}
+
 .divDark{
     background-color:#272b30;
     padding-bottom: 50px;
@@ -171,8 +193,7 @@ th{
     background-color:#272b30;
     padding-bottom: 50px;
     padding-top: 50px;
-    margin: auto;
-    width: 60%;
+   
 }
 
 .textCenter{
@@ -287,4 +308,101 @@ th{
 {
     display: inline-block;
     vertical-align: middle;
+}
+
+
+.navbar-custom {
+    margin-bottom: 0;
+    border-bottom: 1px solid rgba(255,255,255,.3);
+    text-transform: uppercase;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    background-color: #000;
+}
+
+.navbar-custom .navbar-brand {
+    font-weight: 700;
+}
+
+.navbar-custom .navbar-brand:focus {
+    outline: 0;
+}
+
+.navbar-custom .navbar-brand .navbar-toggle {
+    padding: 4px 6px;
+    font-size: 16px;
+    color: #fff;
+}
+
+.navbar-custom .navbar-brand .navbar-toggle:focus,
+.navbar-custom .navbar-brand .navbar-toggle:active {
+   
+    outline: 0;
+}
+
+.navbar-custom a {
+    color: #fff;
+}
+
+.navbar-custom .nav li a {
+    -webkit-transition: background .3s ease-in-out;
+    -moz-transition: background .3s ease-in-out;
+    transition: background .3s ease-in-out;
+}
+
+.navbar-custom .nav li a:hover {
+    outline: 0;
+    color:palevioletred;
+    background-color: transparent;
+}
+
+.navbar-custom .nav li a:focus,
+.navbar-custom .nav li a:active {
+    outline: 0;
+    background-color:transparent;
+    
+}
+
+.navbar-custom .nav li.active {
+    outline: 0;
+    background-color:darkred;
+}
+
+.navbar-custom .nav li.active a {
+    background-color: rgba(255,255,255,.3);
+}
+
+.navbar-custom .nav li.active a:hover {
+    color: #fff;
+}
+
+@media screen and (min-width: 831px) {
+    ul.nav li.dropdown:hover > ul.dropdown-menu {
+        display: block;
+     }
+}
+
+.intro .intro-body {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.intro {
+    display: table;
+    width: 100%;
+    height: auto;
+    padding: 100px 0;
+    text-align: center;
+    color: #fff;
+    background: url('/Content/PURE MUSCLES.jpg') no-repeat bottom center scroll;
+    background-color: #000;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+@media (min-width: 768px)
+.intro {
+    height: 100%;
+    padding: 0;
 }

@@ -1,0 +1,60 @@
+﻿@model Silownia.Models.ZajeciaGrupowe
+@{
+    ViewBag.Title = "Zajecia grupowe: usuń";
+}
+<h2>Czy na pewno chcesz usunąć zajęcia: @Model.NazwaTreningu z instruktorem @Model.Instruktor.imieNazwisko?</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+
+    <div class="divDark">
+        <div class="divInner">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Instruktor.imieNazwisko)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Instruktor.imieNazwisko)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.TreningStart)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.TreningStart)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.CzasTrwania)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.CzasTrwania)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.NazwaTreningu)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.NazwaTreningu)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.OpisTreningu)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.OpisTreningu)
+                </dd>
+                 <dt>
+                    @Html.DisplayNameFor(model => model.Sala.Numer_sali)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Sala.Numer_sali)
+                </dd>
+            </dl>
+            <div>
+                <input type="submit" value="Usuń" class="btn  btn-large btn-lg btn-block btn-danger" />
+            </div>
+        </div>
+    </div>
+}
+@if (Request.UrlReferrer != null)
+{
+    <button class="btn btn-large btn-block btn-primary btn-lg btn-primary" onclick="history.go(-1); return false;">powrót</button>
+}

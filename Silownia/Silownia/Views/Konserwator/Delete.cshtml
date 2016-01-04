@@ -1,0 +1,79 @@
+﻿@model Silownia.Models.Konserwator
+@{
+    ViewBag.Title = "Konserwator: usuń";
+}
+<h2>Czy na pewno chcesz usunąć konserwatora @Model.imieNazwisko?</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="divDark">
+        <div class="divInner">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Imie)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Imie)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Nazwisko)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Nazwisko)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.DataUrodzenia)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.DataUrodzenia)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Pesel)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Pesel)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.NrTelefonu)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.NrTelefonu)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.DataZatrudnienia)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.DataZatrudnienia)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Pensja)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Pensja)
+                </dd>
+                <dt>
+                    Siłownia
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Silownia.Nazwa)
+                </dd>
+            </dl>
+
+            @if (Model.Konserwacje.Count > 0)
+            {
+                <div style="color:red">
+                    Konserwator ma przypisane zadania, należy je przepisać na innego pracownika.
+                </div>
+            }
+            else
+            {
+                <div>
+                    <input type="submit" value="Usuń" class="btn  btn-large btn-lg btn-block btn-danger" />
+                </div>
+            }
+        </div>
+    </div>
+}
+<button class="btn btn-large btn-block btn-lg btn-primary" onclick="location.href='@Url.Action("Index", "Konserwator")';return false;">powrót do listy konserwatorów</button>
+

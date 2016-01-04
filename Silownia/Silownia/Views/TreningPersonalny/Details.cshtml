@@ -25,6 +25,12 @@
                 @Html.DisplayFor(model => model.TreningStart)
             </dd>
             <dt>
+                @Html.DisplayNameFor(model => model.TreningStartGodzina)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.TreningStartGodzina)
+            </dd>
+            <dt>
                 @Html.DisplayNameFor(model => model.CzasTrwania)
             </dt>
             <dd>
@@ -78,9 +84,13 @@
                             <td>
                                 @Html.DisplayFor(model => model.Klient.NrTelefonu)
                             </td>
-                            <td>
-                                @Html.DisplayFor(model => model.Klient.ZdjecieProfilowe)
-                            </td>
+
+                            @*
+                                <td>
+                                    @Html.DisplayFor(model => model.Klient.ZdjecieProfilowe)
+                                </td>
+                            *@
+
                         </tr>
 
                     </table>

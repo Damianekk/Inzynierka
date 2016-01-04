@@ -20,34 +20,37 @@ namespace Silownia.Controllers
         // GET: Instruktor
         public ActionResult Index(string imieNazwisko, string SilowniaID, int page = 1, int pageSize = 10, AkcjaEnumInstruktor akcja = AkcjaEnumInstruktor.Brak, String info = null)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
-                var instruktorzy = from Osoby in db.Instruktorzy.OfType<Instruktor>() select Osoby;
-
-                if (!String.IsNullOrEmpty(imieNazwisko))
-                    foreach (string wyraz in imieNazwisko.Split(' '))
-                        instruktorzy = instruktorzy.Search(wyraz, i => i.Imie, i => i.Nazwisko);
-
-                instruktorzy = instruktorzy.Search(SilowniaID, i => i.Silownia.Nazwa);
-
-                var final = instruktorzy.OrderBy(p => p.Imie);
-                var ileWynikow = instruktorzy.Count();
-                if ((ileWynikow / page) <= 1)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    page = 1;
+                    ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
+                    var instruktorzy = from Osoby in db.Instruktorzy.OfType<Instruktor>() select Osoby;
+
+                    if (!String.IsNullOrEmpty(imieNazwisko))
+                        foreach (string wyraz in imieNazwisko.Split(' '))
+                            instruktorzy = instruktorzy.Search(wyraz, i => i.Imie, i => i.Nazwisko);
+
+                    instruktorzy = instruktorzy.Search(SilowniaID, i => i.Silownia.Nazwa);
+
+                    var final = instruktorzy.OrderBy(p => p.Imie);
+                    var ileWynikow = instruktorzy.Count();
+                    if ((ileWynikow / page) <= 1)
+                    {
+                        page = 1;
+                    }
+                    var kk = ileWynikow / page;
+
+                    PagedList<Instruktor> model = new PagedList<Instruktor>(final, page, pageSize);
+
+                    if (akcja != AkcjaEnumInstruktor.Brak)
+                    {
+                        ViewBag.info = info;
+                        ViewBag.Akcja = akcja;
+                    }
+
+                    return View(model);
                 }
-                var kk = ileWynikow / page;
-
-                PagedList<Instruktor> model = new PagedList<Instruktor>(final, page, pageSize);
-
-                if (akcja != AkcjaEnumInstruktor.Brak)
-                {
-                    ViewBag.info = info;
-                    ViewBag.Akcja = akcja;
-                }
-
-                return View(model);
             }
             return HttpNotFound();
         }
@@ -55,19 +58,22 @@ namespace Silownia.Controllers
         // GET: Instruktor/Details/5
         public ActionResult Details(long? id)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                if (id == null)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                Instruktor instruktor = db.Instruktorzy.Find(id);
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    Instruktor instruktor = db.Instruktorzy.Find(id);
 
-                if (instruktor == null)
-                {
-                    return HttpNotFound();
+                    if (instruktor == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(instruktor);
                 }
-                return View(instruktor);
             }
             return HttpNotFound();
         }
@@ -75,10 +81,13 @@ namespace Silownia.Controllers
         // GET: Instruktor/Create
         public ActionResult Create()
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
-                return View();
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                {
+                    ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
+                    return View();
+                }
             }
             return HttpNotFound();
         }
@@ -89,28 +98,31 @@ namespace Silownia.Controllers
         [HttpPost]
         public ActionResult Create([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,NrTelefonu,Pesel,DataZatrudnienia,Pensja,SilowniaID")] Instruktor instruktor)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                if (ModelState.IsValid)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    instruktor.DataZatrudnienia = DateTime.Now;
-                    db.Instruktorzy.Add(instruktor);
-                    db.SaveChanges();
+                    if (ModelState.IsValid)
+                    {
+                        instruktor.DataZatrudnienia = DateTime.Now;
+                        db.Instruktorzy.Add(instruktor);
+                        db.SaveChanges();
 
-                    Uzytkownik pracownik = new Uzytkownik();
-                    pracownik.IDOsoby = instruktor.OsobaID;
-                    pracownik.Login = instruktor.Nazwisko;
-                    pracownik.Haslo = instruktor.Imie + instruktor.Nazwisko;
-                    pracownik.Rola = "Instruktor";
-                    
-                    db.Uzytkownicy.Add(pracownik);
-                    db.SaveChanges();
+                        Uzytkownik pracownik = new Uzytkownik();
+                        pracownik.IDOsoby = instruktor.OsobaID;
+                        pracownik.Login = instruktor.Pesel.ToString();
+                        pracownik.Haslo = instruktor.Imie + instruktor.Nazwisko;
+                        pracownik.Rola = RoleEnum.Instruktor.GetDescription();
 
-                    return RedirectToAction("Index", new { akcja = AkcjaEnumInstruktor.DodanoInstruktora, info = instruktor.imieNazwisko });
+                        db.Uzytkownicy.Add(pracownik);
+                        db.SaveChanges();
+
+                        return RedirectToAction("Index", new { akcja = AkcjaEnumInstruktor.DodanoInstruktora, info = instruktor.imieNazwisko });
+                    }
+
+                    ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
+                    return View(instruktor);
                 }
-
-                ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
-                return View(instruktor);
             }
             return HttpNotFound();
         }
@@ -118,19 +130,22 @@ namespace Silownia.Controllers
         // GET: Instruktor/Edit/5
         public ActionResult Edit(long? id)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                if (id == null)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    Instruktor instruktor = db.Instruktorzy.Find(id);
+                    if (instruktor == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
+                    return View(instruktor);
                 }
-                Instruktor instruktor = db.Instruktorzy.Find(id);
-                if (instruktor == null)
-                {
-                    return HttpNotFound();
-                }
-                ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
-                return View(instruktor);
             }
             return HttpNotFound();
         }
@@ -140,16 +155,19 @@ namespace Silownia.Controllers
         [HttpPost]
         public ActionResult Edit([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,NrTelefonu,Pesel,DataZatrudnienia,Pensja,SilowniaID")] Instruktor instruktor)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                if (ModelState.IsValid)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    db.Entry(instruktor).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
+                    if (ModelState.IsValid)
+                    {
+                        db.Entry(instruktor).State = EntityState.Modified;
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
+                    ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
+                    return View(instruktor);
                 }
-                ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
-                return View(instruktor);
             }
             return HttpNotFound();
         }
@@ -157,18 +175,21 @@ namespace Silownia.Controllers
         // GET: Instruktor/Delete/5
         public ActionResult Delete(long? id)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                if (id == null)
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    Instruktor instruktor = db.Instruktorzy.Find(id);
+                    if (instruktor == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(instruktor);
                 }
-                Instruktor instruktor = db.Instruktorzy.Find(id);
-                if (instruktor == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(instruktor);
             }
             return HttpNotFound();
         }
@@ -177,12 +198,15 @@ namespace Silownia.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(long id)
         {
-            if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            if (Session["Auth"] != null)
             {
-                Instruktor instruktor = db.Instruktorzy.Find(id);
-                db.Osoby.Remove(instruktor);
-                db.SaveChanges();
-                return RedirectToAction("Index", new { akcja = AkcjaEnumInstruktor.UsunietoInstruktora, info = instruktor.imieNazwisko });
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                {
+                    Instruktor instruktor = db.Instruktorzy.Find(id);
+                    db.Osoby.Remove(instruktor);
+                    db.SaveChanges();
+                    return RedirectToAction("Index", new { akcja = AkcjaEnumInstruktor.UsunietoInstruktora, info = instruktor.imieNazwisko });
+                }
             }
             return HttpNotFound();
         }

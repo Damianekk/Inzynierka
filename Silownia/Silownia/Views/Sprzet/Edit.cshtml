@@ -1,0 +1,54 @@
+﻿@model Silownia.Models.Sprzet
+
+@{
+    ViewBag.Title = "Sprzęt: edycja";
+}
+<h2>Edycja wybranego sprzętu</h2>
+<div class="divDark">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.SprzetID)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Nazwa, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Nazwa)
+                    @Html.ValidationMessageFor(model => model.Nazwa)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Data_zakupu, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Data_zakupu)
+                    @Html.ValidationMessageFor(model => model.Data_zakupu)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Cena_zakupu, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Cena_zakupu)
+                    @Html.ValidationMessageFor(model => model.Cena_zakupu)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Zapisz" class="btn btn-lg btn-large btn-success" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+@if (Request.UrlReferrer != null)
+{
+    <button class="btn btn-large btn-block btn-primary btn-lg btn-primary" onclick="history.go(-1); return false;">powrót</button>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

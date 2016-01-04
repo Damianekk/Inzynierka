@@ -9,14 +9,20 @@ namespace Silownia
 {
     public enum RoleEnum
     {
-            [Description("Administrator")]
-            Administrator,
-            [Description("Trener")]
-            Trener,
-            [Description("Recepcjonista")]
-            Recepcjonista,
-            [Description("Klient")]
-            Klient, 
+        [Description("Administrator")]
+        Administrator,
+        [Description("Trener")]
+        Trener,
+        [Description("Recepcjonista")]
+        Recepcjonista,
+        [Description("Klient")]
+        Klient,
+        [Description("Instruktor")]
+        Instruktor,
+        [Description("Masażysta")]
+        Masazysta,
+        [Description("Konserwator")]
+        Konserwator
     }
 }
 
