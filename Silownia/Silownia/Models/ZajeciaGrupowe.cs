@@ -15,18 +15,24 @@ namespace Silownia.Models
             KlientZajeciaGrupowe = new List<KlientZajeciaGrupowe>();
         }
 
-       // [MaxLength(15, ErrorMessage = " Opis przekracza dozwoloną ilość znaków (15)")]
-       // [Display(Name = "Nazwa treningu")]
+        [Required(ErrorMessage = "Wybierz instruktora z listy")]
+        public long InstruktorID { get; set; }
+
+        [Required(ErrorMessage = "Wybierz salę z listy")]
+        public long SalaID { get; set; }
+
+        [MaxLength(15, ErrorMessage = " Opis przekracza dozwoloną ilość znaków (15)")]
+        [Display(Name = "Nazwa treningu")]
         public string NazwaTreningu { get; set; }
 
         [MaxLength(300, ErrorMessage = " Opis przekracza dozwoloną ilość znaków (300)")]
         [Display(Name = "Opis")]
         public string OpisTreningu { get; set; }
 
-        [Required]
+
         public virtual Instruktor Instruktor { get; set; }
         public virtual ICollection<KlientZajeciaGrupowe> KlientZajeciaGrupowe { get; set; }
-        [Required]
+
         public virtual Sala Sala { get; set; }
     }
 }

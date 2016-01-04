@@ -9,7 +9,7 @@
 <button class="btn btn-large btn-block btn-success btn-lg" onclick="location.href='@Url.Action("Create", "ZajeciaGrup")';return false;">dodaj nowe zajęcia</button>
 <div class="divDark">
     @using (Html.BeginForm())
-    { 
+    {
         @Html.Partial("KryteriaSzukania/_silownia")
         <br />
         <input type="submit" value="szukaj" class="btn btn-info" style="width:10%" />
@@ -24,7 +24,7 @@
         <th>
             @Html.Label("Sala:")
         </th>
-         <th>
+        <th>
             @Html.Label("Początek treningu:")
         </th>
         <th>
@@ -47,10 +47,10 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Sala.Numer_sali)
             </td>
-             <td>
+            <td>
                 @Html.DisplayFor(modelItem => item.TreningStart)
             </td>
-             <td>
+            <td>
                 @Html.DisplayFor(modelItem => item.CzasTrwania)
             </td>
             <td>
@@ -61,7 +61,7 @@
             </td>
             <td>
                 <div class="btn-group">
-                                        <button class="btn-default btn-lg" onclick="location.href='@Url.Action("Edit", "ZajeciaGrup", new { id = item.TreningID })';return false;">edytuj</button>
+                    <button class="btn-default btn-lg" onclick="location.href='@Url.Action("Edit", "ZajeciaGrup", new { id = item.TreningID })';return false;">edytuj</button>
                     <button class="btn-primary btn-lg" onclick="location.href='@Url.Action("Details", "ZajeciaGrup", new { id = item.TreningID })';return false;">szczegóły</button>
                     <button class="btn-danger btn-lg" onclick="location.href='@Url.Action("Delete", "ZajeciaGrup", new { id = item.TreningID })';return false;">usuń</button>
                 </div>

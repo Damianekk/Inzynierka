@@ -84,8 +84,8 @@ namespace Silownia.Controllers
             {
                 if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    ViewBag.TrenerID = new SelectList(db.Instruktorzy, "OsobaID", "imieNazwisko");
-
+                    ViewBag.InstruktorID = new SelectList(db.Instruktorzy, "OsobaID", "imieNazwisko");
+                    ViewBag.SalaID = new SelectList(db.Sale, "Numer_sali", "Rodzaj");
                     var a = from Osoby in db.Instruktorzy select Osoby;
 
                     Instruktor instruktor = null;
@@ -111,20 +111,27 @@ namespace Silownia.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Create([Bind(Include = "TreningID,Instruktor,NazwaTreningu,Sala,TreningStart,CzasTrwania,OpisTreningu")] long? id, ZajeciaGrupowe zajecia)
+        public ActionResult Create([Bind(Include = "TreningID,TreningStart,TreningStartGodzina,CzasTrwania,InstruktorID,SalaID,NazwaTreningu,OpisTreningu")] long? id, ZajeciaGrupowe zajecia)
         {
             if (Session["Auth"] != null)
             {
                 if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    ViewBag.TrenerID = new SelectList(db.Instruktorzy, "OsobaID", "imieNazwisko", zajecia.Instruktor.OsobaID);
+                    ViewBag.InstruktorID = new SelectList(db.Instruktorzy, "OsobaID", "imieNazwisko", zajecia.InstruktorID);
+                    ViewBag.SalaID = new SelectList(db.Sale, "Numer_sali", "Numer_sali", zajecia.SalaID);
 
-                    if (!zajetyTrener(zajecia.Instruktor.OsobaID, zajecia.TreningStart) && !(zajetaSala(zajecia.Sala.Numer_sali, zajecia.TreningStart)))
+                    if (ModelState.IsValid && !zajetyTrener(zajecia.InstruktorID, zajecia.TreningStart) && !zajetaSala(zajecia.SalaID, zajecia.TreningStart))
                     {
                         #region Instruktor
-                        Instruktor instruktor = db.Instruktorzy.Find(zajecia.Instruktor.OsobaID);
+                        Instruktor instruktor = db.Instruktorzy.Find(zajecia.InstruktorID);
                         zajecia.Instruktor = instruktor;
                         instruktor.ZajeciaGrup.Add(zajecia);
+                        #endregion
+
+                        #region Sala
+                        Sala sala = db.Sale.Find(zajecia.SalaID);
+                        zajecia.Sala = sala;
+                        sala.ZajeciaGrup.Add(zajecia);
                         #endregion
 
                         zajecia.TreningStart = zajecia.TreningStart.AddHours(System.Convert.ToDouble(zajecia.TreningStartGodzina.Hour));
@@ -154,7 +161,7 @@ namespace Silownia.Controllers
             else return false; // wolny
         }
 
-        bool zajetaSala(int sala, DateTime dataOd)
+        bool zajetaSala(long sala, DateTime dataOd)
         {
             var check = db.ZajeciaGrup.Where(o => o.Sala.Numer_sali == sala && dataOd >= o.TreningStart && dataOd <= o.TreningKoniec).ToList();
 
@@ -182,7 +189,8 @@ namespace Silownia.Controllers
                     {
                         return HttpNotFound();
                     }
-                    ViewBag.TrenerID = new SelectList(db.Instruktorzy, "OsobaID", "imieNazwisko", zajecia.Instruktor.OsobaID);
+                    ViewBag.InstruktorID = new SelectList(db.Instruktorzy, "OsobaID", "imieNazwisko", zajecia.InstruktorID);
+                    ViewBag.SalaID = new SelectList(db.Sale, "Numer_sali", "Numer_sali", zajecia.SalaID);
                     return View(zajecia);
                 }
             }
@@ -193,15 +201,20 @@ namespace Silownia.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Edit([Bind(Include = "TreningID,Instruktor,NazwaTreningu,Sala,TreningStart,TreningStartGodzina,CzasTrwania,OpisTreningu")] ZajeciaGrupowe zajecia)
+        public ActionResult Edit([Bind(Include = "TreningID,TreningStart,TreningStartGodzina,CzasTrwania,InstruktorID,SalaID,NazwaTreningu,OpisTreningu")] ZajeciaGrupowe zajecia)
         {
             if (Session["Auth"] != null)
             {
                 if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
+                    if (ModelState.IsValid)
+                    {
                         db.Entry(zajecia).State = EntityState.Modified;
                         db.SaveChanges();
                         return RedirectToAction("Index");
+                    }
+                    ViewBag.InstruktorID = new SelectList(db.Instruktorzy, "OsobaID", "imieNazwisko", zajecia.InstruktorID);
+                    ViewBag.SalaID = new SelectList(db.Sale, "Numer_sali", "Numer_sali", zajecia.SalaID);
                 }
             }
             return HttpNotFound();
