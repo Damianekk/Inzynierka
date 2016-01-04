@@ -180,10 +180,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\InstruktorController.cs" />
+    <Compile Include="Controllers\InstruktorViewController.cs" />
     <Compile Include="Controllers\KonserwacjaController.cs" />
     <Compile Include="Controllers\KonserwatorController.cs" />
+    <Compile Include="Controllers\KonserwatorViewController.cs" />
     <Compile Include="Controllers\MasazController.cs" />
     <Compile Include="Controllers\MasazystaController.cs" />
+    <Compile Include="Controllers\MasazystaViewController.cs" />
     <Compile Include="Controllers\PhotoController.cs" />
     <Compile Include="Controllers\SalaController.cs" />
     <Compile Include="Controllers\SprzetController.cs" />
