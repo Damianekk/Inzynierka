@@ -53,6 +53,8 @@ namespace Silownia.Controllers
         {
             if (Session["Auth"] != null)
             {
+                if (Session["Auth"].ToString() == "Klient")
+                {
                     if (id == null)
                     {
                         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -62,32 +64,33 @@ namespace Silownia.Controllers
                     {
                         return HttpNotFound();
                     }
-                    string login = Session["User"].ToString(); 
+                    string login = Session["User"].ToString();
                     Uzytkownik uzytkownik = db.Uzytkownicy.Where(s => s.Login == login).First();
 
                     Klient klient = db.Klienci.Find(uzytkownik.IDOsoby);
-                    
-                     if (klient.KlienciTreningiGrupowe.Where(s => s.TreningID == zajecia.TreningID).Count() != 0)
-                     {
-                         var trening = klient.KlienciTreningiGrupowe.Where(s => s.TreningID == zajecia.TreningID).First();
-                         if (klient.KlienciTreningiGrupowe.Contains(trening) == true)
-                         {
-                             return RedirectToAction("Index", new { akcja = AkcjaZapisEnum.JuzZapis });
-                         }
-                     }
-                         KlientZajeciaGrupowe zajeciagrup = new KlientZajeciaGrupowe();
-                         zajeciagrup.Klient = klient;
-                         zajeciagrup.OsobaID = zajecia.Instruktor.OsobaID;
-                         zajeciagrup.TreningID = zajecia.TreningID;
-                         zajeciagrup.ZajeciaGrupowe = zajecia;
 
-                         klient.KlienciTreningiGrupowe.Add(zajeciagrup);
-                         db.SaveChanges();
+                    if (klient.KlienciTreningiGrupowe.Where(s => s.TreningID == zajecia.TreningID).Count() != 0)
+                    {
+                        var trening = klient.KlienciTreningiGrupowe.Where(s => s.TreningID == zajecia.TreningID).First();
+                        if (klient.KlienciTreningiGrupowe.Contains(trening) == true)
+                        {
+                            return RedirectToAction("Index", new { akcja = AkcjaZapisEnum.JuzZapis });
+                        }
+                    }
+                    KlientZajeciaGrupowe zajeciagrup = new KlientZajeciaGrupowe();
+                    zajeciagrup.Klient = klient;
+                    zajeciagrup.OsobaID = zajecia.Instruktor.OsobaID;
+                    zajeciagrup.TreningID = zajecia.TreningID;
+                    zajeciagrup.ZajeciaGrupowe = zajecia;
 
-                         zajecia.KlientZajeciaGrupowe.Add(zajeciagrup);
-                         db.SaveChanges();
+                    klient.KlienciTreningiGrupowe.Add(zajeciagrup);
+                    db.SaveChanges();
 
-                         return RedirectToAction("Index", new { akcja = AkcjaZapisEnum.DodanoZapis });
+                    zajecia.KlientZajeciaGrupowe.Add(zajeciagrup);
+                    db.SaveChanges();
+
+                    return RedirectToAction("Index", new { akcja = AkcjaZapisEnum.DodanoZapis });
+                }
             }
             return HttpNotFound();
         }
@@ -96,35 +99,38 @@ namespace Silownia.Controllers
         {
             if (Session["Auth"] != null)
             {
-                if (id == null)
+                if (Session["Auth"].ToString() == "Klient")
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                ZajeciaGrupowe zajecia = db.ZajeciaGrup.Find(id);
-                if (zajecia == null)
-                {
-                    return HttpNotFound();
-                }
-                string login = Session["User"].ToString();
-                Uzytkownik uzytkownik = db.Uzytkownicy.Where(s => s.Login == login).First();
-
-                Klient klient = db.Klienci.Find(uzytkownik.IDOsoby);
-
-                if (klient.KlienciTreningiGrupowe.Where(s => s.TreningID == zajecia.TreningID).Count() != 0)
-                {
-                    var trening = klient.KlienciTreningiGrupowe.Where(s => s.TreningID == zajecia.TreningID).First();
-                    if (klient.KlienciTreningiGrupowe.Contains(trening))
+                    if (id == null)
                     {
-                        klient.KlienciTreningiGrupowe.Remove(trening);
-                        db.SaveChanges();
-
-                        zajecia.KlientZajeciaGrupowe.Remove(trening);
-                        db.SaveChanges();
-
-                        return RedirectToAction("Index", new { akcja = AkcjaZapisEnum.UsunietoZapis });
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                     }
+                    ZajeciaGrupowe zajecia = db.ZajeciaGrup.Find(id);
+                    if (zajecia == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    string login = Session["User"].ToString();
+                    Uzytkownik uzytkownik = db.Uzytkownicy.Where(s => s.Login == login).First();
+
+                    Klient klient = db.Klienci.Find(uzytkownik.IDOsoby);
+
+                    if (klient.KlienciTreningiGrupowe.Where(s => s.TreningID == zajecia.TreningID).Count() != 0)
+                    {
+                        var trening = klient.KlienciTreningiGrupowe.Where(s => s.TreningID == zajecia.TreningID).First();
+                        if (klient.KlienciTreningiGrupowe.Contains(trening))
+                        {
+                            klient.KlienciTreningiGrupowe.Remove(trening);
+                            db.SaveChanges();
+
+                            zajecia.KlientZajeciaGrupowe.Remove(trening);
+                            db.SaveChanges();
+
+                            return RedirectToAction("Index", new { akcja = AkcjaZapisEnum.UsunietoZapis });
+                        }
+                    }
+                    return RedirectToAction("Index", new { akcja = AkcjaZapisEnum.NieDaSieZapis });
                 }
-                return RedirectToAction("Index", new { akcja = AkcjaZapisEnum.NieDaSieZapis });
             }
             return HttpNotFound();
         }
@@ -134,6 +140,8 @@ namespace Silownia.Controllers
         {
             if (Session["Auth"] != null)
             {
+                if (Session["Auth"].ToString() == "Klient")
+                {
                     if (id == null)
                     {
                         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -144,6 +152,7 @@ namespace Silownia.Controllers
                         return HttpNotFound();
                     }
                     return View(zajecia);
+                }
             }
             return HttpNotFound();
         }
