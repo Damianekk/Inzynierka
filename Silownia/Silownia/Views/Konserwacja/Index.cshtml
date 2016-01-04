@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Silownia.Models.Konserwacja>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Opis_usterki)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Data_zgłoszenia)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Data_naprawy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.KonserwatorID)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Opis_usterki)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Data_zgłoszenia)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Data_naprawy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.KonserwatorID)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.KonserwacjaID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.KonserwacjaID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.KonserwacjaID })
+        </td>
+    </tr>
+}
+
+</table>

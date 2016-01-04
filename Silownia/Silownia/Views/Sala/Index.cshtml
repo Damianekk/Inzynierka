@@ -1,53 +1,104 @@
-﻿@model IEnumerable<Silownia.Models.Sala>
-
+﻿@model PagedList.PagedList<Silownia.Models.Sala>
+@using PagedList.Mvc;
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Sala: index";
+}
+@Scripts.Render("~/Scripts/infoCzynnosc.js")
+
+@if (ViewBag.Akcja != null)
+{
+    if (ViewBag.Akcja == Silownia.Helpers.AkcjaEnumSala.DodanoSale)
+    {
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <div class="alert alert-success">
+            <br />
+            <h4>@PelnaNazwaEnum.GetDescription(@ViewBag.Akcja) @ViewBag.info</h4>
+            <br />
+        </div>
+    }
+
+    if (ViewBag.Akcja == Silownia.Helpers.AkcjaEnumSala.UsunietoSale)
+    {
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <div class="alert alert-danger">
+            <br />
+            <h4>@PelnaNazwaEnum.GetDescription(@ViewBag.Akcja) @ViewBag.info</h4>
+            <br />
+        </div>
+    }
 }
 
-<!DOCTYPE html>
+<h2>Lista wszystkich sal w naszej sieci</h2>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Sale</title>
-</head>
-<body>
-    
-    <h3>
-        @Html.ActionLink("Dodaj nową", "Create")
-    </h3>
-   
 
-        <div class="container" style="background-color: grey">
-        
-        <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header text-center">
-                    Nasze sale 
-                    <small><font color="Black">Tak wygladaja nasze sale do ćwiczeń.</font></small>
-                </h1>
-            </div>
-        </div>
-       
-    <div class="row center-block">
-@foreach (var item in Model) {
-        <div class="col-md-3 col-md-offset-1 portfolio-item">
-          
-                @*@Html.Partial("~/Views/Sala/Zdjecie.cshtml", Model)*@
-                <img class="img-responsive" src="@item.Zdjecie" alt="no file">
-            
-            <h3>
-                @Html.ActionLink("Sala "+ item.Rodzaj, "Details", new { id = item.Numer_sali })
+<div class="divDark">
+    @using (Html.BeginForm())
+    {
+        @Html.Partial("KryteriaSzukania/_silownia")
+        <br />
+        <input type="submit" value="szukaj" class="btn btn-info" style="width:10%" />
+        <br />
+    }
 
-            </h3>
-            <p>@item.Opis</p>
-            <button class="btn-danger btn-lg" onclick="location.href='@Url.Action("Delete", "Sala", new { id = item.Numer_sali })';return false;">usuń</button>
-            
-        </div>
-}
-    </div>
+</div>
 
-       </div>
-</body>
-</html>
+<table class="table table-hover table-condensed">
+    <tr>
+        <th>
+            @Html.Label("Siłownia:")
+        </th>
+        <th>
+            @Html.Label("Przeznaczenie:")
+        </th>
+        <th>
+            @Html.Label("Numer Sali:")
+        </th>
+        <th>
+            @Html.Label("Opis")
+        </th>
+        <th>
+            @Html.Label("Status")
+        </th>
+        <th>
+            @Html.Label("Grafika")
+        </th>
+        <th></th>
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Silownia.Nazwa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rodzaj)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Numer_sali)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Opis)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Zdjecie)
+            </td>
+            <td>
+                <div class="btn-group">
+                    <button class="btn-primary btn-lg" onclick="location.href='@Url.Action("Details", "Sala", new { id = item.Numer_sali })';return false;">szczegóły</button>
+                    <button class="btn-danger btn-lg" onclick="location.href='@Url.Action("Delete", "Sala", new { id = item.Numer_sali})';return false;">usuń</button>
+                </div>
+            </td>
+        </tr>
+    }
+</table>
+
+<div class="center">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, pageSize = Model.PageSize }))
+    Wyświetlam od @Model.FirstItemOnPage do @Model.LastItemOnPage z @Model.TotalItemCount rekordów Sal
+</div>

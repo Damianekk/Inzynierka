@@ -1,10 +1,10 @@
 ﻿@model Silownia.Models.Sala
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Sala: szczegóły";
 }
 
-<h2>Szczegóły dotyczące sal</h2>
+<h2>Szczegóły dotyczące wybranej sali</h2>
 
 <button class="btn btn-large btn-lg btn-block btn-primary btn-success" onclick="location.href='@Url.Action("Edit", "Sala", new { id = Model.Numer_sali })';return false;">edytuj</button>
 <button class="btn btn-large btn-lg btn-block btn-primary btn-info" onclick="location.href='@Url.Action("Create", "Sprzet", new { id = Model.Numer_sali })';return false;">dodaj sprzęt</button>

@@ -180,6 +180,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\InstruktorController.cs" />
+    <Compile Include="Controllers\KonserwacjaController.cs" />
     <Compile Include="Controllers\KonserwatorController.cs" />
     <Compile Include="Controllers\MasazController.cs" />
     <Compile Include="Controllers\MasazystaController.cs" />
@@ -217,6 +218,7 @@
     <Compile Include="Helpers\AkcjaEnumMasaz.cs" />
     <Compile Include="Helpers\AkcjaEnumMasazysta.cs" />
     <Compile Include="Helpers\AkcjaEnumRecepcjonista.cs" />
+    <Compile Include="Helpers\AkcjaEnumSala.cs" />
     <Compile Include="Helpers\AkcjaEnumSilownia.cs" />
     <Compile Include="Helpers\AkcjaEnumSprzet.cs" />
     <Compile Include="Helpers\AkcjaEnumTrener.cs" />
@@ -494,10 +496,16 @@
     <Content Include="Views\Sprzet\Edit.cshtml" />
     <Content Include="Views\Sprzet\Index.cshtml" />
     <Content Include="Views\Shared\KryteriaSzukania\_sprzet.cshtml" />
+    <Content Include="Views\Konserwacja\Create.cshtml" />
+    <Content Include="Views\Konserwacja\Delete.cshtml" />
+    <Content Include="Views\Konserwacja\Details.cshtml" />
+    <Content Include="Views\Konserwacja\Edit.cshtml" />
+    <Content Include="Views\Konserwacja\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="ViewModel\" />
+    <Folder Include="Views\Status\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

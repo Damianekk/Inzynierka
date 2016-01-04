@@ -50,6 +50,7 @@
     if (Request.UrlReferrer != null)
     {
         <button class="btn btn-large btn-block btn-primary btn-lg btn-primary" onclick="history.go(-1); return false;">powrót</button>
+          <button class="btn btn-large btn-block btn-success btn-lg" onclick="location.href='@Url.Action("Index", "Sprzet")';return false;">Inwentarz sprzetu</button>
     }
 }
 @section Scripts {

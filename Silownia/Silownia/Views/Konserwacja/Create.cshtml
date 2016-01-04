@@ -1,0 +1,80 @@
+﻿@model Silownia.Models.Konserwacja
+
+@{
+    ViewBag.Title = "Konserwacja: dodaj";
+}
+
+<h2>Zdłoś usterkę</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal divDark">
+       
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Opis_usterki, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Opis_usterki)
+                @Html.ValidationMessageFor(model => model.Opis_usterki)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Data_zgłoszenia, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Data_zgłoszenia)
+                @Html.ValidationMessageFor(model => model.Data_zgłoszenia)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Data_naprawy, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Data_naprawy)
+                @Html.ValidationMessageFor(model => model.Data_naprawy)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Status, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.Status, new SelectList(new List<Object>
+           {
+                new { value = 0, text = "Zgłoszona"},
+                new { value = 1, text = "W trakcie napraw"},
+                new { value = 1, text = "Gotowe"}
+           }, "text", "text"))
+                @Html.ValidationMessageFor(model => model.Status)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Konserwator.Pesel, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Pesel")
+                @Html.ValidationMessageFor(model => model.Konserwator.Pesel)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Utwórz" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+     if (Request.UrlReferrer != null)
+    {
+        <button class="btn btn-large btn-block btn-primary btn-lg btn-primary" onclick="history.go(-1); return false;">powrót</button>
+        <button class="btn btn-large btn-block btn-success btn-lg" onclick="location.href='@Url.Action("Index", "Sala")';return false;">Lista wszystkich sal</button>
+    }
+     
+        
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

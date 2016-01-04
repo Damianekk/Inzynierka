@@ -9,6 +9,8 @@ using System.Web.Mvc;
 using Silownia.Models;
 using Silownia.DAL;
 using System.IO;
+using PagedList;
+using Silownia.Helpers;
 
 namespace Silownia.Controllers
 {
@@ -17,20 +19,42 @@ namespace Silownia.Controllers
         private SilowniaContext db = new SilowniaContext();
 
         // GET: /Sala/
-        public ActionResult Index()
+        public ActionResult Index(string nazwa, string SilowniaID, int page = 1, int pageSize = 10, AkcjaEnumSprzet akcja = AkcjaEnumSprzet.Brak, String info = null)
         {
             if (Session["Auth"] != null)
             {
                 if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    return View(db.Sale.ToList());
+                    ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
+
+                    var sala = from Sale in db.Sale select Sale;
+
+                    sala = sala.Search(SilowniaID, i => i.Silownia.Nazwa);
+
+                    var final = sala.OrderBy(p => p.Rodzaj);
+                    var ileWynikow = sala.Count();
+                    if ((ileWynikow / page) <= 1)
+                    {
+                        page = 1;
+                    }
+                    var kk = ileWynikow / page;
+
+                    PagedList<Sala> model = new PagedList<Sala>(final, page, pageSize);
+
+                    if (akcja != AkcjaEnumSprzet.Brak)
+                    {
+                        ViewBag.info = info;
+                        ViewBag.Akcja = akcja;
+                    }
+
+                    return View(model);
                 }
             }
             return HttpNotFound();
         }
 
          // GET: /Sala/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(long? id)
         {
             if (Session["Auth"] != null)
             {
@@ -70,7 +94,7 @@ namespace Silownia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Sala sala, HttpPostedFileBase file)
+        public ActionResult Create(long? id, [Bind(Include = "Numer_sali,Rodzaj,Status,Opis,Zdjecie,SilowniaID")] Sala sala, HttpPostedFileBase file)
         {
             if (Session["Auth"] != null)
             {
@@ -78,6 +102,12 @@ namespace Silownia.Controllers
                 {
                     if (ModelState.IsValid)
                     {
+                        ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
+                        #region Silownia
+                        Models.Silownia silownia = db.Silownie.Find(id);
+                        sala.Silownia = silownia;
+                        silownia.Sale.Add(sala);
+                        #endregion
                         string FileName = "";
                         byte[] bytes;
 
@@ -108,9 +138,11 @@ namespace Silownia.Controllers
                         }
                         db.Sale.Add(sala);
                         db.SaveChanges();
-                        return RedirectToAction("Index");
+
+                        return RedirectToAction("Index", new { akcja = AkcjaEnumSala.DodanoSale, info = sala.Numer_sali });
                     }
-                    ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
+                    
+                    
                     return View(sala);
                 }
             }
@@ -161,7 +193,7 @@ namespace Silownia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="Numer_sali,Rodzaj,Status,Opis,ImageFile,SilowniaID")] Sala sala)
+        public ActionResult Edit([Bind(Include="Numer_sali,Rodzaj,Status,Opis,Zdjecie,SilowniaID")] Sala sala)
         {
             if (Session["Auth"] != null)
             {
