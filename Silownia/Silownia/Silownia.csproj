@@ -266,6 +266,7 @@
     <Content Include="Content\ikony\ikona_adres.png" />
     <Content Include="Content\ikony\ikona_adres50px.png" />
     <Content Include="Content\ikony\ikona_adres_rectangular_blue_40px.png" />
+    <Content Include="Content\ikony\ikona_kamera.png" />
     <Content Include="Content\ikony\ikona_masaz.png" />
     <Content Include="Content\ikony\ikona_masaz50px.png" />
     <Content Include="Content\ikony\ikona_treningGrupowy.png" />
@@ -467,6 +468,7 @@
     <Content Include="Views\TreningPersonalny\Details.cshtml" />
     <Content Include="Views\TreningPersonalny\Edit.cshtml" />
     <Content Include="Views\TreningPersonalny\Index.cshtml" />
+    <Content Include="Views\Shared\zrobZdjecie.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

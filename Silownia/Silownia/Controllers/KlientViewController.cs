@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Silownia.Helpers;
+using System.Web.Script.Serialization;
 
 namespace Silownia.Controllers
 {
@@ -75,6 +76,41 @@ namespace Silownia.Controllers
             }
             return HttpNotFound();
         }
+
+        [HttpPost]
+        public JsonResult OdbierzWiad()
+        {
+
+           var jsonSerialiser = new JavaScriptSerializer();
+            var silownie = db.Silownie.Where(s => s.Adres != null).ToList<Silownia.Models.Silownia>();
+
+            //  silownie.RemoveAll(item => item.Adres != null);
+            var wiad = db.Wiadomosci.Where(o => o.OsobaOdbierajaca.OsobaID == 9);
+
+
+            foreach (Wiadomosc w in wiad)
+            {
+                w.Status = StatusWiadomosciEnum.Odebrany;
+                w.Odebrano = DateTime.Now;
+            }
+
+            if (wiad.Count() > 0)
+                ViewBag.Wiad = wiad.ToList<Wiadomosc>();
+
+
+            var z = wiad.Select(x => new
+            {
+                osWys = (x.OsobaWysylajaca.Imie+" "+x.OsobaWysylajaca.Nazwisko) ,
+                tresc = x.Tresc,
+                dataWys = x.Wyslano.Value
+
+            });
+ 
+            return Json(z);
+
+            //  return Json(new { ok = true, myData = silownie }, JsonRequestBehavior.AllowGet);
+        }
+
 
     }
 }
