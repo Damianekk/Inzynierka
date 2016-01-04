@@ -189,6 +189,7 @@
     <Compile Include="Controllers\SprzetController.cs" />
     <Compile Include="Controllers\TrenerViewController.cs" />
     <Compile Include="Controllers\TreningPersonalnyController.cs" />
+    <Compile Include="Controllers\ZajeciaGrupController.cs" />
     <Compile Include="Helpers\AkcjaEnum.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -501,6 +502,11 @@
     <Content Include="Views\Konserwacja\Details.cshtml" />
     <Content Include="Views\Konserwacja\Edit.cshtml" />
     <Content Include="Views\Konserwacja\Index.cshtml" />
+    <Content Include="Views\ZajeciaGrup\Create.cshtml" />
+    <Content Include="Views\ZajeciaGrup\Delete.cshtml" />
+    <Content Include="Views\ZajeciaGrup\Details.cshtml" />
+    <Content Include="Views\ZajeciaGrup\Edit.cshtml" />
+    <Content Include="Views\ZajeciaGrup\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
