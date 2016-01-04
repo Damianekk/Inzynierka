@@ -1,0 +1,48 @@
+﻿@model Silownia.Models.Konserwator
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@ViewBag.Title = "Konserwator";
+<html>
+
+
+
+<body>
+    @* Zdjecie *@
+    <div class="col-xs-2" style="width:315px;height:380px;">
+        <img src="https://upload.wikimedia.org/wikipedia/en/7/70/Shawn_Tok_Profile.jpg" height="300" width="300">
+    </div>
+    @* Dane konserwatora *@
+    <div class="col-xs-3" style="border:solid; height:380px">
+        <div style="text-align:right">DANE PERSONALNE</div>
+        <h4>Imię:</h4><h3 style="color:aquamarine">@Model.Imie</h3>
+        <br />
+        <h4>Nazwisko:</h4><h3 style="color:aquamarine">@Model.Nazwisko</h3>
+        <br />
+        <h4>Data urodzenia:</h4><h3 style="color:aquamarine">@Model.DataUrodzenia.ToShortDateString()</h3>
+        <br />
+        <h4>Telefon kontaktowy:</h4><h3 style="color:aquamarine">@Model.NrTelefonu</h3>
+        <br />
+    </div>
+    @* Adres *@
+    <div class="col-xs-4" style="border:solid; height:380px; min-width:340px;">
+        <div style="text-align:right">ADRES</div>
+        @if (Model.Adres != null)
+        {
+            <h4>Kod pocztowy:</h4><h3 style="color:aquamarine">@Model.Adres.KodPocztowy</h3>
+            <br />
+            <h4>Miasto:</h4><h3 style="color:aquamarine">@Model.Adres.Miasto</h3>
+            <br />
+            <h4>Adres:</h4><h3 style="color:aquamarine">@Model.Adres.Ulica @Model.Adres.NrBudynku  @Model.Adres.NrLokalu</h3>
+            <br />
+        }
+        else
+        {
+            <h1 style="color:palevioletred; text-align:center">BRAK DANYCH</h1>
+        }
+    </div>
+
+
+</body>
+</html>

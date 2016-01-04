@@ -180,15 +180,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\InstruktorController.cs" />
+    <Compile Include="Controllers\InstruktorViewController.cs" />
     <Compile Include="Controllers\KonserwacjaController.cs" />
     <Compile Include="Controllers\KonserwatorController.cs" />
+    <Compile Include="Controllers\KonserwatorViewController.cs" />
     <Compile Include="Controllers\MasazController.cs" />
     <Compile Include="Controllers\MasazystaController.cs" />
+    <Compile Include="Controllers\MasazystaViewController.cs" />
     <Compile Include="Controllers\PhotoController.cs" />
     <Compile Include="Controllers\SalaController.cs" />
     <Compile Include="Controllers\SprzetController.cs" />
     <Compile Include="Controllers\TrenerViewController.cs" />
     <Compile Include="Controllers\TreningPersonalnyController.cs" />
+    <Compile Include="Controllers\ZajeciaGrupController.cs" />
+    <Compile Include="Controllers\ZapisController.cs" />
     <Compile Include="Helpers\AkcjaEnum.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -214,6 +219,7 @@
     </Compile>
     <Compile Include="Helpers\AkcjaEnumAdres.cs" />
     <Compile Include="Helpers\AkcjaEnumInstruktor.cs" />
+    <Compile Include="Helpers\AkcjaEnumKonserwacja.cs" />
     <Compile Include="Helpers\AkcjaEnumKonserwator.cs" />
     <Compile Include="Helpers\AkcjaEnumMasaz.cs" />
     <Compile Include="Helpers\AkcjaEnumMasazysta.cs" />
@@ -224,6 +230,7 @@
     <Compile Include="Helpers\AkcjaEnumTrener.cs" />
     <Compile Include="Helpers\AkcjaEnumTrening.cs" />
     <Compile Include="Helpers\AkcjaEnumUmowa.cs" />
+    <Compile Include="Helpers\AkcjaZapisEnum.cs" />
     <Compile Include="Helpers\MyAuthorize.cs" />
     <Compile Include="Helpers\RoleEnum.cs" />
     <Compile Include="Helpers\StatusWiadomosciEnum.cs" />
@@ -473,7 +480,6 @@
     <Content Include="Views\Shared\KryteriaSzukania\_masazysta.cshtml" />
     <Content Include="Views\Instruktor\Delete.cshtml" />
     <Content Include="Views\Instruktor\Details.cshtml" />
-    <Content Include="Views\RecepcjonistaView\Index.cshtml" />
     <Content Include="Views\TrenerView\Index.cshtml" />
     <Content Include="Views\Instruktor\Create.cshtml" />
     <Content Include="Views\Instruktor\Edit.cshtml" />
@@ -501,11 +507,22 @@
     <Content Include="Views\Konserwacja\Details.cshtml" />
     <Content Include="Views\Konserwacja\Edit.cshtml" />
     <Content Include="Views\Konserwacja\Index.cshtml" />
+    <Content Include="Views\ZajeciaGrup\Create.cshtml" />
+    <Content Include="Views\ZajeciaGrup\Delete.cshtml" />
+    <Content Include="Views\ZajeciaGrup\Details.cshtml" />
+    <Content Include="Views\ZajeciaGrup\Edit.cshtml" />
+    <Content Include="Views\ZajeciaGrup\Index.cshtml" />
+    <Content Include="Views\Shared\KryteriaSzukania\_konserwator.cshtml" />
+    <Content Include="Views\Shared\KryteriaSzukania\_sprzetNazwa.cshtml" />
+    <Content Include="Views\MasazystaView\index.cshtml" />
+    <Content Include="Views\InstruktorView\index.cshtml" />
+    <Content Include="Views\KonserwatorView\index.cshtml" />
+    <Content Include="Views\Zapis\Details.cshtml" />
+    <Content Include="Views\Zapis\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="ViewModel\" />
-    <Folder Include="Views\Status\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

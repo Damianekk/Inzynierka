@@ -109,6 +109,15 @@ namespace Silownia.Controllers
                         masazysta.DataZatrudnienia = DateTime.Now;
                         db.Osoby.Add(masazysta);
                         db.SaveChanges();
+
+                        Uzytkownik pracownik = new Uzytkownik();
+                        pracownik.IDOsoby = masazysta.OsobaID;
+                        pracownik.Login = masazysta.Pesel.ToString();
+                        pracownik.Haslo = masazysta.Imie + masazysta.Nazwisko;
+                        pracownik.Rola = RoleEnum.Masazysta.GetDescription();
+                        db.Uzytkownicy.Add(pracownik);
+                        db.SaveChanges();
+
                         return RedirectToAction("Index", new { akcja = AkcjaEnumMasazysta.DodanoMasazyste, info = masazysta.imieNazwisko });
                     }
 

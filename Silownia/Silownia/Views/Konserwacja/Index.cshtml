@@ -1,57 +1,120 @@
-﻿@model IEnumerable<Silownia.Models.Konserwacja>
-
+﻿@model PagedList.PagedList<Silownia.Models.Konserwacja>
+@using PagedList.Mvc;
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Konserwacje: index";
+}
+@Scripts.Render("~/Scripts/infoCzynnosc.js")
+
+@if (ViewBag.Akcja != null)
+{
+    if (ViewBag.Akcja == AkcjaEnumKonserwacja.DodanoKonserwacje)
+    {
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <div class="alert alert-success">
+            <br />
+            <h4>@PelnaNazwaEnum.GetDescription(@ViewBag.Akcja) @ViewBag.info</h4>
+            <br />
+        </div>
+    }
+
+    if (ViewBag.Akcja == AkcjaEnumKonserwacja.UsunietoKonserwacje)
+    {
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <div class="alert alert-danger">
+            <br />
+            <h4>@PelnaNazwaEnum.GetDescription(@ViewBag.Akcja) @ViewBag.info</h4>
+            <br />
+        </div>
+    }
 }
 
-<h2>Index</h2>
+<h2>Naprawy i konserwacje przeprowadzane w naszej sieci</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+<div class="divDark">
+    @using (Html.BeginForm())
+    {
+        @Html.Partial("KryteriaSzukania/_sprzetNazwa")
+        @Html.Partial("KryteriaSzukania/_silownia")
+        @*
+            @Html.Partial("KryteriaSzukania/_konserwator")
+        *@
+
+
+        <br />
+        <input type="submit" value="szukaj" class="btn btn-info" style="width:10%" />
+        <br />
+    }
+
+</div>
+
+<table class="table table-hover table-condensed">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Opis_usterki)
+            @Html.Label("Siłownia:")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Data_zgłoszenia)
+            @Html.Label("Sala:")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Data_naprawy)
+            @Html.Label("Sprzęt:")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Status)
+            @Html.Label("Konserwator:")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.KonserwatorID)
+            @Html.Label("Opis usterki:")
+        </th>
+        <th>
+            @Html.Label("Data zgłoszenia:")
+        </th>
+        <th>
+            @Html.Label("Data naprawy:")
+        </th>
+        <th>
+            @Html.Label("Status:")
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Opis_usterki)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Data_zgłoszenia)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Data_naprawy)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.KonserwatorID)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.KonserwacjaID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.KonserwacjaID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.KonserwacjaID })
-        </td>
-    </tr>
-}
-
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sprzet.Sala.Silownia.Nazwa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sprzet.Sala.Rodzaj)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sprzet.Nazwa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Konserwator.imieNazwisko)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Opis_usterki)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Data_zgłoszenia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Data_naprawy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                <div class="btn-group">
+                    <button class="btn-success btn-lg" onclick="location.href='@Url.Action("Edit", "Konserwacja", new { id = item.KonserwacjaID })';return false;">edycja</button>
+                    <button class="btn-primary btn-lg" onclick="location.href='@Url.Action("Details", "Konserwacja", new { id = item.KonserwacjaID })';return false;">szczegóły</button>
+                    <button class="btn-danger btn-lg" onclick="location.href='@Url.Action("Delete", "Konserwacja", new { id = item.KonserwacjaID })';return false;">usuń</button>
+                </div>
+            </td>
+        </tr>
+    }
 </table>
+
+<div class="center">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, pageSize = Model.PageSize }))
+    Wyświetlam od @Model.FirstItemOnPage do @Model.LastItemOnPage z @Model.TotalItemCount rekordów Konserwacja
+</div>

@@ -19,7 +19,7 @@ namespace Silownia.Controllers
         private SilowniaContext db = new SilowniaContext();
 
         // GET: /Sala/
-        public ActionResult Index(string nazwa, string SilowniaID, int page = 1, int pageSize = 10, AkcjaEnumSprzet akcja = AkcjaEnumSprzet.Brak, String info = null)
+        public ActionResult Index(string nazwa, string SilowniaID, int page = 1, int pageSize = 10, AkcjaEnumSala akcja = AkcjaEnumSala.Brak, String info = null)
         {
             if (Session["Auth"] != null)
             {
@@ -41,7 +41,7 @@ namespace Silownia.Controllers
 
                     PagedList<Sala> model = new PagedList<Sala>(final, page, pageSize);
 
-                    if (akcja != AkcjaEnumSprzet.Brak)
+                    if (akcja != AkcjaEnumSala.Brak)
                     {
                         ViewBag.info = info;
                         ViewBag.Akcja = akcja;
@@ -94,7 +94,7 @@ namespace Silownia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(long? id, [Bind(Include = "Numer_sali,Rodzaj,Status,Opis,Zdjecie,SilowniaID")] Sala sala, HttpPostedFileBase file)
+        public ActionResult Create([Bind(Include = "Numer_sali,Rodzaj,Status,Opis,Zdjecie")] long? id, Sala sala, HttpPostedFileBase file)
         {
             if (Session["Auth"] != null)
             {
@@ -103,11 +103,13 @@ namespace Silownia.Controllers
                     if (ModelState.IsValid)
                     {
                         ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
+                        
                         #region Silownia
                         Models.Silownia silownia = db.Silownie.Find(id);
                         sala.Silownia = silownia;
                         silownia.Sale.Add(sala);
                         #endregion
+
                         string FileName = "";
                         byte[] bytes;
 
@@ -193,7 +195,7 @@ namespace Silownia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="Numer_sali,Rodzaj,Status,Opis,Zdjecie,SilowniaID")] Sala sala)
+        public ActionResult Edit([Bind(Include="Numer_sali,Rodzaj,Status,Opis,Zdjecie")] Sala sala)
         {
             if (Session["Auth"] != null)
             {
@@ -205,7 +207,6 @@ namespace Silownia.Controllers
                         db.SaveChanges();
                         return RedirectToAction("Index");
                     }
-                    ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", sala.Silownia);
                     return View(sala);
                 }
             }

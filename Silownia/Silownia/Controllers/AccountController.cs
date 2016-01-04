@@ -78,6 +78,21 @@ namespace Silownia.Controllers
                         Trener trener = db.Trenerzy.Find(uzytkownik.IDOsoby);
                         return RedirectToAction("Index", "TrenerView", new { id = uzytkownik.IDOsoby });
                      }
+                    if (uzytkownik.Rola == RoleEnum.Konserwator.GetDescription())
+                    {
+                        Konserwator konserwator = db.Konserwatorzy.Find(uzytkownik.IDOsoby);
+                        return RedirectToAction("Index", "KonserwatorView", new { id = uzytkownik.IDOsoby });
+                    }
+                    if (uzytkownik.Rola == RoleEnum.Masazysta.GetDescription())
+                    {
+                        Masazysta masazysta = db.Masazysci.Find(uzytkownik.IDOsoby);
+                        return RedirectToAction("Index", "MasazystaView", new { id = uzytkownik.IDOsoby });
+                    }
+                    if (uzytkownik.Rola == RoleEnum.Instruktor.GetDescription())
+                    {
+                        Instruktor instruktor = db.Instruktorzy.Find(uzytkownik.IDOsoby);
+                        return RedirectToAction("Index", "InstruktorView", new { id = uzytkownik.IDOsoby });
+                    }
                 }
                 else
                 {

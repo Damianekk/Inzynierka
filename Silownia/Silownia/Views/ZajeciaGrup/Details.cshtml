@@ -1,0 +1,129 @@
+﻿@model Silownia.Models.ZajeciaGrupowe
+@{
+    ViewBag.Title = "Zajęcia: szczegóły";
+}
+<h2>Szczegóły dotyczące wybranych zajęć:</h2>
+<div class="divDark">
+    <div class="divInner">
+        <dl class="dl-horizontal">
+            <dt>
+                Klienci
+            </dt>
+            <dd>
+                 @foreach (var item in Model.KlientZajeciaGrupowe)
+                            {
+                            <tr>
+                            <td>@Html.DisplayFor(model => item.Klient.imieNazwisko)<br /></td>
+                            </tr>
+                            }
+            </dd>
+            <dt>
+                Instruktor
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Instruktor.imieNazwisko)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.TreningStart)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.TreningStart)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.TreningStartGodzina)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.TreningStartGodzina)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.CzasTrwania)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.CzasTrwania) minut
+            </dd>
+            <dt>
+                Nazwa treningu:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.NazwaTreningu)
+            </dd>
+            <dt>
+                Opis treningu:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.OpisTreningu)
+            </dd>
+        </dl>
+    </div>
+</div>
+
+
+<div>
+    @if (Request.UrlReferrer != null)
+    {
+        <button class="btn btn-large btn-block btn-primary btn-lg btn-primary" onclick="history.go(-1); return false;">powrót</button>
+    }
+</div> 
+
+    <div class="wrap">
+        <img class="show_hide" src="~/Content/ikony/persony/ikona_trenerPersonalny.png" width="90" height="90">
+
+        <div class="slidingDiv" style="display:none">
+            <dl , class="table-bordered" ,new style="color:#782D86">
+                <dt>
+                    @Html.Label("Instruktor", new { style = "color:#782D86" })
+                </dt>
+
+                <dd>
+                    <table class="table">
+                        <tr>
+                            <th>Imię i nazwisko</th>
+                            <th>Numer telefonu</th>
+                            <th></th>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(model => model.Instruktor.imieNazwisko)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.Instruktor.NrTelefonu)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.Instruktor.ZdjecieProfilowe)
+                            </td>
+                        </tr>
+
+                    </table>
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+</div>
+
+
+<style type="text/cs">
+    div.wrap {
+        float: left;
+        width: 500px;
+    }
+
+    img.show_hide {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .slidingDiv {
+        width: 500px;
+        display: none;
+    }
+</style>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">
+</script>
+<script type="text/javascript">
+    $('img.show_hide').on("click", function () {
+        $('div.slidingDiv').stop().slideUp('fast');
+        $(this).next('div.slidingDiv').stop().slideToggle('fast');
+    });
+</script>

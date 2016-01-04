@@ -1,64 +1,65 @@
 ﻿@model Silownia.Models.Konserwacja
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Konserwacja: usuń";
 }
+<h2>Czy na pewno chcesz usunąć konserwację @Model.Sprzet.Nazwa?</h2>
 
-<h2>Delete</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Konserwacja</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Opis_usterki)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Opis_usterki)
-        </dd>
+    <div class="divDark">
+        <div class="divInner">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Konserwator.imieNazwisko)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Data_zgłoszenia)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Konserwator.imieNazwisko)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Opis_usterki)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Data_zgłoszenia)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Opis_usterki)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Data_naprawy)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Data_zgłoszenia)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Data_naprawy)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Data_zgłoszenia)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Data_naprawy)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Status)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Data_naprawy)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.KonserwatorID)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Status)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.KonserwatorID)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Status)
+                </dd>
+            </dl>
 
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <div>
+                <input type="submit" value="Usuń" class="btn  btn-large btn-lg btn-block btn-danger" />
+            </div>
         </div>
-    }
-</div>
+    </div>
+}
+@if (Request.UrlReferrer != null)
+{
+    <button class="btn btn-large btn-block btn-primary btn-lg btn-primary" onclick="history.go(-1); return false;">powrót</button>
+}

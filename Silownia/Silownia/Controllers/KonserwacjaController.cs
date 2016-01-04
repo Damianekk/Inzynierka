@@ -12,32 +12,35 @@ using PagedList;
 using Silownia.Helpers;
 using System.Globalization;
 using Microsoft.AspNet.Identity;
+
 namespace Silownia.Controllers
 {
     public class KonserwacjaController : Controller
     {
         private SilowniaContext db = new SilowniaContext();
 
-        // GET: /Konserwacja/
-        public ActionResult Index(string imieNazwisko, string SilowniaID, string MasazystaID, int page = 1, int pageSize = 10, AkcjaEnumMasaz akcja = AkcjaEnumMasaz.Brak, String info = null)
+        // GET: Konserwacja
+        public ActionResult Index(string nazwaSprzetu, string SilowniaID, int page = 1, int pageSize = 10, AkcjaEnumKonserwacja akcja = AkcjaEnumKonserwacja.Brak, String info = null)
         {
             if (Session["Auth"] != null)
             {
                 if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
                     ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
-                    ViewBag.SalaID = new SelectList(db.Sale.DistinctBy(a => new { a.Numer_sali }), "Numer_sali", "Rodzaj");
-                    ViewBag.SprzetID = new SelectList(db.Sprzety.DistinctBy(a => new { a.SprzetID }), "SprzetID", "Nazwa");
-                    ViewBag.KonserwatorID = new SelectList(db.Konserwatorzy.DistinctBy(a => new { a.OsobaID }), "OsobaID", "imieNazwisko");
+                    //ViewBag.KonserwatorID = new SelectList(db.Konserwatorzy.DistinctBy(a => new { a.Pesel }), "imieNazwisko", "imieNazwisko");
 
-                    var kons = from Konserwacje in db.Konserwacje select Konserwacje;
 
-                    if (!String.IsNullOrEmpty(imieNazwisko))
-                        foreach (string wyraz in imieNazwisko.Split(' '))
-                            kons = kons.Search(wyraz, i => i.Konserwator.Imie, i => i.Konserwator.Nazwisko);
+                    var konserwacje = from Konserwacje in db.Konserwacje select Konserwacje;
 
-                    var final = kons.OrderBy(p => p.Konserwator.Nazwisko);
-                    var ileWynikow = kons.Count();
+                    if (!String.IsNullOrEmpty(nazwaSprzetu))
+                        konserwacje = konserwacje.Search(nazwaSprzetu, i => i.Sprzet.Nazwa);
+
+                    konserwacje = konserwacje.Search(SilowniaID, i => i.Sprzet.Sala.Silownia.Nazwa);
+
+                  //  konserwacje = konserwacje.Search(KonserwatorID, i => i.Konserwator.imieNazwisko);
+
+                    var final = konserwacje.OrderBy(p => p.Sprzet.Nazwa);
+                    var ileWynikow = konserwacje.Count();
                     if ((ileWynikow / page) <= 1)
                     {
                         page = 1;
@@ -46,7 +49,11 @@ namespace Silownia.Controllers
 
                     PagedList<Konserwacja> model = new PagedList<Konserwacja>(final, page, pageSize);
 
-                   
+                    if (akcja != AkcjaEnumKonserwacja.Brak)
+                    {
+                        ViewBag.info = info;
+                        ViewBag.Akcja = akcja;
+                    }
 
                     return View(model);
                 }
@@ -54,7 +61,7 @@ namespace Silownia.Controllers
             return HttpNotFound();
         }
 
-        // GET: Masaz/Details/5
+        // GET: Konserwacja/Details/5
         public ActionResult Details(long? id)
         {
             if (Session["Auth"] != null)
@@ -65,79 +72,89 @@ namespace Silownia.Controllers
                     {
                         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                     }
-                    Konserwacja konse = db.Konserwacje.Find(id);
-                    if (konse == null)
+                    Konserwacja konserwacja = db.Konserwacje.Find(id);
+                    if (konserwacja == null)
                     {
                         return HttpNotFound();
                     }
-                    return View(konse);
+                    return View(konserwacja);
                 }
             }
             return HttpNotFound();
         }
 
-        // GET: Masaz/Create
+        // GET: Konserwacja/Create
         public ActionResult Create(long? id)
         {
             if (Session["Auth"] != null)
             {
                 if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    ViewBag.SalaID = new SelectList(db.Sale, "Numer_sali", "Rodzaj");
-                    ViewBag.KoncerwatorID = new SelectList(db.Konserwatorzy, "OsobaID", "imieNazwisko");
-                    ViewBag.SprzetID = new SelectList(db.Sprzety, "SprzetID", "Nazwa");
+                    ViewBag.KonserwatorID = new SelectList(db.Konserwatorzy, "OsobaID", "imieNazwisko");
+                    var a = from Osoby in db.Konserwatorzy select Osoby;
 
-                    var ust = from  Konser in db.Konserwacje select Konser;
+                    Konserwator konserwator = null;
+                    var user = User.Identity.GetUserName();
+                    foreach (Konserwator kons in a)
+                    {
+                        if (kons.imieNazwisko.Replace(" ", "") == user)
+                        {
+                            konserwator = kons;
+                            break;
+                        }
 
-                  return View();
+                        Osoba osoba = db.Osoby.Find(id);
+                        ViewBag.Osoba = osoba;
+                    }
+
+                    return View(new Konserwacja
+                    {
+                        Data_zgłoszenia = DateTime.Now,
+                    });
                 }
             }
             return HttpNotFound();
         }
 
-        // POST: Masaz/Create
+        // POST: Konserwacja/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Create([Bind(Include = "KonserwacjaID,Opis_usterki,Data_zgłoszenia,Data_naprawy,Status,KonserwatorID")] long? id, Konserwacja kons)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "KonserwacjaID,Opis_usterki,Data_zgłoszenia,Data_naprawy,Status,KonserwatorID")] long? id, Konserwacja konserwacja)
         {
             if (Session["Auth"] != null)
             {
                 if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    ViewBag.SilowniaID = new SelectList(db.Silownie, "Nazwa", "Nazwa", kons.KonserwacjaID );
-                    ViewBag.SalaID = new SelectList(db.Sale, "Numer_sali", "Rodzaj", kons.KonserwacjaID);
-                    ViewBag.SprzetID = new SelectList(db.Sprzety, "SprzetID", "Nazwa", kons.KonserwacjaID);
-                    ViewBag.KonserwatorID = new SelectList(db.Konserwatorzy, "OsobaID", "imieNazwisko", kons.KonserwacjaID);
+                    ViewBag.KonserwatorID = new SelectList(db.Konserwatorzy, "OsobaID", "imieNazwisko", konserwacja.KonserwatorID);
 
-                  
-                        #region Konserwator
-                        Konserwator konserwator = db.Konserwatorzy.Find(id);
-                        kons.Konserwator = konserwator;
-                        konserwator.Konserwacje.Add(kons);
-                        #endregion
-
+                    if (ModelState.IsValid)
+                    {
                         #region Sprzet
-                        Sprzet sprz = db.Sprzety.Find(kons.Sprzet);
-                        kons.Sprzet = sprz;
-                        sprz.Konserwacje.Add(kons);
+                        Sprzet sprzet = db.Sprzety.Find(id);
+                        konserwacja.Sprzet = sprzet;
+                        sprzet.Konserwacje.Add(konserwacja);
                         #endregion
-                    
-                        db.Konserwacje.Add(kons);
-                        db.SaveChanges();
 
-                        return RedirectToAction("Index");
+                        #region Konserwator
+                        Konserwator konserwator = db.Konserwatorzy.Find(konserwacja.KonserwatorID);
+                        konserwacja.Konserwator = konserwator;
+                        konserwator.Konserwacje.Add(konserwacja);
+                        #endregion
+
+                        db.Konserwacje.Add(konserwacja);
+                        db.SaveChanges();
+                        return RedirectToAction("Index", new { akcja = AkcjaEnumKonserwacja.DodanoKonserwacje, info = konserwacja.Sprzet.Nazwa });
                     }
-                    return View(kons);
-                
+
+                    return View(konserwacja);
+                }
             }
             return HttpNotFound();
         }
 
-
-       
-
-        // GET: Masaz/Edit/5
+        // GET: Konserwacja/Edit/5
         public ActionResult Edit(long? id)
         {
             if (Session["Auth"] != null)
@@ -153,21 +170,19 @@ namespace Silownia.Controllers
                     {
                         return HttpNotFound();
                     }
-                  
-                    ViewBag.SilowniaID = new SelectList(db.Silownie, "Nazwa", "Nazwa", konserwacja.KonserwacjaID);
-                    ViewBag.SalaID = new SelectList(db.Sale, "Numer_sali", "Rodzaj", konserwacja.KonserwacjaID);
-                    ViewBag.SprzetID = new SelectList(db.Sprzety, "SprzetID", "Nazwa", konserwacja.KonserwacjaID);
-                    ViewBag.KonserwatorID = new SelectList(db.Konserwatorzy, "OsobaID", "imieNazwisko", konserwacja.KonserwacjaID);
+                    ViewBag.KonserwatorID = new SelectList(db.Konserwatorzy, "OsobaID", "imieNazwisko", konserwacja.KonserwatorID);
+
                     return View(konserwacja);
                 }
             }
             return HttpNotFound();
         }
 
-        // POST: Masaz/Edit/5
+        // POST: Konserwacja/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "KonserwacjaID,Opis_usterki,Data_zgłoszenia,Data_naprawy,Status,KonserwatorID")] Konserwacja konserwacja)
         {
             if (Session["Auth"] != null)
@@ -180,18 +195,14 @@ namespace Silownia.Controllers
                         db.SaveChanges();
                         return RedirectToAction("Index");
                     }
-                    ViewBag.SilowniaID = new SelectList(db.Silownie, "Nazwa", "Nazwa", konserwacja.KonserwacjaID);
-                    ViewBag.SalaID = new SelectList(db.Sale, "Numer_sali", "Rodzaj", konserwacja.KonserwacjaID);
-                    ViewBag.SprzetID = new SelectList(db.Sprzety, "SprzetID", "Nazwa", konserwacja.KonserwacjaID);
-                    ViewBag.KonserwatorID = new SelectList(db.Konserwatorzy, "Pesel", "imieNazwisko", konserwacja.KonserwacjaID);
-
+                    ViewBag.KonserwatorID = new SelectList(db.Konserwatorzy, "OsobaID", "imieNazwisko", konserwacja.KonserwatorID);
                     return View(konserwacja);
                 }
             }
             return HttpNotFound();
         }
 
-        // GET: Masaz/Delete/5
+        // GET: Konserwacja/Delete/5
         public ActionResult Delete(long? id)
         {
             if (Session["Auth"] != null)
@@ -213,8 +224,9 @@ namespace Silownia.Controllers
             return HttpNotFound();
         }
 
-        // POST: Masaz/Delete/5
+        // POST: Konserwacja/Delete/5
         [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
             if (Session["Auth"] != null)
@@ -224,7 +236,7 @@ namespace Silownia.Controllers
                     Konserwacja konserwacja = db.Konserwacje.Find(id);
                     db.Konserwacje.Remove(konserwacja);
                     db.SaveChanges();
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", new { akcja = AkcjaEnumKonserwacja.UsunietoKonserwacje });
                 }
             }
             return HttpNotFound();
