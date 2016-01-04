@@ -6,6 +6,7 @@
 <h2>Szczegóły dotyczące wybranego sprzętu</h2>
 
 <button class="btn btn-large btn-lg btn-block btn-primary btn-success" onclick="location.href='@Url.Action("Edit", "Sprzet", new { id = Model.SprzetID })';return false;">edytuj</button>
+<button class="btn btn-large btn-lg btn-block btn-primary btn-danger" onclick="location.href='@Url.Action("Create", "Konserwacja", new { id = Model.SprzetID })';return false;">zgłoś konserwację</button>
 <div class="divDark">
     <div class="divInner">
         <dl class="dl-horizontal">
