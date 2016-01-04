@@ -46,7 +46,7 @@
             else if (Session["Auth"].ToString() == "Klient")
             {
                 <li>@Html.ActionLink("Panel klienta", "Index", "KlientView")</li>
-                <li>@Html.ActionLine("Zapisz się na zajęcia", "Index", "Zapis") </li>
+                <li>@Html.ActionLink("Zapisz się na zajęcia", "Index", "Zapis") </li>
             }
             else if (Session["Auth"].ToString() == "Trener")
             {
