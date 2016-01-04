@@ -173,53 +173,6 @@ namespace Silownia.Controllers
             else return false; // wolny
         }
 
-        // GET: ZajeciaGrup/Edit/5
-        public ActionResult Edit(long? id)
-        {
-            if (Session["Auth"] != null)
-            {
-                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
-                {
-                    if (id == null)
-                    {
-                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                    }
-                    ZajeciaGrupowe zajecia = db.ZajeciaGrup.Find(id);
-                    if (zajecia == null)
-                    {
-                        return HttpNotFound();
-                    }
-                    ViewBag.InstruktorID = new SelectList(db.Instruktorzy, "OsobaID", "imieNazwisko", zajecia.InstruktorID);
-                    ViewBag.SalaID = new SelectList(db.Sale, "Numer_sali", "Numer_sali", zajecia.SalaID);
-                    return View(zajecia);
-                }
-            }
-            return HttpNotFound();
-        }
-
-        // POST: ZajeciaGrup/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        public ActionResult Edit([Bind(Include = "TreningID,TreningStart,TreningStartGodzina,CzasTrwania,InstruktorID,SalaID,NazwaTreningu,OpisTreningu")] ZajeciaGrupowe zajecia)
-        {
-            if (Session["Auth"] != null)
-            {
-                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
-                {
-                    if (ModelState.IsValid)
-                    {
-                        db.Entry(zajecia).State = EntityState.Modified;
-                        db.SaveChanges();
-                        return RedirectToAction("Index");
-                    }
-                    ViewBag.InstruktorID = new SelectList(db.Instruktorzy, "OsobaID", "imieNazwisko", zajecia.InstruktorID);
-                    ViewBag.SalaID = new SelectList(db.Sale, "Numer_sali", "Numer_sali", zajecia.SalaID);
-                }
-            }
-            return HttpNotFound();
-        }
-
         // GET: ZajeciaGrup/Delete/5
         public ActionResult Delete(int? id)
         {

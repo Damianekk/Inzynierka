@@ -193,6 +193,7 @@
     <Compile Include="Controllers\TrenerViewController.cs" />
     <Compile Include="Controllers\TreningPersonalnyController.cs" />
     <Compile Include="Controllers\ZajeciaGrupController.cs" />
+    <Compile Include="Controllers\ZapisController.cs" />
     <Compile Include="Helpers\AkcjaEnum.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -229,6 +230,7 @@
     <Compile Include="Helpers\AkcjaEnumTrener.cs" />
     <Compile Include="Helpers\AkcjaEnumTrening.cs" />
     <Compile Include="Helpers\AkcjaEnumUmowa.cs" />
+    <Compile Include="Helpers\AkcjaZapisEnum.cs" />
     <Compile Include="Helpers\MyAuthorize.cs" />
     <Compile Include="Helpers\RoleEnum.cs" />
     <Compile Include="Helpers\StatusWiadomosciEnum.cs" />
@@ -515,6 +517,8 @@
     <Content Include="Views\MasazystaView\index.cshtml" />
     <Content Include="Views\InstruktorView\index.cshtml" />
     <Content Include="Views\KonserwatorView\index.cshtml" />
+    <Content Include="Views\Zapis\Details.cshtml" />
+    <Content Include="Views\Zapis\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
