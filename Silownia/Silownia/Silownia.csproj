@@ -189,6 +189,7 @@
     <Compile Include="Controllers\SprzetController.cs" />
     <Compile Include="Controllers\TrenerViewController.cs" />
     <Compile Include="Controllers\TreningPersonalnyController.cs" />
+    <Compile Include="Controllers\ZajeciaGrupController.cs" />
     <Compile Include="Helpers\AkcjaEnum.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
