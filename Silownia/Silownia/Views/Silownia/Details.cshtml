@@ -114,9 +114,9 @@
             <img class="show_hide" src="~/Content/ikony/sala/ikona_sala.png" width="90" height="90">
 
             <div class="slidingDiv" style="display:none">
-                <dl , class="table-bordered" ,new style="color: #1abc9c">
+                <dl , class="table-bordered" ,new style="color: #ecf0f1">
                     <dt>
-                        @Html.Label("Sale", new { style = "color:#1abc9c" })
+                        @Html.Label("Sale", new { style = "color:#ecf0f1" })
                     </dt>
                     @if (Model.Sale.Count > 0)
                     {
@@ -144,7 +144,15 @@
                                         <td>
                                             @Html.DisplayFor(modelItem => item.Status)
                                         </td>
-                                        <td></td>
+                                        <td>
+
+                                            <div class="btn-group">
+                                                <button class="btn-success btn-lg" onclick="location.href='@Url.Action("Edit", "Sala", new { id = item.Numer_sali })';return false;">edytuj</button>
+                                                <button class="btn-primary btn-lg" onclick="location.href='@Url.Action("Details", "Sala", new { id = item.Numer_sali })';return false;">szczegóły</button>
+                                                <button class="btn-danger btn-lg" onclick="location.href='@Url.Action("Delete", "Sala", new { id = item.Numer_sali })';return false;">usuń</button>
+                                            </div>
+
+                                        </td>
                                     </tr>
                                 }
                             </table>

@@ -15,41 +15,35 @@ using Microsoft.AspNet.Identity;
 
 namespace Silownia.Controllers
 {
-    public class KonserwacjaController : Controller
+    public class ZajeciaGrupController : Controller
     {
         private SilowniaContext db = new SilowniaContext();
 
-        // GET: Konserwacja
-        public ActionResult Index(string nazwaSprzetu, string SilowniaID, int page = 1, int pageSize = 10, AkcjaEnumKonserwacja akcja = AkcjaEnumKonserwacja.Brak, String info = null)
+        // GET: ZajęciaGrupowe
+        public ActionResult Index(string SilowniaID, int page = 1, int pageSize = 10, AkcjaEnumTrening akcja = AkcjaEnumTrening.Brak, String info = null)
         {
             if (Session["Auth"] != null)
             {
                 if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
                     ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
-                    //ViewBag.KonserwatorID = new SelectList(db.Konserwatorzy.DistinctBy(a => new { a.Pesel }), "imieNazwisko", "imieNazwisko");
 
+                    var zajeciaGrup = from ZajeciaGrupowe in db.ZajeciaGrup select ZajeciaGrupowe;
 
-                    var konserwacje = from Konserwacje in db.Konserwacje select Konserwacje;
+                    zajeciaGrup = zajeciaGrup.Search(SilowniaID, i => i.Instruktor.Silownia.Nazwa);
 
-                    if (!String.IsNullOrEmpty(nazwaSprzetu))
-                        konserwacje = konserwacje.Search(nazwaSprzetu, i => i.Sprzet.Nazwa);
-
-                    konserwacje = konserwacje.Search(SilowniaID, i => i.Sprzet.Sala.Silownia.Nazwa);
-
-                  //  konserwacje = konserwacje.Search(KonserwatorID, i => i.Konserwator.imieNazwisko);
-
-                    var final = konserwacje.OrderBy(p => p.Sprzet.Nazwa);
-                    var ileWynikow = konserwacje.Count();
+                    var final = zajeciaGrup.OrderBy(p => p.Instruktor.Nazwisko);
+                    var ileWynikow = zajeciaGrup.Count();
                     if ((ileWynikow / page) <= 1)
                     {
                         page = 1;
                     }
                     var kk = ileWynikow / page;
 
-                    PagedList<Konserwacja> model = new PagedList<Konserwacja>(final, page, pageSize);
+                    PagedList<ZajeciaGrupowe> model = new PagedList<ZajeciaGrupowe>(final, page, pageSize);
 
-                    if (akcja != AkcjaEnumKonserwacja.Brak)
+
+                    if (akcja != AkcjaEnumTrening.Brak)
                     {
                         ViewBag.info = info;
                         ViewBag.Akcja = akcja;
@@ -61,8 +55,8 @@ namespace Silownia.Controllers
             return HttpNotFound();
         }
 
-        // GET: Konserwacja/Details/5
-        public ActionResult Details(long? id)
+        // GET: ZajeciaGrup/Details/5
+        public ActionResult Details(int? id)
         {
             if (Session["Auth"] != null)
             {
@@ -72,89 +66,107 @@ namespace Silownia.Controllers
                     {
                         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                     }
-                    Konserwacja konserwacja = db.Konserwacje.Find(id);
-                    if (konserwacja == null)
+                    ZajeciaGrupowe zajecia = db.ZajeciaGrup.Find(id);
+                    if (zajecia == null)
                     {
                         return HttpNotFound();
                     }
-                    return View(konserwacja);
+                    return View(zajecia);
                 }
             }
             return HttpNotFound();
         }
 
-        // GET: Konserwacja/Create
+        // GET: ZajeciaGrup/Create
         public ActionResult Create(long? id)
         {
             if (Session["Auth"] != null)
             {
                 if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    ViewBag.KonserwatorID = new SelectList(db.Konserwatorzy, "OsobaID", "imieNazwisko");
-                    var a = from Osoby in db.Konserwatorzy select Osoby;
+                    ViewBag.TrenerID = new SelectList(db.Instruktorzy, "OsobaID", "imieNazwisko");
 
-                    Konserwator konserwator = null;
+                    var a = from Osoby in db.Instruktorzy select Osoby;
+
+                    Instruktor instruktor = null;
                     var user = User.Identity.GetUserName();
-                    foreach (Konserwator kons in a)
+                    foreach (Instruktor instr in a)
                     {
-                        if (kons.imieNazwisko.Replace(" ", "") == user)
+                        if (instr.imieNazwisko.Replace(" ", "") == user)
                         {
-                            konserwator = kons;
+                            instruktor = instr;
                             break;
                         }
 
                         Osoba osoba = db.Osoby.Find(id);
                         ViewBag.Osoba = osoba;
                     }
-
-                    return View(new Konserwacja
-                    {
-                        Data_zgłoszenia = DateTime.Now,
-                    });
+                    return View();
                 }
             }
             return HttpNotFound();
         }
 
-        // POST: Konserwacja/Create
+        // POST: ZajeciaGrup/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "KonserwacjaID,Opis_usterki,Data_zgłoszenia,Data_naprawy,Status,KonserwatorID")] long? id, Konserwacja konserwacja)
+        public ActionResult Create([Bind(Include = "TreningID,Instruktor,NazwaTreningu,Sala,TreningStart,CzasTrwania,OpisTreningu")] long? id, ZajeciaGrupowe zajecia)
         {
             if (Session["Auth"] != null)
             {
                 if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    ViewBag.KonserwatorID = new SelectList(db.Konserwatorzy, "OsobaID", "imieNazwisko", konserwacja.KonserwatorID);
+                    ViewBag.TrenerID = new SelectList(db.Instruktorzy, "OsobaID", "imieNazwisko", zajecia.Instruktor.OsobaID);
 
-                    if (ModelState.IsValid)
+                    if (!zajetyTrener(zajecia.Instruktor.OsobaID, zajecia.TreningStart) && !(zajetaSala(zajecia.Sala.Numer_sali, zajecia.TreningStart)))
                     {
-                        #region Sprzet
-                        Sprzet sprzet = db.Sprzety.Find(id);
-                        konserwacja.Sprzet = sprzet;
-                        sprzet.Konserwacje.Add(konserwacja);
+                        #region Instruktor
+                        Instruktor instruktor = db.Instruktorzy.Find(zajecia.Instruktor.OsobaID);
+                        zajecia.Instruktor = instruktor;
+                        instruktor.ZajeciaGrup.Add(zajecia);
                         #endregion
 
-                        #region Konserwator
-                        Konserwator konserwator = db.Konserwatorzy.Find(konserwacja.KonserwatorID);
-                        konserwacja.Konserwator = konserwator;
-                        konserwator.Konserwacje.Add(konserwacja);
-                        #endregion
+                        zajecia.TreningStart = zajecia.TreningStart.AddHours(System.Convert.ToDouble(zajecia.TreningStartGodzina.Hour));
+                        zajecia.TreningStart = zajecia.TreningStart.AddMinutes(System.Convert.ToDouble(zajecia.TreningStartGodzina.Minute));
+                        zajecia.TreningKoniec = zajecia.TreningStart.AddMinutes(System.Convert.ToDouble(zajecia.CzasTrwania));
 
-                        db.Konserwacje.Add(konserwacja);
+                        db.ZajeciaGrup.Add(zajecia);
                         db.SaveChanges();
-                        return RedirectToAction("Index", new { akcja = AkcjaEnumKonserwacja.DodanoKonserwacje, info = konserwacja.Sprzet.Nazwa });
-                    }
 
-                    return View(konserwacja);
+                        return RedirectToAction("Index", new { akcja = AkcjaEnumTrening.DodanoTrening, info = " " });
+                    }
+                    return View(zajecia);
                 }
             }
             return HttpNotFound();
         }
 
-        // GET: Konserwacja/Edit/5
+        bool zajetyTrener(long instruktor, DateTime dataOd)
+        {
+            var check = db.ZajeciaGrup.Where(o => o.Instruktor.OsobaID == instruktor && dataOd >= o.TreningStart && dataOd <= o.TreningKoniec).ToList();
+
+            if (check.Count == 1)
+            {
+                TempData["msg"] = "<script>alert('Instruktor ma już zaplanowane zajęcia w tym terminie.');</script>";
+                return true; //zajęty
+            }
+            else return false; // wolny
+        }
+
+        bool zajetaSala(int sala, DateTime dataOd)
+        {
+            var check = db.ZajeciaGrup.Where(o => o.Sala.Numer_sali == sala && dataOd >= o.TreningStart && dataOd <= o.TreningKoniec).ToList();
+
+            if (check.Count == 1)
+            {
+                TempData["msg"] = "<script>alert('Sala jest zajęta w tym terminie.');</script>";
+                return true; //zajęty
+            }
+            else return false; // wolny
+        }
+
+        // GET: ZajeciaGrup/Edit/5
         public ActionResult Edit(long? id)
         {
             if (Session["Auth"] != null)
@@ -165,45 +177,38 @@ namespace Silownia.Controllers
                     {
                         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                     }
-                    Konserwacja konserwacja = db.Konserwacje.Find(id);
-                    if (konserwacja == null)
+                    ZajeciaGrupowe zajecia = db.ZajeciaGrup.Find(id);
+                    if (zajecia == null)
                     {
                         return HttpNotFound();
                     }
-                    ViewBag.KonserwatorID = new SelectList(db.Konserwatorzy, "OsobaID", "imieNazwisko", konserwacja.KonserwatorID);
-
-                    return View(konserwacja);
+                    ViewBag.TrenerID = new SelectList(db.Instruktorzy, "OsobaID", "imieNazwisko", zajecia.Instruktor.OsobaID);
+                    return View(zajecia);
                 }
             }
             return HttpNotFound();
         }
 
-        // POST: Konserwacja/Edit/5
+        // POST: ZajeciaGrup/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "KonserwacjaID,Opis_usterki,Data_zgłoszenia,Data_naprawy,Status,KonserwatorID")] Konserwacja konserwacja)
+        public ActionResult Edit([Bind(Include = "TreningID,Instruktor,NazwaTreningu,Sala,TreningStart,TreningStartGodzina,CzasTrwania,OpisTreningu")] ZajeciaGrupowe zajecia)
         {
             if (Session["Auth"] != null)
             {
                 if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    if (ModelState.IsValid)
-                    {
-                        db.Entry(konserwacja).State = EntityState.Modified;
+                        db.Entry(zajecia).State = EntityState.Modified;
                         db.SaveChanges();
                         return RedirectToAction("Index");
-                    }
-                    ViewBag.KonserwatorID = new SelectList(db.Konserwatorzy, "OsobaID", "imieNazwisko", konserwacja.KonserwatorID);
-                    return View(konserwacja);
                 }
             }
             return HttpNotFound();
         }
 
-        // GET: Konserwacja/Delete/5
-        public ActionResult Delete(long? id)
+        // GET: ZajeciaGrup/Delete/5
+        public ActionResult Delete(int? id)
         {
             if (Session["Auth"] != null)
             {
@@ -213,30 +218,30 @@ namespace Silownia.Controllers
                     {
                         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                     }
-                    Konserwacja konserwacja = db.Konserwacje.Find(id);
-                    if (konserwacja == null)
+                    ZajeciaGrupowe zajecia = db.ZajeciaGrup.Find(id);
+                    if (zajecia == null)
                     {
                         return HttpNotFound();
                     }
-                    return View(konserwacja);
+                    return View(zajecia);
                 }
             }
             return HttpNotFound();
         }
 
-        // POST: Konserwacja/Delete/5
+        // POST: TreningPersonalny/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(long id)
+        public ActionResult DeleteConfirmed(int id)
         {
             if (Session["Auth"] != null)
             {
                 if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    Konserwacja konserwacja = db.Konserwacje.Find(id);
-                    db.Konserwacje.Remove(konserwacja);
+                    ZajeciaGrupowe zajecia = db.ZajeciaGrup.Find(id);
+                    db.ZajeciaGrup.Remove(zajecia);
                     db.SaveChanges();
-                    return RedirectToAction("Index", new { akcja = AkcjaEnumKonserwacja.UsunietoKonserwacje });
+
+                    return RedirectToAction("Index", new { akcja = AkcjaEnumTrening.UsunietoTrening });
                 }
             }
             return HttpNotFound();

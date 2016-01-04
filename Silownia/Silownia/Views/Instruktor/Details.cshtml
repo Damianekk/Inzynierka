@@ -72,13 +72,34 @@
                                 <th>Fokus treningu</th>
                                 <th>Data treningu</th>
                                 <th>Czas trwania</th>
+                                <th>Nazwa treningu</th>
+                                <th>Opis treningu</th>
                                 <th>Członkowie</th>
                             </tr>
                             @foreach (var item in Model.ZajeciaGrup)
                             {
                                 <tr>
                                     <td>
-                                        TODO (po zrobieniu treningów grupowych: Jagoda)
+                                        @Html.DisplayFor(modelItem => item.Instruktor.imieNazwisko)
+                                    </td>
+                   
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TreningStart)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CzasTrwania)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NazwaTreningu) 
+                                    </td>
+                                     <td>
+                                        @Html.DisplayFor(modelItem => item.OpisTreningu) 
+                                    </td>
+                                     <td>
+                                        <div class="btn-group">
+                                            <button class="btn-primary btn-lg" onclick="location.href='@Url.Action("Details", "ZajeciaGrup", new { id = item.TreningID })';return false;">szczegóły</button>
+                                            <button class="btn-danger btn-lg" onclick="location.href='@Url.Action("Delete", "ZajeciaGrup", new { id = item.TreningID })';return false;">usuń</button>
+                                        </div>
                                     </td>
                                 </tr>
                             }

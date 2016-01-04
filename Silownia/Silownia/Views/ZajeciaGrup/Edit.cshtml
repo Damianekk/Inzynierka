@@ -1,0 +1,70 @@
+﻿@model Silownia.Models.ZajeciaGrupowe
+@{
+    ViewBag.Title = "Zajęcia grupowe: edycja";
+}
+<h2>Edycja wybranych zajęć</h2>
+<div class="divDark">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.Instruktor.OsobaID)
+            <div class="form-group">
+                @Html.LabelFor(model => model.Instruktor.OsobaID, "TrenerID", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("TrenerID")
+                    @Html.ValidationMessageFor(model => model.Instruktor.OsobaID)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.TreningStart, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.TreningStart)
+                    @Html.ValidationMessageFor(model => model.TreningStart)
+            </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.NazwaTreningu, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.NazwaTreningu)
+                    @Html.ValidationMessageFor(model => model.NazwaTreningu)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.OpisTreningu, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.OpisTreningu)
+                    @Html.ValidationMessageFor(model => model.OpisTreningu)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.CzasTrwania, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CzasTrwania)
+                    @Html.ValidationMessageFor(model => model.CzasTrwania)
+                </div>
+            </div>
+             <div class="form-group">
+                @Html.LabelFor(model => model.Sala.Numer_sali, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Sala.Numer_sali)
+                    @Html.ValidationMessageFor(model => model.Sala.Numer_sali)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Zapisz" class="btn btn-lg btn-large btn-success" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div>
+    <button class="btn btn-large btn-block btn-lg btn-primary btn-primary" onclick="location.href='@Url.Action("Index", "ZajeciaGrup")';return false;">powrót do listy zajęć</button>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

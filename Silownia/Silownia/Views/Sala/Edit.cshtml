@@ -15,9 +15,17 @@
             @Html.HiddenFor(model => model.Numer_sali)
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Rodzaj, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Rodzaj)
+                @Html.LabelFor(model => model.Rodzaj, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.DropDownListFor(m => m.Status, new SelectList(new List<Object>
+           {
+                new { value = 0, text = "Fitness"},
+                new { value = 1, text = "Aerobowa"},
+                new { value = 2, text = "Wolne ciężary"},
+                new { value = 3, text = "Crossfit"},
+                new { value = 4, text = "Rehabilitacyjna"},
+                new { value = 5, text = "Inna"}
+           }, "text", "text"))
                     @Html.ValidationMessageFor(model => model.Rodzaj)
                 </div>
             </div>
@@ -48,14 +56,6 @@
                     <input type="file" id="file1" name="file1" />
                     @*@Html.EditorFor(model => model.ImageFile)
                         @Html.ValidationMessageFor(model => model.ImageFile)*@
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.SilowniaID, "Siłownia", new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("SilowniaID")
-                    @Html.ValidationMessageFor(model => model.SilowniaID)
                 </div>
             </div>
 
