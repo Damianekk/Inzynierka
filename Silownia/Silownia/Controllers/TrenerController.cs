@@ -111,7 +111,7 @@ namespace Silownia.Controllers
 
                         Uzytkownik pracownik = new Uzytkownik();
                         pracownik.IDOsoby = trener.OsobaID;
-                        pracownik.Login = trener.Nazwisko;
+                        pracownik.Login = trener.Pesel.ToString();
                         pracownik.Haslo = trener.Imie + trener.Nazwisko;
                         pracownik.Rola = RoleEnum.Trener.GetDescription();
                         db.Uzytkownicy.Add(pracownik);

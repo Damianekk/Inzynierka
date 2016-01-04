@@ -61,7 +61,10 @@
             </td>
             <td>
                 <div class="btn-group">
-                    <button class="btn-default btn-lg" onclick="location.href='@Url.Action("Edit", "ZajeciaGrup", new { id = item.TreningID })';return false;">edytuj</button>
+                    @*
+                        <button class="btn-default btn-lg" onclick="location.href='@Url.Action("Edit", "ZajeciaGrup", new { id = item.TreningID })';return false;">edytuj</button>
+                    *@
+
                     <button class="btn-primary btn-lg" onclick="location.href='@Url.Action("Details", "ZajeciaGrup", new { id = item.TreningID })';return false;">szczegóły</button>
                     <button class="btn-danger btn-lg" onclick="location.href='@Url.Action("Delete", "ZajeciaGrup", new { id = item.TreningID })';return false;">usuń</button>
                 </div>

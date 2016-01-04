@@ -179,7 +179,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\ZapisController.cs" />
     <Compile Include="Controllers\InstruktorController.cs" />
     <Compile Include="Controllers\KonserwacjaController.cs" />
     <Compile Include="Controllers\KonserwatorController.cs" />
@@ -191,6 +190,7 @@
     <Compile Include="Controllers\TrenerViewController.cs" />
     <Compile Include="Controllers\TreningPersonalnyController.cs" />
     <Compile Include="Controllers\ZajeciaGrupController.cs" />
+    <Compile Include="Controllers\ZapisController.cs" />
     <Compile Include="Helpers\AkcjaEnum.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -511,8 +511,11 @@
     <Content Include="Views\ZajeciaGrup\Index.cshtml" />
     <Content Include="Views\Shared\KryteriaSzukania\_konserwator.cshtml" />
     <Content Include="Views\Shared\KryteriaSzukania\_sprzetNazwa.cshtml" />
-    <Content Include="Views\Zapis\Index.cshtml" />
+    <Content Include="Views\MasazystaView\index.cshtml" />
+    <Content Include="Views\InstruktorView\index.cshtml" />
+    <Content Include="Views\KonserwatorView\index.cshtml" />
     <Content Include="Views\Zapis\Details.cshtml" />
+    <Content Include="Views\Zapis\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

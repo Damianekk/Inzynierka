@@ -112,7 +112,7 @@ namespace Silownia.Controllers
 
                         Uzytkownik pracownik = new Uzytkownik();
                         pracownik.IDOsoby = recepcjonista.OsobaID;
-                        pracownik.Login = recepcjonista.Nazwisko;
+                        pracownik.Login = recepcjonista.Pesel.ToString();
                         pracownik.Haslo = recepcjonista.Imie + recepcjonista.Nazwisko;
                         pracownik.Rola = RoleEnum.Recepcjonista.GetDescription();
                         db.Uzytkownicy.Add(pracownik);
