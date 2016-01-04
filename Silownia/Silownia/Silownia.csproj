@@ -179,6 +179,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\ZapisController.cs" />
     <Compile Include="Controllers\InstruktorController.cs" />
     <Compile Include="Controllers\KonserwacjaController.cs" />
     <Compile Include="Controllers\KonserwatorController.cs" />
@@ -226,6 +227,7 @@
     <Compile Include="Helpers\AkcjaEnumTrener.cs" />
     <Compile Include="Helpers\AkcjaEnumTrening.cs" />
     <Compile Include="Helpers\AkcjaEnumUmowa.cs" />
+    <Compile Include="Helpers\AkcjaZapisEnum.cs" />
     <Compile Include="Helpers\MyAuthorize.cs" />
     <Compile Include="Helpers\RoleEnum.cs" />
     <Compile Include="Helpers\StatusWiadomosciEnum.cs" />
@@ -509,6 +511,8 @@
     <Content Include="Views\ZajeciaGrup\Index.cshtml" />
     <Content Include="Views\Shared\KryteriaSzukania\_konserwator.cshtml" />
     <Content Include="Views\Shared\KryteriaSzukania\_sprzetNazwa.cshtml" />
+    <Content Include="Views\Zapis\Index.cshtml" />
+    <Content Include="Views\Zapis\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
