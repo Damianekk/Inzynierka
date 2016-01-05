@@ -1,4 +1,4 @@
-﻿@model Silownia.ViewModel.PlikiViewModel
+﻿@model Silownia.Models.Sala
 
 @{
     ViewBag.Title = "Sala: szczegóły";
@@ -13,16 +13,13 @@
     <div class="divInner">
         <dl class="dl-horizontal">
 
-            <dt>
-                @Html.DisplayNameFor(model => model.File)
-            </dt>
-            <td>
-                <img id="image" src='@Url.Action("Zdjecie", "Sala", new { id = Model.Numer_sali })' />
-            </td>
-
+            <dd>
+                <img alt="no file" src="@Url.Content("/Sala/Zdjecie?id =" + Model.Zdjecie+ "&img=1")" />
+            </dd>
             <dt>
                 @Html.DisplayNameFor(model => model.Rodzaj)
             </dt>
+
             <dd>
                 @Html.DisplayFor(model => model.Rodzaj)
             </dd>

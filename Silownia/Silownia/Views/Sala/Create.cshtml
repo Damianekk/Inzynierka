@@ -1,4 +1,4 @@
-﻿@model Silownia.ViewModel.PlikiViewModel
+﻿@model Silownia.Models.Sala
        
 
 @{
@@ -7,7 +7,7 @@
 
 <h2>Dodaj nową sale</h2>
 
-@using (Html.BeginForm("ZapiszPlik, ")) 
+@using (Html.BeginForm()) 
 {
     <form name="datapluspics" method="post" enctype="multipart/form-data">
     @Html.AntiForgeryToken()
@@ -53,10 +53,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.File, "Zdjęcie", new { @class = "control-label col-md-3", type = "file", multiple = "false" })
+            @Html.LabelFor(model => model.Zdjecie, "Zdjęcie", new { @class = "control-label col-md-3" })
             <div class="col-md-9">              
-                <input type="file" id="File" name="File"/>
-                
+                <input type="file" id="file1" name="file1" />
+      
             </div>
         </div>
                 @*

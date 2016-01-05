@@ -57,7 +57,9 @@
                 @Html.ValidationMessageFor(model => model.Cena)
             </div>
         </div>
-        <div class="form-group">
+
+        @*
+            <div class="form-group">
             @Html.Label("Zdjęcie", new { @class = "control-label col-md-2" })
             <div class="wrap">
                 <img class="show_hide" src="~/Content/ikony/ikona_kamera.png" width="48" height="48">
@@ -65,61 +67,65 @@
                     @Html.Action("Index", "Photo", new { osoba = @ViewBag.Osoba })
                 </div>
             </div>
-        </div>
+             </div>
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Utwórz" class="btn btn-lg btn-large btn-success" />
-                </div>
+        *@
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Utwórz" class="btn btn-lg btn-large btn-success" />
             </div>
-
-
-            @*@Html.Partial("zrobZdjecie")*@
-
-            @if (Request.UrlReferrer != null)
-        {
-                <button class="btn btn-large btn-block btn-primary btn-lg btn-primary" onclick="history.go(-1); return false;">powrót</button>
-        }
-
-            @if (TempData["msg"] != null)
-        { @Html.Raw(TempData["msg"]) }
-
-            @if (ViewBag.Osoba != null)
-        {
-                <div class="table-bordered">
-                    @Html.Action("Details", "Klient", new { id = ViewBag.Osoba.OsobaID })
-                </div>
-        }
-
         </div>
 
 
-            }
-            @section Scripts {
-                @Scripts.Render("~/bundles/jqueryval")
+        @*@Html.Partial("zrobZdjecie")*@
 
 
-                <script>
-                    function FillCity() {
-                        var silowniaID = $('#Silownia').val();
-                        $.ajax({
-                            url: '/Recepcjonista/FillRecepcjonista',
-                            type: "GET",
-                            dataType: "JSON",
-                            data: { Silownia: SilowniaID },
-                            success: function (recepcjonisci) {
-                                $("#Recepcjonista").html(""); // clear before appending new list
-                                $.each(recepcjonisci, function (i, recepcjonista) {
-                                    $("#Recepcjonista").append(
-                                        $('<option></option>').val(recepcjonista.recepcjonistaID).html(recepcjonista.imieNazwisko));
-                                });
-                            }
-                        });
-                    }
-                </script>
-            }
 
         
+
+        @if (TempData["msg"] != null)
+        { @Html.Raw(TempData["msg"]) }
+
+        @if (ViewBag.Osoba != null)
+        {
+            <div class="table-bordered">
+                @Html.Action("Details", "Klient", new { id = ViewBag.Osoba.OsobaID })
+            </div>
+        }
+
+    </div>
+    if (Request.UrlReferrer != null)
+    {
+        <button class="btn btn-large btn-block btn-primary btn-lg btn-primary" onclick="history.go(-1); return false;">powrót</button>
+    }
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+    <script>
+        function FillCity() {
+            var silowniaID = $('#Silownia').val();
+            $.ajax({
+                url: '/Recepcjonista/FillRecepcjonista',
+                type: "GET",
+                dataType: "JSON",
+                data: { Silownia: SilowniaID },
+                success: function (recepcjonisci) {
+                    $("#Recepcjonista").html(""); // clear before appending new list
+                    $.each(recepcjonisci, function (i, recepcjonista) {
+                        $("#Recepcjonista").append(
+                            $('<option></option>').val(recepcjonista.recepcjonistaID).html(recepcjonista.imieNazwisko));
+                    });
+                }
+            });
+        }
+    </script>
+}
+
+
 
 
 

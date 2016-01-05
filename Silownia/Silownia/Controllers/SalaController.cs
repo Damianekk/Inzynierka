@@ -11,7 +11,6 @@ using Silownia.DAL;
 using System.IO;
 using PagedList;
 using Silownia.Helpers;
-using Silownia.ViewModel;
 
 namespace Silownia.Controllers
 {
@@ -54,7 +53,6 @@ namespace Silownia.Controllers
             return HttpNotFound();
         }
 
-     
          // GET: /Sala/Details/5
         public ActionResult Details(long? id)
         {
@@ -105,42 +103,63 @@ namespace Silownia.Controllers
                     if (ModelState.IsValid)
                     {
                         ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
-
+                        
                         #region Silownia
                         Models.Silownia silownia = db.Silownie.Find(id);
                         sala.Silownia = silownia;
                         silownia.Sale.Add(sala);
                         #endregion
 
-                      
+                        string FileName = "";
+                        byte[] bytes;
+
+                        int BytesToRead;
+
+                        int numBytesRead;
+
+                        if (file != null)
+                        {
+                            FileName = Path.GetFileName(file.FileName);
+                            bytes = new byte[file.ContentLength];
+                            BytesToRead = (int)file.ContentLength;
+                            numBytesRead = 0;
+
+                            while (BytesToRead > 0)
+                            {
+                                int n = file.InputStream.Read(bytes, numBytesRead, BytesToRead);
+
+                                if (n == 0)
+                                {
+                                    break;
+                                }
+                                numBytesRead += n;
+                                BytesToRead -= n;
+                            }
+                            sala.Zdjecie = bytes;
+
+                        }
                         db.Sale.Add(sala);
                         db.SaveChanges();
 
                         return RedirectToAction("Index", new { akcja = AkcjaEnumSala.DodanoSale, info = sala.Numer_sali });
                     }
-
+                    
+                    
+                    return View(sala);
                 }
             }
             return HttpNotFound();
         }
-        public ActionResult ZdjecieUpload(){
-            return View();
-        }
 
-
-        [HttpPost]
-        public ActionResult KilkaZdjecUpload(PlikiViewModel fileModel)
+        public ActionResult Zdjecie(int id, int img)
         {
             if (Session["Auth"] != null)
             {
                 if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
-                    ZapisZdjec zapisuj = new ZapisZdjec();
-                    foreach (var item in fileModel.File)
-                    {
-                        zapisuj.ZapiszPlik(item);
-                    }
-                    return RedirectToAction("Index", new { akcja = AkcjaEnumSala.DodanoSale});
+                    ViewBag.Pic = img;
+                    Sala foto = db.Sale.Find(id);
+                    return View(foto);
                 }
             }
             return HttpNotFound();

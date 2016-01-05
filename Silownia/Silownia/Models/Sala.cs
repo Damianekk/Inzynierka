@@ -23,7 +23,8 @@ namespace Silownia.Models
         public int Numer_sali { get; set; }
         public string FotoLokalizacja { get; set; }
         public byte[] FotoBytes { get; set; }
-        [Required]
+        public byte[] Zdjecie { get; set; }
+       // [Required]
         public string Rodzaj { get; set; }
         public string Status { get; set; }
         [DataType(DataType.MultilineText)]
