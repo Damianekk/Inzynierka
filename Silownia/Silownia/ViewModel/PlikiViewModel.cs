@@ -1,28 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.IO;
 using System.Linq;
 using System.Web;
+using Silownia.Models;
+using System.ComponentModel.DataAnnotations;
 
-namespace Silownia.Models
+namespace Silownia.ViewModel
 {
-    public class Sala
+    public class PlikiViewModel
     {
-        public Sala()
-        {
-            ZajeciaGrup = new List<ZajeciaGrupowe>();
-            Sprzety = new List<Sprzet>();
-            Masaze = new List<Masaz>();
-        }
-
-
-        [Key, Required]
-       
-        [Display(Name="Nr sali")]
+        [Display(Name = "Nr sali")]
         public int Numer_sali { get; set; }
-        public string FotoLokalizacja { get; set; }
-        public byte[] FotoBytes { get; set; }
+
         [Required]
         public string Rodzaj { get; set; }
         public string Status { get; set; }
@@ -34,7 +23,10 @@ namespace Silownia.Models
         public virtual ICollection<Masaz> Masaze { get; set; }
 
         public long SilowniaID { get; set; }
-        public virtual Silownia Silownia { get; set; }
+        public virtual Models.Silownia Silownia { get; set; }
 
+
+        public IEnumerable<HttpPostedFileBase> File { get; set; }
+        public IEnumerable<Sala> Sale { get; set; }
     }
 }
