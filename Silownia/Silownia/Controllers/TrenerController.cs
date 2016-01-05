@@ -97,7 +97,7 @@ namespace Silownia.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Create([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,DataZatrudnienia,Pensja,SilowniaID,SpecjalizacjaID,StawkaGodzinowa")] Trener trener)
+        public ActionResult Create([Bind(Include = "OsobaID,Imie,Nazwisko,DataUrodzenia,Pesel,DataZatrudnienia,Pensja,SilowniaID,SpecjalizacjaID,StawkaGodzinowa")] Trener trener)
         {
             if (Session["Auth"] != null)
             {
