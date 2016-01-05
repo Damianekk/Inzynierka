@@ -120,6 +120,10 @@ namespace Silownia.Controllers
                     ViewBag.InstruktorID = new SelectList(db.Instruktorzy, "OsobaID", "imieNazwisko", zajecia.InstruktorID);
                     ViewBag.SalaID = new SelectList(db.Sale, "Numer_sali", "Numer_sali", zajecia.SalaID);
 
+                    zajecia.TreningStart = zajecia.TreningStart.AddHours(System.Convert.ToDouble(zajecia.TreningStartGodzina.Hour));
+                    zajecia.TreningStart = zajecia.TreningStart.AddMinutes(System.Convert.ToDouble(zajecia.TreningStartGodzina.Minute));
+                    zajecia.TreningKoniec = zajecia.TreningStart.AddMinutes(System.Convert.ToDouble(zajecia.CzasTrwania));
+
                     if (ModelState.IsValid && !zajetyTrener(zajecia.InstruktorID, zajecia.TreningStart) && !zajetaSala(zajecia.SalaID, zajecia.TreningStart))
                     {
                         #region Instruktor
@@ -134,9 +138,9 @@ namespace Silownia.Controllers
                         sala.ZajeciaGrup.Add(zajecia);
                         #endregion
 
-                        zajecia.TreningStart = zajecia.TreningStart.AddHours(System.Convert.ToDouble(zajecia.TreningStartGodzina.Hour));
-                        zajecia.TreningStart = zajecia.TreningStart.AddMinutes(System.Convert.ToDouble(zajecia.TreningStartGodzina.Minute));
-                        zajecia.TreningKoniec = zajecia.TreningStart.AddMinutes(System.Convert.ToDouble(zajecia.CzasTrwania));
+                        //zajecia.TreningStart = zajecia.TreningStart.AddHours(System.Convert.ToDouble(zajecia.TreningStartGodzina.Hour));
+                        //zajecia.TreningStart = zajecia.TreningStart.AddMinutes(System.Convert.ToDouble(zajecia.TreningStartGodzina.Minute));
+                        //zajecia.TreningKoniec = zajecia.TreningStart.AddMinutes(System.Convert.ToDouble(zajecia.CzasTrwania));
 
                         db.ZajeciaGrup.Add(zajecia);
                         db.SaveChanges();
