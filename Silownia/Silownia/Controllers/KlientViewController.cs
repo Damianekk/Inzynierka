@@ -14,16 +14,27 @@ namespace Silownia.Controllers
     public class KlientViewController : Controller
     {
         private SilowniaContext db = new SilowniaContext();
-        public ActionResult Index(long? id)
+        public ActionResult Index(long? id,AkcjaEnumMasaz? akcja)
         {
             if (Session["Auth"] != null)
             {
                 if (Session["Auth"].ToString() == "Klient")
                 {
-                    if (id == null)
+                    if (id == null) // jeżeli nie podano idOsoby jako parametr 
                     {
+                        if(String.IsNullOrEmpty(Session["loggedUserID"].ToString())) // sprawdzamy czy zalogowana jest osoba
                         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                        else
+                        {
+                            id = (long)(Session["loggedUserID"]); // jeśli jest to bierzemy jej id z sesji 
+                        }
                     }
+
+                    if (akcja != AkcjaEnumMasaz.Brak)
+                    {
+                        ViewBag.Akcja = akcja;
+                    }
+
                     ViewBag.Trenerzy = new SelectList(db.Trenerzy, "OsobaID", "imieNazwisko");
                     Klient klient = db.Klienci.Find(id);
 
@@ -63,7 +74,7 @@ namespace Silownia.Controllers
             {
                 if (Session["Auth"].ToString() == "Klient")
                 {
-                    var osWys = db.Osoby.Find(Session["UserID"]);
+                    var osWys = db.Osoby.Find(Session["loggedUserID"]);
                     var osOdb = db.Osoby.Find(trenerID);
 
                     Wiadomosc wiadomosc = new Wiadomosc
@@ -94,7 +105,8 @@ namespace Silownia.Controllers
             var silownie = db.Silownie.Where(s => s.Adres != null).ToList<Silownia.Models.Silownia>();
 
             //  silownie.RemoveAll(item => item.Adres != null);
-            var wiad = db.Wiadomosci.Where(o => o.OsobaOdbierajaca.OsobaID == 9);
+            long loggUsID = (long)Session["loggedUserID"];
+            var wiad = db.Wiadomosci.Where(o => o.OsobaOdbierajaca.OsobaID == loggUsID);
 
 
             foreach (Wiadomosc w in wiad)

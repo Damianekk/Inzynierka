@@ -278,6 +278,79 @@ namespace Silownia.Controllers
             return HttpNotFound();
         }
 
+        // GET: Masaz/Create
+        public ActionResult ZapisKlient(long? id)
+        {
+            if (Session["Auth"] != null)
+            {
+                if (Session["Auth"].ToString() == "Klient" | Session["Auth"].ToString() == "Klient")
+                {
+                    ViewBag.MasazystaID = new SelectList(db.Masazysci, "OsobaID", "imieNazwisko");
+                    var a = from Osoby in db.Masazysci select Osoby;
+
+                    Masazysta masazysta = null;
+                    var user = User.Identity.GetUserName();
+                    foreach (Masazysta mas in a)
+                    {
+                        if (mas.imieNazwisko.Replace(" ", "") == user)
+                        {
+                            masazysta = mas;
+                            break;
+                        }
+
+                        Osoba osoba = db.Osoby.Find(id);
+                        ViewBag.Osoba = osoba;
+                    }
+
+                    return View();
+                }
+            }
+            return HttpNotFound();
+        }
+
+        // POST: ZajeciaGrup/Zapis/5
+        [HttpPost]
+        public ActionResult ZapisKlient(Masaz masaz)
+        {
+            long loggedUsID =(long) Session["loggedUserID"];
+            if (Session["Auth"] != null)
+            {
+                if (Session["Auth"].ToString() == "Klient")
+                {
+                    ViewBag.MasazystaID = new SelectList(db.Masazysci, "OsobaID", "imieNazwisko", masaz.MasazystaID);
+
+                    if (ModelState.IsValid && !aktywnyMasaz(loggedUsID, masaz.DataMasazu) && !zajetyMasazysta(masaz.MasazystaID, masaz.DataMasazu))
+                    {
+                        #region Klient
+                        Klient klient = db.Klienci.Find(loggedUsID);
+                        masaz.Klient = klient;
+                        klient.Masaze.Add(masaz);
+                        #endregion
+
+                        #region Masazysta
+                        Masazysta masazysta = db.Masazysci.Find(masaz.MasazystaID);
+                        masaz.Masazysta = masazysta;
+                        masazysta.Masaze.Add(masaz);
+                        #endregion
+
+                        masaz.DataMasazu = masaz.DataMasazu.AddHours(System.Convert.ToDouble(masaz.MasazStart.Hour));
+                        masaz.DataMasazu = masaz.DataMasazu.AddMinutes(System.Convert.ToDouble(masaz.MasazStart.Minute));
+                        masaz.DataMasazuKoniec = masaz.DataMasazu.AddMinutes(System.Convert.ToDouble(masaz.CzasTrwania));
+                        masaz.kosztMasazu = (masaz.CzasTrwania * masaz.Masazysta.StawkaGodzinowa) / 60;
+
+
+
+                        db.Masaze.Add(masaz);
+                        db.SaveChanges();
+
+                        return RedirectToAction("Index","KlientView", new { akcja = AkcjaEnumMasaz.DodanoMasaz });
+                    }
+                }
+            }
+            return HttpNotFound();
+        }
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

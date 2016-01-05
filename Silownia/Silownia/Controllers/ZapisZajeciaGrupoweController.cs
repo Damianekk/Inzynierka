@@ -15,7 +15,7 @@ using Microsoft.AspNet.Identity;
 
 namespace Silownia.Controllers
 {
-    public class ZapisController : Controller
+    public class ZapisZajeciaGrupoweController : Controller
     {
         private SilowniaContext db = new SilowniaContext();
 
@@ -64,18 +64,12 @@ namespace Silownia.Controllers
                     {
                         return HttpNotFound();
                     }
-                    string login = Session["User"].ToString();
-                    Uzytkownik uzytkownik = db.Uzytkownicy.Where(s => s.Login == login).First();
-
-                    Klient klient = db.Klienci.Find(uzytkownik.IDOsoby);
+                  
+                    Klient klient = db.Klienci.Find(Session["loggedUserID"]);
 
                     if (klient.KlienciTreningiGrupowe.Where(s => s.TreningID == zajecia.TreningID).Count() != 0)
                     {
-                        var trening = klient.KlienciTreningiGrupowe.Where(s => s.TreningID == zajecia.TreningID).First();
-                        if (klient.KlienciTreningiGrupowe.Contains(trening) == true)
-                        {
                             return RedirectToAction("Index", new { akcja = AkcjaZapisEnum.JuzZapis });
-                        }
                     }
                     KlientZajeciaGrupowe zajeciagrup = new KlientZajeciaGrupowe();
                     zajeciagrup.Klient = klient;

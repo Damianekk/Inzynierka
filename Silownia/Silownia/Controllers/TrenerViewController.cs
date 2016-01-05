@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Silownia.Helpers;
 using Newtonsoft.Json;
+using System.Web.Script.Serialization;
 
 namespace Silownia.Controllers
 {
@@ -24,7 +25,7 @@ namespace Silownia.Controllers
                     {
                         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                     }
-                    ViewBag.Trenerzy = new SelectList(db.Klienci, "OsobaID", "imieNazwisko");
+                    ViewBag.Klienci = new SelectList(db.Klienci, "OsobaID", "imieNazwisko");
                     Osoba os = db.Osoby.Find(id);
 
                     var wiad = db.Wiadomosci.Where(o => o.OsobaOdbierajaca.OsobaID == id);
@@ -65,7 +66,7 @@ namespace Silownia.Controllers
             {
                 if (Session["Auth"].ToString() == "Trener")
                 {
-                    var osWys = db.Osoby.Find(Session["UserID"]);
+                    var osWys = db.Osoby.Find(Session["loggedUserID"]);
                     var osOdb = db.Osoby.Find(trenerID);
 
                     Wiadomosc wiadomosc = new Wiadomosc
@@ -86,6 +87,41 @@ namespace Silownia.Controllers
                 }
             }
             return HttpNotFound();
+        }
+
+        [HttpPost]
+        public JsonResult OdbierzWiad()
+        {
+
+            var jsonSerialiser = new JavaScriptSerializer();
+            var silownie = db.Silownie.Where(s => s.Adres != null).ToList<Silownia.Models.Silownia>();
+
+            long loggUsID = (long)Session["loggedUserID"];
+            //  silownie.RemoveAll(item => item.Adres != null);
+            var wiad = db.Wiadomosci.Where(o => o.OsobaOdbierajaca.OsobaID == loggUsID);
+
+
+            foreach (Wiadomosc w in wiad)
+            {
+                w.Status = StatusWiadomosciEnum.Odebrany;
+                w.Odebrano = DateTime.Now;
+            }
+
+            if (wiad.Count() > 0)
+                ViewBag.Wiad = wiad.ToList<Wiadomosc>();
+
+
+            var z = wiad.Select(x => new
+            {
+                osWys = (x.OsobaWysylajaca.Imie + " " + x.OsobaWysylajaca.Nazwisko),
+                tresc = x.Tresc,
+                dataWys = x.Wyslano.Value
+
+            });
+
+            return Json(z);
+
+            //  return Json(new { ok = true, myData = silownie }, JsonRequestBehavior.AllowGet);
         }
 
     }

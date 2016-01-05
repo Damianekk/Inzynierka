@@ -37,6 +37,7 @@ namespace Silownia.Controllers
             {
                 Session["User"] = null;
                 Session["Auth"] = null;
+               
             }
             if (returnUrl == "/Account/Manage")
             {
@@ -59,6 +60,7 @@ namespace Silownia.Controllers
                 {
                     Session["User"] = uzytkownik.Login;
                     Session["Auth"] = uzytkownik.Rola;
+                    Session["loggedUserID"] = uzytkownik.IDOsoby;
                     if (uzytkownik.Login == "admin")
                     {
                         return RedirectToAction("Index", "Silownia", new { id = 1 });

@@ -277,6 +277,79 @@ namespace Silownia.Controllers
             return HttpNotFound();
         }
 
+        public ActionResult ZapisKlient(long? id)
+        {
+            if (Session["Auth"] != null)
+            {
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                {
+                    ViewBag.TrenerID = new SelectList(db.Trenerzy, "OsobaID", "imieNazwisko");
+                    var a = from Osoby in db.Trenerzy select Osoby;
+
+                    Trener trener = null;
+                    var user = User.Identity.GetUserName();
+                    foreach (Trener trenr in a)
+                    {
+                        if (trenr.imieNazwisko.Replace(" ", "") == user)
+                        {
+                            trener = trenr;
+                            break;
+                        }
+
+                        Osoba osoba = db.Osoby.Find(id);
+                        ViewBag.Osoba = osoba;
+                    }
+
+                    return View();
+                }
+            }
+            return HttpNotFound();
+        }
+
+        [HttpPost]
+        public ActionResult ZapisKlient([Bind(Include = "TreningID,TreningStart,TreningStartGodzina,CzasTrwania,TrenerID")] TreningPersonalny treningPersonalny)
+        {
+            long loggedUsID = (long)Session["loggedUserID"];
+            if (Session["Auth"] != null)
+            {
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                {
+                    ViewBag.TrenerID = new SelectList(db.Trenerzy, "OsobaID", "imieNazwisko", treningPersonalny.TrenerID);
+
+                    if (ModelState.IsValid && !aktywneZajecia(loggedUsID, treningPersonalny.TreningStart) && !zajetyTrener(treningPersonalny.TrenerID, treningPersonalny.TreningStart))
+                    {
+                        #region Klient
+                        Klient klient = db.Klienci.Find(loggedUsID);
+                        treningPersonalny.Klient = klient;
+                        klient.TreningiPersonalne.Add(treningPersonalny);
+                        #endregion
+
+                        #region Trener
+                        Trener trener = db.Trenerzy.Find(treningPersonalny.TrenerID);
+                        treningPersonalny.Trener = trener;
+                        trener.TreningiPersonalne.Add(treningPersonalny);
+                        #endregion
+
+                        treningPersonalny.TreningStart = treningPersonalny.TreningStart.AddHours(System.Convert.ToDouble(treningPersonalny.TreningStartGodzina.Hour));
+                        treningPersonalny.TreningStart = treningPersonalny.TreningStart.AddMinutes(System.Convert.ToDouble(treningPersonalny.TreningStartGodzina.Minute));
+                        treningPersonalny.TreningKoniec = treningPersonalny.TreningStart.AddMinutes(System.Convert.ToDouble(treningPersonalny.CzasTrwania));
+                        treningPersonalny.kosztTreningu = (treningPersonalny.CzasTrwania * treningPersonalny.Trener.StawkaGodzinowa) / 60;
+
+
+                        db.TreningiPersonalne.Add(treningPersonalny);
+                        db.SaveChanges();
+
+                        return RedirectToAction("Index", "KlientView", new { akcja = AkcjaEnumMasaz.DodanoMasaz }); // Póki co masaż bo czasu brak :) plan taki aby klient przyjmowal parametr po którym wszystkie enumy ktore klient moze przyjac dziedzicza (ale nie wiem jeszcze czy to bd dzialac)
+                                                                                                                    // Pozwoli to na dawanie "dowolnego" enuma do kontrolera - warunek musi dziedziczyc po jakiejs nowej klasie (trzeba utworzyc) 
+                    }
+                    return View(treningPersonalny);
+                }
+            }
+            return HttpNotFound();
+        }
+
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
