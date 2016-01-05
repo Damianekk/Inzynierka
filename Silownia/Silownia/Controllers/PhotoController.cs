@@ -14,12 +14,13 @@ namespace Silownia.Controllers
     public class PhotoController : Controller
     {
         private SilowniaContext db = new SilowniaContext();
-
+        private long? komuID;
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult Index(Object osoba)
         {
             Session["val"] = "";
-            return View();
+            ViewBag.komuID = osoba;
+            return View(osoba);
         }
 
         [HttpPost]
@@ -49,13 +50,13 @@ namespace Silownia.Controllers
             return Json(path, JsonRequestBehavior.AllowGet);
         }
 
-
+        [HttpPost]
         public ActionResult Capture()
         {
             var stream = Request.InputStream;
+            var idOsoby = Request.AppRelativeCurrentExecutionFilePath.Remove(0,Request.AppRelativeCurrentExecutionFilePath.LastIndexOf("/")+1);
+            
             string dump;
-
-
 
             using (var reader = new StreamReader(stream))
             {
@@ -68,15 +69,13 @@ namespace Silownia.Controllers
                 var path = Server.MapPath("~/WebImages/" + date + "test.jpg");
 
 
-                Osoba os =  db.Osoby.Find(1);
+                Osoba os =  db.Osoby.Find(Convert.ToInt64(idOsoby));
                 os.ZdjecieProfilowe = (String_To_Bytes2(dump));
                 db.SaveChanges();
 
               //  System.IO.File.WriteAllBytes(path, String_To_Bytes2(dump));
 
-                ViewData["path"] = date + "test.jpg";
-
-                Session["val"] = date + "test.jpg";
+              
             }
 
             return View("Index");
