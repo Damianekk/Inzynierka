@@ -179,6 +179,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\InstruktorController.cs" />
     <Compile Include="Controllers\InstruktorViewController.cs" />
     <Compile Include="Controllers\KonserwacjaController.cs" />
@@ -235,6 +236,7 @@
     <Compile Include="Helpers\RoleEnum.cs" />
     <Compile Include="Helpers\StatusWiadomosciEnum.cs" />
     <Compile Include="Helpers\KryteriaSzukania.cs" />
+    <Compile Include="Helpers\ZapisZdjec.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Adres.cs" />
@@ -245,6 +247,7 @@
     <Compile Include="Models\KomentarzOPracowniku.cs" />
     <Compile Include="Models\Konserwacja.cs" />
     <Compile Include="Models\Konserwator.cs" />
+    <Compile Include="Models\Konto.cs" />
     <Compile Include="Models\Masaz.cs" />
     <Compile Include="Models\Masazysta.cs">
       <SubType>Code</SubType>
@@ -281,6 +284,9 @@
     <Content Include="Content\ikony\ikona_adres60px.png" />
     <Content Include="Content\ikony\ikona_adres_rectangular_blue.png" />
     <Content Include="Content\ikony\ikona_adres_rectangular_blue_40px.png" />
+    <Content Include="Content\ikony\ikona_kamera.png" />
+    <Content Include="Content\ikony\ikona_konserwacja.png" />
+    <Content Include="Content\ikony\ikona_konserwacja60px.png" />
     <Content Include="Content\ikony\ikona_masaz.png" />
     <Content Include="Content\ikony\ikona_masaz60px.png" />
     <Content Include="Content\ikony\ikona_sprzet.png" />
@@ -493,6 +499,41 @@
     <Content Include="Views\ZapisZajeciaGrupowe\Details.cshtml" />
     <Content Include="Views\ZapisZajeciaGrupowe\Index.cshtml" />
     <Content Include="Views\Masaz\ZapisKlient.cshtml" />
+    <Content Include="Views\InstruktorView\index.cshtml" />
+    <Content Include="Views\Konserwacja\Create.cshtml" />
+    <Content Include="Views\Konserwacja\Delete.cshtml" />
+    <Content Include="Views\Konserwacja\Details.cshtml" />
+    <Content Include="Views\Konserwacja\Edit.cshtml" />
+    <Content Include="Views\Konserwacja\Index.cshtml" />
+    <Content Include="Views\KonserwatorView\index.cshtml" />
+    <Content Include="Views\Konserwator\Create.cshtml" />
+    <Content Include="Views\Konserwator\Delete.cshtml" />
+    <Content Include="Views\Konserwator\Details.cshtml" />
+    <Content Include="Views\Konserwator\Edit.cshtml" />
+    <Content Include="Views\Konserwator\Index.cshtml" />
+    <Content Include="Views\MasazystaView\index.cshtml" />
+    <Content Include="Views\Sprzet\Create.cshtml" />
+    <Content Include="Views\Sprzet\Delete.cshtml" />
+    <Content Include="Views\Sprzet\Details.cshtml" />
+    <Content Include="Views\Sprzet\Edit.cshtml" />
+    <Content Include="Views\Sprzet\Index.cshtml" />
+    <Content Include="Views\ZajeciaGrup\Create.cshtml" />
+    <Content Include="Views\ZajeciaGrup\Delete.cshtml" />
+    <Content Include="Views\ZajeciaGrup\Details.cshtml" />
+    <Content Include="Views\ZajeciaGrup\Edit.cshtml" />
+    <Content Include="Views\ZajeciaGrup\Index.cshtml" />
+    <Content Include="Views\Zajecia\Create.cshtml" />
+    <Content Include="Views\Zajecia\Delete.cshtml" />
+    <Content Include="Views\Zajecia\Details.cshtml" />
+    <Content Include="Views\Zajecia\Edit.cshtml" />
+    <Content Include="Views\Zajecia\Index.cshtml" />
+    <Content Include="Views\Shared\KryteriaSzukania\_konserwator.cshtml" />
+    <Content Include="Views\Shared\KryteriaSzukania\_sprzet.cshtml" />
+    <Content Include="Views\Shared\KryteriaSzukania\_sprzetNazwa.cshtml" />
+    <Content Include="Views\Shared\KontoInfo.cshtml" />
+    <Content Include="Views\Shared\zrobZdjecie.cshtml" />
+    <Content Include="Views\Calendar\Index.cshtml" />
+    <Content Include="Views\Sala\Zdjecie.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -508,11 +549,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201601050119535_mig.resx">
-      <DependentUpon>201601050119535_mig.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
