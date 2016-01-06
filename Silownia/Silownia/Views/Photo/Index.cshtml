@@ -27,7 +27,7 @@
                data: { Imagename: src },
                success: function () { }
            });
-            window.opener.location.href = "http://localhost:55694/Photo/Changephoto";
+            window.opener.location.href = "http://localhost:55694/Photo/PokazZapisaneZdjecie";
             self.close();}}
 </script>
 
@@ -48,7 +48,7 @@
                 swffile: "@Url.Content("~/Scripts/jscam.swf")",
                 onTick: function () { },
                 onSave: function () {
-                    UploadPic();
+                  alert("Zapisano poprawnie")
                 },
                 onCapture: function () {
                     

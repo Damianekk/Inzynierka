@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "PokazZapisaneZdjecie";
+}
+
+
+@{
+    var base64 = Convert.ToBase64String(@ViewBag.Pic);
+    var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+}
+ 
+<div style="margin: 0 auto; width: 980px; text-align: center">
+    <div style="float: left; border: 4px solid #ccc; padding: 5px">
+        <img src="@imgSrc" />
+    </div>
+</div>
+
+
+
+

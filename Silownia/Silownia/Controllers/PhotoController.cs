@@ -14,41 +14,23 @@ namespace Silownia.Controllers
     public class PhotoController : Controller
     {
         private SilowniaContext db = new SilowniaContext();
-        private long? komuID;
         [HttpGet]
         public ActionResult Index(Object osoba)
         {
-            Session["val"] = "";
+     
             ViewBag.komuID = osoba;
             return View(osoba);
         }
 
-        [HttpPost]
-        public ActionResult Index(string Imagename)
-        {
-            string sss = Session["val"].ToString();
-
-            ViewBag.pic = "http://localhost:55694/WebImages/" + Session["val"].ToString();
-
-            return View();
-        }
-
+      
         [HttpGet]
-        public ActionResult Changephoto()
+        public ActionResult PokazZapisaneZdjecie(long idOsoby)
         {        
-                Osoba os = db.Osoby.Find(1);
+                Osoba os = db.Osoby.Find(idOsoby);
                 ViewBag.pic = os.ZdjecieProfilowe ;
             return View();
         }
 
-
-
-        public JsonResult Rebind()
-        {
-            string path = "http://localhost:55694/WebImages/" + Session["val"].ToString();
-
-            return Json(path, JsonRequestBehavior.AllowGet);
-        }
 
         [HttpPost]
         public ActionResult Capture()
@@ -78,7 +60,7 @@ namespace Silownia.Controllers
               
             }
 
-            return View("Index");
+            return null;
         }
 
       
@@ -99,28 +81,7 @@ namespace Silownia.Controllers
         return bytes;
         }
 
-     //   Bytes_To_String on the other hand, is more of a mess:
-
-        // convert the byte array back to a true string
-        private string Bytes_To_String2(byte[] bytes_Input)
-        {
-        StringBuilder strTemp = new StringBuilder(bytes_Input.Length *2);
-        foreach(byte b in bytes_Input)
-        {
-        strTemp.Append(b.ToString("X02"));
-        }
-        return strTemp.ToString();
-        }
-
-    
-
-        public Image byteArrayToImage(byte[] byteArrayIn)
-        {
-            MemoryStream ms = new MemoryStream(byteArrayIn);
-            Image returnImage = Image.FromStream(ms);
-            return returnImage;
-        }
-
+      
 
     }
 }

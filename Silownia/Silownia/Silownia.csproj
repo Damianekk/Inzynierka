@@ -280,6 +280,7 @@
     <Content Include="Content\4.jpg" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\ikony\ikona_ZapisaneZdjecie.png" />
     <Content Include="Content\ikony\ikona_adres.png" />
     <Content Include="Content\ikony\ikona_adres60px.png" />
     <Content Include="Content\ikony\ikona_adres_rectangular_blue.png" />
@@ -390,7 +391,6 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -473,8 +473,6 @@
     <Content Include="Views\Masazysta\Details.cshtml" />
     <Content Include="Views\Masazysta\Edit.cshtml" />
     <Content Include="Views\Masazysta\Index.cshtml" />
-    <Content Include="Scripts\Makefile" />
-    <Content Include="Scripts\README.md" />
     <Content Include="Scripts\webcam.jquery.json" />
     <Content Include="Views\Masaz\Create.cshtml" />
     <Content Include="Views\Masaz\Delete.cshtml" />
@@ -489,7 +487,7 @@
     <Content Include="Views\Instruktor\Create.cshtml" />
     <Content Include="Views\Instruktor\Edit.cshtml" />
     <Content Include="Views\Instruktor\Index.cshtml" />
-    <Content Include="Views\Photo\ChangePhoto.cshtml" />
+    <Content Include="Views\Photo\PokazZapisaneZdjecie.cshtml" />
     <Content Include="Views\Photo\Index.cshtml" />
     <Content Include="Views\Shared\KryteriaSzukania\_trener.cshtml" />
     <Content Include="Views\TreningPersonalny\Create.cshtml" />
@@ -534,6 +532,7 @@
     <Content Include="Views\Shared\zrobZdjecie.cshtml" />
     <Content Include="Views\Calendar\Index.cshtml" />
     <Content Include="Views\Sala\Zdjecie.cshtml" />
+    <Content Include="Views\TreningPersonalny\ZapisKlient.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

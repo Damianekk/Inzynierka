@@ -54,7 +54,7 @@ namespace Silownia.Controllers
         public async Task<ActionResult> Login(Uzytkownik model, string returnUrl)
         {
             SilowniaContext db = new SilowniaContext();
-            Uzytkownik uzytkownik = db.Uzytkownicy.Where(w => w.Login == model.Login).First();
+            Uzytkownik uzytkownik = db.Uzytkownicy.Where(w => w.Login == model.Login).FirstOrDefault();
 
                 if (uzytkownik != null)
                 {

@@ -323,6 +323,10 @@ namespace Silownia.Controllers
                 {
                     ViewBag.MasazystaID = new SelectList(db.Masazysci, "OsobaID", "imieNazwisko", masaz.MasazystaID);
 
+                    masaz.DataMasazu = masaz.DataMasazu.AddHours(System.Convert.ToDouble(masaz.MasazStart.Hour));
+                    masaz.DataMasazu = masaz.DataMasazu.AddMinutes(System.Convert.ToDouble(masaz.MasazStart.Minute));
+                    masaz.DataMasazuKoniec = masaz.DataMasazu.AddMinutes(System.Convert.ToDouble(masaz.CzasTrwania));
+           
                     if (ModelState.IsValid && !aktywnyMasaz(loggedUsID, masaz.DataMasazu) && !zajetyMasazysta(masaz.MasazystaID, masaz.DataMasazu))
                     {
                         #region Klient
@@ -337,11 +341,7 @@ namespace Silownia.Controllers
                         masazysta.Masaze.Add(masaz);
                         #endregion
 
-                        masaz.DataMasazu = masaz.DataMasazu.AddHours(System.Convert.ToDouble(masaz.MasazStart.Hour));
-                        masaz.DataMasazu = masaz.DataMasazu.AddMinutes(System.Convert.ToDouble(masaz.MasazStart.Minute));
-                        masaz.DataMasazuKoniec = masaz.DataMasazu.AddMinutes(System.Convert.ToDouble(masaz.CzasTrwania));
                         masaz.kosztMasazu = (masaz.CzasTrwania * masaz.Masazysta.StawkaGodzinowa) / 60;
-
 
 
                         db.Masaze.Add(masaz);
@@ -349,6 +349,7 @@ namespace Silownia.Controllers
 
                         return RedirectToAction("Index","KlientView", new { akcja = AkcjaEnumMasaz.DodanoMasaz });
                     }
+                    return View(masaz);
                 }
             }
             return HttpNotFound();

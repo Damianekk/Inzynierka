@@ -38,7 +38,26 @@
             <dd>
                 @Html.DisplayFor(model => model.NrTelefonu)
             </dd>
-
+          @if (Model.ZdjecieProfilowe != null)
+          {
+                <dt>
+                    @Html.DisplayName("Zapisane zdjęcie")
+                </dt>
+         
+                <dd>
+                
+                    <div class="form-group">
+                        <div class="wrap">
+                            <img class="show_hide" src="~/Content/ikony/ikona_ZapisaneZdjecie.png" width="48" height="48" onclick="javascript:pokazZdjecie()">
+                            <div class="slidingDiv" id="Zdjecie" style="display:none">
+                            </div>
+                        </div>
+                    </div>
+                
+                </dd>
+          }
+           
+            
             @if (Model.Adres != null)
             {
 
@@ -152,6 +171,7 @@
                                 <th>Godzina</th>
                                 <th>Czas trwania</th>
                                 <th>Całkowity koszt</th>
+                             
                                 <th></th>
                             </tr>
                             @foreach (var item in Model.Masaze)
@@ -172,6 +192,7 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.kosztMasazu) zł
                                     </td>
+                                 
                                     <td>
                                         <div class="btn-group">
                                             <button class="btn-primary btn-lg" onclick="location.href='@Url.Action("Details", "Masaz", new { id = item.MasazID })';return false;">szczegóły</button>
@@ -315,6 +336,7 @@
         display: none;
     }
 </style>
+
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">
 </script>
 <script type="text/javascript">
@@ -322,4 +344,20 @@
         $('div.slidingDiv').stop().slideUp('fast');
         $(this).next('div.slidingDiv').stop().slideToggle('fast');
     });
+</script>
+<script>
+    function pokazZdjecie() {
+        var MiejsceNaZdjecie = document.getElementById("Zdjecie");
+
+        $.ajax({
+            url: '@Url.Action("PokazZapisaneZdjecie", "Photo", new { idOsoby = @Model.OsobaID})',
+            type: "GET",
+            dataType: "html",
+            success: function (zdjecie) {
+                $(MiejsceNaZdjecie).html(""); // clear before appending new list
+                $(MiejsceNaZdjecie).html(zdjecie)
+            }
+        });
+
+    };
 </script>
