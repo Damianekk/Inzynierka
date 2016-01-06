@@ -5,16 +5,14 @@
 }
 
 <html>
-@ViewBag.Title = "Instruktor";
-
 
 <body>
     @* Zdjecie *@
-    <div class="col-xs-2" style="width:315px;height:380px;">
-        <img src="https://upload.wikimedia.org/wikipedia/en/7/70/Shawn_Tok_Profile.jpg" height="300" width="300">
+    <div class="col-xs-2" style="width:300px;height:380px;">
+        <img src="https://upload.wikimedia.org/wikipedia/en/7/70/Shawn_Tok_Profile.jpg" height="285" width="285">
     </div>
-    @* Dane instruktora *@
-    <div class="col-xs-3" style="border:solid; height:380px">
+    @* Dane masażysty *@
+    <div class="col-xs-3" style="border:solid; height:450px">
         <div style="text-align:right">DANE PERSONALNE</div>
         <h4>Imię:</h4><h3 style="color:aquamarine">@Model.Imie</h3>
         <br />
@@ -22,27 +20,121 @@
         <br />
         <h4>Data urodzenia:</h4><h3 style="color:aquamarine">@Model.DataUrodzenia.ToShortDateString()</h3>
         <br />
-        <h4>Telefon kontaktowy:</h4><h3 style="color:aquamarine">@Model.NrTelefonu</h3>
+        <h4>Numer kontaktowy:</h4><h3 style="color:aquamarine">@Model.NrTelefonu</h3>
         <br />
     </div>
-    @* Adres *@
-    <div class="col-xs-4" style="border:solid; height:380px; min-width:340px;">
-        <div style="text-align:right">ADRES</div>
-        @if (Model.Adres != null)
+    @* Siłownia *@
+    <div class="col-xs-4" style="border:solid; height:450px; min-width:340px;">
+        <div style="text-align:right">SIŁOWNIA</div>
+        <h4>Nazwa siłowni:</h4><h3 style="color:aquamarine">@Model.Silownia.Nazwa</h3>
+        <br />
+        <h4>Info:</h4><h3 style="color:aquamarine">@Model.Silownia.infoDodatkowe</h3>
+        <br />
+        <h4>Numer kontaktowy:</h4><h3 style="color:aquamarine">@Model.Silownia.NrTelefonu</h3>
+        <br />
+        <h4>Adres:</h4><h3 style="color:aquamarine">@Model.Silownia.Adres.Miasto, @Model.Silownia.Adres.Ulica @Model.Silownia.Adres.NrBudynku / @Model.Silownia.Adres.NrLokalu</h3>
+        <br />
+    </div>
+    @* Szczegóły kontraktu *@
+    <div class="col-xs-2" style="border:solid; width:300px; height:450px;">
+        <div style="text-align:right">UMOWA Z PRACODAWCĄ</div>
+        <h4>Zatrudnienie od:</h4><h3 style="color:aquamarine">@Model.DataZatrudnienia.ToShortDateString()</h3>
+        <br />
+        <h4>Pensja podstawowa:</h4><h3 style="color:aquamarine">@Model.Pensja zł</h3>
+        <br />
+    </div>
+    @* Najnowszy trening *@
+    <div class="col-xs-2" style="border: solid; width:300px; height:450px">
+        <div style="text-align:right">NAJNOWSZY TRENING</div>
+        @if (@Model.ZajeciaGrup.FirstOrDefault() != null)
         {
-            <h4>Kod pocztowy:</h4><h3 style="color:aquamarine">@Model.Adres.KodPocztowy</h3>
+            <h4>Data:</h4><h3 style="color:aquamarine">@Model.ZajeciaGrup.Last().TreningStart.ToShortDateString()</h3>
             <br />
-            <h4>Miasto:</h4><h3 style="color:aquamarine">@Model.Adres.Miasto</h3>
+            <h4>Godzina:</h4><h3 style="color:aquamarine">@Model.ZajeciaGrup.Last().TreningStartGodzina.ToShortTimeString()</h3>
             <br />
-            <h4>Adres:</h4><h3 style="color:aquamarine">@Model.Adres.Ulica @Model.Adres.NrBudynku  @Model.Adres.NrLokalu</h3>
+            <h4>Sala:</h4><h3 style="color:aquamarine">@Model.ZajeciaGrup.Last().Sala.Rodzaj</h3>
             <br />
         }
         else
         {
-            <h1 style="color:palevioletred; text-align:center">BRAK DANYCH</h1>
+            <h3 style="color:palevioletred">BRAK</h3>
         }
+    </div>
+    <br />
+    <div>
+        @* Moje zajęcia *@
+        <div class="wrap">
+            <img class="show_hide" src="~/Content/ikony/ikona_treningGrupowy.png" width="90" height="90">
+            <div class="slidingDiv" style="display:none">
+                <dl class="table-bordered" ,new style="color:#F15B4D">
+                    <dt>
+                        @Html.Label("Treningi grupowe", new { style = "color:#F15B4D" })
+                    </dt>
+                    @if (Model.ZajeciaGrup.Count > 0)
+                    {
+                        <dd>
+                            <table class="table">
+                                <tr>
+                                    <th>Fokus treningu</th>
+                                    <th>Opis treningu</th>
+                                    <th>Sala</th>
+                                    <th>Czas trwania</th>
+                                    <th>Data treningu</th>
+                                    <th>Godzina treningu</th>
+                                    <th>Ilosc osób</th>
+                                </tr>
+                                @foreach (var item in Model.ZajeciaGrup)
+                                {
+                                    <tr>
+                                        <td>@Html.DisplayFor(model => item.NazwaTreningu)</td>
+                                        <td>@Html.DisplayFor(model => item.OpisTreningu)</td>
+                                        <td>@Html.DisplayFor(model => item.Sala.Numer_sali)</td>
+                                        <td>@Html.DisplayFor(model => item.CzasTrwania)</td>
+                                        <td>@Html.DisplayFor(model => item.TreningStart)</td>
+                                        <td>@Html.DisplayFor(model => item.TreningStartGodzina)</td>
+                                        <td>@Html.DisplayFor(model => item.KlientZajeciaGrupowe.Count)</td>
+                                    </tr>
+                                }
+                            </table>
+                        </dd>
+                    }
+                    else
+                    {
+                        <dt>
+                            @Html.Label("Brak treningów grupowych", new { style = "color:#D11919" })
+                        </dt>
+                    }
+                </dl>
+            </div>
+        </div>
     </div>
 
 
 </body>
 </html>
+
+
+<style type="text/cs">
+    div.wrap {
+        float: left;
+        width: 500px;
+    }
+
+    img.show_hide {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .slidingDiv {
+        width: 500px;
+        display: none;
+    }
+</style>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">
+</script>
+<script type="text/javascript">
+    $('img.show_hide').on("click", function () {
+        $('div.slidingDiv').stop().slideUp('fast');
+        $(this).next('div.slidingDiv').stop().slideToggle('fast');
+    });
+</script>

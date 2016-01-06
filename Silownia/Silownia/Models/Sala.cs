@@ -18,14 +18,15 @@ namespace Silownia.Models
 
 
         [Key, Required]
-       
-        [Display(Name="Nr sali")]
+
+        [Display(Name = "Nr sali")]
         public int Numer_sali { get; set; }
         public string FotoLokalizacja { get; set; }
         public byte[] FotoBytes { get; set; }
         public byte[] Zdjecie { get; set; }
        // [Required]
         public string Rodzaj { get; set; }
+       // [Required]
         public string Status { get; set; }
         [DataType(DataType.MultilineText)]
         public string Opis { get; set; }
