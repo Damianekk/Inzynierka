@@ -19,7 +19,7 @@ namespace Silownia
         Klient,
         [Description("Instruktor")]
         Instruktor,
-        [Description("Masażysta")]
+        [Description("Masazysta")]
         Masazysta,
         [Description("Konserwator")]
         Konserwator
