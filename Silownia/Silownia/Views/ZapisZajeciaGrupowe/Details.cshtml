@@ -50,7 +50,7 @@
 <div>
     @if (Request.UrlReferrer != null)
     {
-        <button class="btn btn-large btn-block btn-primary btn-lg btn-primary" onclick="history.go(-1); return false;">powrót</button>
+           <button class="btn btn-large btn-lg btn-block btn-primary btn-primary" onclick="location.href='@Url.Action("Index", "ZapisZajeciaGrupowe")';return false;">powrót</button>
     }
 </div> 
 
