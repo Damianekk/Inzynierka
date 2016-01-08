@@ -56,7 +56,9 @@ namespace Silownia.Controllers
             SilowniaContext db = new SilowniaContext();
             Uzytkownik uzytkownik = db.Uzytkownicy.Where(w => w.Login == model.Login).FirstOrDefault();
 
-                if (uzytkownik != null)
+            if (uzytkownik != null)
+            {
+                if (model.Haslo == uzytkownik.Haslo)
                 {
                     Session["User"] = uzytkownik.Login;
                     Session["Auth"] = uzytkownik.Rola;
@@ -68,18 +70,18 @@ namespace Silownia.Controllers
                     if (uzytkownik.Rola == RoleEnum.Klient.GetDescription())
                     {
                         Klient klient = db.Klienci.Find(uzytkownik.IDOsoby);
-                        return RedirectToAction("Index", "KlientView", new {  id = uzytkownik.IDOsoby });
+                        return RedirectToAction("Index", "KlientView", new { id = uzytkownik.IDOsoby });
                     }
                     if (uzytkownik.Rola == RoleEnum.Recepcjonista.GetDescription())
                     {
                         Recepcjonista recepcjonista = db.Recepcjonisci.Find(uzytkownik.IDOsoby);
                         return RedirectToAction("Index", "Silownia", new { id = recepcjonista.SilowniaID });
                     }
-                    if(uzytkownik.Rola == RoleEnum.Trener.GetDescription())
+                    if (uzytkownik.Rola == RoleEnum.Trener.GetDescription())
                     {
                         Trener trener = db.Trenerzy.Find(uzytkownik.IDOsoby);
                         return RedirectToAction("Index", "TrenerView", new { id = uzytkownik.IDOsoby });
-                     }
+                    }
                     if (uzytkownik.Rola == RoleEnum.Konserwator.GetDescription())
                     {
                         Konserwator konserwator = db.Konserwatorzy.Find(uzytkownik.IDOsoby);
@@ -98,8 +100,13 @@ namespace Silownia.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Użytkownik nie istnieje.");
+                    ModelState.AddModelError("", "Niepoprawny login lub hasło");
                 }
+            }
+            else
+            {
+                ModelState.AddModelError("", "Użytkownik nie istnieje.");
+            }
 
             // If we got this far, something failed, redisplay form
             return View("~/Views/Account/Login.cshtml");
