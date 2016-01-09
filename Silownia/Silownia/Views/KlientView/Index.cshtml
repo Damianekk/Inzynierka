@@ -97,7 +97,7 @@
 @Scripts.Render("~/Scripts/infoCzynnosc.js")
 @if (ViewBag.Akcja != null)
 {
-    if (ViewBag.Akcja == AkcjaEnumMasaz.DodanoMasaz)
+    if (ViewBag.Akcja != AkcjaEnumMasaz.Brak)
     {
         <a href="#" class="close" data-dismiss="alert">&times;</a>
         <div class="alert alert-success">
@@ -200,6 +200,9 @@
                                             <td>@Html.DisplayFor(model => item.ZajeciaGrupowe.CzasTrwania)</td>
                                             <td>@Html.DisplayFor(model => item.ZajeciaGrupowe.TreningStart)</td>
                                             <td>@Html.DisplayFor(model => item.ZajeciaGrupowe.KlientZajeciaGrupowe.Count)</td>
+                                            <td>
+                                            <button class="btn-danger btn-small" onclick="location.href='@Url.Action("UsunKlientowiTreningGrupowy", "KlientView", new { id = item.TreningID })';return false;">Wypisz</button>
+                                            </td>
                                         </tr>
                                     }
                                 </table>
@@ -252,7 +255,9 @@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.kosztMasazu) zł
                                             </td>
-                                          
+                                            <td>
+                                                <button class="btn-danger btn-small" onclick="location.href='@Url.Action("UsunKlientowiMasaz", "KlientView", new { id = item.MasazID })';return false;">Wypisz</button>
+                                            </td>
                                         </tr>
                                     }
                                 </table>
