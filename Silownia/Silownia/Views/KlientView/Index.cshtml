@@ -74,25 +74,6 @@
 
     };
 
-    @*function Odbierz()
-    {
-        var okienko = document.getElementById("WiadomosciOdebrane");
-        var osWys ;
-
-        var array = @Html.Raw(Json.Encode(@ViewBag.Wiad));
-
-        for(var i = 0; i < array.length; i++) {
-            osWys = array[i].OsobaWysylajaca;
-
-            okienko.innerHTML = array[i].OsobaWysylajaca.imieNazwisko+": "+array[i].Tresc+"\n----------------------------------------------------------------------------------------------------------------------------------------------------------------------";
-       
-            okienko.style.fontSize = "small";
-
-        }
-
-    }*@
-
-
 </script>
 @Scripts.Render("~/Scripts/infoCzynnosc.js")
 @if (ViewBag.Akcja != null)
