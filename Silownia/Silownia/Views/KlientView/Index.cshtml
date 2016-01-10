@@ -87,6 +87,15 @@
             <br />
         </div>
     }
+    else if (ViewBag.Akcja != AkcjaEnumTrening.Brak)
+    {
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <div class="alert alert-success">
+            <br />
+            <h4>@PelnaNazwaEnum.GetDescription(@ViewBag.Akcja)</h4>
+            <br />
+        </div>
+    }
 }
 
 <html>
@@ -128,7 +137,7 @@
     </div>
     @* Umowa *@
     <div class="col-xs-2" style="border:solid; width:300px; height:190px;">
-        <h3>Umowa aktywna</h3>
+        <h3>Umowa aktywna do:</h3>
         @if (@Model.Umowy.FirstOrDefault() != null)
         {
             <h3 style="color:aquamarine">@Model.Umowy.First().DataZakonczenia.ToShortDateString()</h3>
@@ -154,13 +163,33 @@
         }
 
     </div>
+
+
+    @* Odebrane wiadomości *@
+    <div class="col-xs-2" style=" width:530px; height:320px">
+        <h3>Odebrane wiadmości <button type="button" id="OdbierzW" class="btn btn-primary" role="button" onclick="OdbierzWiad()" style="width:120px; ">Odśwież</button></h3>
+
+        @Html.TextArea("WiadomosciOdebrane", htmlAttributes: new { style = "width: 100%; max-width: 100%; height:250px;", @readonly = "readonly" })
+
+    </div>
+
+    <div class="col-xs-2" style="border:solid; width:300px; height:320px">
+
+        <h3>Wiadomość do trenera</h3>
+        @Html.DropDownList("Trenerzy", String.Empty)
+        @Html.TextArea("Wiadomosc", new { @style = "width:270px; height:180px" })
+        <button type="button" id="Send" class="btn btn-primary" role="button" onclick="Wyslij()" style="width:270px; ">Wyślij</button>
+        @*  *@
+
+    </div>
+
     @* Moje masaże itp *@
-    <div class="col-xs-2" style=" width:820px; height:320px">
+    <div class="col-xs-2" style="border-left:solid; border-top:solid; width:1000px; height:320px">
         <h3 style="text-align:center">Moje zajęcia</h3>
         @* Treningi grupowe *@
         <div class="wrap">
             <img class="show_hide" src="~/Content/ikony/ikona_treningGrupowy.png" width="90" height="90" title="Treningi">
-            <div class="slidingDiv" style="display:none">
+            <div class="slidingDivON">
                 <dl class="table-bordered" ,new style="color:#F15B4D">
                     <dt>
                         @Html.Label("Zaplanowane treningi grupowe", new { style = "color:#F15B4D" })
@@ -332,26 +361,6 @@
         </div>
     </div>
 
-    @* Odebrane wiadomości *@
-    <div class="col-xs-2" style=" width:650px; height:320px">
-        <h3>Odebrane wiadmości <button type="button" id="OdbierzW" class="btn btn-primary" role="button" onclick="OdbierzWiad()" style="width:120px; ">Odśwież</button></h3>
-
-        @Html.TextArea("WiadomosciOdebrane", htmlAttributes: new { style = "width: 100%; max-width: 100%; height:250px;", @readonly = "readonly" })
-
-    </div>
-
-    <div class="col-xs-2" style="border:solid; width:300px; height:320px">
-
-        <h3>Wiadomość do trenera</h3>
-        @Html.DropDownList("Trenerzy", String.Empty)
-        @Html.TextArea("Wiadomosc", new { @style = "width:270px; height:180px" })
-        <button type="button" id="Send" class="btn btn-primary" role="button" onclick="Wyslij()" style="width:270px; ">Wyślij</button>
-        @*  *@
-
-    </div>
-
-
-
 </body>
 </html>
 
@@ -369,7 +378,11 @@
 
     .slidingDiv {
         width: 500px;
-        display: none;
+        display: none
+    }
+    .slidingDivON {
+        width: 500px;
+
     }
 </style>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">
@@ -377,6 +390,8 @@
 <script type="text/javascript">
     $('img.show_hide').on("click", function () {
         $('div.slidingDiv').stop().slideUp('fast');
+        $('div.slidingDivON').stop().slideUp('fast');
         $(this).next('div.slidingDiv').stop().slideToggle('fast');
+        $(this).next('div.slidingDivON').stop().slideToggle('fast');
     });
 </script>

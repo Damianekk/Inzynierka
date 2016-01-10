@@ -20,9 +20,14 @@ namespace Silownia.Controllers
             {
                 if (Session["Auth"].ToString() == "Instruktor")
                 {
-                    if (id == null)
+                    if (id == null) // jeżeli nie podano idOsoby jako parametr 
                     {
-                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                        if (String.IsNullOrEmpty(Session["loggedUserID"].ToString())) // sprawdzamy czy zalogowana jest osoba
+                            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                        else
+                        {
+                            id = (long)(Session["loggedUserID"]); // jeśli jest to bierzemy jej id z sesji 
+                        }
                     }
                     Osoba os = db.Osoby.Find(id);
                    

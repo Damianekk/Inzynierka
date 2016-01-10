@@ -4,7 +4,19 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@Scripts.Render("~/Scripts/infoCzynnosc.js")
+@if (ViewBag.Akcja != null)
+{
+    if (ViewBag.Akcja != AkcjaEnumMasaz.Brak)
+    {
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <div class="alert alert-success">
+            <br />
+            <h4>@PelnaNazwaEnum.GetDescription(@ViewBag.Akcja)</h4>
+            <br />
+        </div>
+    }
+}
 <html>
 
 <body>
@@ -66,15 +78,15 @@
 
     </div>
     @* Moje masaże *@
-    <div class="col-xs-2" style=" width:735px; height:320px">
+    <div class="col-xs-2" style=" width:1000px; height:320px">
         <h3 style="text-align:center">Moje masaże</h3>
         @* Masaże *@
         <div class="wrap">
             <img class="show_hide" src="/Content/ikony/ikona_masaz.png" width="90" height="90">
-            <div class="slidingDiv" style="display:none">
+            <div class="slidingDivON">
                 <dl class="table-bordered" ,new style="color:#B8C932">
                     <dt>
-                        @Html.Label("Masaże", new { style = "color:#B8C932" })
+                        @Html.Label("Zaplanowane masaże", new { style = "color:#B8C932" })
                     </dt>
                     @if (Model.Masaze.Count > 0)
                     {
@@ -87,7 +99,7 @@
                                     <th>Czas trwania</th>
                                     <th>Całkowity koszt</th>
                                 </tr>
-                                @foreach (var item in Model.Masaze)
+                                @foreach (var item in Model.Masaze.Where(a => a.MasazStart.Day >= DateTime.Now.Day))
                                 {
                                     <tr>
                                         <td>
@@ -105,6 +117,9 @@
                                         <td>
                                             @Html.DisplayFor(modelItem => item.kosztMasazu) zł
                                         </td>
+                                        <td>
+                                            <button class="btn-danger btn-small" onclick="location.href='@Url.Action("UsunMasazyscieMasaz", "MasazystaView", new { id = item.MasazID })';return false;">Anuluj</button>
+                                        </td>
                                     </tr>
                                 }
                             </table>
@@ -113,7 +128,7 @@
                     else
                     {
                         <dt>
-                            @Html.Label("Brak masaży", new { style = "color:#D11919" })
+                            @Html.Label("Brak zaplanowanych masaży", new { style = "color:#D11919" })
                         </dt>
                     }
                 </dl>
@@ -139,12 +154,18 @@
         width: 500px;
         display: none;
     }
+
+    .slidingDivON {
+        width: 500px;
+    }
 </style>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">
 </script>
 <script type="text/javascript">
     $('img.show_hide').on("click", function () {
         $('div.slidingDiv').stop().slideUp('fast');
+        $('div.slidingDivON').stop().slideUp('fast');
         $(this).next('div.slidingDiv').stop().slideToggle('fast');
+        $(this).next('div.slidingDivON').stop().slideToggle('fast');
     });
 </script>

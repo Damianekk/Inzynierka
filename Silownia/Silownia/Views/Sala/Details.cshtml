@@ -61,7 +61,7 @@
     <div class="wrap">
         <img class="show_hide" src="~/Content/ikony/ikona_sprzet.png" width="90" height="90">
 
-        <div class="slidingDiv" style="display:none">
+        <div class="slidingDivON">
             <dl , class="table-bordered" ,new style="color:#1ABC9C">
                 <dt>
                     @Html.Label("Sprzęty", new { style = "color:#1ABC9C" })
@@ -128,12 +128,18 @@
         width: 500px;
         display: none;
     }
+
+    .slidingDivON {
+        width: 500px;
+    }
 </style>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">
 </script>
 <script type="text/javascript">
     $('img.show_hide').on("click", function () {
         $('div.slidingDiv').stop().slideUp('fast');
+        $('div.slidingDivON').stop().slideUp('fast');
         $(this).next('div.slidingDiv').stop().slideToggle('fast');
+        $(this).next('div.slidingDivON').stop().slideToggle('fast');
     });
 </script>

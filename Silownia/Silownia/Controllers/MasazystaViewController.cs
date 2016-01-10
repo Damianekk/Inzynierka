@@ -14,17 +14,28 @@ namespace Silownia.Controllers
     public class MasazystaViewController : Controller
     {
         private SilowniaContext db = new SilowniaContext();
-        public ActionResult Index(long? id)
+        public ActionResult Index(long? id, AkcjaEnumMasaz? akcja)
         {
             if (Session["Auth"] != null)
             {
                 if (Session["Auth"].ToString() == "Masazysta")
                 {
-                    if (id == null)
+                    if (id == null) // jeżeli nie podano idOsoby jako parametr 
                     {
-                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                        if (String.IsNullOrEmpty(Session["loggedUserID"].ToString())) // sprawdzamy czy zalogowana jest osoba
+                            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                        else
+                        {
+                            id = (long)(Session["loggedUserID"]); // jeśli jest to bierzemy jej id z sesji 
+                        }
                     }
                     Osoba os = db.Osoby.Find(id);
+
+                    if (akcja != AkcjaEnumMasaz.Brak)
+                    {
+                        ViewBag.Akcja = akcja;
+                    }
+
 
                     if (os == null)
                     {
@@ -38,6 +49,12 @@ namespace Silownia.Controllers
             return HttpNotFound();
 
         }
-
+        public ActionResult UsunMasazyscieMasaz(long id)
+        {
+            var mas = db.Masaze.Find(id);
+            db.Masaze.Remove(mas);
+            db.SaveChanges();
+            return RedirectToAction("Index", "MasazystaView", new { akcja = AkcjaEnumMasaz.UsunietoMasaz });
+        }
     }
 }

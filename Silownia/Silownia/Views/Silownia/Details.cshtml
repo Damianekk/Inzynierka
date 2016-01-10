@@ -72,7 +72,7 @@
         <div class="wrap">
             <img class="show_hide" src="~/Content/ikony/persony/ikona_pracownicy.png" width="90" height="90">
 
-            <div class="slidingDiv" style="display:none">
+            <div class="slidingDivON">
                 <dl , class="table-bordered" ,new style="color:#95a5a6">
                     <dt>
                         @Html.Label("Pracownicy", new { style = "color:#95a5a6" })
@@ -95,7 +95,9 @@
                                         <td>
                                             @Html.DisplayFor(modelItem => item.Pensja) zł
                                         </td>
-                                        <td></td>
+                                        <td>
+
+                                        </td>
                                     </tr>
                                 }
                             </table>
@@ -127,7 +129,7 @@
                                     <th>Numer Sali</th>
                                     <th>Opis</th>
                                     <th>Status</th>
-                                  
+
                                 </tr>
                                 @foreach (var item in Model.Sale)
                                 {
@@ -168,7 +170,7 @@
             </div>
         </div>
     </div>
-        
+
 
 </div>
 
@@ -305,12 +307,18 @@
         width: 500px;
         display: none;
     }
+
+    .slidingDivON {
+        width: 500px;
+    }
 </style>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">
 </script>
 <script type="text/javascript">
     $('img.show_hide').on("click", function () {
         $('div.slidingDiv').stop().slideUp('fast');
+        $('div.slidingDivON').stop().slideUp('fast');
         $(this).next('div.slidingDiv').stop().slideToggle('fast');
+        $(this).next('div.slidingDivON').stop().slideToggle('fast');
     });
 </script>

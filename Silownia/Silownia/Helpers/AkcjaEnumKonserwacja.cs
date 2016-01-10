@@ -13,6 +13,13 @@ namespace Silownia
        ,
         [Description("Poprawnie usunięto konserwację")]
         UsunietoKonserwacje
-       , Brak
+       ,
+        [Description("Przyjęto konserwację")]
+        PrzyjetoKonserwacje
+       ,
+        [Description("Zamknięto konserwację")]
+        ZamknietoKonserwacje
+       , 
+        Brak
     }
 }

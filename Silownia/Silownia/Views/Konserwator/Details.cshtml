@@ -67,7 +67,7 @@
     <div class="wrap">
         <img class="show_hide" src="~/Content/ikony/silownia/ikona_silownia.png" width="90" height="90">
 
-        <div class="slidingDiv" style="display:none">
+        <div class="slidingDivON">
             <dl , class="table-bordered" ,new style="color:#5BABD5">
                 <dt>
                     @Html.Label("Siłownia", new { style = "color:#5BABD5" })
@@ -110,7 +110,7 @@
         <div class="slidingDiv" style="display:none">
             <dl , class="table-bordered" ,new style="color:#f1c40f">
                 <dt>
-                    @Html.Label("Naprawy", new { style = "color:#f1c40f" })
+                    @Html.Label("Zgłoszone naprawy", new { style = "color:#f1c40f" })
                 </dt>
                 @if (Model.Konserwacje.Count > 0)
                 {
@@ -123,7 +123,7 @@
                                 <th>Data zakończenia naprawy</th>
                                 <th>Opis usterki</th>
                             </tr>
-                            @foreach (var item in Model.Konserwacje)
+                            @foreach (var item in Model.Konserwacje.Where(k => k.Status == "przyjęta"))
                             {
                                 <tr>
                                     <td>
@@ -141,6 +141,13 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Opis_usterki)
                                     </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn-primary btn-lg" onclick="location.href='@Url.Action("Edit", "Konserwacja", new { id = item.KonserwacjaID })';return false;">edytuj</button>
+                                            <button class="btn-primary btn-lg" onclick="location.href='@Url.Action("Details", "Konserwacja", new { id = item.KonserwacjaID })';return false;">szczegóły</button>
+                                            <button class="btn-danger btn-lg" onclick="location.href='@Url.Action("Delete", "Konserwacja", new { id = item.KonserwacjaID })';return false;">usuń</button>
+                                        </div>
+                                    </td>
                                 </tr>
                             }
                         </table>
@@ -149,12 +156,72 @@
                 else
                 {
                     <dt>
-                        @Html.Label("Brak napraw", new { style = "color:#D11919" })
+                        @Html.Label("Brak zleconych napraw", new { style = "color:#D11919" })
                     </dt>
                 }
             </dl>
         </div>
     </div>
+
+    <div class="wrap">
+        <img class="show_hide" src="/Content/ikony/ikona_konserwacja.png" width="90" height="90">
+
+        <div class="slidingDiv" style="display:none">
+            <dl , class="table-bordered" ,new style="color:#f1c40f">
+                <dt>
+                    @Html.Label("Trwające naprawy", new { style = "color:#f1c40f" })
+                </dt>
+                @if (Model.Konserwacje.Count > 0)
+                {
+                    <dd>
+                        <table class="table">
+                            <tr>
+                                <th>Sprzęt</th>
+                                <th>Sala w siłowni</th>
+                                <th>Data zgłoszenia</th>
+                                <th>Data zakończenia naprawy</th>
+                                <th>Opis usterki</th>
+                            </tr>
+                            @foreach (var item in Model.Konserwacje.Where(k => k.Status == "w naprawie"))
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Sprzet.Nazwa)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Sprzet.Sala.Rodzaj)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Data_zgłoszenia)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Data_naprawy)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Opis_usterki)
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn-primary btn-lg" onclick="location.href='@Url.Action("Edit", "Konserwacja", new { id = item.KonserwacjaID })';return false;">edytuj</button>
+                                            <button class="btn-primary btn-lg" onclick="location.href='@Url.Action("Details", "Konserwacja", new { id = item.KonserwacjaID })';return false;">szczegóły</button>
+                                            <button class="btn-danger btn-lg" onclick="location.href='@Url.Action("Delete", "Konserwacja", new { id = item.KonserwacjaID })';return false;">usuń</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </dd>
+                }
+                else
+                {
+                    <dt>
+                        @Html.Label("Brak zleconych napraw", new { style = "color:#D11919" })
+                    </dt>
+                }
+            </dl>
+        </div>
+    </div>
+
 </div>
 
 
@@ -173,12 +240,18 @@
         width: 500px;
         display: none;
     }
+
+    .slidingDivON {
+        width: 500px;
+    }
 </style>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">
 </script>
 <script type="text/javascript">
     $('img.show_hide').on("click", function () {
         $('div.slidingDiv').stop().slideUp('fast');
+        $('div.slidingDivON').stop().slideUp('fast');
         $(this).next('div.slidingDiv').stop().slideToggle('fast');
+        $(this).next('div.slidingDivON').stop().slideToggle('fast');
     });
 </script>

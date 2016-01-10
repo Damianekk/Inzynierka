@@ -55,6 +55,50 @@
 </div>
 
 <div>
+    <div class="wrap">
+        <img class="show_hide" src="~/Content/ikony/silownia/ikona_silownia.png" width="90" height="90">
+
+        <div class="slidingDivON">
+            <dl , class="table-bordered" ,new style="color: #3498db">
+                <dt>
+                    @Html.Label("Siłownia", new { style = "color:#3498db" })
+                </dt>
+                <dd>
+                    <table class="table">
+                        <tr>
+                            <th>Nazwa</th>
+                            <th>Miasto</th>
+                            <th>Numer telefonu</th>
+                            <th>Info</th>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(model => model.Masazysta.Silownia.Nazwa)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.Masazysta.Silownia.Adres.Miasto)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.Masazysta.Silownia.NrTelefonu)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.Masazysta.Silownia.infoDodatkowe)
+                            </td>
+                            <td>
+
+                                <div class="btn-group">
+                                    <button class="btn-primary btn-lg" onclick="location.href='@Url.Action("Details", "Silownia", new { id = Model.Masazysta.Silownia.SilowniaID })';return false;">szczegóły</button>
+                                </div>
+
+                            </td>
+                        </tr>
+
+                    </table>
+                </dd>
+            </dl>
+        </div>
+    </div>
 
     <div class="wrap">
         <img class="show_hide" src="~/Content/ikony/persony/ikona_klient.png" width="90" height="90">
@@ -157,12 +201,18 @@
         width: 500px;
         display: none;
     }
+
+    .slidingDivON {
+        width: 500px;
+    }
 </style>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">
 </script>
 <script type="text/javascript">
     $('img.show_hide').on("click", function () {
         $('div.slidingDiv').stop().slideUp('fast');
+        $('div.slidingDivON').stop().slideUp('fast');
         $(this).next('div.slidingDiv').stop().slideToggle('fast');
+        $(this).next('div.slidingDivON').stop().slideToggle('fast');
     });
 </script>

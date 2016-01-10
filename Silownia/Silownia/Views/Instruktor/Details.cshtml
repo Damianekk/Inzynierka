@@ -58,11 +58,50 @@
 </div>
 <div>
     <div class="wrap">
+        <img class="show_hide" src="~/Content/ikony/silownia/ikona_silownia.png" width="90" height="90">
+
+        <div class="slidingDivON">
+            <dl , class="table-bordered" ,new style="color:#5BABD5">
+                <dt>
+                    @Html.Label("Siłownia", new { style = "color:#5BABD5" })
+                </dt>
+
+                <dd>
+                    <table class="table">
+                        <tr>
+                            <th>Nazwa siłowni</th>
+                            <th>Info</th>
+                            <th>Numer telefonu</th>
+                            <th>Miasto</th>
+                            <th></th>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(model => model.Silownia.Nazwa)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.Silownia.infoDodatkowe)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.Silownia.NrTelefonu)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.Silownia.Adres.Miasto)
+                            </td>
+                        </tr>
+
+                    </table>
+                </dd>
+            </dl>
+        </div>
+    </div>
+    <div class="wrap">
         <img class="show_hide" src="~/Content/ikony/ikona_treningGrupowy.png" width="90" height="90">
         <div class="slidingDiv" style="display:none">
             <dl class="table-bordered" ,new style="color:#F15B4D">
                 <dt>
-                    @Html.Label("Treningi grupowe", new { style = "color:#F15B4D" })
+                    @Html.Label("Zaplanowane treningi grupowe", new { style = "color:#F15B4D" })
                 </dt>
                 @if (Model.ZajeciaGrup.Count > 0)
                 {
@@ -76,8 +115,8 @@
                                 <th>Opis treningu</th>
                                 <th>Członkowie</th>
                             </tr>
-                            @foreach (var item in Model.ZajeciaGrup)
-                            {
+                           @foreach (var item in Model.ZajeciaGrup.Where(a => a.TreningStart.Day >= DateTime.Now.Day))
+                           {
                                 <tr>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Instruktor.imieNazwisko)
@@ -109,7 +148,7 @@
                 else
                 {
                     <dt>
-                        @Html.Label("Brak treningów grupowych", new { style = "color:#D11919" })
+                        @Html.Label("Brak zaplanowanych treningów grupowych", new { style = "color:#D11919" })
                     </dt>
                 }
             </dl>
@@ -133,12 +172,18 @@
         width: 500px;
         display: none;
     }
+
+    .slidingDivON {
+        width: 500px;
+    }
 </style>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">
 </script>
 <script type="text/javascript">
     $('img.show_hide').on("click", function () {
         $('div.slidingDiv').stop().slideUp('fast');
+        $('div.slidingDivON').stop().slideUp('fast');
         $(this).next('div.slidingDiv').stop().slideToggle('fast');
+        $(this).next('div.slidingDivON').stop().slideToggle('fast');
     });
 </script>

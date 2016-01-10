@@ -535,6 +535,11 @@
     <Content Include="Views\TreningPersonalny\ZapisKlient.cshtml" />
     <Content Include="Views\Shared\_zajeciaZapisany.cshtml" />
     <Content Include="Views\Shared\_zajeciaNiezapisany.cshtml" />
+    <Content Include="Views\Shared\KryteriaSzukania\_tylkoPrzyszlosc.cshtml" />
+    <Content Include="Views\Shared\KryteriaSzukania\_konserwacjePrzyjete.cshtml" />
+    <Content Include="Views\Shared\KryteriaSzukania\_konserwacjewNaprawie.cshtml" />
+    <Content Include="Views\Shared\KryteriaSzukania\_konserwacjeZakonczone.cshtml" />
+    <Content Include="Views\Shared\KryteriaSzukania\_konserwacjaStatus.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

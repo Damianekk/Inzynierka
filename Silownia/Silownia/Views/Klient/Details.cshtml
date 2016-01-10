@@ -103,7 +103,7 @@
     <div class="wrap">
         <img class="show_hide" src="/Content/ikony/ikona_umowa.png" width="90" height="90">
 
-        <div class="slidingDiv" style="display:none">
+        <div class="slidingDivON">
             <dl , class="table-bordered" ,new style="color:#4039f9">
                 <dt>
                     @Html.Label("Umowy", new { style = "color:#4039f9" })
@@ -132,9 +132,8 @@
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Cena) zł
-                                    </td>    
+                                    </td>
                                     <td>
-                                        @* trzeba dorobić tutaj treningi grupowe po wprowadzeniu ich do aplikacji*@
                                         @if (Model.Masaze.Count == 0 && Model.TreningiPersonalne.Count == 0)
                                         {
                                             <button class="btn-danger btn-lg" onclick="location.href='@Url.Action("Delete", "Umowa", new { id = item.UmowaID})';return false;">usuń</button>
@@ -159,7 +158,7 @@
         <div class="slidingDiv" style="display:none">
             <dl class="table-bordered" ,new style="color:#B8C932">
                 <dt>
-                    @Html.Label("Masaże", new { style = "color:#B8C932" })
+                    @Html.Label("Zaplanowane masaże", new { style = "color:#B8C932" })
                 </dt>
                 @if (Model.Masaze.Count > 0)
                 {
@@ -171,10 +170,10 @@
                                 <th>Godzina</th>
                                 <th>Czas trwania</th>
                                 <th>Całkowity koszt</th>
-                             
+
                                 <th></th>
                             </tr>
-                            @foreach (var item in Model.Masaze)
+                            @foreach (var item in Model.Masaze.Where(a => a.MasazStart.Day >= DateTime.Now.Day))
                             {
                                 <tr>
                                     <td>
@@ -192,7 +191,7 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.kosztMasazu) zł
                                     </td>
-                                 
+
                                     <td>
                                         <div class="btn-group">
                                             <button class="btn-primary btn-lg" onclick="location.href='@Url.Action("Details", "Masaz", new { id = item.MasazID })';return false;">szczegóły</button>
@@ -207,7 +206,7 @@
                 else
                 {
                     <dt>
-                        @Html.Label("Brak masaży", new { style = "color:#D11919" })
+                        @Html.Label("Brak zaplanowanych masaży", new { style = "color:#D11919" })
                     </dt>
                 }
             </dl>
@@ -218,7 +217,7 @@
         <div class="slidingDiv" style="display:none">
             <dl class="table-bordered" ,new style="color:#782D86">
                 <dt>
-                    @Html.Label("Treningi personalne", new { style = "color:#782D86" })
+                    @Html.Label("Zaplanowane treningi personalne", new { style = "color:#782D86" })
                 </dt>
                 @if (Model.TreningiPersonalne.Count > 0)
                 {
@@ -233,8 +232,8 @@
                                 <th>Całkowity koszt</th>
                                 <th></th>
                             </tr>
-                            @foreach (var item in Model.TreningiPersonalne)
-                            {
+                           @foreach (var item in Model.TreningiPersonalne.Where(a => a.TreningStart.Day >= DateTime.Now.Day))
+                           {
                                 <tr>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Trener.imieNazwisko)
@@ -268,7 +267,7 @@
                 else
                 {
                     <dt>
-                        @Html.Label("Brak treningów", new { style = "color:#D11919" })
+                        @Html.Label("Brak zaplanowanych treningów", new { style = "color:#D11919" })
                     </dt>
                 }
             </dl>
@@ -279,7 +278,7 @@
         <div class="slidingDiv" style="display:none">
             <dl class="table-bordered" ,new style="color:#F15B4D">
                 <dt>
-                    @Html.Label("Treningi grupowe", new { style = "color:#F15B4D" })
+                    @Html.Label("Zaplanowane treningi grupowe", new { style = "color:#F15B4D" })
                 </dt>
                 @if (Model.KlienciTreningiGrupowe.Count > 0)
                 {
@@ -294,7 +293,7 @@
                                 <th>Data treningu</th>
                                 <th>Ilosc osób</th>
                             </tr>
-                            @foreach (var item in Model.KlienciTreningiGrupowe)
+                            @foreach (var item in Model.KlienciTreningiGrupowe.Where(a => a.ZajeciaGrupowe.TreningStart.Day >= DateTime.Now.Day))
                             {
                              <tr>
                                     <td>@Html.DisplayFor(model => item.ZajeciaGrupowe.NazwaTreningu)</td>
@@ -312,7 +311,7 @@
                 else
                 {
                     <dt>
-                        @Html.Label("Brak treningów grupowych", new { style = "color:#D11919" })
+                        @Html.Label("Brak zaplanowanych treningów grupowych", new { style = "color:#D11919" })
                     </dt>
                 }
             </dl>
@@ -331,9 +330,9 @@
         margin-right: auto;
     }
 
-    .slidingDiv {
+    .slidingDivON {
         width: 500px;
-        display: none;
+
     }
 </style>
 
@@ -342,7 +341,9 @@
 <script type="text/javascript">
     $('img.show_hide').on("click", function () {
         $('div.slidingDiv').stop().slideUp('fast');
+        $('div.slidingDivON').stop().slideUp('fast');
         $(this).next('div.slidingDiv').stop().slideToggle('fast');
+        $(this).next('div.slidingDivON').stop().slideToggle('fast');
     });
 </script>
 <script>

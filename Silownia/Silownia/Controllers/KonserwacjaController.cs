@@ -20,15 +20,15 @@ namespace Silownia.Controllers
         private SilowniaContext db = new SilowniaContext();
 
         // GET: Konserwacja
-        public ActionResult Index(string nazwaSprzetu, string SilowniaID, int page = 1, int pageSize = 10, AkcjaEnumKonserwacja akcja = AkcjaEnumKonserwacja.Brak, String info = null)
+        public ActionResult Index(string nazwaSprzetu, string SilowniaID, string KonserwatorID, string Status, int page = 1, int pageSize = 10, AkcjaEnumKonserwacja akcja = AkcjaEnumKonserwacja.Brak, String info = null)
         {
             if (Session["Auth"] != null)
             {
                 if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {
                     ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
-                    //ViewBag.KonserwatorID = new SelectList(db.Konserwatorzy.DistinctBy(a => new { a.Pesel }), "imieNazwisko", "imieNazwisko");
-
+                    ViewBag.Status = new SelectList(db.Konserwacje.DistinctBy(a => new { a.Status }), "Status", "Status");
+                    ViewBag.KonserwatorID = new SelectList(db.Konserwatorzy.DistinctBy(a => new { a.Pesel }), "imieNazwisko", "imieNazwisko");
 
                     var konserwacje = from Konserwacje in db.Konserwacje select Konserwacje;
 
@@ -36,8 +36,11 @@ namespace Silownia.Controllers
                         konserwacje = konserwacje.Search(nazwaSprzetu, i => i.Sprzet.Nazwa);
 
                     konserwacje = konserwacje.Search(SilowniaID, i => i.Sprzet.Sala.Silownia.Nazwa);
+                    konserwacje = konserwacje.Search(Status, i => i.Status);
 
-                  //  konserwacje = konserwacje.Search(KonserwatorID, i => i.Konserwator.imieNazwisko);
+                    if (!String.IsNullOrEmpty(KonserwatorID))
+                        foreach (string wyraz in KonserwatorID.Split(' '))
+                            konserwacje = konserwacje.Search(wyraz, i => i.Konserwator.Imie, i => i.Konserwator.Nazwisko);
 
                     var final = konserwacje.OrderBy(p => p.Sprzet.Nazwa);
                     var ileWynikow = konserwacje.Count();

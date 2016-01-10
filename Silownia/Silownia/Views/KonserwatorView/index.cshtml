@@ -4,6 +4,20 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@Scripts.Render("~/Scripts/infoCzynnosc.js")
+@if (ViewBag.Akcja != null)
+{
+    if (ViewBag.Akcja != AkcjaEnumKonserwacja.Brak)
+    {
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <div class="alert alert-success">
+            <br />
+            <h4>@PelnaNazwaEnum.GetDescription(@ViewBag.Akcja)</h4>
+            <br />
+        </div>
+    }
+
+}
 <html>
 <body>
     @* Zdjecie *@
@@ -47,11 +61,13 @@
         <div style="text-align:right">OSTATNIO ZGŁOSZONA KONSERWACJA</div>
         @if (@Model.Konserwacje.FirstOrDefault() != null)
         {
+            <h4>Siłownia:</h4><h3 style="color:aquamarine">@Model.Konserwacje.Last().Sprzet.Sala.Silownia.Nazwa</h3>
+            <br />
+            <h4>Sala:</h4><h3 style="color:aquamarine">@Model.Konserwacje.Last().Sprzet.Sala.Numer_sali</h3>
+            <br />
             <h4>Sprzęt:</h4><h3 style="color:aquamarine">@Model.Konserwacje.Last().Sprzet.Nazwa</h3>
             <br />
             <h4>Opis usterki:</h4><h3 style="color:aquamarine">@Model.Konserwacje.Last().Opis_usterki</h3>
-            <br />
-            <h4>Status:</h4><h3 style="color:aquamarine">@Model.Konserwacje.Last().Status</h3>
             <br />
         }
         else
@@ -61,16 +77,16 @@
 
     </div>
     @* Moje konserwacje *@
-    <div class="col-xs-2" style=" width:735px; height:320px">
+    <div class="col-xs-2" style=" width:1000px; height:320px">
         <h3 style="text-align:center">Moje konserwacje</h3>
         @* Konserwacje *@
         <div class="wrap">
             <img class="show_hide" src="/Content/ikony/ikona_konserwacja.png" width="90" height="90">
 
-            <div class="slidingDiv" style="display:none">
+            <div class="slidingDivON">
                 <dl , class="table-bordered" ,new style="color:#f1c40f">
                     <dt>
-                        @Html.Label("Naprawy", new { style = "color:#f1c40f" })
+                        @Html.Label("Zgłoszone naprawy", new { style = "color:#f1c40f" })
                     </dt>
                     @if (Model.Konserwacje.Count > 0)
                     {
@@ -83,7 +99,7 @@
                                     <th>Data zakończenia naprawy</th>
                                     <th>Opis usterki</th>
                                 </tr>
-                                @foreach (var item in Model.Konserwacje)
+                                @foreach (var item in Model.Konserwacje.Where(k => k.Status == "przyjęta"))
                                 {
                                     <tr>
                                         <td>
@@ -101,6 +117,9 @@
                                         <td>
                                             @Html.DisplayFor(modelItem => item.Opis_usterki)
                                         </td>
+                                        <td>
+                                            <button class="btn-success btn-small" onclick="location.href='@Url.Action("PrzyjmijKonserwacje", "KonserwatorView", new { id = item.KonserwacjaID })';return false;">Przyjmij</button>
+                                        </td>
                                     </tr>
                                 }
                             </table>
@@ -109,17 +128,69 @@
                     else
                     {
                         <dt>
-                            @Html.Label("Brak napraw", new { style = "color:#D11919" })
+                            @Html.Label("Brak zleconych napraw", new { style = "color:#D11919" })
                         </dt>
                     }
                 </dl>
             </div>
         </div>
+        <div class="wrap">
+            <img class="show_hide" src="/Content/ikony/ikona_konserwacja.png" width="90" height="90">
 
+            <div class="slidingDivON">
+                <dl , class="table-bordered" ,new style="color:#f1c40f">
+                    <dt>
+                        @Html.Label("Trwające naprawy", new { style = "color:#f1c40f" })
+                    </dt>
+                    @if (Model.Konserwacje.Count > 0)
+                    {
+                        <dd>
+                            <table class="table">
+                                <tr>
+                                    <th>Sprzęt</th>
+                                    <th>Sala w siłowni</th>
+                                    <th>Data zgłoszenia</th>
+                                    <th>Data zakończenia naprawy</th>
+                                    <th>Opis usterki</th>
+                                </tr>
+                                @foreach (var item in Model.Konserwacje.Where(k => k.Status == "w naprawie"))
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Sprzet.Nazwa)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Sprzet.Sala.Rodzaj)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Data_zgłoszenia)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Data_naprawy)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Opis_usterki)
+                                        </td>
+                                        <td>
+                                            <button class="btn-danger btn-small" onclick="location.href='@Url.Action("ZamknijKonserwacje", "KonserwatorView", new { id = item.KonserwacjaID })';return false;">Zakończ</button>
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                        </dd>
+                    }
+                    else
+                    {
+                        <dt>
+                            @Html.Label("Brak zleconych napraw", new { style = "color:#D11919" })
+                        </dt>
+                    }
+                </dl>
+            </div>
+        </div>
     </div>
 </body>
 </html>
-
 
 <style type="text/cs">
     div.wrap {
@@ -136,12 +207,18 @@
         width: 500px;
         display: none;
     }
+
+    .slidingDivON {
+        width: 500px;
+    }
 </style>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">
 </script>
 <script type="text/javascript">
     $('img.show_hide').on("click", function () {
         $('div.slidingDiv').stop().slideUp('fast');
+        $('div.slidingDivON').stop().slideUp('fast');
         $(this).next('div.slidingDiv').stop().slideToggle('fast');
+        $(this).next('div.slidingDivON').stop().slideToggle('fast');
     });
 </script>

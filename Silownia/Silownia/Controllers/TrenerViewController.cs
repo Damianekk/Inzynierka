@@ -15,22 +15,30 @@ namespace Silownia.Controllers
     public class TrenerViewController : Controller
     {
         private SilowniaContext db = new SilowniaContext();
-        public ActionResult Index(long? id)
+        public ActionResult Index(long? id, AkcjaEnumTrening? akcja)
         {
             if (Session["Auth"] != null)
             {
                 if (Session["Auth"].ToString() == "Trener")
                 {
-                    if (id == null)
+                    if (id == null) // jeżeli nie podano idOsoby jako parametr 
                     {
-                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                        if (String.IsNullOrEmpty(Session["loggedUserID"].ToString())) // sprawdzamy czy zalogowana jest osoba
+                            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                        else
+                        {
+                            id = (long)(Session["loggedUserID"]); // jeśli jest to bierzemy jej id z sesji 
+                        }
                     }
                     ViewBag.Klienci = new SelectList(db.Klienci, "OsobaID", "imieNazwisko");
                     Osoba os = db.Osoby.Find(id);
 
                     var wiad = db.Wiadomosci.Where(o => o.OsobaOdbierajaca.OsobaID == id);
 
-
+                    if (akcja != AkcjaEnumTrening.Brak)
+                    {
+                        ViewBag.Akcja = akcja;
+                    }
 
                     foreach (Wiadomosc w in wiad)
                     {
@@ -124,5 +132,12 @@ namespace Silownia.Controllers
             //  return Json(new { ok = true, myData = silownie }, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult UsunTrenerowiTreningPersonalny(long id)
+        {
+            var trP = db.TreningiPersonalne.Find(id);
+            db.TreningiPersonalne.Remove(trP);
+            db.SaveChanges();
+            return RedirectToAction("Index", "TrenerView", new { akcja = AkcjaEnumTrening.UsunietoTrening });
+        }
     }
 }

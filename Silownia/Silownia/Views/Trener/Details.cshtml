@@ -73,7 +73,7 @@
     <div class="wrap">
         <img class="show_hide" src="~/Content/ikony/silownia/ikona_silownia.png" width="90" height="90">
 
-        <div class="slidingDiv" style="display:none">
+        <div class="slidingDivON">
             <dl , class="table-bordered" ,new style="color:#5BABD5">
                 <dt>
                     @Html.Label("Siłownia", new { style = "color:#5BABD5" })
@@ -115,7 +115,7 @@
         <div class="slidingDiv" style="display:none">
             <dl class="table-bordered" ,new style="color:#782D86">
                 <dt>
-                    @Html.Label("Treningi personalne", new { style = "color:#782D86" })
+                    @Html.Label("Zaplanowane treningi personalne", new { style = "color:#782D86" })
                 </dt>
                 @if (Model.TreningiPersonalne.Count > 0)
                 {
@@ -130,7 +130,7 @@
                                 <th>Całkowity koszt</th>
                                 <th></th>
                             </tr>
-                            @foreach (var item in Model.TreningiPersonalne)
+                            @foreach (var item in Model.TreningiPersonalne.Where(a => a.TreningStart.Day >= DateTime.Now.Day))
                             {
                                 <tr>
                                     <td>
@@ -189,12 +189,18 @@
         width: 500px;
         display: none;
     }
+
+    .slidingDivON {
+        width: 500px;
+    }
 </style>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">
 </script>
 <script type="text/javascript">
     $('img.show_hide').on("click", function () {
         $('div.slidingDiv').stop().slideUp('fast');
+        $('div.slidingDivON').stop().slideUp('fast');
         $(this).next('div.slidingDiv').stop().slideToggle('fast');
+        $(this).next('div.slidingDivON').stop().slideToggle('fast');
     });
 </script>

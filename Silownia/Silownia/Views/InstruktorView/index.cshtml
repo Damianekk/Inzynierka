@@ -54,61 +54,63 @@
             <br />
             <h4>Sala:</h4><h3 style="color:aquamarine">@Model.ZajeciaGrup.Last().Sala.Rodzaj</h3>
             <br />
+            <h4>Fokus:</h4><h3 style="color:aquamarine">@Model.ZajeciaGrup.Last().NazwaTreningu</h3>
+            <br />
         }
         else
         {
             <h3 style="color:palevioletred">BRAK</h3>
         }
     </div>
-    <br />
-    <div>
-        @* Moje zajęcia *@
+
+    @* Moje zajęcia *@
+    <div class="col-xs-2" style="width:1000px; height:320px">
+        <h3 style="text-align:center">Moje zajęcia</h3>
         <div class="wrap">
             <img class="show_hide" src="~/Content/ikony/ikona_treningGrupowy.png" width="90" height="90">
-            <div class="slidingDiv" style="display:none">
+            <div class="slidingDivON">
                 <dl class="table-bordered" ,new style="color:#F15B4D">
                     <dt>
-                        @Html.Label("Treningi grupowe", new { style = "color:#F15B4D" })
+                        @Html.Label("Zaplanowane treningi grupowe", new { style = "color:#F15B4D" })
                     </dt>
                     @if (Model.ZajeciaGrup.Count > 0)
                     {
-                        <dd>
-                            <table class="table">
+                    <dd>
+                        <table class="table">
+                            <tr>
+                                <th>Fokus treningu</th>
+                                <th>Opis treningu</th>
+                                <th>Sala</th>
+                                <th>Czas trwania</th>
+                                <th>Data treningu</th>
+                                <th>Godzina treningu</th>
+                                <th>Ilosc osób</th>
+                            </tr>
+                            @foreach (var item in Model.ZajeciaGrup.Where(a => a.TreningStart.Day >= DateTime.Now.Day))
+                               {
                                 <tr>
-                                    <th>Fokus treningu</th>
-                                    <th>Opis treningu</th>
-                                    <th>Sala</th>
-                                    <th>Czas trwania</th>
-                                    <th>Data treningu</th>
-                                    <th>Godzina treningu</th>
-                                    <th>Ilosc osób</th>
+                                    <td>@Html.DisplayFor(model => item.NazwaTreningu)</td>
+                                    <td>@Html.DisplayFor(model => item.OpisTreningu)</td>
+                                    <td>@Html.DisplayFor(model => item.Sala.Numer_sali)</td>
+                                    <td>@Html.DisplayFor(model => item.CzasTrwania)</td>
+                                    <td>@Html.DisplayFor(model => item.TreningStart)</td>
+                                    <td>@Html.DisplayFor(model => item.TreningStartGodzina)</td>
+                                    <td>@Html.DisplayFor(model => item.KlientZajeciaGrupowe.Count)</td>
                                 </tr>
-                                @foreach (var item in Model.ZajeciaGrup)
-                                {
-                                    <tr>
-                                        <td>@Html.DisplayFor(model => item.NazwaTreningu)</td>
-                                        <td>@Html.DisplayFor(model => item.OpisTreningu)</td>
-                                        <td>@Html.DisplayFor(model => item.Sala.Numer_sali)</td>
-                                        <td>@Html.DisplayFor(model => item.CzasTrwania)</td>
-                                        <td>@Html.DisplayFor(model => item.TreningStart)</td>
-                                        <td>@Html.DisplayFor(model => item.TreningStartGodzina)</td>
-                                        <td>@Html.DisplayFor(model => item.KlientZajeciaGrupowe.Count)</td>
-                                    </tr>
                                 }
-                            </table>
-                        </dd>
+                        </table>
+                    </dd>
                     }
                     else
                     {
-                        <dt>
-                            @Html.Label("Brak treningów grupowych", new { style = "color:#D11919" })
-                        </dt>
+                    <dt>
+                        @Html.Label("Brak zaplanowanych treningów grupowych", new { style = "color:#D11919" })
+                    </dt>
                     }
                 </dl>
             </div>
         </div>
     </div>
-
 
 </body>
 </html>
@@ -129,12 +131,18 @@
         width: 500px;
         display: none;
     }
+
+    .slidingDivON {
+        width: 500px;
+    }
 </style>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">
 </script>
 <script type="text/javascript">
     $('img.show_hide').on("click", function () {
         $('div.slidingDiv').stop().slideUp('fast');
+        $('div.slidingDivON').stop().slideUp('fast');
         $(this).next('div.slidingDiv').stop().slideToggle('fast');
+        $(this).next('div.slidingDivON').stop().slideToggle('fast');
     });
 </script>

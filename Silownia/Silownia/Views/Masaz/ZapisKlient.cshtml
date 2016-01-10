@@ -8,9 +8,11 @@
 {
     @Html.AntiForgeryToken()
 
+    @Html.ValidationSummary(true)
+
     <div class="form-horizontal divDark">
 
-        @Html.ValidationSummary(true)
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.MasazystaID, "Masażysta", new { @class = "control-label col-md-2" })
@@ -47,10 +49,6 @@
             </div>
         </div>
 
-        @if (Request.UrlReferrer != null)
-        {
-            <button class="btn btn-large btn-block btn-primary btn-lg btn-primary" onclick="history.go(-1); return false;">powrót</button>
-        }
 
         @if (TempData["msg"] != null)
         { @Html.Raw(TempData["msg"]) }
@@ -64,6 +62,13 @@
 
     </div>
 }
+
+@if (Request.UrlReferrer != null)
+{
+    <button class="btn btn-large btn-block btn-primary btn-lg btn-primary" onclick="history.go(-1); return false;">powrót</button>
+}
+
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

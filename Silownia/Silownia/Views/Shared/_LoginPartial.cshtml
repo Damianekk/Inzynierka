@@ -7,7 +7,7 @@
         <ul class="nav navbar-nav navbar-right">
 
 
-            @if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+            @if (Session["Auth"].ToString() == "Administrator")
             {
 
                 <li>@Html.ActionLink("Siłownie", "Index", "Silownia")</li>
@@ -41,13 +41,50 @@
                     </ul>
                 </li>
 
-                @*<li>@Html.ActionLink("Sale", "Index", "Sala")</li>*@
+                <li>@Html.ActionLink("Konserwacje", "Index", "Konserwacja")</li>
+                <li>@Html.ActionLink("Specjalizacje", "Index", "Specjalizacja")</li>
+            }
+            else if (Session["Auth"].ToString() == "Recepcjonista")
+            {
+
+                <li>@Html.ActionLink("Siłownie", "Index", "Silownia")</li>
+
+                <li>@Html.ActionLink("Klienci", "Index", "Klient")</li>
+                <li>@Html.ActionLink("Umowy", "Index", "Umowa")</li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pracownicy <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><img src="~/Content/ikony/persony/ikona_instruktor60px.png" height="50" width="50" style="float:right">@Html.ActionLink("Instruktorzy", "Index", "Instruktor")</li>
+                        <li role="separator" class="divider"></li>
+                        <li><img src="~/Content/ikony/persony/ikona_trenerPersonalny60px.png" height="50" width="50" style="float:right">@Html.ActionLink("Trenerzy", "Index", "Trener")</li>
+                        <li role="separator" class="divider"></li>
+                        <li><img src="~/Content/ikony/persony/ikona_masazysta60px.png" height="50" width="50" style="float:right">@Html.ActionLink("Masażyści", "Index", "Masazysta") </li>
+                        <li role="separator" class="divider"></li>
+                        <li><img src="~/Content/ikony/persony/ikona_recepcjonista60px.png" height="50" width="50" style="float:right">@Html.ActionLink("Recepcjoniści", "Index", "Recepcjonista")</li>
+                        <li role="separator" class="divider"></li>
+                        <li><img src="~/Content/ikony/persony/ikona_konserwator60px.png" height="50" width="50" style="float:right">@Html.ActionLink("Konserwatorzy", "Index", "Konserwator")</li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Zajęcia <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><img src="~/Content/ikony/ikona_treningGrupowy60px.png" height="50" width="50" style="float:right">@Html.ActionLink("Treningi grupowe", "Index", "ZajeciaGrup")</li>
+                        <li role="separator" class="divider"></li>
+                        <li><img src="~/Content/ikony/ikona_treningPersonalny60px.png" height="50" width="50" style="float:right">@Html.ActionLink("Treningi personalne", "Index", "TreningPersonalny")</li>
+                        <li role="separator" class="divider"></li>
+                        <li><img src="~/Content/ikony/ikona_masaz60px.png" height="50" width="50" style="float:right">@Html.ActionLink("Masaże", "Index", "Masaz")</li>
+                    </ul>
+                </li>
+
+                <li>@Html.ActionLink("Konserwacje", "Index", "Konserwacja")</li>
             }
             else if (Session["Auth"].ToString() == "Klient")
             {
-                
+
                 <li>@Html.ActionLink("Panel klienta", "Index", "KlientView/Index/" + Session["loggedUserID"])</li>
-    
+
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Zapisz się<span class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -73,7 +110,7 @@
             }
             else if (Session["Auth"].ToString() == "Konserwator")
             {
-                <li>@Html.ActionLink("Panel konserwatora", "Index", "MasazystaView")</li>
+                <li>@Html.ActionLink("Panel konserwatora", "Index", "KonserwatorView")</li>
             }
 
             <li><a href="javascript:document.getElementById('logoutForm').submit()">Wyloguj</a></li>

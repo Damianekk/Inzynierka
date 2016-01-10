@@ -59,75 +59,206 @@
     }
 
 </script>
+@Scripts.Render("~/Scripts/infoCzynnosc.js")
+@if (ViewBag.Akcja != null)
+{
+    if (ViewBag.Akcja != AkcjaEnumTrening.Brak)
+    {
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <div class="alert alert-success">
+            <br />
+            <h4>@PelnaNazwaEnum.GetDescription(@ViewBag.Akcja)</h4>
+            <br />
+        </div>
+    }
+}
+
 <html>
-    <head>
-
-    </head>
-
-    <body>
-        @* Zdjecie *@
-        <div class="col-xs-2"style="width:315px;height:380px;">
-            <img src="https://upload.wikimedia.org/wikipedia/en/7/70/Shawn_Tok_Profile.jpg" height="300" width="300">
-        </div>
-        @* Dane klienta *@
-        <div class="col-xs-3" style="border:solid; height:380px">
+<body>
+    @* Zdjecie *@
+    <div class="col-xs-2" style="width:300px;height:380px;">
+        <img src="https://upload.wikimedia.org/wikipedia/en/7/70/Shawn_Tok_Profile.jpg" height="285" width="285">
+    </div>
+    @* Dane trenera *@
+    <div class="col-xs-3" style="border:solid; height:450px">
         <div style="text-align:right">DANE PERSONALNE</div>
-           <h4>Imie:</h4><h3 style="color:aquamarine">@Model.Imie</h3>
+        <h4>Imię:</h4><h3 style="color:aquamarine">@Model.Imie</h3>
+        <br />
+        <h4>Nazwisko:</h4><h3 style="color:aquamarine">@Model.Nazwisko</h3>
+        <br />
+        <h4>Data urodzenia:</h4><h3 style="color:aquamarine">@Model.DataUrodzenia.ToShortDateString()</h3>
+        <br />
+        <h4>Numer kontaktowy:</h4><h3 style="color:aquamarine">@Model.NrTelefonu</h3>
+        <br />
+    </div>
+    @* Siłownia *@
+    <div class="col-xs-4" style="border:solid; height:450px; min-width:340px;">
+        <div style="text-align:right">SIŁOWNIA</div>
+        <h4>Nazwa siłowni:</h4><h3 style="color:aquamarine">@Model.Silownia.Nazwa</h3>
+        <br />
+        <h4>Info:</h4><h3 style="color:aquamarine">@Model.Silownia.infoDodatkowe</h3>
+        <br />
+        <h4>Numer kontaktowy:</h4><h3 style="color:aquamarine">@Model.Silownia.NrTelefonu</h3>
+        <br />
+        <h4>Adres:</h4><h3 style="color:aquamarine">@Model.Silownia.Adres.Miasto, @Model.Silownia.Adres.Ulica @Model.Silownia.Adres.NrBudynku / @Model.Silownia.Adres.NrLokalu</h3>
+        <br />
+    </div>
+    @* Szczegóły kontraktu *@
+    <div class="col-xs-2" style="border:solid; width:300px; height:450px;">
+        <div style="text-align:right">UMOWA Z PRACODAWCĄ</div>
+        <h4>Zatrudnienie od:</h4><h3 style="color:aquamarine">@Model.DataZatrudnienia.ToShortDateString()</h3>
+        <br />
+        <h4>Pensja podstawowa:</h4><h3 style="color:aquamarine">@Model.Pensja zł</h3>
+        <br />
+        <h4>Stawka za godzinę pracy:</h4><h3 style="color:aquamarine">@Model.StawkaGodzinowa zł</h3>
+        <br />
+
+    </div>
+    @* Najnowszy trening *@
+    <div class="col-xs-2" style="border: solid; width:300px; height:450px">
+        <div style="text-align:right">NAJNOWSZY TRENING</div>
+        @if (@Model.TreningiPersonalne.FirstOrDefault() != null)
+        {
+            <h4>Data:</h4><h3 style="color:aquamarine">@Model.TreningiPersonalne.Last().TreningStart.ToShortDateString()</h3>
             <br />
-            <h4>Nazwisko:</h4><h3 style="color:aquamarine">@Model.Nazwisko</h3>
+            <h4>Godzina:</h4><h3 style="color:aquamarine">@Model.TreningiPersonalne.Last().TreningStartGodzina.ToShortTimeString()</h3>
             <br />
-            <h4>Data urodzenia:</h4><h3 style="color:aquamarine">@Model.DataUrodzenia.ToShortDateString()</h3>
+            <h4>Klient:</h4><h3 style="color:aquamarine">@Model.TreningiPersonalne.Last().Klient.imieNazwisko</h3>
             <br />
-        </div>
-        @* Adres *@
-        <div class="col-xs-4" style="border:solid; height:380px; min-width:340px;">
-            <div style="text-align:right">ADRES</div>
-            @if (Model.Adres != null)
-            {
-            <h4>Kod pocztowy:</h4><h3 style="color:aquamarine">@Model.Adres.KodPocztowy</h3>
-            <br />
-            <h4>Miasto:</h4><h3 style="color:aquamarine">@Model.Adres.Miasto</h3>
-            <br />
-            <h4>Adres:</h4><h3 style="color:aquamarine">@Model.Adres.Ulica @Model.Adres.NrBudynku  @Model.Adres.NrLokalu</h3>
-            <br />
-            }
-            else
-            {
-                <h1 style="color:palevioletred; text-align:center">BRAK DANYCH</h1>
-            }
-        </div>
-        <div class="col-xs-2" style=" width:700px; height:320px">
+        }
+        else
+        {
+            <h3 style="color:palevioletred">BRAK</h3>
+        }
+
+    </div>
+    <div class="col-xs-2" style="border:solid; width:530px; height:320px">
         <h3>Odebrane wiadmości</h3>
         @if (ViewBag.Wiad != null)
         {
 
             @Html.TextArea("WiadomosciOdebrane", htmlAttributes: new { style = "width: 100%; max-width: 100%; height:250px;", @readonly = "readonly" })
-        //    @Html.TextArea("WiadomosciOdebrane", new { @style = "width:650px; height:180px" })
+            //    @Html.TextArea("WiadomosciOdebrane", new { @style = "width:650px; height:180px" })
             <script type="text/javascript">Odbierz();</script>
             @*<h3>
-            @{
-                @ViewBag.Wiad[0].Tresc
-                @: |
-                @ViewBag.Wiad[0].OsobaWysylajaca
-                @: |
-                @ViewBag.Wiad[0].OsobaOdbierajaca
-        }
-    </h3>*@
+                        @{
+                            @ViewBag.Wiad[0].Tresc
+                            @: |
+                            @ViewBag.Wiad[0].OsobaWysylajaca
+                            @: |
+                            @ViewBag.Wiad[0].OsobaOdbierajaca
+                    }
+                </h3>*@
         }
 
 
+    </div>
+
+    <div class="col-xs-2" style="border:solid; width:300px; height:320px">
+
+        <h3>Wyślij wiadomość</h3>
+        @Html.DropDownList("Klienci", "**Klienci**")
+        @Html.TextArea("Wiadomosc", new { @style = "width:270px; height:180px" })
+        <button type="button" id="Send" class="btn btn-primary" role="button" onclick="Wyslij()" style="width:270px; ">Wyślij</button>
+
+    </div>
+    @* Moje treningi itp *@
+    <div class="col-xs-2" style=" border-top:solid; width:1050px; height:320px">
+        <h3 style="text-align:center">Moje zajęcia</h3>
+        @* Treningi grupowe *@
+        <div class="wrap">
+            <img class="show_hide" src="~/Content/ikony/ikona_treningPersonalny.png" width="90" height="90">
+            <div class="slidingDivON">
+                <dl class="table-bordered" ,new style="color:#782D86">
+                    <dt>
+                        @Html.Label("Zaplanowane treningi personalne", new { style = "color:#782D86" })
+                    </dt>
+                    @if (Model.TreningiPersonalne.Count > 0)
+                    {
+                        <dd>
+                            <table class="table">
+                                <tr>
+                                    <th>Klient</th>
+                                    <th>Fokus treningu</th>
+                                    <th>Data treningu</th>
+                                    <th>Godzina</th>
+                                    <th>Czas trwania</th>
+                                    <th>Całkowity koszt</th>
+                                    <th></th>
+                                </tr>
+                                @foreach (var item in Model.TreningiPersonalne.Where(a=>a.TreningStart.Day >= DateTime.Now.Day))
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Klient.imieNazwisko)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Trener.Specjalizacja.Nazwa)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TreningStart)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TreningStartGodzina)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.CzasTrwania)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.kosztTreningu) zł
+                                        </td>
+                                        <td>
+                                            <button class="btn-danger btn-small" onclick="location.href='@Url.Action("UsunTrenerowiTreningPersonalny", "TrenerView", new { id = item.TreningID })';return false;">Anuluj</button>
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                        </dd>
+                    }
+                    else
+                    {
+                        <dt>
+                            @Html.Label("Brak treningów", new { style = "color:#D11919" })
+                        </dt>
+                    }
+                </dl>
+            </div>
         </div>
-
-        <div class="col-xs-2" style="border:solid; width:300px; height:320px">
-
-            <h3>Wyślij wiadomość</h3>
-           @Html.DropDownList("Klienci", "**Klienci**")
-            @Html.TextArea("Wiadomosc",new { @style="width:270px; height:180px" })
-            <button type="button" id="Send" class="btn btn-primary" role="button" onclick="Wyslij()" style="width:270px; " >Wyślij</button>
-              
-</div>
+    </div>
 
 
-
-    </body>
+</body>
 </html>
+
+
+
+<style type="text/cs">
+    div.wrap {
+        float: left;
+        width: 500px;
+    }
+
+    img.show_hide {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .slidingDiv {
+        width: 500px;
+        display: none;
+    }
+
+    .slidingDivON {
+        width: 500px;
+    }
+</style>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">
+</script>
+<script type="text/javascript">
+    $('img.show_hide').on("click", function () {
+        $('div.slidingDiv').stop().slideUp('fast');
+        $('div.slidingDivON').stop().slideUp('fast');
+        $(this).next('div.slidingDiv').stop().slideToggle('fast');
+        $(this).next('div.slidingDivON').stop().slideToggle('fast');
+    });
+</script>
