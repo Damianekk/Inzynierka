@@ -17,7 +17,7 @@ textarea {
 }
 
 a.umowaPic {
-    background: url('/Content/ikony/ikona_umowa60px.png') no-repeat;
+    background: url('~/Content/ikony/ikona_umowa60px.png') no-repeat;
     display: block;
     width: 60px;
     height: 60px;
@@ -25,7 +25,7 @@ a.umowaPic {
 }
 
 a.konserwacjaPic {
-    background: url('/Content/ikony/ikona_konserwacja60px.png') no-repeat;
+    background: url('~/Content/ikony/ikona_konserwacja60px.png') no-repeat;
     display: block;
     width: 60px;
     height: 60px;
@@ -33,7 +33,7 @@ a.konserwacjaPic {
 }
 
 a.masazPic {
-    background: url('/Content/ikony/ikona_masaz60px.png') no-repeat;
+    background: url('~/Content/ikony/ikona_masaz60px.png') no-repeat;
     display: block;
     width: 60px;
     height: 60px;
@@ -41,7 +41,7 @@ a.masazPic {
 }
 
 a.treningPersonalnyPic {
-    background: url('/Content/ikony/ikona_treningPersonalny60px.png') no-repeat;
+    background: url('~/Content/ikony/ikona_treningPersonalny60px.png') no-repeat;
     display: block;
     width: 60px;
     height: 60px;
@@ -49,7 +49,7 @@ a.treningPersonalnyPic {
 }
 
 a.adresPic {
-    background: url('/Content/ikony/ikona_adres60px.png') no-repeat;
+    background: url('~/Content/ikony/ikona_adres60px.png') no-repeat;
     display: block;
     width: 60px;
     height: 60px;
@@ -57,7 +57,7 @@ a.adresPic {
 }
 
 a.adresSilowniaPic {
-    background: url('/Content/ikony/silownia/ikona_adres_silownia_60px.png') no-repeat;
+    background: url('~/Content/ikony/silownia/ikona_adres_silownia_60px.png') no-repeat;
     display: block;
     width: 60px;
     height: 60px;
@@ -65,7 +65,7 @@ a.adresSilowniaPic {
 }
 
 a.instruktorPic{
-    background: url('/Content/ikony/persony/ikona_instruktor60px.png') no-repeat;
+    background: url('~/Content/ikony/persony/ikona_instruktor60px.png') no-repeat;
     display: block;
     width: 60px;
     height: 60px;
@@ -393,7 +393,7 @@ th{
     padding: 100px 0;
     text-align: center;
     color: #fff;
-    background: url('/Content/PURE MUSCLES.jpg') no-repeat bottom center scroll;
+    background: url('~/Content/PURE MUSCLES.jpg') no-repeat bottom center scroll;
     background-color: #000;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -401,7 +401,8 @@ th{
     -o-background-size: cover;
 }
 
-@media (min-width: 768px)
+@media (min-width: 768px) {
+}
 .intro {
     height: 100%;
     padding: 0;
