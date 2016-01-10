@@ -20,13 +20,18 @@ namespace Silownia.Controllers
         private SilowniaContext db = new SilowniaContext();
 
         // GET: Zapis
-        public ActionResult Index(int page = 1, int pageSize = 10, AkcjaZapisEnum akcja = AkcjaZapisEnum.Brak)
+        public ActionResult Index(string SilowniaID, int page = 1, int pageSize = 10, AkcjaZapisEnum akcja = AkcjaZapisEnum.Brak)
         {
             if (Session["Auth"] != null)
             {
                 if (Session["Auth"].ToString() == "Klient")
                 {
+                    ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
+
                     var zajeciaGrup = from ZajeciaGrupowe in db.ZajeciaGrup select ZajeciaGrupowe;
+
+                    zajeciaGrup = zajeciaGrup.Search(SilowniaID, i => i.Sala.Silownia.Nazwa);
+
                     var final = zajeciaGrup.OrderBy(p => p.Instruktor.Nazwisko);
                     var ileWynikow = zajeciaGrup.Count();
                     if ((ileWynikow / page) <= 1)
@@ -104,10 +109,8 @@ namespace Silownia.Controllers
                     {
                         return HttpNotFound();
                     }
-                    string login = Session["User"].ToString();
-                    Uzytkownik uzytkownik = db.Uzytkownicy.Where(s => s.Login == login).First();
 
-                    Klient klient = db.Klienci.Find(uzytkownik.IDOsoby);
+                    Klient klient = db.Klienci.Find(Session["loggedUserID"]);
 
                     if (klient.KlienciTreningiGrupowe.Where(s => s.TreningID == zajecia.TreningID).Count() != 0)
                     {

@@ -47,57 +47,113 @@
     }
 }
 <h2>Lista zajęć grupowych:</h2>
-<table class="table table-hover table-condensed">
-    <tr>
-        <th>
-            @Html.Label("Instruktor:")
-        </th>
-        <th>
-            @Html.Label("Sala:")
-        </th>
-         <th>
-            @Html.Label("Początek treningu:")
-        </th>
-        <th>
-            @Html.Label("Czas trwania treningu:")
-        </th>
-        <th>
-            @Html.Label("Nazwa treningu:")
-        </th>
-        <th>
-            @Html.Label("Opis treningu:")
-        </th>
-        <th></th>
-    </tr>
-    @foreach (var item in Model)
+<div class="divDark">
+    @using (Html.BeginForm())
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Instruktor.imieNazwisko)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Sala.Numer_sali)
-            </td>
-             <td>
-                @Html.DisplayFor(modelItem => item.TreningStart)
-            </td>
-             <td>
-                @Html.DisplayFor(modelItem => item.CzasTrwania)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NazwaTreningu)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OpisTreningu)
-            </td>
-            <td>
-                <div class="btn-group">
-                    <button class="btn-default btn-lg" onclick="location.href='@Url.Action("Save", "ZapisZajeciaGrupowe", new { id = item.TreningID })';return false;">zapisz się</button>
-                     <button class="btn-default btn-lg" onclick="location.href='@Url.Action("Remove", "ZapisZajeciaGrupowe", new { id = item.TreningID })';return false;">wypisz się</button>
-                    <button class="btn-primary btn-lg" onclick="location.href='@Url.Action("Details", "ZapisZajeciaGrupowe", new { id = item.TreningID })';return false;">szczegóły</button>
-                </div>
-            </td>
-        </tr>
+        @Html.Partial("KryteriaSzukania/_silownia")
+        <br />
+        <input type="submit" value="szukaj" class="btn btn-info" style="width:10%" />
+        <br />
     }
-</table>
+</div>
+  <div class="wrap">
+        <img class="show_hide" src="~/Content/ikony/ikona_treningGrupowy.png" width="90" height="90">    Treningi grupowe, na które jesteś zapisany
+        <div class="slidingDiv" style="display:none">
+            <dl class="table-bordered" ,new style="color:#F15B4D">
+                <dd>
+                <table class="table table-hover table-condensed">
+                    <tr>
+                        <th>
+                            @Html.Label("Instruktor:")
+                        </th>
+                        <th>
+                            @Html.Label("Sala:")
+                        </th>   
+                        <th>
+                            @Html.Label("Siłownia:")
+                        </th>
+                         <th>
+                            @Html.Label("Początek treningu:")
+                        </th>
+                        <th>
+                            @Html.Label("Czas trwania treningu:")
+                        </th>
+                        <th>
+                            @Html.Label("Nazwa treningu:")
+                        </th>
+                        <th>
+                            @Html.Label("Opis treningu:")
+                        </th>
+                        <th></th>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                        @Html.Partial("_zajeciaZapisany", item)
+                        </tr>
+                    }
+                </table>
+                </dd>
+          </dl>
+     </div>
+</div>
 
+  <div class="wrap">
+        <img class="show_hide" src="~/Content/ikony/ikona_treningGrupowy.png" width="90" height="90">    Zapisz się również na inne dostępne zajęcia
+        <div class="slidingDiv" style="display:none">
+            <dl class="table-bordered" ,new style="color:#F15B4D">
+                @if (Model.Count > 0)
+                {
+                <dd>
+                <table class="table table-hover table-condensed">
+                    <tr>
+                        <th>
+                            @Html.Label("Instruktor:")
+                        </th>
+                        <th>
+                            @Html.Label("Sala:")
+                        </th>
+                        <th>
+                            @Html.Label("Siłownia:")
+                        </th>
+                         <th>
+                            @Html.Label("Początek treningu:")
+                        </th>
+                        <th>
+                            @Html.Label("Czas trwania treningu:")
+                        </th>
+                        <th>
+                            @Html.Label("Nazwa treningu:")
+                        </th>
+                        <th>
+                            @Html.Label("Opis treningu:")
+                        </th>
+                        <th></th>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                           @Html.Partial("_zajeciaNiezapisany", item)   
+                        </tr>
+                    }
+                </table>
+                </dd>
+                }
+                else
+                {
+                    <dt>
+                        @Html.Label("Nie ma zajęć, na które mógłbyś się zapisać", new { style = "color:#D11919" })
+                    </dt>
+                }
+          </dl>
+     </div>
+</div>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">
+</script>
+<script type="text/javascript">
+    $('img.show_hide').on("click", function () {
+        $('div.slidingDiv').stop().slideUp('fast');
+        $(this).next('div.slidingDiv').stop().slideToggle('fast');
+    });
+</script>

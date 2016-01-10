@@ -74,30 +74,11 @@
 
     };
 
-    @*function Odbierz()
-    {
-        var okienko = document.getElementById("WiadomosciOdebrane");
-        var osWys ;
-
-        var array = @Html.Raw(Json.Encode(@ViewBag.Wiad));
-
-        for(var i = 0; i < array.length; i++) {
-            osWys = array[i].OsobaWysylajaca;
-
-            okienko.innerHTML = array[i].OsobaWysylajaca.imieNazwisko+": "+array[i].Tresc+"\n----------------------------------------------------------------------------------------------------------------------------------------------------------------------";
-       
-            okienko.style.fontSize = "small";
-
-        }
-
-    }*@
-
-
 </script>
 @Scripts.Render("~/Scripts/infoCzynnosc.js")
 @if (ViewBag.Akcja != null)
 {
-    if (ViewBag.Akcja == AkcjaEnumMasaz.DodanoMasaz)
+    if (ViewBag.Akcja != AkcjaEnumMasaz.Brak)
     {
         <a href="#" class="close" data-dismiss="alert">&times;</a>
         <div class="alert alert-success">
@@ -109,186 +90,269 @@
 }
 
 <html>
-    <head>
+<head>
     <title></title>
-    </head>
+</head>
 
-    <body>
-        @* Zdjecie *@
-        <div class="col-xs-2" style="width:350px;height:240px;" id="Zdjecie">
-          
-        </div>
-        @* Dane klienta *@
-        <div class="col-xs-3" style="border:solid; height:380px">
-        <div style="text-align:right">DANE PERSONALNE</div> 
-           <h4>Imie:</h4><h3 style="color:aquamarine">@Model.Imie</h3>
-            <br />
-            <h4>Nazwisko:</h4><h3 style="color:aquamarine">@Model.Nazwisko</h3>
-            <br />
-            <h4>Data urodzenia:</h4><h3 style="color:aquamarine">@Model.DataUrodzenia.ToShortDateString()</h3>
-            <br />
-        </div>
-        @* Adres *@
-        <div class="col-xs-4" style="border:solid; height:380px; min-width:340px;">
-            <div style="text-align:right">ADRES</div> 
-            @if (Model.Adres != null)
-            {
+<body>
+    @* Zdjecie *@
+    <div class="col-xs-2" style="width:350px;height:240px;" id="Zdjecie">
+
+    </div>
+    @* Dane klienta *@
+    <div class="col-xs-3" style="border:solid; height:380px">
+        <div style="text-align:right">DANE PERSONALNE</div>
+        <h4>Imie:</h4><h3 style="color:aquamarine">@Model.Imie</h3>
+        <br />
+        <h4>Nazwisko:</h4><h3 style="color:aquamarine">@Model.Nazwisko</h3>
+        <br />
+        <h4>Data urodzenia:</h4><h3 style="color:aquamarine">@Model.DataUrodzenia.ToShortDateString()</h3>
+        <br />
+    </div>
+    @* Adres *@
+    <div class="col-xs-4" style="border:solid; height:380px; min-width:340px;">
+        <div style="text-align:right">ADRES</div>
+        @if (Model.Adres != null)
+        {
             <h4>Kod pocztowy:</h4><h3 style="color:aquamarine">@Model.Adres.KodPocztowy</h3>
             <br />
             <h4>Miasto:</h4><h3 style="color:aquamarine">@Model.Adres.Miasto</h3>
             <br />
             <h4>Adres:</h4><h3 style="color:aquamarine">@Model.Adres.Ulica @Model.Adres.NrBudynku  @Model.Adres.NrLokalu</h3>
             <br />
-            }
-            else
-            {
-                <h1 style="color:palevioletred; text-align:center">BRAK DANYCH</h1>
-            }
-        </div>
-        @* Umowa *@
-        <div class="col-xs-2" style="border:solid; width:300px; height:190px;">
-            <h3>Umowa aktywna</h3>  
-            @if(@Model.Umowy.FirstOrDefault() != null)
-            {
-                <h3 style="color:aquamarine">@Model.Umowy.First().DataZakonczenia.ToShortDateString()</h3>
+        }
+        else
+        {
+            <h1 style="color:palevioletred; text-align:center">BRAK DANYCH</h1>
+        }
+    </div>
+    @* Umowa *@
+    <div class="col-xs-2" style="border:solid; width:300px; height:190px;">
+        <h3>Umowa aktywna</h3>
+        @if (@Model.Umowy.FirstOrDefault() != null)
+        {
+            <h3 style="color:aquamarine">@Model.Umowy.First().DataZakonczenia.ToShortDateString()</h3>
 
-            }
-            else
-            {
-                <h3 style="color:palevioletred">BRAK</h3>
-            }
+        }
+        else
+        {
+            <h3 style="color:palevioletred">BRAK</h3>
+        }
 
-        </div>
-        @* Ostatni trening *@
-        <div class="col-xs-2" style="border: solid; width:300px; height:190px">
+    </div>
+    @* Najnowszy trening *@
+    <div class="col-xs-2" style="border: solid; width:300px; height:190px">
+        <h3>Najnowszy trening</h3>
+        @if (@Model.TreningiPersonalne.FirstOrDefault() != null)
+        {
+            <h3 style="color:aquamarine">@Model.TreningiPersonalne.Last().TreningStart.ToShortDateString()</h3>
+            <h3 style="color:aquamarine">@Model.TreningiPersonalne.Last().TreningStartGodzina.ToShortTimeString()</h3>
+        }
+        else
+        {
+            <h3 style="color:palevioletred">BRAK</h3>
+        }
 
-            <h3>Ostatni trening własny</h3>
-
-
-        </div>
-        @* Moje masaże itp *@
-        <div class="col-xs-2" style=" width:735px; height:320px">
-          <h3 style="text-align:center">Moje</h3>
-            @* Treningi grupowe *@
-            <div class="wrap">
-                <img class="show_hide" src="~/Content/ikony/ikona_treningGrupowy.png" width="90" height="90" title="Treningi">
-                <div class="slidingDiv" style="display:none">
-                    <dl class="table-bordered" ,new style="color:#F15B4D">
-                        <dt>
-                            @Html.Label("Treningi grupowe", new { style = "color:#F15B4D" })
-                        </dt>
-                        @if (Model.KlienciTreningiGrupowe.Count > 0)
-                        {
-                            <dd>
-                                <table class="table">
+    </div>
+    @* Moje masaże itp *@
+    <div class="col-xs-2" style=" width:820px; height:320px">
+        <h3 style="text-align:center">Moje zajęcia</h3>
+        @* Treningi grupowe *@
+        <div class="wrap">
+            <img class="show_hide" src="~/Content/ikony/ikona_treningGrupowy.png" width="90" height="90" title="Treningi">
+            <div class="slidingDiv" style="display:none">
+                <dl class="table-bordered" ,new style="color:#F15B4D">
+                    <dt>
+                        @Html.Label("Zaplanowane treningi grupowe", new { style = "color:#F15B4D" })
+                    </dt>
+                    @if (Model.KlienciTreningiGrupowe.Count > 0)
+                    {
+                        <dd>
+                            <table class="table">
+                                <tr>
+                                    <th>Siłownia</th>
+                                    <th>Fokus treningu</th>
+                                    <th>Opis treningu</th>
+                                    <th>Instruktor prowadzący</th>
+                                    <th>Sala</th>
+                                    <th>Czas trwania</th>
+                                    <th>Data treningu</th>
+                                    <th>Ilosc osób</th>
+                                </tr>
+                                @foreach (var item in Model.KlienciTreningiGrupowe.Where(a => a.ZajeciaGrupowe.TreningStart.Day >= DateTime.Now.Day))
+                                {
                                     <tr>
-                                        <th>Fokus treningu</th>
-                                        <th>Opis treningu</th>
-                                        <th>Instruktor prowadzący</th>
-                                        <th>Sala</th>
-                                        <th>Czas trwania</th>
-                                        <th>Data treningu</th>
-                                        <th>Ilosc osób</th>
+                                        <td>@Html.DisplayFor(model => item.ZajeciaGrupowe.Sala.Silownia.Nazwa)</td>
+                                        <td>@Html.DisplayFor(model => item.ZajeciaGrupowe.NazwaTreningu)</td>
+                                        <td>@Html.DisplayFor(model => item.ZajeciaGrupowe.OpisTreningu)</td>
+                                        <td>@Html.DisplayFor(model => item.ZajeciaGrupowe.Instruktor.imieNazwisko)</td>
+                                        <td>@Html.DisplayFor(model => item.ZajeciaGrupowe.Sala.Numer_sali)</td>
+                                        <td>@Html.DisplayFor(model => item.ZajeciaGrupowe.CzasTrwania)</td>
+                                        <td>@Html.DisplayFor(model => item.ZajeciaGrupowe.TreningStart)</td>
+                                        <td>@Html.DisplayFor(model => item.ZajeciaGrupowe.KlientZajeciaGrupowe.Count)</td>
+                                        <td>
+                                            <button class="btn-danger btn-small" onclick="location.href='@Url.Action("UsunKlientowiTreningGrupowy", "KlientView", new { id = item.TreningID })';return false;">Wypisz</button>
+                                        </td>
                                     </tr>
-                                    @foreach (var item in Model.KlienciTreningiGrupowe)
-                                    {
-                                        <tr>
-                                            <td>@Html.DisplayFor(model => item.ZajeciaGrupowe.NazwaTreningu)</td>
-                                            <td>@Html.DisplayFor(model => item.ZajeciaGrupowe.OpisTreningu)</td>
-                                            <td>@Html.DisplayFor(model => item.ZajeciaGrupowe.Instruktor.imieNazwisko)</td>
-                                            <td>@Html.DisplayFor(model => item.ZajeciaGrupowe.Sala.Numer_sali)</td>
-                                            <td>@Html.DisplayFor(model => item.ZajeciaGrupowe.CzasTrwania)</td>
-                                            <td>@Html.DisplayFor(model => item.ZajeciaGrupowe.TreningStart)</td>
-                                            <td>@Html.DisplayFor(model => item.ZajeciaGrupowe.KlientZajeciaGrupowe.Count)</td>
-                                        </tr>
-                                    }
-                                </table>
-                            </dd>
-                        }
-                        else
-                        {
-                            <dt>
-                                @Html.Label("Brak treningów grupowych", new { style = "color:#D11919" })
-                            </dt>
-                        }
-                    </dl>
-                </div>
-            </div>
-            @* Masaże*@
-            <div class="wrap">
-                <img class="show_hide" src="/Content/ikony/ikona_masaz.png" width="90" height="90">
-                <div class="slidingDiv" style="display:none">
-                    <dl class="table-bordered" ,new style="color:#B8C932">
+                                }
+                            </table>
+                        </dd>
+                    }
+                    else
+                    {
                         <dt>
-                            @Html.Label("Masaże", new { style = "color:#B8C932" })
+                            @Html.Label("Brak zaplanowanych grupowych", new { style = "color:#D11919" })
                         </dt>
-                        @if (Model.Masaze.Count > 0)
-                        {
-                            <dd>
-                                <table class="table">
-                                    <tr>
-                                        <th>Masażysta</th>
-                                        <th>Data masażu</th>
-                                        <th>Godzina</th>
-                                        <th>Czas trwania</th>
-                                        <th>Całkowity koszt</th>
-                                        <th></th>
-                                    </tr>
-                                    @foreach (var item in Model.Masaze)
-                                    {
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Masazysta.imieNazwisko)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.DataMasazu)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.MasazStart)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.CzasTrwania)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.kosztMasazu) zł
-                                            </td>
-                                          
-                                        </tr>
-                                    }
-                                </table>
-                            </dd>
-                        }
-                        else
-                        {
-                            <dt>
-                                @Html.Label("Brak masaży", new { style = "color:#D11919" })
-                            </dt>
-                        }
-                    </dl>
-                </div>
+                    }
+                </dl>
             </div>
         </div>
-        @* Odebrane wiadomości *@
-        <div class="col-xs-2" style=" width:700px; height:320px">
+        @* Masaże*@
+        <div class="wrap">
+            <img class="show_hide" src="/Content/ikony/ikona_masaz.png" width="90" height="90">
+            <div class="slidingDiv" style="display:none">
+                <dl class="table-bordered" ,new style="color:#B8C932">
+                    <dt>
+                        @Html.Label("Zaplanowane masaże", new { style = "color:#B8C932" })
+                    </dt>
+                    @if (Model.Masaze.Count > 0)
+                    {
+                        <dd>
+                            <table class="table">
+                                <tr>
+                                    <th>Siłownia</th>
+                                    <th>Masażysta</th>
+                                    <th>Data masażu</th>
+                                    <th>Godzina</th>
+                                    <th>Czas trwania</th>
+                                    <th>Całkowity koszt</th>
+                                    <th></th>
+                                </tr>
+                                @foreach (var item in Model.Masaze.Where(a => a.MasazStart.Day >= DateTime.Now.Day))
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Masazysta.Silownia.Nazwa)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Masazysta.imieNazwisko)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.DataMasazu)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MasazStart)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.CzasTrwania)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.kosztMasazu) zł
+                                        </td>
+                                        <td>
+                                            <button class="btn-danger btn-small" onclick="location.href='@Url.Action("UsunKlientowiMasaz", "KlientView", new { id = item.MasazID })';return false;">Wypisz</button>
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                        </dd>
+                    }
+                    else
+                    {
+                        <dt>
+                            @Html.Label("Brak zaplanowanych masaży", new { style = "color:#D11919" })
+                        </dt>
+                    }
+                </dl>
+            </div>
+        </div>
+
+        @* Treningi personalne*@
+        <div class="wrap">
+            <img class="show_hide" src="~/Content/ikony/ikona_treningPersonalny.png" width="90" height="90">
+            <div class="slidingDiv" style="display:none">
+                <dl class="table-bordered" ,new style="color:#782D86">
+                    <dt>
+                        @Html.Label("Zaplanowane treningi personalne", new { style = "color:#782D86" })
+                    </dt>
+                    @if (Model.TreningiPersonalne.Count > 0)
+                    {
+                        <dd>
+                            <table class="table">
+                                <tr>
+                                    <th>Siłownia</th>
+                                    <th>Trener</th>
+                                    <th>Fokus treningu</th>
+                                    <th>Data treningu</th>
+                                    <th>Godzina</th>
+                                    <th>Czas trwania</th>
+                                    <th>Całkowity koszt</th>
+                                    <th></th>
+                                </tr>
+                                @foreach (var item in Model.TreningiPersonalne.Where(a => a.TreningStart.Day >= DateTime.Now.Day))
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Trener.Silownia.Nazwa)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Trener.imieNazwisko)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Trener.Specjalizacja.Nazwa)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TreningStart)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TreningStartGodzina)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.CzasTrwania)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.kosztTreningu) zł
+                                        </td>
+                                        <td>
+                                            <button class="btn-danger btn-small" onclick="location.href='@Url.Action("UsunKlientowiTreningPersonalny", "KlientView", new { id = item.TreningID })';return false;">Wypisz</button>
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                        </dd>
+                    }
+                    else
+                    {
+                        <dt>
+                            @Html.Label("Brak zaplanowanych treningów", new { style = "color:#D11919" })
+                        </dt>
+                    }
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    @* Odebrane wiadomości *@
+    <div class="col-xs-2" style=" width:650px; height:320px">
         <h3>Odebrane wiadmości <button type="button" id="OdbierzW" class="btn btn-primary" role="button" onclick="OdbierzWiad()" style="width:120px; ">Odśwież</button></h3>
 
-            @Html.TextArea("WiadomosciOdebrane", htmlAttributes: new { style = "width: 100%; max-width: 100%; height:250px;", @readonly = "readonly" })
-            
-        </div>
+        @Html.TextArea("WiadomosciOdebrane", htmlAttributes: new { style = "width: 100%; max-width: 100%; height:250px;", @readonly = "readonly" })
 
-        <div class="col-xs-2" style="border:solid; width:300px; height:320px">
+    </div>
 
-            <h3>Wiadomość do trenera</h3>
-          @Html.DropDownList("Trenerzy", String.Empty)
-            @Html.TextArea("Wiadomosc",new { @style="width:270px; height:180px" })
-            <button type="button" id="Send" class="btn btn-primary" role="button" onclick="Wyslij()" style="width:270px; " >Wyślij</button>
-          @*  *@
- 
-</div>
+    <div class="col-xs-2" style="border:solid; width:300px; height:320px">
+
+        <h3>Wiadomość do trenera</h3>
+        @Html.DropDownList("Trenerzy", String.Empty)
+        @Html.TextArea("Wiadomosc", new { @style = "width:270px; height:180px" })
+        <button type="button" id="Send" class="btn btn-primary" role="button" onclick="Wyslij()" style="width:270px; ">Wyślij</button>
+        @*  *@
+
+    </div>
 
 
 
-    </body>
+</body>
 </html>
 
 

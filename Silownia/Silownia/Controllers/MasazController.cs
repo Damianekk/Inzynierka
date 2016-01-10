@@ -20,7 +20,7 @@ namespace Silownia.Controllers
         private SilowniaContext db = new SilowniaContext();
 
         // GET: Masaz
-        public ActionResult Index(string imieNazwisko, string SilowniaID, string MasazystaID, int page = 1, int pageSize = 10, AkcjaEnumMasaz akcja = AkcjaEnumMasaz.Brak, String info = null)
+        public ActionResult Index(string imieNazwisko, string SilowniaID, string MasazystaID, bool czyPrzyszlosc = false, int page = 1, int pageSize = 10, AkcjaEnumMasaz akcja = AkcjaEnumMasaz.Brak, String info = null)
         {
             if (Session["Auth"] != null)
             {
@@ -41,9 +41,8 @@ namespace Silownia.Controllers
                         foreach (string wyraz in MasazystaID.Split(' '))
                             masaze = masaze.Search(wyraz, i => i.Masazysta.Imie, i => i.Masazysta.Nazwisko);
 
-                    //previous solution
-                    // masaze = masaze.Search(imieNazwisko, i => i.Klient.Imie, i => i.Klient.Nazwisko);
-                    // masaze = masaze.Search(MasazystaID, i => i.Masazysta.Imie, i => i.Masazysta.Nazwisko);
+                    if (czyPrzyszlosc)
+                        masaze = masaze.Where(u => u.DataMasazu.Day >= DateTime.Now.Day);
 
                     var final = masaze.OrderBy(p => p.Klient.Nazwisko);
                     var ileWynikow = masaze.Count();

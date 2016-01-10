@@ -20,7 +20,7 @@ namespace Silownia.Controllers
         private SilowniaContext db = new SilowniaContext();
 
         // GET: TreningPersonalny
-        public ActionResult Index(string imieNazwisko, string SilowniaID, string TrenerID, string SpecjalizacjaID, int page = 1, int pageSize = 10, AkcjaEnumTrening akcja = AkcjaEnumTrening.Brak, String info = null)
+        public ActionResult Index(string imieNazwisko, string SilowniaID, string TrenerID, string SpecjalizacjaID, bool czyPrzyszlosc = false, int page = 1, int pageSize = 10, AkcjaEnumTrening akcja = AkcjaEnumTrening.Brak, String info = null)
         {
             if (Session["Auth"] != null)
             {
@@ -43,6 +43,9 @@ namespace Silownia.Controllers
                             treningiPersonalne = treningiPersonalne.Search(wyraz, i => i.Trener.Imie, i => i.Trener.Nazwisko);
 
                     treningiPersonalne = treningiPersonalne.Search(SpecjalizacjaID, i => i.Trener.Specjalizacja.Nazwa);
+
+                    if (czyPrzyszlosc)
+                        treningiPersonalne = treningiPersonalne.Where(u => u.TreningStart.Day >= DateTime.Now.Day);
 
                     var final = treningiPersonalne.OrderBy(p => p.Klient.Nazwisko);
                     var ileWynikow = treningiPersonalne.Count();

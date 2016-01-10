@@ -132,6 +132,30 @@ namespace Silownia.Controllers
             //  return Json(new { ok = true, myData = silownie }, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult UsunKlientowiTreningGrupowy(long id)
+        {
+            var k = db.Klienci.Find(11);
+            var trening = db.ZajeciaGrup.Find(id);
 
+           // k.KlienciTreningiGrupowe.Remove(trening);
+            db.SaveChanges();
+            return null;
+        }
+
+        public ActionResult UsunKlientowiMasaz(long id)
+        {
+            var masaz = db.Masaze.Find(id);
+            db.Masaze.Remove(masaz);
+            db.SaveChanges();
+            return RedirectToAction("Index", "KlientView", new { akcja = AkcjaEnumMasaz.UsunietoMasaz });
+        }
+
+        public ActionResult UsunKlientowiTreningPersonalny(long id)
+        {
+            var trP = db.TreningiPersonalne.Find(id);
+            db.TreningiPersonalne.Remove(trP);
+            db.SaveChanges();
+            return RedirectToAction("Index", "KlientView", new { akcja = AkcjaEnumTrening.UsunietoTrening });
+        }
     }
 }
