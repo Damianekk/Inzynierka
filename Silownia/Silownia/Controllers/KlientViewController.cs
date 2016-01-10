@@ -149,5 +149,13 @@ namespace Silownia.Controllers
             db.SaveChanges();
             return RedirectToAction("Index", "KlientView", new { akcja = AkcjaEnumMasaz.UsunietoMasaz });
         }
+
+        public ActionResult UsunKlientowiTreningPersonalny(long id)
+        {
+            var trP = db.TreningiPersonalne.Find(id);
+            db.TreningiPersonalne.Remove(trP);
+            db.SaveChanges();
+            return RedirectToAction("Index", "KlientView", new { akcja = AkcjaEnumTrening.UsunietoTrening });
+        }
     }
 }

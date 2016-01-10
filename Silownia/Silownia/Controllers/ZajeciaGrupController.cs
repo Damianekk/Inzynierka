@@ -20,7 +20,7 @@ namespace Silownia.Controllers
         private SilowniaContext db = new SilowniaContext();
 
         // GET: ZajęciaGrupowe
-        public ActionResult Index(string SilowniaID, int page = 1, int pageSize = 10, AkcjaEnumTrening akcja = AkcjaEnumTrening.Brak, String info = null)
+        public ActionResult Index(string SilowniaID, bool czyPrzyszlosc = false, int page = 1, int pageSize = 10, AkcjaEnumTrening akcja = AkcjaEnumTrening.Brak, String info = null)
         {
             if (Session["Auth"] != null)
             {
@@ -31,6 +31,9 @@ namespace Silownia.Controllers
                     var zajeciaGrup = from ZajeciaGrupowe in db.ZajeciaGrup select ZajeciaGrupowe;
 
                     zajeciaGrup = zajeciaGrup.Search(SilowniaID, i => i.Instruktor.Silownia.Nazwa);
+
+                    if (czyPrzyszlosc)
+                        zajeciaGrup = zajeciaGrup.Where(u => u.TreningStart.Day >= DateTime.Now.Day);
 
                     var final = zajeciaGrup.OrderBy(p => p.Instruktor.Nazwisko);
                     var ileWynikow = zajeciaGrup.Count();
