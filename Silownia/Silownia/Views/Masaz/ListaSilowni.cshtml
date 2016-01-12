@@ -1,8 +1,29 @@
 ﻿@model Silownia.ViewModel.SilowniaMasazystaViewModel
 @{
-    Layout = "null";
+    Layout = null; 
 }
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#Silwnie-DropDown').change(function () {
+            $.ajax({
+                type: "GET",
+                data: { SilkaId: $("#Silwnie-DropDown").val() },
+                url: "@Url.Action("MasazystaWSilowni", null, null, Request.Url.Scheme)",
+                datatype: "json",
+                success: function (data) {
+                    var masazysta = "<select id='Masazysta-DropDownID'>";
+                    masazysta = masazysta + '<option value="">Wybierz Masażyste</option>';
 
+                    for (var i = 0; i < data.length; i++) {
+                        masazysta = masazysta + '<option value=' + data[i].Value + '>' + data[i].Text + '</option>';
+                    }
+                    masazysta = masazysta + '</select>';
+                    $('#Masazysta-DropDownID').html(masazysta);
+                }
+            });
+        });
+    });
+</script>
 
 
 
@@ -10,14 +31,14 @@
 <div class="form-group">
     @Html.Label("Siłownia", new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.DropDownListFor(x => x.SilownieSelectLista, Model.SilownieSelectLista, "Wybierz siłownie", new { @id = "Silwnie-DropDown" });
+        @Html.DropDownListFor(x => x.SilownieSelectLista, Model.SilownieSelectLista, "Wybierz siłownie", new { @id = "Silwnie-DropDown" })
 
     </div>
 </div>
 <div class="form-group">
     @Html.Label("Masażysta", new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.DropDownListFor(x => x.MasazysciSelectLista, new List<SelectListItem>(), "Wybierz", new { @id = "Masazysta-DropDownID" });
+        @Html.DropDownListFor(x => x.MasazysciSelectLista, new List<SelectListItem>(), "Wybierz Masażyste", new { @id = "Masazysta-DropDownID" })
 
     </div>
 </div>

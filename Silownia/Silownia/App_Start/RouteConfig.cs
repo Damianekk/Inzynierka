@@ -14,6 +14,12 @@ namespace Silownia
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+
+            routes.MapRoute("MasazystaWSilowni",
+                           "Masaz/MasazystaWSilowni/",
+                           new { controller = "SilkaMasazModel", action = "MasazystaWSilowni" },
+                           new[] { "Silownia.Controllers" });
         }
     }
 }
