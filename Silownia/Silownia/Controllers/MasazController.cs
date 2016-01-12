@@ -12,6 +12,7 @@ using PagedList;
 using Silownia.Helpers;
 using System.Globalization;
 using Microsoft.AspNet.Identity;
+using Silownia.ViewModel;
 
 namespace Silownia.Controllers
 {
@@ -321,6 +322,7 @@ namespace Silownia.Controllers
                 if (Session["Auth"].ToString() == "Klient")
                 {
                     ViewBag.MasazystaID = new SelectList(db.Masazysci, "OsobaID", "imieNazwisko", masaz.MasazystaID);
+                    masaz.MasazystaID = Int32.Parse(Request["MasazysciSelectLista"]);
 
                     masaz.DataMasazu = masaz.DataMasazu.AddHours(System.Convert.ToDouble(masaz.MasazStart.Hour));
                     masaz.DataMasazu = masaz.DataMasazu.AddMinutes(System.Convert.ToDouble(masaz.MasazStart.Minute));
@@ -352,6 +354,38 @@ namespace Silownia.Controllers
                 }
             }
             return HttpNotFound();
+        }
+
+        public ActionResult ListaSilowni()
+        {
+            List<SelectListItem> NazwySilowni = new List<SelectListItem>();
+            SilowniaMasazystaViewModel MasazysciWSilce = new SilowniaMasazystaViewModel();
+
+            List<Models.Silownia> silownie = db.Silownie.ToList();
+            silownie.ForEach(x =>
+            {
+                NazwySilowni.Add(new SelectListItem { Text = x.Nazwa, Value = x.SilowniaID.ToString() });
+            });
+            MasazysciWSilce.SilownieSelectLista = NazwySilowni;
+            return View(MasazysciWSilce);
+
+        }
+
+        public ActionResult MasazystaWSilowni(string SilkaId)
+        {
+            int silowniaId;
+            List<SelectListItem> masazysci = new List<SelectListItem>();
+
+            if (!string.IsNullOrEmpty(SilkaId))
+            {
+                silowniaId = Convert.ToInt32(SilkaId);
+                List<Masazysta> masazysciLista = db.Pracownicy.OfType<Masazysta>().Where(x => x.SilowniaID == silowniaId).ToList();
+                masazysciLista.ForEach(x =>
+                {
+                    masazysci.Add(new SelectListItem { Text = x.imieNazwisko, Value = x.OsobaID.ToString() });
+                });
+            }
+            return Json(masazysci, JsonRequestBehavior.AllowGet);
         }
 
 

@@ -12,15 +12,12 @@
 
     <div class="form-horizontal divDark">
 
-
-
         <div class="form-group">
-            @Html.LabelFor(model => model.MasazystaID, "Masażysta", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("MasazystaID", String.Empty)
-                @Html.ValidationMessageFor(model => model.MasazystaID)
+            <div id="Silownia-DropdownID">
+                @Html.Action("ListaSilowni")
             </div>
         </div>
+
         <div class="form-group">
             @Html.LabelFor(model => model.DataMasazu, new { @class = "control-label col-md-2" })
             <div class="col-md-10">

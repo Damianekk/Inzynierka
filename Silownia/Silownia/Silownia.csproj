@@ -273,10 +273,9 @@
     <Compile Include="Helpers\SwapExpressionVisitor.cs" />
     <Compile Include="Test.cs" />
     <Compile Include="ViewModel\PlikiViewModel.cs" />
+    <Compile Include="ViewModel\SilowniaMasazystaViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\13.jpg" />
-    <Content Include="Content\4.jpg" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\ikony\ikona_ZapisaneZdjecie.png" />
@@ -538,6 +537,7 @@
     <Content Include="Views\Shared\KryteriaSzukania\_konserwacjewNaprawie.cshtml" />
     <Content Include="Views\Shared\KryteriaSzukania\_konserwacjeZakonczone.cshtml" />
     <Content Include="Views\Shared\KryteriaSzukania\_konserwacjaStatus.cshtml" />
+    <Content Include="Views\Masaz\ListaSilowni.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
