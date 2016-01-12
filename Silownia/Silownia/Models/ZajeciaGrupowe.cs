@@ -29,6 +29,8 @@ namespace Silownia.Models
         [Display(Name = "Opis")]
         public string OpisTreningu { get; set; }
 
+        [Display(Name = "Ilość zapisanych osób")]
+        public int ZapisaneOsoby { get; set; }
 
         public virtual Instruktor Instruktor { get; set; }
         public virtual ICollection<KlientZajeciaGrupowe> KlientZajeciaGrupowe { get; set; }

@@ -18,7 +18,6 @@ namespace Silownia.Models
 
 
         [Key, Required]
-
         [Display(Name = "Nr sali")]
         public int Numer_sali { get; set; }
         public string FotoLokalizacja { get; set; }
@@ -30,6 +29,9 @@ namespace Silownia.Models
         public string Status { get; set; }
         [DataType(DataType.MultilineText)]
         public string Opis { get; set; }
+
+        [Display(Name = "Ilość osób")]
+        public int LiczbaOsob { get; set; }
 
         public virtual ICollection<Sprzet> Sprzety { get; set; }
         public virtual ICollection<ZajeciaGrupowe> ZajeciaGrup { get; set; }

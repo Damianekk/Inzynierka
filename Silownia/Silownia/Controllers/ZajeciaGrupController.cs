@@ -114,7 +114,7 @@ namespace Silownia.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Create([Bind(Include = "TreningID,TreningStart,TreningStartGodzina,CzasTrwania,InstruktorID,SalaID,NazwaTreningu,OpisTreningu")] long? id, ZajeciaGrupowe zajecia)
+        public ActionResult Create([Bind(Include = "TreningID,TreningStart,TreningStartGodzina,CzasTrwania,InstruktorID,SalaID,NazwaTreningu,OpisTreningu,ZapisaneOsoby")] long? id, ZajeciaGrupowe zajecia)
         {
             if (Session["Auth"] != null)
             {
@@ -126,6 +126,7 @@ namespace Silownia.Controllers
                     zajecia.TreningStart = zajecia.TreningStart.AddHours(System.Convert.ToDouble(zajecia.TreningStartGodzina.Hour));
                     zajecia.TreningStart = zajecia.TreningStart.AddMinutes(System.Convert.ToDouble(zajecia.TreningStartGodzina.Minute));
                     zajecia.TreningKoniec = zajecia.TreningStart.AddMinutes(System.Convert.ToDouble(zajecia.CzasTrwania));
+                    zajecia.ZapisaneOsoby = 0;
 
                     if (ModelState.IsValid && !zajetyTrener(zajecia.InstruktorID, zajecia.TreningStart) && !zajetaSala(zajecia.SalaID, zajecia.TreningStart))
                     {
