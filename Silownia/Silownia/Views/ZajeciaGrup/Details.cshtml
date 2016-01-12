@@ -6,16 +6,11 @@
 <div class="divDark">
     <div class="divInner">
         <dl class="dl-horizontal">
-            <dt>
-                Klienci
+             <dt>
+                Liczba zapisanych osób
             </dt>
             <dd>
-                 @foreach (var item in Model.KlientZajeciaGrupowe)
-                            {
-                            <tr>
-                            <td>@Html.DisplayFor(model => item.Klient.imieNazwisko)<br /></td>
-                            </tr>
-                            }
+                @Html.DisplayFor(model => model.ZapisaneOsoby)
             </dd>
             <dt>
                 Instruktor
@@ -76,6 +71,7 @@
 
                 <dd>
                     <table class="table">
+                        
                         <tr>
                             <th>Imię i nazwisko</th>
                             <th>Numer telefonu</th>
@@ -101,6 +97,43 @@
     </div>
 
 </div>
+
+   <div class="wrap">
+        <img class="show_hide" src="~/Content/ikony/persony/ikona_klient.png" width="90" height="90">
+
+        <div class="slidingDiv" style="display:none">
+            <dl , class="table-bordered" ,new style="color:#76C3D7">
+                <dt>
+                    @Html.Label("Klienci", new { style = "color:#76C3D7" })
+                </dt>
+                    <dd>
+                    <tr>
+                    <table class="table">
+                            <th>Imię i nazwisko</th>
+                            <th>Adres e-mail</th>
+                            <th>Numer telefonu</th>
+                            <th></th>
+                            </tr>
+                            @foreach (var item in Model.KlientZajeciaGrupowe)
+                            {
+                            <tr>
+                            <td>
+                                @Html.DisplayFor(model => item.Klient.imieNazwisko)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => item.Klient.Mail)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => item.Klient.NrTelefonu)
+                            </td>
+                            </tr>
+                            }
+                    </table>
+                    </dd>
+            </dl>
+        </div>
+    </div>
+
 
 
 <style type="text/cs">

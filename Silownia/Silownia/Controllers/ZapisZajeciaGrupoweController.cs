@@ -20,17 +20,20 @@ namespace Silownia.Controllers
         private SilowniaContext db = new SilowniaContext();
 
         // GET: Zapis
-        public ActionResult Index(string SilowniaID, int page = 1, int pageSize = 10, AkcjaZapisEnum akcja = AkcjaZapisEnum.Brak)
+        public ActionResult Index(string SilowniaID,  bool czyPrzyszlosc = false,int page = 1, int pageSize = 10, AkcjaZapisEnum akcja = AkcjaZapisEnum.Brak)
         {
             if (Session["Auth"] != null)
             {
                 if (Session["Auth"].ToString() == "Klient")
                 {
-                    ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
+                    ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa"); 
 
                     var zajeciaGrup = from ZajeciaGrupowe in db.ZajeciaGrup select ZajeciaGrupowe;
 
                     zajeciaGrup = zajeciaGrup.Search(SilowniaID, i => i.Sala.Silownia.Nazwa);
+
+                    if (czyPrzyszlosc)
+                        zajeciaGrup = zajeciaGrup.Where(u => u.TreningStart.Day >= DateTime.Now.Day);
 
                     var final = zajeciaGrup.OrderBy(p => p.Instruktor.Nazwisko);
                     var ileWynikow = zajeciaGrup.Count();

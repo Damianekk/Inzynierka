@@ -2,6 +2,7 @@
 
 @{ int i = 0;}
 
+
 @foreach (var item in Model.KlientZajeciaGrupowe)
 {
        if(item.Klient.Mail == Session["User"].ToString())
@@ -10,7 +11,7 @@
        }
 }
 @if (i != 1)
-        {
+        {   
             <td>
                 @Html.DisplayFor(model => model.Instruktor.imieNazwisko)
             </td>
@@ -20,6 +21,9 @@
             <td>
                 @Html.DisplayFor(model => model.Sala.Silownia.Nazwa)
             </td>
+             <td>
+                @Html.DisplayFor(model => model.ZapisaneOsoby) / @Html.DisplayFor(model => model.Sala.LiczbaOsob)
+             </td>
             <td>
                 @Html.DisplayFor(model => model.TreningStart)
             </td>

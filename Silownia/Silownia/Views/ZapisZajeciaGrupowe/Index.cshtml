@@ -57,11 +57,13 @@
     }
 </div>
   <div class="wrap">
-        <img class="show_hide" src="~/Content/ikony/ikona_treningGrupowy.png" width="90" height="90">    Treningi grupowe, na które jesteś zapisany
-        <div class="slidingDiv" style="display:none">
-            <dl class="table-bordered" ,new style="color:#F15B4D">
+        <img src="~/Content/ikony/ikona_treningGrupowy.png" width="90" height="90">    Treningi grupowe, na które jesteś zapisany
+        <div class="" style="display:none">
+           
+     </div>
+         <dl class="table-bordered" ,new style="color:#F15B4D">
                 <dd>
-                <table class="table table-hover table-condensed">
+                <table class="table table-hover">
                     <tr>
                         <th>
                             @Html.Label("Instruktor:")
@@ -71,6 +73,9 @@
                         </th>   
                         <th>
                             @Html.Label("Siłownia:")
+                        </th>
+                          <th>
+                            @Html.Label("Ilość osób:")
                         </th>
                          <th>
                             @Html.Label("Początek treningu:")
@@ -84,7 +89,6 @@
                         <th>
                             @Html.Label("Opis treningu:")
                         </th>
-                        <th></th>
                     </tr>
                     @foreach (var item in Model)
                     {
@@ -95,17 +99,18 @@
                 </table>
                 </dd>
           </dl>
-     </div>
 </div>
 
   <div class="wrap">
-        <img class="show_hide" src="~/Content/ikony/ikona_treningGrupowy.png" width="90" height="90">    Zapisz się również na inne dostępne zajęcia
-        <div class="slidingDiv" style="display:none">
-            <dl class="table-bordered" ,new style="color:#F15B4D">
+        <img class="" src="~/Content/ikony/ikona_treningGrupowy.png" width="90" height="90">    Zapisz się również na inne dostępne zajęcia
+        <div class="" style="display:none">
+           
+     </div>
+         <dl class="table-bordered" ,new style="color:#F15B4D">
                 @if (Model.Count > 0)
                 {
                 <dd>
-                <table class="table table-hover table-condensed">
+                <table class="table table-hover">
                     <tr>
                         <th>
                             @Html.Label("Instruktor:")
@@ -115,6 +120,9 @@
                         </th>
                         <th>
                             @Html.Label("Siłownia:")
+                        </th>
+                          <th>
+                            @Html.Label("Ilość zapisanych osób:")
                         </th>
                          <th>
                             @Html.Label("Początek treningu:")
@@ -146,7 +154,6 @@
                     </dt>
                 }
           </dl>
-     </div>
 </div>
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">

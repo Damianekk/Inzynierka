@@ -94,7 +94,7 @@ namespace Silownia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Numer_sali,Rodzaj,Status,Opis,Zdjecie")] long? id, Sala sala, HttpPostedFileBase file)
+        public ActionResult Create([Bind(Include = "Numer_sali,Rodzaj,Status,Opis,Zdjecie,LiczbaOsob")] long? id, Sala sala, HttpPostedFileBase file)
         {
             if (Session["Auth"] != null)
             {
@@ -195,7 +195,7 @@ namespace Silownia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="Numer_sali,Rodzaj,Status,Opis,Zdjecie")] Sala sala)
+        public ActionResult Edit([Bind(Include="Numer_sali,Rodzaj,Status,Opis,Zdjecie,LiczbaOsob")] Sala sala)
         {
             if (Session["Auth"] != null)
             {
