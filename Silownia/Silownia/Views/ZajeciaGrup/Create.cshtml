@@ -72,14 +72,16 @@
             </div>
         </div>
 
-        @if (Request.UrlReferrer != null)
-        {
-            <button class="btn btn-large btn-block btn-primary btn-lg btn-primary" onclick="history.go(-1); return false;">powrót</button>
-        }
+        
 
         @if (TempData["msg"] != null)
         { @Html.Raw(TempData["msg"]) }
     </div>
+    
+}
+@if (Request.UrlReferrer != null)
+{
+    <button class="btn btn-large btn-block btn-primary btn-lg btn-primary" onclick="history.go(-1); return false;">powrót</button>
 }
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
