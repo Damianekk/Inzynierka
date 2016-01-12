@@ -78,6 +78,8 @@ namespace Silownia.Controllers
                     }
                     if (zajecia.ZapisaneOsoby < zajecia.Sala.LiczbaOsob)
                     {
+                        zajecia.ZapisaneOsoby++;
+
                         KlientZajeciaGrupowe zajeciagrup = new KlientZajeciaGrupowe();
                         zajeciagrup.Klient = klient;
                         zajeciagrup.OsobaID = zajecia.Instruktor.OsobaID;
