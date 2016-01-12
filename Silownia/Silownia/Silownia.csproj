@@ -236,7 +236,6 @@
     <Compile Include="Helpers\RoleEnum.cs" />
     <Compile Include="Helpers\StatusWiadomosciEnum.cs" />
     <Compile Include="Helpers\KryteriaSzukania.cs" />
-    <Compile Include="Helpers\ZapisZdjec.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Adres.cs" />
@@ -531,7 +530,6 @@
     <Content Include="Views\Shared\KontoInfo.cshtml" />
     <Content Include="Views\Shared\zrobZdjecie.cshtml" />
     <Content Include="Views\Calendar\Index.cshtml" />
-    <Content Include="Views\Sala\Zdjecie.cshtml" />
     <Content Include="Views\TreningPersonalny\ZapisKlient.cshtml" />
     <Content Include="Views\Shared\_zajeciaZapisany.cshtml" />
     <Content Include="Views\Shared\_zajeciaNiezapisany.cshtml" />

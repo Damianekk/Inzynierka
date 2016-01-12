@@ -94,7 +94,7 @@ namespace Silownia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Numer_sali,Rodzaj,Status,Opis,Zdjecie,LiczbaOsob")] long? id, Sala sala, HttpPostedFileBase file)
+        public ActionResult Create([Bind(Include = "Numer_sali,Rodzaj,Status,Opis,LiczbaOsob")] long? id, Sala sala, HttpPostedFileBase file)
         {
             if (Session["Auth"] != null)
             {
@@ -110,34 +110,7 @@ namespace Silownia.Controllers
                         silownia.Sale.Add(sala);
                         #endregion
 
-                        string FileName = "";
-                        byte[] bytes;
 
-                        int BytesToRead;
-
-                        int numBytesRead;
-
-                        if (file != null)
-                        {
-                            FileName = Path.GetFileName(file.FileName);
-                            bytes = new byte[file.ContentLength];
-                            BytesToRead = (int)file.ContentLength;
-                            numBytesRead = 0;
-
-                            while (BytesToRead > 0)
-                            {
-                                int n = file.InputStream.Read(bytes, numBytesRead, BytesToRead);
-
-                                if (n == 0)
-                                {
-                                    break;
-                                }
-                                numBytesRead += n;
-                                BytesToRead -= n;
-                            }
-                            sala.Zdjecie = bytes;
-
-                        }
                         db.Sale.Add(sala);
                         db.SaveChanges();
 
