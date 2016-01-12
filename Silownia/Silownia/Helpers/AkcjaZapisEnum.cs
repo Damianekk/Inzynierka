@@ -17,6 +17,8 @@ namespace Silownia
        NieDaSieZapis
         ,[Description("Już jesteś zapisany na te zajęcia. Nie możesz się na nie znów zapisać.")]
        JuzZapis
+       ,[Description("Na podane zajęcia nie ma już wolnych miejsc.")]
+       BrakMiejsc
       ,Brak
     }
 }

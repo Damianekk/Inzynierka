@@ -50,6 +50,14 @@
                 </div>
             </div>
 
+             <div class="form-group">
+            @Html.LabelFor(model => model.LiczbaOsob, new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.LiczbaOsob)
+                @Html.ValidationMessageFor(model => model.LiczbaOsob)
+            </div>
+        </div>
+
             <div class="form-group">
                 @Html.LabelFor(model => model.Zdjecie, "Zdjęcie", new { @class = "control-label col-md-2" })
                 <div class="col-md-10">

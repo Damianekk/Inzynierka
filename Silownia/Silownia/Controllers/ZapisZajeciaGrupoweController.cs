@@ -76,19 +76,26 @@ namespace Silownia.Controllers
                     {
                             return RedirectToAction("Index", new { akcja = AkcjaZapisEnum.JuzZapis });
                     }
-                    KlientZajeciaGrupowe zajeciagrup = new KlientZajeciaGrupowe();
-                    zajeciagrup.Klient = klient;
-                    zajeciagrup.OsobaID = zajecia.Instruktor.OsobaID;
-                    zajeciagrup.TreningID = zajecia.TreningID;
-                    zajeciagrup.ZajeciaGrupowe = zajecia;
+                    if (zajecia.ZapisaneOsoby < zajecia.Sala.LiczbaOsob)
+                    {
+                        KlientZajeciaGrupowe zajeciagrup = new KlientZajeciaGrupowe();
+                        zajeciagrup.Klient = klient;
+                        zajeciagrup.OsobaID = zajecia.Instruktor.OsobaID;
+                        zajeciagrup.TreningID = zajecia.TreningID;
+                        zajeciagrup.ZajeciaGrupowe = zajecia;
 
-                    klient.KlienciTreningiGrupowe.Add(zajeciagrup);
-                    db.SaveChanges();
+                        klient.KlienciTreningiGrupowe.Add(zajeciagrup);
+                        db.SaveChanges();
 
-                    zajecia.KlientZajeciaGrupowe.Add(zajeciagrup);
-                    db.SaveChanges();
+                        zajecia.KlientZajeciaGrupowe.Add(zajeciagrup);
+                        db.SaveChanges();
 
-                    return RedirectToAction("Index", new { akcja = AkcjaZapisEnum.DodanoZapis });
+                        return RedirectToAction("Index", new { akcja = AkcjaZapisEnum.DodanoZapis });
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", new { akcja = AkcjaZapisEnum.BrakMiejsc });
+                    }
                 }
             }
             return HttpNotFound();
@@ -117,6 +124,9 @@ namespace Silownia.Controllers
                         var trening = klient.KlienciTreningiGrupowe.Where(s => s.TreningID == zajecia.TreningID).First();
                         if (klient.KlienciTreningiGrupowe.Contains(trening))
                         {
+                            zajecia.ZapisaneOsoby--;
+                            db.SaveChanges();
+
                             klient.KlienciTreningiGrupowe.Remove(trening);
                             db.SaveChanges();
 
