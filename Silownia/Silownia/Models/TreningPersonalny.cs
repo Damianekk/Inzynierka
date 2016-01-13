@@ -16,6 +16,7 @@ namespace Silownia.Models
         public int kosztTreningu { get; set; }
 
         public virtual Klient Klient { get; set; }
+        [Required]
         public virtual Trener Trener { get; set; }
 
     }

@@ -25,14 +25,14 @@ namespace Silownia.Models
         public DateTime TreningStartGodzina { get; set; }
 
 
-        //[Required(ErrorMessage = "Podaj datę treningu")]
+        [Required(ErrorMessage = "Podaj datę treningu")]
         [Display(Name = "Koniec treningu")]
         [DataType(DataType.DateTime)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
         public DateTime TreningKoniec { get; set; }
 
         [Required(ErrorMessage = "Podaj czas trwania treningu")]
-        [Range(30, 90, ErrorMessage = "Masaż może trwać od 30 do 90 minut")]
+        [Range(30, 90, ErrorMessage = "Trening może trwać od 30 do 90 minut")]
         [Display(Name = "Czas trwania treningu")]
         public int CzasTrwania { get; set; }
     }
