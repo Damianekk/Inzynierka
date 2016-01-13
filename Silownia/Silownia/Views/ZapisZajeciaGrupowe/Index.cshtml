@@ -90,7 +90,7 @@
                             @Html.Label("Opis treningu:")
                         </th>
                     </tr>
-                    @foreach (var item in Model)
+                    @foreach (var item in Model.Where(a => a.TreningStart.Day >= DateTime.Now.Day))
                     {
                         <tr>
                         @Html.Partial("_zajeciaZapisany", item)
@@ -138,7 +138,7 @@
                         </th>
                         <th></th>
                     </tr>
-                    @foreach (var item in Model)
+                    @foreach (var item in Model.Where(a => a.TreningStart.Day >= DateTime.Now.Day))
                     {
                         <tr>
                            @Html.Partial("_zajeciaNiezapisany", item)   
