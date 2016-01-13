@@ -126,14 +126,15 @@ namespace Silownia.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Create([Bind(Include = "TreningID,TreningStart,TreningStartGodzina,CzasTrwania,TrenerID")] long? id, TreningPersonalny treningPersonalny)
+        public ActionResult Create([Bind(Include = "SilowniaID,TreningID,TreningStart,TreningStartGodzina,CzasTrwania,TrenerID")] long? id, TreningPersonalny treningPersonalny)
         {
             if (Session["Auth"] != null)
             {
                 if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
                 {
                     ViewBag.TrenerID = new SelectList(db.Trenerzy, "OsobaID", "imieNazwisko", treningPersonalny.TrenerID);
-                    //treningPersonalny.TrenerID = Int32.Parse(Request["TrenerzySelectLista"]);
+                    treningPersonalny.TrenerID = Int32.Parse(Request["TrenerzySelectLista"]);
+
 
                     treningPersonalny.TreningStart = treningPersonalny.TreningStart.AddHours(System.Convert.ToDouble(treningPersonalny.TreningStartGodzina.Hour));
                     treningPersonalny.TreningStart = treningPersonalny.TreningStart.AddMinutes(System.Convert.ToDouble(treningPersonalny.TreningStartGodzina.Minute));
@@ -162,7 +163,7 @@ namespace Silownia.Controllers
                         db.TreningiPersonalne.Add(treningPersonalny);
                         db.SaveChanges();
 
-                        return RedirectToAction("Index", new { akcja = AkcjaEnumTrening.DodanoTrening, info = klient.imieNazwisko });
+                        return RedirectToAction("Index", new { akcja = AkcjaEnumTrening.DodanoTrening+" klientowi: ", info = klient.imieNazwisko });
                     }
                     return View(treningPersonalny);
                 }

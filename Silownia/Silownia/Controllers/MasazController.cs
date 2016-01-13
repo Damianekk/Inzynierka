@@ -130,6 +130,7 @@ namespace Silownia.Controllers
                 if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
                 {
                     ViewBag.MasazystaID = new SelectList(db.Masazysci, "OsobaID", "imieNazwisko", masaz.MasazystaID);
+                    masaz.MasazystaID = Int32.Parse(Request["MasazysciSelectLista"]);
 
                     masaz.DataMasazu = masaz.DataMasazu.AddHours(System.Convert.ToDouble(masaz.MasazStart.Hour));
                     masaz.DataMasazu = masaz.DataMasazu.AddMinutes(System.Convert.ToDouble(masaz.MasazStart.Minute));
@@ -159,7 +160,7 @@ namespace Silownia.Controllers
                         db.Masaze.Add(masaz);
                         db.SaveChanges();
 
-                        return RedirectToAction("Index", new { akcja = AkcjaEnumMasaz.DodanoMasaz, info = klient.imieNazwisko });
+                        return RedirectToAction("Index", new { akcja = AkcjaEnumMasaz.DodanoMasaz + "  klientowi:", info = klient.imieNazwisko });
                     }
                     return View(masaz);
                 }
@@ -316,7 +317,7 @@ namespace Silownia.Controllers
         [HttpPost]
         public ActionResult ZapisKlient(Masaz masaz)
         {
-            long loggedUsID =(long) Session["loggedUserID"];
+            long loggedUsID = (long)Session["loggedUserID"];
             if (Session["Auth"] != null)
             {
                 if (Session["Auth"].ToString() == "Klient")
@@ -327,7 +328,7 @@ namespace Silownia.Controllers
                     masaz.DataMasazu = masaz.DataMasazu.AddHours(System.Convert.ToDouble(masaz.MasazStart.Hour));
                     masaz.DataMasazu = masaz.DataMasazu.AddMinutes(System.Convert.ToDouble(masaz.MasazStart.Minute));
                     masaz.DataMasazuKoniec = masaz.DataMasazu.AddMinutes(System.Convert.ToDouble(masaz.CzasTrwania));
-           
+
                     if (ModelState.IsValid && !aktywnyMasaz(loggedUsID, masaz.DataMasazu) && !zajetyMasazysta(masaz.MasazystaID, masaz.DataMasazu))
                     {
                         #region Klient
@@ -348,7 +349,7 @@ namespace Silownia.Controllers
                         db.Masaze.Add(masaz);
                         db.SaveChanges();
 
-                        return RedirectToAction("Index","KlientView", new { akcja = AkcjaEnumMasaz.DodanoMasaz });
+                        return RedirectToAction("Index", "KlientView", new { akcja = AkcjaEnumMasaz.DodanoMasaz });
                     }
                     return View(masaz);
                 }

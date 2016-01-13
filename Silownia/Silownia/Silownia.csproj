@@ -485,7 +485,6 @@
     <Content Include="Views\Recepcjonista\Details.cshtml" />
     <Content Include="Views\Recepcjonista\Edit.cshtml" />
     <Content Include="Views\Recepcjonista\Index.cshtml" />
-    <Content Include="Views\Home\_Carusel.cshtml" />
     <Content Include="Views\Home\_Trenerzy.cshtml" />
     <Content Include="Views\Home\_Video.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
@@ -569,10 +568,6 @@
     <Content Include="Views\Shared\_zajeciaZapisany.cshtml" />
     <Content Include="Views\Shared\_zajeciaNiezapisany.cshtml" />
     <Content Include="Views\Shared\KryteriaSzukania\_tylkoPrzyszlosc.cshtml" />
-    <Content Include="Views\Shared\KryteriaSzukania\_konserwacjePrzyjete.cshtml" />
-    <Content Include="Views\Shared\KryteriaSzukania\_konserwacjewNaprawie.cshtml" />
-    <Content Include="Views\Shared\KryteriaSzukania\_konserwacjeZakonczone.cshtml" />
-    <Content Include="Views\Shared\KryteriaSzukania\_konserwacjaStatus.cshtml" />
     <Content Include="Views\Masaz\ListaSilowni.cshtml" />
     <Content Include="Views\TreningPersonalny\ListaSilowni.cshtml" />
   </ItemGroup>
