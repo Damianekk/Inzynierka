@@ -11,11 +11,10 @@
         <div class="form-horizontal">
             @Html.ValidationSummary(true)
             @Html.HiddenFor(model => model.MasazID)
+            
             <div class="form-group">
-                @Html.LabelFor(model => model.MasazystaID, "SilowniaID", new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("MasazystaID")
-                    @Html.ValidationMessageFor(model => model.MasazystaID)
+                <div id="Silownia-DropdownID col-md-10">
+                    @Html.Action("ListaSilowni")
                 </div>
             </div>
             <div class="form-group">

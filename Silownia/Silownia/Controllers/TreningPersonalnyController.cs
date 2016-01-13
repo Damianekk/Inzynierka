@@ -12,6 +12,7 @@ using PagedList;
 using Silownia.Helpers;
 using System.Globalization;
 using Microsoft.AspNet.Identity;
+using Silownia.ViewModel;
 
 namespace Silownia.Controllers
 {
@@ -129,9 +130,10 @@ namespace Silownia.Controllers
         {
             if (Session["Auth"] != null)
             {
-                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
                 {
                     ViewBag.TrenerID = new SelectList(db.Trenerzy, "OsobaID", "imieNazwisko", treningPersonalny.TrenerID);
+                    //treningPersonalny.TrenerID = Int32.Parse(Request["TrenerzySelectLista"]);
 
                     treningPersonalny.TreningStart = treningPersonalny.TreningStart.AddHours(System.Convert.ToDouble(treningPersonalny.TreningStartGodzina.Hour));
                     treningPersonalny.TreningStart = treningPersonalny.TreningStart.AddMinutes(System.Convert.ToDouble(treningPersonalny.TreningStartGodzina.Minute));
@@ -204,7 +206,7 @@ namespace Silownia.Controllers
         {
             if (Session["Auth"] != null)
             {
-                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
                 {
                     if (id == null)
                     {
@@ -215,7 +217,7 @@ namespace Silownia.Controllers
                     {
                         return HttpNotFound();
                     }
-                    ViewBag.MasazystaID = new SelectList(db.Trenerzy, "OsobaID", "imieNazwisko", treningPersonalny.TrenerID);
+                    ViewBag.TrenerID = new SelectList(db.Trenerzy, "OsobaID", "imieNazwisko", treningPersonalny.TrenerID);
                     return View(treningPersonalny);
                 }
             }
@@ -230,7 +232,7 @@ namespace Silownia.Controllers
         {
             if (Session["Auth"] != null)
             {
-                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
                 {
                     if (ModelState.IsValid)
                     {
@@ -273,7 +275,7 @@ namespace Silownia.Controllers
         {
             if (Session["Auth"] != null)
             {
-                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
                 {
                     TreningPersonalny treningPersonalny = db.TreningiPersonalne.Find(id);
                     db.TreningiPersonalne.Remove(treningPersonalny);
@@ -288,7 +290,7 @@ namespace Silownia.Controllers
         {
             if (Session["Auth"] != null)
             {
-                if (Session["Auth"].ToString() == "Klient" | Session["Auth"].ToString() == "Klient")
+                if (Session["Auth"].ToString() == "Klient" || Session["Auth"].ToString() == "Klient")
                 {
                     ViewBag.TrenerID = new SelectList(db.Trenerzy, "OsobaID", "imieNazwisko");
                     var a = from Osoby in db.Trenerzy select Osoby;
@@ -314,15 +316,15 @@ namespace Silownia.Controllers
         }
 
         [HttpPost]
-        public ActionResult ZapisKlient([Bind(Include = "TreningID,TreningStart,TreningStartGodzina,CzasTrwania,TrenerID")] TreningPersonalny treningPersonalny)
+        public ActionResult ZapisKlient([Bind(Include = "TreningID,TreningStart,TreningStartGodzina,CzasTrwania,TrenerID, SilowniaID")] TreningPersonalny treningPersonalny)
         {
             long loggedUsID = (long)Session["loggedUserID"];
             if (Session["Auth"] != null)
             {
-                if (Session["Auth"].ToString() == "Klient" | Session["Auth"].ToString() == "Klient")
+                if (Session["Auth"].ToString() == "Klient" || Session["Auth"].ToString() == "Klient")
                 {
                     ViewBag.TrenerID = new SelectList(db.Trenerzy, "OsobaID", "imieNazwisko", treningPersonalny.TrenerID);
-
+                    treningPersonalny.TrenerID = Int32.Parse(Request["TrenerzySelectLista"]);
 
                     treningPersonalny.TreningStart = treningPersonalny.TreningStart.AddHours(System.Convert.ToDouble(treningPersonalny.TreningStartGodzina.Hour));
                     treningPersonalny.TreningStart = treningPersonalny.TreningStart.AddMinutes(System.Convert.ToDouble(treningPersonalny.TreningStartGodzina.Minute));
@@ -348,7 +350,7 @@ namespace Silownia.Controllers
                         db.TreningiPersonalne.Add(treningPersonalny);
                         db.SaveChanges();
 
-                        return RedirectToAction("Index", "KlientView", new { akcja = AkcjaEnumMasaz.DodanoMasaz }); // Póki co masaż bo czasu brak :) plan taki aby klient przyjmowal parametr po którym wszystkie enumy ktore klient moze przyjac dziedzicza (ale nie wiem jeszcze czy to bd dzialac)
+                        return RedirectToAction("Index", "KlientView", new { akcja = AkcjaEnumTrening.DodanoTrening }); // Póki co masaż bo czasu brak :) plan taki aby klient przyjmowal parametr po którym wszystkie enumy ktore klient moze przyjac dziedzicza (ale nie wiem jeszcze czy to bd dzialac)
                                                                                                                     // Pozwoli to na dawanie "dowolnego" enuma do kontrolera - warunek musi dziedziczyc po jakiejs nowej klasie (trzeba utworzyc) 
                     }
                     return View(treningPersonalny);
@@ -357,7 +359,37 @@ namespace Silownia.Controllers
             return HttpNotFound();
         }
 
+        public ActionResult ListaSilowni()
+        {
+            List<SelectListItem> NazwySilowni = new List<SelectListItem>();
+            SilowniaTrenerViewModel TrenerzyWSilce = new SilowniaTrenerViewModel();
 
+            List<Models.Silownia> silownie = db.Silownie.ToList();
+            silownie.ForEach(x =>
+            {
+                NazwySilowni.Add(new SelectListItem { Text = x.Nazwa, Value = x.SilowniaID.ToString() });
+            });
+            TrenerzyWSilce.SilownieSelectLista = NazwySilowni;
+            return View(TrenerzyWSilce);
+
+        }
+
+        public ActionResult TrenerWSilowni(string SilkaId)
+        {
+            int silowniaId;
+            List<SelectListItem> trenerzy = new List<SelectListItem>();
+
+            if (!string.IsNullOrEmpty(SilkaId))
+            {
+                silowniaId = Convert.ToInt32(SilkaId);
+                List<Trener> trenerzyLista = db.Pracownicy.OfType<Trener>().Where(x => x.SilowniaID == silowniaId).ToList();
+                trenerzyLista.ForEach(x =>
+                {
+                    trenerzy.Add(new SelectListItem { Text = x.imieNazwisko, Value = x.OsobaID.ToString() });
+                });
+            }
+            return Json(trenerzy, JsonRequestBehavior.AllowGet);
+        }
 
         protected override void Dispose(bool disposing)
         {

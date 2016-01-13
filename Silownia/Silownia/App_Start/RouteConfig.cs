@@ -18,8 +18,13 @@ namespace Silownia
 
             routes.MapRoute("MasazystaWSilowni",
                            "Masaz/MasazystaWSilowni/",
-                           new { controller = "SilkaMasazModel", action = "MasazystaWSilowni" },
+                           new { controller = "SilowniaMasazystaViewModel", action = "MasazystaWSilowni" },
                            new[] { "Silownia.Controllers" });
+
+            routes.MapRoute("TrenerWSilowni",
+                          "TreningPersonalny/TrenerWSilowni/",
+                          new { controller = "SilowniaTrenerViewModel", action = "TrenerWSilowni" },
+                          new[] { "Silownia.Controllers" });
         }
     }
 }

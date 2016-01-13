@@ -274,6 +274,7 @@
     <Compile Include="Test.cs" />
     <Compile Include="ViewModel\PlikiViewModel.cs" />
     <Compile Include="ViewModel\SilowniaMasazystaViewModel.cs" />
+    <Compile Include="ViewModel\SilowniaTrenerViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -573,6 +574,7 @@
     <Content Include="Views\Shared\KryteriaSzukania\_konserwacjeZakonczone.cshtml" />
     <Content Include="Views\Shared\KryteriaSzukania\_konserwacjaStatus.cshtml" />
     <Content Include="Views\Masaz\ListaSilowni.cshtml" />
+    <Content Include="Views\TreningPersonalny\ListaSilowni.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
