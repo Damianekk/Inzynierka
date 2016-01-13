@@ -228,7 +228,7 @@ namespace Silownia.Controllers
         public ActionResult ListaSilowniInstruktorowSal()
         {
             List<SelectListItem> NazwySilowni = new List<SelectListItem>();
-            SilowniaTrenerViewModel InstruktorzyWSilce = new SilowniaTrenerViewModel();
+            DropDownListyViewModel InstruktorzyWSilce = new DropDownListyViewModel();
 
             List<Models.Silownia> silownie = db.Silownie.ToList();
             silownie.ForEach(x =>

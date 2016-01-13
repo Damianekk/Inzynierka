@@ -12,6 +12,7 @@ using PagedList;
 using Silownia.Helpers;
 using System.Globalization;
 using Microsoft.AspNet.Identity;
+using Silownia.ViewModel;
 
 namespace Silownia.Controllers
 {
@@ -186,19 +187,25 @@ namespace Silownia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "KonserwacjaID,Opis_usterki,Data_zgłoszenia,Data_naprawy,Status,KonserwatorID")] Konserwacja konserwacja)
+        public ActionResult Edit( Konserwacja konserwacja)
         {
             if (Session["Auth"] != null)
             {
-                if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
-                {
-                    if (ModelState.IsValid)
-                    {
-                        db.Entry(konserwacja).State = EntityState.Modified;
-                        db.SaveChanges();
-                        return RedirectToAction("Index");
-                    }
-                    ViewBag.KonserwatorID = new SelectList(db.Konserwatorzy, "OsobaID", "imieNazwisko", konserwacja.KonserwatorID);
+                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                {                    
+                        ViewBag.KonserwatorID = new SelectList(db.Konserwatorzy, "OsobaID", "imieNazwisko", konserwacja.KonserwatorID);
+
+                        konserwacja.KonserwatorID = Int32.Parse(Request["KonserwatorzySelectLista"]);
+
+                        if (ModelState.IsValid)
+                        {
+
+                            db.Entry(konserwacja).State = EntityState.Modified;
+                            db.SaveChanges();
+                            
+                            return RedirectToAction("Index",new { akcja = AkcjaEnumKonserwacja.ZmienionoKonserwacje});
+                        }
+                 
                     return View(konserwacja);
                 }
             }
@@ -244,6 +251,39 @@ namespace Silownia.Controllers
             }
             return HttpNotFound();
         }
+
+        public ActionResult ListaSilowni()
+        {
+            List<SelectListItem> NazwySilowni = new List<SelectListItem>();
+            DropDownListyViewModel  KonserwatorzyWSilce = new DropDownListyViewModel();
+
+            List<Models.Silownia> silownie = db.Silownie.ToList();
+            silownie.ForEach(x =>
+            {
+                NazwySilowni.Add(new SelectListItem { Text = x.Nazwa, Value = x.SilowniaID.ToString() });
+            });
+            KonserwatorzyWSilce.SilownieSelectLista = NazwySilowni;
+            return View(KonserwatorzyWSilce);
+
+        }
+
+        public ActionResult KonserwatorWSilowni(string SilkaId)
+        {
+            int silowniaId;
+            List<SelectListItem> konserwatorzy = new List<SelectListItem>();
+
+            if (!string.IsNullOrEmpty(SilkaId))
+            {
+                silowniaId = Convert.ToInt32(SilkaId);
+                List<Konserwator> konserwatorzyLista = db.Pracownicy.OfType<Konserwator>().Where(x => x.SilowniaID == silowniaId).ToList();
+                konserwatorzyLista.ForEach(x =>
+                {
+                    konserwatorzy.Add(new SelectListItem { Text = x.imieNazwisko, Value = x.OsobaID.ToString() });
+                });
+            }
+            return Json(konserwatorzy, JsonRequestBehavior.AllowGet);
+        }
+
 
         protected override void Dispose(bool disposing)
         {

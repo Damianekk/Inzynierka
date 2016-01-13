@@ -14,13 +14,10 @@
             @Html.HiddenFor(model => model.KonserwacjaID)
 
             <div class="form-group">
-                @Html.LabelFor(model => model.KonserwatorID, "Konserwator", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("KonserwatorID")
-                    @Html.ValidationMessageFor(model => model.KonserwatorID)
+                <div id="Silownia-DropdownID col-md-10">
+                    @Html.Action("ListaSilowni")
                 </div>
             </div>
-
             <div class="form-group">
                 @Html.LabelFor(model => model.Opis_usterki, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -44,7 +41,7 @@
                     @Html.ValidationMessageFor(model => model.Data_naprawy)
                 </div>
             </div>
-
+          
             <div class="form-group">
                 @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">

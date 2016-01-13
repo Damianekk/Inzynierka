@@ -271,9 +271,8 @@
     <Compile Include="Startup.cs" />
     <Compile Include="Helpers\SwapExpressionVisitor.cs" />
     <Compile Include="Test.cs" />
-    <Compile Include="ViewModel\PlikiViewModel.cs" />
     <Compile Include="ViewModel\SilowniaMasazystaViewModel.cs" />
-    <Compile Include="ViewModel\SilowniaTrenerViewModel.cs" />
+    <Compile Include="ViewModel\DropDownListyViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -570,6 +569,7 @@
     <Content Include="Views\Masaz\ListaSilowni.cshtml" />
     <Content Include="Views\TreningPersonalny\ListaSilowni.cshtml" />
     <Content Include="Views\ZajeciaGrup\ListaSilowniInstruktorowSal.cshtml" />
+    <Content Include="Views\Konserwacja\ListaSilowni.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

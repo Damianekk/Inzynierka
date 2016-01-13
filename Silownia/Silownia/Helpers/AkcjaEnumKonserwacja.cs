@@ -19,7 +19,10 @@ namespace Silownia
        ,
         [Description("Zamknięto konserwację")]
         ZamknietoKonserwacje
-       , 
+       ,
+        [Description("Pomyslnie wprowadzono zmiany w konserwacji")]
+        ZmienionoKonserwacje
+        ,
         Brak
     }
 }

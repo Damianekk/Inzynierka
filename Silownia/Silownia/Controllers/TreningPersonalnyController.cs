@@ -363,7 +363,7 @@ namespace Silownia.Controllers
         public ActionResult ListaSilowni()
         {
             List<SelectListItem> NazwySilowni = new List<SelectListItem>();
-            SilowniaTrenerViewModel TrenerzyWSilce = new SilowniaTrenerViewModel();
+            DropDownListyViewModel TrenerzyWSilce = new DropDownListyViewModel();
 
             List<Models.Silownia> silownie = db.Silownie.ToList();
             silownie.ForEach(x =>
