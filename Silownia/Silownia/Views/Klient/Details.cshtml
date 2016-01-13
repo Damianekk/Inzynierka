@@ -46,17 +46,11 @@
          
                 <dd>
                 
-                    <div class="form-group">
-                        <div class="wrap">
-                            <img class="show_hide" src="~/Content/ikony/ikona_ZapisaneZdjecie.png" width="48" height="48" onclick="javascript:pokazZdjecie()">
-                            <div class="slidingDiv" id="Zdjecie" style="display:none">
-                            </div>
-                        </div>
-                    </div>
+                   @Html.Action("PokazZapisaneZdjecie", "Photo", new { idOsoby = @Model.OsobaID })
                 
                 </dd>
           }
-           
+            
             
             @if (Model.Adres != null)
             {
@@ -339,15 +333,16 @@
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">
 </script>
 <script type="text/javascript">
-    $('img.show_hide').on("click", function () {
-        $('div.slidingDiv').stop().slideUp('fast');
-        $('div.slidingDivON').stop().slideUp('fast');
-        $(this).next('div.slidingDiv').stop().slideToggle('fast');
-        $(this).next('div.slidingDivON').stop().slideToggle('fast');
-    });
-</script>
+        $('img.show_hide').on("click", function () {
+            $('div.slidingDiv').stop().slideUp('fast');
+            $('div.slidingDivON').stop().slideUp('fast');
+            $(this).next('div.slidingDiv').stop().slideToggle('fast');
+            $(this).next('div.slidingDivON').stop().slideToggle('fast');
+        });
+    </script>
+
 <script>
-    function pokazZdjecie() {
+    window.onload = function pokazZdjecie() {
         var MiejsceNaZdjecie = document.getElementById("Zdjecie");
 
         $.ajax({
