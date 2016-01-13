@@ -39,7 +39,7 @@
         </th>
         <th></th>
     </tr>
-    @foreach (var item in Model)
+    @foreach (var item in Model.Where(a => a.TreningStart.Day >= DateTime.Now.Day))
     {
         <tr>
             <td>
