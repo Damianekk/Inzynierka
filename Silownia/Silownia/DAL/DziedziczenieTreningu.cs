@@ -12,7 +12,6 @@ namespace Silownia.DAL
         public DziedziczenieTreningu()
         {
             this.Map<TreningPersonalny>(x => x.ToTable("TreningPersonalny"))
-                .Map<TreningWlasny>(x => x.ToTable("TreningWlasny"))
                 .Map<ZajeciaGrupowe>(x => x.ToTable("ZajeciaGrupowe"));
         }
     }

@@ -10,5 +10,7 @@ namespace Silownia.ViewModel
     {
         public IList<SelectListItem> SilownieSelectLista { get; set; }
         public IList<SelectListItem> TrenerzySelectLista { get; set; }
+        public IList<SelectListItem> InstruktorzySelectLista { get; set; }
+        public IList<SelectListItem> SaleSelectLista { get; set; }
     }
 }

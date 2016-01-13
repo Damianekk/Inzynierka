@@ -26,7 +26,7 @@ namespace Silownia.Models
         public string Status { get; set; }
         [DataType(DataType.MultilineText)]
         public string Opis { get; set; }
-        // [Required]
+        [Required]
         [Display(Name = "Ilość osób")]
         public int LiczbaOsob { get; set; }
 

@@ -12,6 +12,7 @@ using PagedList;
 using Silownia.Helpers;
 using System.Globalization;
 using Microsoft.AspNet.Identity;
+using Silownia.ViewModel;
 
 namespace Silownia.Controllers
 {
@@ -122,6 +123,8 @@ namespace Silownia.Controllers
                 {
                     ViewBag.InstruktorID = new SelectList(db.Instruktorzy, "OsobaID", "imieNazwisko", zajecia.InstruktorID);
                     ViewBag.SalaID = new SelectList(db.Sale, "Numer_sali", "Numer_sali", zajecia.SalaID);
+                    zajecia.InstruktorID = Int32.Parse(Request["InstruktorzySelectLista"]);
+                    zajecia.SalaID = Int32.Parse(Request["SaleSelectLista"]);
 
                     zajecia.TreningStart = zajecia.TreningStart.AddHours(System.Convert.ToDouble(zajecia.TreningStartGodzina.Hour));
                     zajecia.TreningStart = zajecia.TreningStart.AddMinutes(System.Convert.ToDouble(zajecia.TreningStartGodzina.Minute));
@@ -219,6 +222,56 @@ namespace Silownia.Controllers
                 }
             }
             return HttpNotFound();
+        }
+
+
+        public ActionResult ListaSilowniInstruktorowSal()
+        {
+            List<SelectListItem> NazwySilowni = new List<SelectListItem>();
+            SilowniaTrenerViewModel InstruktorzyWSilce = new SilowniaTrenerViewModel();
+
+            List<Models.Silownia> silownie = db.Silownie.ToList();
+            silownie.ForEach(x =>
+            {
+                NazwySilowni.Add(new SelectListItem { Text = x.Nazwa, Value = x.SilowniaID.ToString() });
+            });
+            InstruktorzyWSilce.SilownieSelectLista = NazwySilowni;
+            return View(InstruktorzyWSilce);
+
+        }
+
+        public ActionResult InstruktorWSilowni(string SilkaId)
+        {
+            int silowniaId;
+            List<SelectListItem> instruktorzy = new List<SelectListItem>();
+
+            if (!string.IsNullOrEmpty(SilkaId))
+            {
+                silowniaId = Convert.ToInt32(SilkaId);
+                List<Instruktor> instruktorzyLista = db.Pracownicy.OfType<Instruktor>().Where(x => x.SilowniaID == silowniaId).ToList();
+                instruktorzyLista.ForEach(x =>
+                {
+                    instruktorzy.Add(new SelectListItem { Text = x.imieNazwisko, Value = x.OsobaID.ToString() });
+                });
+            }
+            return Json(instruktorzy, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult SalaWSilowni(string SilkaId)
+        {
+            int silowniaId;
+            List<SelectListItem> sale = new List<SelectListItem>();
+
+            if (!string.IsNullOrEmpty(SilkaId))
+            {
+                silowniaId = Convert.ToInt32(SilkaId);
+                List<Sala> saleLista = db.Sale.Where(x => x.SilowniaID == silowniaId).ToList();
+                saleLista.ForEach(x =>
+                {
+                    sale.Add(new SelectListItem { Text = x.Numer_sali +" - "+ x.Rodzaj, Value = x.Numer_sali.ToString() });
+                });
+            }
+            return Json(sale, JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)

@@ -264,7 +264,6 @@
     <Compile Include="Models\Wiadomosc.cs" />
     <Compile Include="Models\ZajeciaGrupowe.cs" />
     <Compile Include="Models\TreningPersonalny.cs" />
-    <Compile Include="Models\TreningWlasny.cs" />
     <Compile Include="Models\Umowa.cs" />
     <Compile Include="Helpers\PelnaNazwaEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -570,6 +569,7 @@
     <Content Include="Views\Shared\KryteriaSzukania\_tylkoPrzyszlosc.cshtml" />
     <Content Include="Views\Masaz\ListaSilowni.cshtml" />
     <Content Include="Views\TreningPersonalny\ListaSilowni.cshtml" />
+    <Content Include="Views\ZajeciaGrup\ListaSilowniInstruktorowSal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

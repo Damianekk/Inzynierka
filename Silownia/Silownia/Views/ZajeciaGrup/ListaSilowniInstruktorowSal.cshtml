@@ -1,0 +1,68 @@
+﻿@model Silownia.ViewModel.SilowniaTrenerViewModel
+@{
+    Layout = null;
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#Silwnie-DropDown').change(function () {
+            $.ajax({
+                type: "GET",
+                data: { SilkaId: $("#Silwnie-DropDown").val() },
+                url: "@Url.Action("InstruktorWSilowni", null, null, Request.Url.Scheme)",
+                datatype: "json",
+                success: function (data) {
+                    var instruktor = "<select id='Instruktor-DropDownID'>";
+                    instruktor = instruktor + '<option value="">Wybierz Instruktora</option>';
+
+                    for (var i = 0; i < data.length; i++) {
+                        instruktor = instruktor + '<option value=' + data[i].Value + '>' + data[i].Text + '</option>';
+                    }
+                    instruktor = instruktor + '</select>';
+                    $('#Instruktor-DropDownID').html(instruktor);
+                }
+            });
+            $.ajax({
+                type: "GET",
+                data: { SilkaId: $("#Silwnie-DropDown").val() },
+                url: "@Url.Action("SalaWSilowni", null, null, Request.Url.Scheme)",
+                datatype: "json",
+            success: function (data) {
+                var sala = "<select id='Sala-DropDownID'>";
+                sala = sala + '<option value="">Wybierz Sale</option>';
+
+                for (var i = 0; i < data.length; i++) {
+                    sala = sala + '<option value=' + data[i].Value + '>' + data[i].Text + '</option>';
+                }
+                sala = sala + '</select>';
+                $('#Sala-DropDownID').html(sala);
+                }
+            });
+        });
+     });           
+</script>
+
+<div class="form-group">
+    @Html.LabelFor(x => x.SilownieSelectLista, "Siłownia", new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownListFor(x => x.SilownieSelectLista, Model.SilownieSelectLista, "Wybierz siłownie", new { @id = "Silwnie-DropDown" })
+        @Html.ValidationMessageFor(x => x.SilownieSelectLista)
+    </div>
+</div>
+<div class="form-group">
+    @Html.LabelFor(x => x.InstruktorzySelectLista, "Instruktor", new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownListFor(x => x.InstruktorzySelectLista, new List<SelectListItem>(), "Wybierz Instruktora", new { @id = "Instruktor-DropDownID" })
+        @Html.ValidationMessageFor(x => x.InstruktorzySelectLista)
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(x => x.SaleSelectLista, "Sala", new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownListFor(x => x.SaleSelectLista, new List<SelectListItem>(), "Wybierz sale", new { @id = "Sala-DropDownID" })
+        @Html.ValidationMessageFor(x => x.SaleSelectLista)
+    </div>
+</div>
+
+
