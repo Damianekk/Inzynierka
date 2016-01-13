@@ -268,7 +268,7 @@ namespace Silownia.Controllers
                 List<Sala> saleLista = db.Sale.Where(x => x.SilowniaID == silowniaId).ToList();
                 saleLista.ForEach(x =>
                 {
-                    sale.Add(new SelectListItem { Text = x.Rodzaj, Value = x.Numer_sali.ToString() });
+                    sale.Add(new SelectListItem { Text = x.Numer_sali +" - "+ x.Rodzaj, Value = x.Numer_sali.ToString() });
                 });
             }
             return Json(sale, JsonRequestBehavior.AllowGet);
