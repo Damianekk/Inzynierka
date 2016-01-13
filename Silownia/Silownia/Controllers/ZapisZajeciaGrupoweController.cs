@@ -12,6 +12,7 @@ using PagedList;
 using Silownia.Helpers;
 using System.Globalization;
 using Microsoft.AspNet.Identity;
+using Silownia.ViewModel;
 
 namespace Silownia.Controllers
 {
@@ -166,6 +167,7 @@ namespace Silownia.Controllers
             return HttpNotFound();
         }
 
+    
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -570,6 +570,7 @@
     <Content Include="Views\Shared\KryteriaSzukania\_tylkoPrzyszlosc.cshtml" />
     <Content Include="Views\Masaz\ListaSilowni.cshtml" />
     <Content Include="Views\TreningPersonalny\ListaSilowni.cshtml" />
+    <Content Include="Views\ZajeciaGrup\ListaSilowniInstruktorowSal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
