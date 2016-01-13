@@ -21,7 +21,7 @@ namespace Silownia.Controllers
         {
             if (Session["Auth"] != null)
             {
-                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
                 {
                     ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
                     ViewBag.SpecjalizacjaID = new SelectList(db.Specjalizacje.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
@@ -61,7 +61,7 @@ namespace Silownia.Controllers
         {
             if (Session["Auth"] != null)
             {
-                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
                 {
                     if (id == null)
                     {
@@ -83,7 +83,7 @@ namespace Silownia.Controllers
         {
             if (Session["Auth"] != null)
             {
-                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
                 {
                     ViewBag.SpecjalizacjaID = new SelectList(db.Specjalizacje, "SpecjalizacjaID", "Nazwa");
                     ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa");
@@ -101,7 +101,7 @@ namespace Silownia.Controllers
         {
             if (Session["Auth"] != null)
             {
-                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
                 {
                     if (ModelState.IsValid)
                     {
@@ -135,7 +135,7 @@ namespace Silownia.Controllers
         {
             if (Session["Auth"] != null)
             {
-                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
                 {
                     if (id == null)
                     {
@@ -162,7 +162,7 @@ namespace Silownia.Controllers
         {
             if (Session["Auth"] != null)
             {
-                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
                 {
                     if (ModelState.IsValid)
                     {
@@ -183,7 +183,7 @@ namespace Silownia.Controllers
         {
             if (Session["Auth"] != null)
             {
-                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
                 {
                     if (id == null)
                     {
@@ -206,7 +206,7 @@ namespace Silownia.Controllers
         {
             if (Session["Auth"] != null)
             {
-                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
                 {
                     Trener trener = db.Trenerzy.Find(id);
                     db.Trenerzy.Remove(trener);

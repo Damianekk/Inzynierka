@@ -20,7 +20,7 @@ namespace Silownia.Controllers
         {
             if (Session["Auth"] != null)
             {
-                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
                 {
 
                     if (akcja != AkcjaEnumAdres.Brak)
@@ -40,7 +40,7 @@ namespace Silownia.Controllers
         {
             if (Session["Auth"] != null)
             {
-                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
                 {
                     if (id == null)
                     {
@@ -62,7 +62,7 @@ namespace Silownia.Controllers
         {
             if (Session["Auth"] != null)
             {
-                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
                 {
                     if (id != null)
                     {
@@ -94,7 +94,7 @@ namespace Silownia.Controllers
         {
             if (Session["Auth"] != null)
             {
-                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
                 {
                     object redirectTo = null;
                     if (ModelState.IsValid)
@@ -150,7 +150,7 @@ namespace Silownia.Controllers
         {
             if (Session["Auth"] != null)
             {
-                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
                 {
                     if (id == null)
                     {
@@ -175,7 +175,7 @@ namespace Silownia.Controllers
         {
             if (Session["Auth"] != null)
             {
-                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
                 {
                     if (ModelState.IsValid)
                     {
@@ -194,7 +194,7 @@ namespace Silownia.Controllers
         {
             if (Session["Auth"] != null)
             {
-                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
                 {
                     if (id == null)
                     {
@@ -217,7 +217,7 @@ namespace Silownia.Controllers
         {
             if (Session["Auth"] != null)
             {
-                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
                 {
                     Adres adres = db.Adresy.Find(id);
                     Silownia.Models.Silownia silownia = db.Silownie.Where(w => w.Adres.AdresID == id).FirstOrDefault();

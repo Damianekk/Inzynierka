@@ -21,7 +21,7 @@ namespace Silownia.Controllers
         {
             if (Session["Auth"] != null)
             {
-                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
                 {
                     var Miasta = db.Silownie.Where(u => (u.SilowniaID != null) && (u.Adres != null)).DistinctBy(a => new { a.Adres.Miasto }).Select(x => x.Adres);
 
@@ -59,7 +59,7 @@ namespace Silownia.Controllers
         {
             if (Session["Auth"] != null)
             {
-                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
                 {
                     if (id == null)
                     {
@@ -86,7 +86,7 @@ namespace Silownia.Controllers
         {
             if (Session["Auth"] != null)
             {
-                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
                 {
                     return View();
                 }
@@ -103,7 +103,7 @@ namespace Silownia.Controllers
         {
             if (Session["Auth"] != null)
             {
-                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
                 {
                     if (ModelState.IsValid)
                     {
@@ -122,7 +122,7 @@ namespace Silownia.Controllers
         {
             if (Session["Auth"] != null)
             {
-                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
                 {
                     if (id == null)
                     {
@@ -148,7 +148,7 @@ namespace Silownia.Controllers
         {
             if (Session["Auth"] != null)
             {
-                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
                 {
                     if (ModelState.IsValid)
                     {
@@ -168,7 +168,7 @@ namespace Silownia.Controllers
         {
             if (Session["Auth"] != null)
             {
-                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
                 {
                     if (id == null)
                     {
@@ -192,7 +192,7 @@ namespace Silownia.Controllers
         {
             if (Session["Auth"] != null)
             {
-                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
                 {
                     Models.Silownia silownia = db.Silownie.Find(id);
                     db.Silownie.Remove(silownia);

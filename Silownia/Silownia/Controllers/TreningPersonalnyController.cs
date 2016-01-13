@@ -25,7 +25,7 @@ namespace Silownia.Controllers
         {
             if (Session["Auth"] != null)
             {
-                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
                 {
                     ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
                     ViewBag.TrenerID = new SelectList(db.Trenerzy.DistinctBy(a => new { a.Pesel }), "imieNazwisko", "imieNazwisko");
@@ -75,7 +75,7 @@ namespace Silownia.Controllers
         {
             if (Session["Auth"] != null)
             {
-                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
                 {
                     if (id == null)
                     {
@@ -97,7 +97,7 @@ namespace Silownia.Controllers
         {
             if (Session["Auth"] != null)
             {
-                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
                 {
                     ViewBag.TrenerID = new SelectList(db.Trenerzy, "OsobaID", "imieNazwisko");
                     var a = from Osoby in db.Trenerzy select Osoby;
@@ -252,7 +252,7 @@ namespace Silownia.Controllers
         {
             if (Session["Auth"] != null)
             {
-                if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
+                if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
                 {
                     if (id == null)
                     {
