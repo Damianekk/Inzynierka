@@ -62,8 +62,8 @@
             <div class="form-group">
             @Html.Label("Zrób zdjęcie", new { @class = "control-label col-md-2" })
             <div class="wrap">
-                <img class="show_hide" src="~/Content/ikony/ikona_kamera.png" width="48" height="48">
-                <div class="slidingDiv" style="display:none">
+                <img class="Slide" src="~/Content/ikony/ikona_kamera.png" width="48" height="48">
+                <div class="slidinggDiv" style="display:none">
                     @Html.Action("Index", "Photo", new { osoba = @ViewBag.Osoba })
                 </div>
             </div>
@@ -72,8 +72,8 @@
         <div class="form-group">
             @Html.Label("Zapisane zdjęcie", new { @class = "control-label col-md-2" })
             <div class="wrap">
-                <img class="show_hide" src="~/Content/ikony/ikona_ZapisaneZdjecie.png" width="48" height="48" onclick="javascript:pokazZdjecie()">
-                <div class="slidingDiv" id="Zdjecie" style="display:none">
+                <img class="Slide" src="~/Content/ikony/ikona_ZapisaneZdjecie.png" width="48" height="48" onclick="javascript:pokazZdjecie()">
+                <div class="slidinggDiv" id="Zdjecie" style="display:none">
                 </div>
             </div>
         </div>
@@ -133,7 +133,7 @@
         });
     }
 
-    function pokazZdjecie() {
+     function pokazZdjecie() {
         var MiejsceNaZdjecie = document.getElementById("Zdjecie");
   
         $.ajax({
@@ -146,9 +146,17 @@
             }
         });
 
+
     };
-
-
+        pokazZdjecie(); //http://stackoverflow.com/questions/20635489/javascript-function-sometimes-called-sometimes-not 
+    </script>
+    <script>
+        $('img.Slide').on("click", function () {
+            $('div.slidinggDiv').stop().slideUp('fast');
+            $('div.slidinggDivON').stop().slideUp('fast');
+            $(this).next('div.slidinggDiv').stop().slideToggle('fast');
+            $(this).next('div.slidinggDivON').stop().slideToggle('fast');
+        });
 
     </script>
 }

@@ -25,10 +25,21 @@ namespace Silownia.Controllers
       
         [HttpGet]
         public ActionResult PokazZapisaneZdjecie(long idOsoby)
-        {        
+        {
+            
+            
                 Osoba os = db.Osoby.Find(idOsoby);
-                ViewBag.pic = os.ZdjecieProfilowe ;
-            return View();
+                if (os.ZdjecieProfilowe != null)
+                {
+                    ViewBag.pic = os.ZdjecieProfilowe;
+                    return View();
+                }
+                else
+                {
+                   // TempData["msg"] = "<script>alert('Brak zdjęcia');</script>";
+                    return null;
+                }
+   
         }
 
 
