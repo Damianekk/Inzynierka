@@ -27,7 +27,7 @@ namespace Silownia.Models
         [DataType(DataType.MultilineText)]
         public string Opis { get; set; }
         [Required]
-        [Display(Name = "Ilość osób")]
+        [Display(Name = "Pojemność sali")]
         public int LiczbaOsob { get; set; }
 
         public virtual ICollection<Sprzet> Sprzety { get; set; }

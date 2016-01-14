@@ -78,7 +78,7 @@
                                 <th>Nazwa</th>
                                 <th>Data zakupu</th>
                                 <th>Cena zakupu</th>
-                                <th></th>
+
                             </tr>
                             @foreach (var item in Model.Sprzety)
                             {
@@ -97,6 +97,10 @@
                                             <button class="btn-primary btn-lg" onclick="location.href='@Url.Action("Details", "Sprzet", new { id = item.SprzetID })';return false;">szczegóły</button>
                                             <button class="btn-danger btn-lg" onclick="location.href='@Url.Action("Delete", "Sprzet", new { id = item.SprzetID })';return false;">usuń</button>
                                         </div>
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("konserwacja", "Create", "Konserwacja", new { id = item.SprzetID },
+                           new { @class = "konserwacjaPic" })
                                     </td>
                                 </tr>
                             }

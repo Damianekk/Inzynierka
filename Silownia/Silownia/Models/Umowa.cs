@@ -27,7 +27,7 @@ namespace Silownia.Models
         public DateTime DataZakonczenia { get; set; }
 
         [RegularExpression("\\d{1,3}[,\\.]?(\\d{1,2})?", ErrorMessage = "Wprowadź poprawną kwotę")]
-        [Required(ErrorMessage = "Uzupełnij koszt karnetu/mc")]
+        [Required(ErrorMessage = "Uzupełnij koszt karnetu/msc")]
         [Display(Name = "Opłata /msc")]
         public string Cena { get; set; }
 

@@ -10,7 +10,7 @@ namespace Silownia.Models
         }
 
         public long SpecjalizacjaID { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Podaj nazwę specjalizacji")]
         [Display(Name = "Nazwa specjalizacji")]
         public string Nazwa { get; set; }
 

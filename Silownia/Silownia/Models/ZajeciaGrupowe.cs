@@ -21,6 +21,7 @@ namespace Silownia.Models
         [Required(ErrorMessage = "Wybierz salę z listy")]
         public long SalaID { get; set; }
 
+        [Required(ErrorMessage = "Nazwa treningu jest wymagana")]
         [MaxLength(15, ErrorMessage = " Opis przekracza dozwoloną ilość znaków (15)")]
         [Display(Name = "Nazwa treningu")]
         public string NazwaTreningu { get; set; }
