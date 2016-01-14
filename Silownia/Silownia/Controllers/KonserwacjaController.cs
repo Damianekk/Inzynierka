@@ -187,7 +187,7 @@ namespace Silownia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit( Konserwacja konserwacja)
+        public ActionResult Edit([Bind(Include = "KonserwacjaID,Opis_usterki,Data_zgłoszenia,Data_naprawy,Status,KonserwatorID")] Konserwacja konserwacja)
         {
             if (Session["Auth"] != null)
             {

@@ -34,7 +34,6 @@ namespace Silownia.Models
         [Required(ErrorMessage = "Wybierz konserwatora z listy")]
         public int KonserwatorID { get; set; }
 
-        [Required]
         public virtual Konserwator Konserwator { get; set; }
         public virtual Sprzet Sprzet { get; set; }
 

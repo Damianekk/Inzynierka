@@ -33,9 +33,7 @@ namespace Silownia.Models
 
 
         public virtual Klient Klient { get; set; }
-        [Required]
         public virtual Recepcjonista Recepcjonista { get; set; }
-        [Required]
         public virtual Silownia Silownia { get; set; }
     }
 }

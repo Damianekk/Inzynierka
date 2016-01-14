@@ -32,11 +32,9 @@ namespace Silownia.Models
         [Display(Name = "Ilość zapisanych osób")]
         public int ZapisaneOsoby { get; set; }
 
-        [Required]
         public virtual Instruktor Instruktor { get; set; }
         public virtual ICollection<KlientZajeciaGrupowe> KlientZajeciaGrupowe { get; set; }
 
-        [Required]
         public virtual Sala Sala { get; set; }
     }
 }
