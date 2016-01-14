@@ -14,8 +14,8 @@ namespace Silownia.Controllers
     public class PhotoController : Controller
     {
         private SilowniaContext db = new SilowniaContext();
-        
-        [HttpGet]
+
+        [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
         public ActionResult Index(Object osoba)
         {
      
@@ -23,8 +23,8 @@ namespace Silownia.Controllers
             return View(osoba);
         }
 
-      
-        [HttpGet]
+
+        [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
         public ActionResult PokazZapisaneZdjecie(long idOsoby)
         {
             
