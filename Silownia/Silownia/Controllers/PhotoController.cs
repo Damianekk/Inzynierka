@@ -14,6 +14,7 @@ namespace Silownia.Controllers
     public class PhotoController : Controller
     {
         private SilowniaContext db = new SilowniaContext();
+        
         [HttpGet]
         public ActionResult Index(Object osoba)
         {

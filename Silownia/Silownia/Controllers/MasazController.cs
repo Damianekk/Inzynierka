@@ -130,7 +130,7 @@ namespace Silownia.Controllers
                 if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
                 {
                     ViewBag.MasazystaID = new SelectList(db.Masazysci, "OsobaID", "imieNazwisko", masaz.MasazystaID);
-                    masaz.MasazystaID = Int32.Parse(Request["MasazysciSelectLista"]);
+                    masaz.MasazystaID = Int32.Parse(Request["MasazystaSelectLista"]);
 
                     masaz.DataMasazu = masaz.DataMasazu.AddHours(System.Convert.ToDouble(masaz.MasazStart.Hour));
                     masaz.DataMasazu = masaz.DataMasazu.AddMinutes(System.Convert.ToDouble(masaz.MasazStart.Minute));
@@ -323,7 +323,7 @@ namespace Silownia.Controllers
                 if (Session["Auth"].ToString() == "Klient")
                 {
                     ViewBag.MasazystaID = new SelectList(db.Masazysci, "OsobaID", "imieNazwisko", masaz.MasazystaID);
-                    masaz.MasazystaID = Int32.Parse(Request["MasazysciSelectLista"]);
+                    masaz.MasazystaID = Int32.Parse(Request["MasazystaSelectLista"]);
 
                     masaz.DataMasazu = masaz.DataMasazu.AddHours(System.Convert.ToDouble(masaz.MasazStart.Hour));
                     masaz.DataMasazu = masaz.DataMasazu.AddMinutes(System.Convert.ToDouble(masaz.MasazStart.Minute));
@@ -360,7 +360,7 @@ namespace Silownia.Controllers
         public ActionResult ListaSilowni()
         {
             List<SelectListItem> NazwySilowni = new List<SelectListItem>();
-            SilowniaMasazystaViewModel MasazysciWSilce = new SilowniaMasazystaViewModel();
+            MasazystaWSilowniViewModel MasazysciWSilce = new MasazystaWSilowniViewModel();
 
             List<Models.Silownia> silownie = db.Silownie.ToList();
             silownie.ForEach(x =>

@@ -10,6 +10,7 @@ using System.Globalization;
 using PagedList;
 using Silownia.Helpers;
 using System.Collections.Generic;
+using Silownia.ViewModel;
 
 namespace Silownia.Controllers
 {
@@ -129,8 +130,8 @@ namespace Silownia.Controllers
                 if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
                 {
 
-                    ViewBag.SilowniaID = new SelectList(db.Silownie, "SilowniaID", "Nazwa", umowa.SilowniaID);
-                    ViewBag.RecepcjonistaID = new SelectList(db.Recepcjonisci.Where(o => o.SilowniaID == umowa.SilowniaID), "OsobaID", "imieNazwisko", umowa.RecepcjonistaID);
+                    umowa.SilowniaID = Int32.Parse(Request["SilownieSelectLista"]);
+                    umowa.RecepcjonistaID = Int32.Parse(Request["RecepcjonistaSelectLista"]);
 
                     if (ModelState.IsValid && !aktywnaUmowa(id, umowa.DataPodpisania, umowa.DataZakonczenia))
                     {
@@ -263,6 +264,38 @@ namespace Silownia.Controllers
             return HttpNotFound();
         }
 
+
+        public ActionResult ListaSilowni()
+        {
+            List<SelectListItem> NazwySilowni = new List<SelectListItem>();
+            DropDownListyViewModel UmowyWSilce = new DropDownListyViewModel();
+
+            List<Models.Silownia> silownie = db.Silownie.ToList();
+            silownie.ForEach(x =>
+            {
+                NazwySilowni.Add(new SelectListItem { Text = x.Nazwa, Value = x.SilowniaID.ToString() });
+            });
+            UmowyWSilce.SilownieSelectLista = NazwySilowni;
+            return View(UmowyWSilce);
+
+        }
+
+        public ActionResult RecepcjonistaWSilowni(string SilkaId)
+        {
+            int silowniaId;
+            List<SelectListItem> recepcjonista = new List<SelectListItem>();
+
+            if (!string.IsNullOrEmpty(SilkaId))
+            {
+                silowniaId = Convert.ToInt32(SilkaId);
+                List<Recepcjonista> recepcjonisciLista = db.Pracownicy.OfType<Recepcjonista>().Where(x => x.SilowniaID == silowniaId).ToList();
+                recepcjonisciLista.ForEach(x =>
+                {
+                    recepcjonista.Add(new SelectListItem { Text = x.imieNazwisko, Value = x.OsobaID.ToString() });
+                });
+            }
+            return Json(recepcjonista, JsonRequestBehavior.AllowGet);
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

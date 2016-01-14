@@ -248,7 +248,6 @@ C:\Users\Łukasz\Source\Repos\Inzynierka\Silownia\Silownia\bin\Microsoft.Owin.Se
 C:\Users\Łukasz\Source\Repos\Inzynierka\Silownia\Silownia\bin\Microsoft.Owin.Security.Google.xml
 C:\Users\Łukasz\Source\Repos\Inzynierka\Silownia\Silownia\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\Łukasz\Source\Repos\Inzynierka\Silownia\Silownia\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-C:\Users\Mtk\Desktop\Inzynier_MVC\Inzynierka\Silownia\Silownia\obj\Debug\Silownia.csprojResolveAssemblyReference.cache
 C:\Users\lcmaj_000\Source\Repos\Inzynierka\Silownia\Silownia\obj\Debug\Silownia.csprojResolveAssemblyReference.cache
 C:\Users\lcmaj_000\Source\Repos\Inzynierka\Silownia\Silownia\obj\Debug\Silownia.dll
 C:\Users\lcmaj_000\Source\Repos\Inzynierka\Silownia\Silownia\obj\Debug\Silownia.pdb

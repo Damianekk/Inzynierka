@@ -6,9 +6,9 @@ using System.Web.Mvc;
 
 namespace Silownia.ViewModel
 {
-    public class SilowniaMasazystaViewModel
+    public class MasazystaWSilowniViewModel
     {
+        public IList<SelectListItem> MasazystaSelectLista { get; set; }
         public IList<SelectListItem> SilownieSelectLista { get; set; }
-        public IList<SelectListItem> MasazysciSelectLista { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿@model Silownia.ViewModel.DropDownListyViewModel
 @{
-   Layout = null;
+    Layout = null;
 }
 <script type="text/javascript">
     $(document).ready(function () {
@@ -8,17 +8,17 @@
             $.ajax({
                 type: "GET",
                 data: { SilkaId: $("#Silwnie-DropDown").val() },
-                url: "@Url.Action("TrenerWSilowni", null, null, Request.Url.Scheme)",
+                url: "@Url.Action("RecepcjonistaWSilowni", null, null, Request.Url.Scheme)",
                 datatype: "json",
                 success: function (data) {
-                    var masazysta = "<select id='Trener-DropDownID'>";
-                    masazysta = masazysta + '<option value="">Wybierz Trenera</option>';
+                    var recepcjonista = "<select id='Recepcjonista-DropDownID'>";
+                    recepcjonista = recepcjonista + '<option value="">Wybierz Recepcjoniste</option>';
 
                     for (var i = 0; i < data.length; i++) {
-                        masazysta = masazysta + '<option value=' + data[i].Value + '>' + data[i].Text + '</option>';
+                        recepcjonista = recepcjonista + '<option value=' + data[i].Value + '>' + data[i].Text + '</option>';
                     }
-                    masazysta = masazysta + '</select>';
-                    $('#Trener-DropDownID').html(masazysta);
+                    recepcjonista = recepcjonista + '</select>';
+                    $('#Recepcjonista-DropDownID').html(recepcjonista);
                 }
             });
         });
@@ -33,9 +33,9 @@
     </div>
 </div>
 <div class="form-group">
-    @Html.LabelFor(x => x.TrenerSelectLista, "Trener", new { @class = "control-label col-md-2" })
+    @Html.LabelFor(x => x.RecepcjonistaSelectLista, "Recepcjonista", new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.DropDownListFor(x => x.TrenerSelectLista, new List<SelectListItem>(), "Wybierz Trenera", new { @id = "Trener-DropDownID" })
-        @Html.ValidationMessageFor(x => x.TrenerSelectLista)
+        @Html.DropDownListFor(x => x.RecepcjonistaSelectLista, new List<SelectListItem>(), "Wybierz Recepcjoniste", new { @id = "Recepcjonista-DropDownID" })
+        @Html.ValidationMessageFor(x => x.RecepcjonistaSelectLista)
     </div>
 </div>

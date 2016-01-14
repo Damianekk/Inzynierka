@@ -195,7 +195,7 @@ namespace Silownia.Controllers
                 {                    
                         ViewBag.KonserwatorID = new SelectList(db.Konserwatorzy, "OsobaID", "imieNazwisko", konserwacja.KonserwatorID);
 
-                        konserwacja.KonserwatorID = Int32.Parse(Request["KonserwatorzySelectLista"]);
+                        konserwacja.KonserwatorID = Int32.Parse(Request["KonserwatorSelectLista"]);
 
                         if (ModelState.IsValid)
                         {

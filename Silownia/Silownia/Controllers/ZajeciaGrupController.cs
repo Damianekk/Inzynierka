@@ -90,6 +90,7 @@ namespace Silownia.Controllers
                 {
                     ViewBag.InstruktorID = new SelectList(db.Instruktorzy, "OsobaID", "imieNazwisko");
                     ViewBag.SalaID = new SelectList(db.Sale, "Numer_sali", "Rodzaj");
+
                     var a = from Osoby in db.Instruktorzy select Osoby;
 
                     Instruktor instruktor = null;
@@ -121,9 +122,9 @@ namespace Silownia.Controllers
             {
                 if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
                 {
-                    ViewBag.InstruktorID = new SelectList(db.Instruktorzy, "OsobaID", "imieNazwisko", zajecia.InstruktorID);
-                    ViewBag.SalaID = new SelectList(db.Sale, "Numer_sali", "Numer_sali", zajecia.SalaID);
-                    zajecia.InstruktorID = Int32.Parse(Request["InstruktorzySelectLista"]);
+                    //ViewBag.InstruktorID = new SelectList(db.Instruktorzy, "OsobaID", "imieNazwisko", zajecia.InstruktorID);
+                   // ViewBag.SalaID = new SelectList(db.Sale, "Numer_sali", "Numer_sali", zajecia.SalaID);
+                    zajecia.InstruktorID = Int32.Parse(Request["InstruktorSelectLista"]);
                     zajecia.SalaID = Int32.Parse(Request["SaleSelectLista"]);
 
                     zajecia.TreningStart = zajecia.TreningStart.AddHours(System.Convert.ToDouble(zajecia.TreningStartGodzina.Hour));

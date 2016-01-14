@@ -271,8 +271,8 @@
     <Compile Include="Startup.cs" />
     <Compile Include="Helpers\SwapExpressionVisitor.cs" />
     <Compile Include="Test.cs" />
-    <Compile Include="ViewModel\SilowniaMasazystaViewModel.cs" />
     <Compile Include="ViewModel\DropDownListyViewModel.cs" />
+    <Compile Include="ViewModel\MasazystaWSilowniViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -408,7 +408,11 @@
     <Content Include="Scripts\infoCzynnosc.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery-2.2.0.js" />
+    <Content Include="Scripts\jquery-2.2.0.min.js" />
+    <Content Include="Scripts\jquery-2.2.0.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <None Include="Scripts\jquery-2.2.0-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.11.4.js" />
     <Content Include="Scripts\jquery-ui-1.11.4.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -437,7 +441,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\_RemoveAccountPartial.cshtml" />
@@ -570,6 +573,7 @@
     <Content Include="Views\TreningPersonalny\ListaSilowni.cshtml" />
     <Content Include="Views\ZajeciaGrup\ListaSilowniInstruktorowSal.cshtml" />
     <Content Include="Views\Konserwacja\ListaSilowni.cshtml" />
+    <Content Include="Views\Umowa\ListaSilowni.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
