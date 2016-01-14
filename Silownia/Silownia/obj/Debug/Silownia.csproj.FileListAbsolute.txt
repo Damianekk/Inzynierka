@@ -445,3 +445,4 @@ C:\Users\Łukasz\Source\Inzynierka\Silownia\Silownia\bin\Microsoft.Owin.Security
 C:\Users\Łukasz\Source\Inzynierka\Silownia\Silownia\obj\Debug\Silownia.dll
 C:\Users\Łukasz\Source\Inzynierka\Silownia\Silownia\obj\Debug\Silownia.pdb
 C:\Users\Łukasz\Source\Inzynierka\Silownia\Silownia\obj\Debug\Silownia.csprojResolveAssemblyReference.cache
+C:\Users\Mtk\Desktop\Inzynier_MVC\Inzynierka\Silownia\Silownia\obj\Debug\Silownia.csprojResolveAssemblyReference.cache
