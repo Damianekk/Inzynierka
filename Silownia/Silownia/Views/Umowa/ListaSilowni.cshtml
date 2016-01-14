@@ -12,7 +12,7 @@
                 datatype: "json",
                 success: function (data) {
                     var recepcjonista = "<select id='Recepcjonista-DropDownID'>";
-                    recepcjonista = recepcjonista + '<option value="">Wybierz Recepcjoniste</option>';
+                    recepcjonista = recepcjonista + '<option value="">wybierz recepcjonistę</option>';
 
                     for (var i = 0; i < data.length; i++) {
                         recepcjonista = recepcjonista + '<option value=' + data[i].Value + '>' + data[i].Text + '</option>';
@@ -28,14 +28,14 @@
 <div class="form-group">
     @Html.LabelFor(x => x.SilownieSelectLista, "Siłownia", new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.DropDownListFor(x => x.SilownieSelectLista, Model.SilownieSelectLista, "Wybierz siłownie", new { @id = "Silwnie-DropDown" })
+        @Html.DropDownListFor(x => x.SilownieSelectLista, Model.SilownieSelectLista, "wybierz siłownię", new { @id = "Silwnie-DropDown" })
         @Html.ValidationMessageFor(x => x.SilownieSelectLista)
     </div>
 </div>
 <div class="form-group">
     @Html.LabelFor(x => x.PracownikSelectLista, "Recepcjonista", new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.DropDownListFor(x => x.PracownikSelectLista, new List<SelectListItem>(), "Wybierz Recepcjoniste", new { @id = "Recepcjonista-DropDownID" })
+        @Html.DropDownListFor(x => x.PracownikSelectLista, new List<SelectListItem>(), "wybierz recepcjonistę", new { @id = "Recepcjonista-DropDownID" })
         @Html.ValidationMessageFor(x => x.PracownikSelectLista)
     </div>
 </div>
