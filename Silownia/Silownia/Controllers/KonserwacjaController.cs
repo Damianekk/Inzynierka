@@ -193,9 +193,7 @@ namespace Silownia.Controllers
             {
                 if (Session["Auth"].ToString() == "Recepcjonista" | Session["Auth"].ToString() == "Administrator")
                 {                    
-                        ViewBag.KonserwatorID = new SelectList(db.Konserwatorzy, "OsobaID", "imieNazwisko", konserwacja.KonserwatorID);
-
-                        konserwacja.KonserwatorID = Int32.Parse(Request["KonserwatorSelectLista"]);
+                  konserwacja.KonserwatorID = Int32.Parse(Request["PracownikSelectLista"]);
 
                         if (ModelState.IsValid)
                         {

@@ -33,9 +33,9 @@
     </div>
 </div>
 <div class="form-group">
-    @Html.LabelFor(x => x.TrenerSelectLista, "Trener", new { @class = "control-label col-md-2" })
+    @Html.LabelFor(x => x.PracownikSelectLista, "Trener", new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.DropDownListFor(x => x.TrenerSelectLista, new List<SelectListItem>(), "Wybierz Trenera", new { @id = "Trener-DropDownID" })
-        @Html.ValidationMessageFor(x => x.TrenerSelectLista)
+        @Html.DropDownListFor(x => x.PracownikSelectLista, new List<SelectListItem>(), "Wybierz Trenera", new { @id = "Trener-DropDownID" })
+        @Html.ValidationMessageFor(x => x.PracownikSelectLista)
     </div>
 </div>

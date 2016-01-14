@@ -324,8 +324,8 @@ namespace Silownia.Controllers
             {
                 if (Session["Auth"].ToString() == "Klient" || Session["Auth"].ToString() == "Klient")
                 {
-                    ViewBag.TrenerID = new SelectList(db.Trenerzy, "OsobaID", "imieNazwisko", treningPersonalny.TrenerID);
-                    treningPersonalny.TrenerID = Int32.Parse(Request["TrenerSelectLista"]);
+                    
+                    treningPersonalny.TrenerID = Int32.Parse(Request["PracownikSelectLista"]);
 
                     treningPersonalny.TreningStart = treningPersonalny.TreningStart.AddHours(System.Convert.ToDouble(treningPersonalny.TreningStartGodzina.Hour));
                     treningPersonalny.TreningStart = treningPersonalny.TreningStart.AddMinutes(System.Convert.ToDouble(treningPersonalny.TreningStartGodzina.Minute));

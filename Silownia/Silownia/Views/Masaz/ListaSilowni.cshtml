@@ -1,4 +1,4 @@
-﻿@model Silownia.ViewModel.MasazystaWSilowniViewModel
+﻿@model Silownia.ViewModel.DropDownListyViewModel
 @{
     Layout = null; 
 }
@@ -33,9 +33,9 @@
         </div>
     </div>
     <div class="form-group">
-        @Html.Label("Masażysta", new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(x => x.MasazystaSelectLista, new List<SelectListItem>(), "Wybierz Masażyste", new { @id = "Masazysta-DropDownID" })
-
-        </div>
+    @Html.LabelFor(x => x.PracownikSelectLista, "Masażysta", new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownListFor(x => x.PracownikSelectLista, new List<SelectListItem>(), "Wybierz Masażyste", new { @id = "Masazysta-DropDownID" })
+        @Html.ValidationMessageFor(x => x.PracownikSelectLista)
     </div>
+</div>

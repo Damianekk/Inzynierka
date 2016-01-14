@@ -122,9 +122,7 @@ namespace Silownia.Controllers
             {
                 if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
                 {
-                    //ViewBag.InstruktorID = new SelectList(db.Instruktorzy, "OsobaID", "imieNazwisko", zajecia.InstruktorID);
-                   // ViewBag.SalaID = new SelectList(db.Sale, "Numer_sali", "Numer_sali", zajecia.SalaID);
-                    zajecia.InstruktorID = Int32.Parse(Request["InstruktorSelectLista"]);
+                    zajecia.InstruktorID = Int32.Parse(Request["PracownikSelectLista"]);
                     zajecia.SalaID = Int32.Parse(Request["SaleSelectLista"]);
 
                     zajecia.TreningStart = zajecia.TreningStart.AddHours(System.Convert.ToDouble(zajecia.TreningStartGodzina.Hour));

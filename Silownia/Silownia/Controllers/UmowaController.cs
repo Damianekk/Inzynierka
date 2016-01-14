@@ -131,7 +131,7 @@ namespace Silownia.Controllers
                 {
 
                     umowa.SilowniaID = Int32.Parse(Request["SilownieSelectLista"]);
-                    umowa.RecepcjonistaID = Int32.Parse(Request["RecepcjonistaSelectLista"]);
+                    umowa.RecepcjonistaID = Int32.Parse(Request["PracownikSelectLista"]);
 
                     if (ModelState.IsValid && !aktywnaUmowa(id, umowa.DataPodpisania, umowa.DataZakonczenia))
                     {
