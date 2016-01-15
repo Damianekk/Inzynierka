@@ -232,6 +232,7 @@
     <Compile Include="Helpers\AkcjaEnumTrening.cs" />
     <Compile Include="Helpers\AkcjaEnumUmowa.cs" />
     <Compile Include="Helpers\AkcjaZapisEnum.cs" />
+    <Compile Include="Helpers\SzyfrowanieHasel.cs" />
     <Compile Include="Helpers\MyAuthorize.cs" />
     <Compile Include="Helpers\RoleEnum.cs" />
     <Compile Include="Helpers\StatusWiadomosciEnum.cs" />

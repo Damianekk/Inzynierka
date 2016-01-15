@@ -113,7 +113,14 @@ namespace Silownia.Controllers
                         Uzytkownik pracownik = new Uzytkownik();
                         pracownik.IDOsoby = masazysta.OsobaID;
                         pracownik.Login = masazysta.Pesel.ToString();
+
+                        //string haslo = instruktor.Imie + instruktor.Nazwisko;
+                        //string szyfrowanie = szyfr.Encrypt(haslo);
+                        //pracownik.Haslo = szyfrowanie;
+
+                        //to bedzie do zakomentowania - zakomentowane do odkomentowania
                         pracownik.Haslo = masazysta.Imie + masazysta.Nazwisko;
+
                         pracownik.Rola = RoleEnum.Masazysta.GetDescription();
                         db.Uzytkownicy.Add(pracownik);
                         db.SaveChanges();

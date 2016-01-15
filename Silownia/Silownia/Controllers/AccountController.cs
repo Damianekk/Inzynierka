@@ -8,6 +8,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using Silownia.Models;
+using Silownia.Helpers;
 using Silownia.DAL;
 
 namespace Silownia.Controllers
@@ -15,6 +16,9 @@ namespace Silownia.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+
+        private SzyfrowanieHasel szyfr = new SzyfrowanieHasel("mojklucz", "mojwektor", 32);
+
         public AccountController()
             : this(new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext())))
         {
@@ -59,7 +63,9 @@ namespace Silownia.Controllers
 
             if (uzytkownik != null)
             {
-                if (model.Haslo == uzytkownik.Haslo)
+                //string haslo = szyfr.Decrypt(uzytkownik.Haslo);
+                //if (model.Haslo == haslo)
+                if(model.Haslo == uzytkownik.Haslo)
                 {
                     Session["User"] = uzytkownik.Login;
                     Session["Auth"] = uzytkownik.Rola;
