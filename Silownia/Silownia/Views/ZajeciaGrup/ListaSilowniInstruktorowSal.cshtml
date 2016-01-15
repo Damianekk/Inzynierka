@@ -13,7 +13,7 @@
                 datatype: "json",
                 success: function (data) {
                     var instruktor = "<select id='Instruktor-DropDownID'>";
-                    instruktor = instruktor + '<option value="">Wybierz Instruktora</option>';
+                    instruktor = instruktor + '<option value="">wybierz instruktora</option>';
 
                     for (var i = 0; i < data.length; i++) {
                         instruktor = instruktor + '<option value=' + data[i].Value + '>' + data[i].Text + '</option>';
@@ -29,7 +29,7 @@
                 datatype: "json",
             success: function (data) {
                 var sala = "<select id='Sala-DropDownID'>";
-                sala = sala + '<option value="">Wybierz Sale</option>';
+                sala = sala + '<option value="">wybierz salę</option>';
 
                 for (var i = 0; i < data.length; i++) {
                     sala = sala + '<option value=' + data[i].Value + '>' + data[i].Text + '</option>';
@@ -45,14 +45,14 @@
 <div class="form-group">
     @Html.LabelFor(x => x.SilownieSelectLista, "Siłownia", new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.DropDownListFor(x => x.SilownieSelectLista, Model.SilownieSelectLista, "Wybierz siłownie", new { @id = "Silwnie-DropDown" })
+        @Html.DropDownListFor(x => x.SilownieSelectLista, Model.SilownieSelectLista, "wybierz siłownię", new { @id = "Silwnie-DropDown" })
         @Html.ValidationMessageFor(x => x.SilownieSelectLista)
     </div>
 </div>
 <div class="form-group">
     @Html.LabelFor(x => x.PracownikSelectLista, "Instruktor", new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.DropDownListFor(x => x.PracownikSelectLista, new List<SelectListItem>(), "Wybierz Instruktora", new { @id = "Instruktor-DropDownID" })
+        @Html.DropDownListFor(x => x.PracownikSelectLista, new List<SelectListItem>(), "wybierz instruktora", new { @id = "Instruktor-DropDownID" })
         @Html.ValidationMessageFor(x => x.PracownikSelectLista)
     </div>
 </div>
@@ -60,7 +60,7 @@
 <div class="form-group">
     @Html.LabelFor(x => x.SaleSelectLista, "Sala", new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.DropDownListFor(x => x.SaleSelectLista, new List<SelectListItem>(), "Wybierz sale", new { @id = "Sala-DropDownID" })
+        @Html.DropDownListFor(x => x.SaleSelectLista, new List<SelectListItem>(), "wybierz salę", new { @id = "Sala-DropDownID" })
         @Html.ValidationMessageFor(x => x.SaleSelectLista)
     </div>
 </div>

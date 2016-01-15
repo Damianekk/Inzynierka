@@ -12,7 +12,7 @@ namespace Silownia.Models
 
         [Required(ErrorMessage = "Podaj datę masażu")]
         [DataType(DataType.Date)]
-        [Display(Name = "Pełna data masażu")]
+        [Display(Name = "Data masażu")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime DataMasazu { get; set; }
 

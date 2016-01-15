@@ -17,6 +17,7 @@ namespace Silownia.Models
             TreningiPersonalne = new List<TreningPersonalny>();
         }
 
+        [Required]
         [EmailAddress]
         public string Mail { get; set; }
 

@@ -6,6 +6,7 @@ using System.Net;
 using System.Web.Mvc;
 using Silownia.Models;
 using Silownia.DAL;
+using Silownia.Helpers;
 using PagedList;
 using System.Collections.Generic;
 using System.Web.Script.Serialization;
@@ -14,11 +15,10 @@ using System.Web.Script.Serialization;
 namespace Silownia.Controllers
 {
 
-
     public class KlientController : Controller
     {
         private SilowniaContext db = new SilowniaContext();
-
+        private SzyfrowanieHasel szyfr = new SzyfrowanieHasel("mojklucz", "mojwektor", 32);
 
         // GET: /Klient/
 
@@ -121,6 +121,12 @@ namespace Silownia.Controllers
                         Uzytkownik uzytkownik = new Uzytkownik();
                         uzytkownik.IDOsoby = klient.OsobaID;
                         uzytkownik.Login = klient.Mail;
+
+                        //string haslo = klient.Imie + klient.Nazwisko;
+                        //string szyfrowanie = szyfr.Encrypt(haslo);
+                        //uzytkownik.Haslo = szyfrowanie;
+
+                        //to bedzie do zakomentowania - zakomentowane do odkomentowania
                         uzytkownik.Haslo = klient.Imie + klient.Nazwisko;
                         uzytkownik.Rola = RoleEnum.Klient.GetDescription();
                         db.Uzytkownicy.Add(uzytkownik);

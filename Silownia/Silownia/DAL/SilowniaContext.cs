@@ -63,7 +63,7 @@ namespace Silownia.DAL
             //    m.ToTable("ZajeciaGrupowe");
             //});
 
-            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+            //modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 
         }
 
