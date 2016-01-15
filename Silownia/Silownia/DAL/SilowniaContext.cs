@@ -45,25 +45,43 @@ namespace Silownia.DAL
             modelBuilder.Configurations.Add(new DziedziczeniePracownika());
             modelBuilder.Configurations.Add(new DziedziczenieTreningu());
 
-            //modelBuilder.Entity<TreningPersonalny>().Map(m =>
-            //{
-            //    m.MapInheritedProperties();
-            //    m.ToTable("TreningPersonalny");
-            //});
-
-            //modelBuilder.Entity<TreningWlasny>().Map(m =>
-            //{
-            //    m.MapInheritedProperties();
-            //    m.ToTable("TreningWlasny");
-            //});
-
-            //modelBuilder.Entity<ZajeciaGrupowe>().Map(m =>
-            //{
-            //    m.MapInheritedProperties();
-            //    m.ToTable("ZajeciaGrupowe");
-            //});
-
-            //modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+            //Usuwanie kaskadowe miedzy tabelami powiazanymi ze sobą
+            modelBuilder.Entity<Models.Silownia>()
+                        .HasMany(t => t.Sale)
+                        .WithRequired(t=>t.Silownia)
+                        .WillCascadeOnDelete(true);
+            
+            modelBuilder.Entity<Models.Silownia>()
+                        .HasMany(t => t.Pracownicy)
+                        .WithRequired(t => t.Silownia)
+                        .WillCascadeOnDelete(true);
+            
+            modelBuilder.Entity<Models.Silownia>()
+                        .HasMany(t => t.Umowy)
+                        .WithRequired(t => t.Silownia)
+                        .WillCascadeOnDelete(true);
+            
+            modelBuilder.Entity<Trener>()
+                       .HasMany(t => t.TreningiPersonalne)
+                       .WithRequired(t => t.Trener)
+                       .WillCascadeOnDelete(true);
+            
+            modelBuilder.Entity<Masazysta>()
+                       .HasMany(t => t.Masaze)
+                       .WithRequired(t => t.Masazysta)
+                       .WillCascadeOnDelete(true);
+            
+   
+            modelBuilder.Entity<Sala>()
+                        .HasMany(t => t.Sprzety)
+                        .WithRequired(t => t.Sala)
+                        .WillCascadeOnDelete(true);
+            
+            modelBuilder.Entity<Sala>()
+                        .HasMany(t => t.ZajeciaGrup)
+                        .WithRequired(t => t.Sala)
+                        .WillCascadeOnDelete(true);
+                        
 
         }
 
