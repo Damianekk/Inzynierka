@@ -93,6 +93,8 @@ namespace Silownia.Controllers
 
                     Recepcjonista recepcjonista = null;
                     var user = User.Identity.GetUserName();
+                    Osoba osoba = db.Osoby.Find(id);
+                    ViewBag.Osoba = osoba;
                     foreach (Recepcjonista rec in a)
                     {
                         if (rec.imieNazwisko.Replace(" ", "") == user)
@@ -101,8 +103,7 @@ namespace Silownia.Controllers
                             break;
                         }
 
-                        Osoba osoba = db.Osoby.Find(id);
-                        ViewBag.Osoba = osoba;
+               
                     }
 
                     return View(new Umowa // W ten sposób tworze obiekt nadaje aktualny czas / przypisuje do Daty podpisania umowy i zwracam widok z datą (teraz)
