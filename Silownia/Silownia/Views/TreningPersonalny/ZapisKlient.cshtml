@@ -46,10 +46,6 @@
             </div>
         </div>
 
-        @if (Request.UrlReferrer != null)
-        {
-            <button class="btn btn-large btn-block btn-primary btn-lg btn-primary" onclick="history.go(-1); return false;">powrót</button>
-        }
 
         @if (TempData["msg"] != null)
         { @Html.Raw(TempData["msg"]) }
@@ -61,9 +57,18 @@
                 @Html.Action("Details", "Klient", new { id = ViewBag.Osoba.OsobaID })
             </div>
         }
+        
+    </div>
+    <div>
+        @if (Request.UrlReferrer != null)
+        {
+            <button class="btn btn-large btn-block btn-primary btn-lg btn-primary" onclick="history.go(-1); return false;">powrót</button>
+        }
 
     </div>
+
 }
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

@@ -144,10 +144,6 @@ namespace Silownia.Controllers
                         sala.ZajeciaGrup.Add(zajecia);
                         #endregion
 
-                        //zajecia.TreningStart = zajecia.TreningStart.AddHours(System.Convert.ToDouble(zajecia.TreningStartGodzina.Hour));
-                        //zajecia.TreningStart = zajecia.TreningStart.AddMinutes(System.Convert.ToDouble(zajecia.TreningStartGodzina.Minute));
-                        //zajecia.TreningKoniec = zajecia.TreningStart.AddMinutes(System.Convert.ToDouble(zajecia.CzasTrwania));
-
                         db.ZajeciaGrup.Add(zajecia);
                         db.SaveChanges();
 
@@ -161,7 +157,7 @@ namespace Silownia.Controllers
 
         bool zajetyTrener(long instruktor, DateTime dataOd)
         {
-            var check = db.ZajeciaGrup.Where(o => o.Instruktor.OsobaID == instruktor && dataOd >= o.TreningStart && dataOd <= o.TreningKoniec).ToList();
+            var check = db.ZajeciaGrup.Where(o => o.Instruktor.OsobaID == instruktor && dataOd >= o.TreningStart && dataOd < o.TreningKoniec).ToList();
 
             if (check.Count == 1)
             {
@@ -173,7 +169,7 @@ namespace Silownia.Controllers
 
         bool zajetaSala(long sala, DateTime dataOd)
         {
-            var check = db.ZajeciaGrup.Where(o => o.Sala.Numer_sali == sala && dataOd >= o.TreningStart && dataOd <= o.TreningKoniec).ToList();
+            var check = db.ZajeciaGrup.Where(o => o.Sala.Numer_sali == sala && dataOd >= o.TreningStart && dataOd < o.TreningKoniec).ToList();
 
             if (check.Count == 1)
             {
