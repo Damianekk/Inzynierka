@@ -150,12 +150,7 @@ namespace Silownia.Controllers
                         masazysta.Masaze.Add(masaz);
                         #endregion
 
-                        //masaz.DataMasazu = masaz.DataMasazu.AddHours(System.Convert.ToDouble(masaz.MasazStart.Hour));
-                        //masaz.DataMasazu = masaz.DataMasazu.AddMinutes(System.Convert.ToDouble(masaz.MasazStart.Minute));
-                        //masaz.DataMasazuKoniec = masaz.DataMasazu.AddMinutes(System.Convert.ToDouble(masaz.CzasTrwania));
                         masaz.kosztMasazu = (masaz.CzasTrwania * masaz.Masazysta.StawkaGodzinowa) / 60;
-
-
 
                         db.Masaze.Add(masaz);
                         db.SaveChanges();
@@ -171,8 +166,8 @@ namespace Silownia.Controllers
 
         bool aktywnyMasaz(long? klientID, DateTime dataOd)
         {
-            var checkMasaz = db.Masaze.Where(o => o.Klient.OsobaID == klientID && dataOd >= o.DataMasazu && dataOd <= o.DataMasazuKoniec).ToList();
-            var checkTrening = db.TreningiPersonalne.Where(o => o.Klient.OsobaID == klientID && dataOd >= o.TreningStart && dataOd <= o.TreningKoniec).ToList();
+            var checkMasaz = db.Masaze.Where(o => o.Klient.OsobaID == klientID && dataOd >= o.DataMasazu && dataOd < o.DataMasazuKoniec).ToList();
+            var checkTrening = db.TreningiPersonalne.Where(o => o.Klient.OsobaID == klientID && dataOd >= o.TreningStart && dataOd < o.TreningKoniec).ToList();
             if (checkMasaz.Count == 1)
             {
                 TempData["msg"] = "<script>alert('Klient ma już umówiony masaż w tym terminie');</script>";
@@ -188,7 +183,7 @@ namespace Silownia.Controllers
 
         bool zajetyMasazysta(long? MasazystaID, DateTime dataOd)
         {
-            var check = db.Masaze.Where(o => o.Masazysta.OsobaID == MasazystaID && dataOd >= o.DataMasazu && dataOd <= o.DataMasazuKoniec).ToList();
+            var check = db.Masaze.Where(o => o.Masazysta.OsobaID == MasazystaID && dataOd >= o.DataMasazu && dataOd < o.DataMasazuKoniec).ToList();
 
             if (check.Count == 1)
             {

@@ -154,9 +154,6 @@ namespace Silownia.Controllers
                         trener.TreningiPersonalne.Add(treningPersonalny);
                         #endregion
 
-                        //treningPersonalny.TreningStart = treningPersonalny.TreningStart.AddHours(System.Convert.ToDouble(treningPersonalny.TreningStartGodzina.Hour));
-                        //treningPersonalny.TreningStart = treningPersonalny.TreningStart.AddMinutes(System.Convert.ToDouble(treningPersonalny.TreningStartGodzina.Minute));
-                        //treningPersonalny.TreningKoniec = treningPersonalny.TreningStart.AddMinutes(System.Convert.ToDouble(treningPersonalny.CzasTrwania));
                         treningPersonalny.kosztTreningu = (treningPersonalny.CzasTrwania * treningPersonalny.Trener.StawkaGodzinowa) / 60;
 
 
@@ -173,8 +170,8 @@ namespace Silownia.Controllers
 
         bool aktywneZajecia(long? klientID, DateTime dataOd)
         {
-            var checkTrening = db.TreningiPersonalne.Where(o => o.Klient.OsobaID == klientID && dataOd >= o.TreningStart && dataOd <= o.TreningKoniec).ToList();
-            var checkMasaz = db.Masaze.Where(o => o.Klient.OsobaID == klientID && dataOd >= o.DataMasazu && dataOd <= o.DataMasazuKoniec).ToList();
+            var checkTrening = db.TreningiPersonalne.Where(o => o.Klient.OsobaID == klientID && dataOd >= o.TreningStart && dataOd < o.TreningKoniec).ToList();
+            var checkMasaz = db.Masaze.Where(o => o.Klient.OsobaID == klientID && dataOd >= o.DataMasazu && dataOd < o.DataMasazuKoniec).ToList();
 
             if (checkTrening.Count == 1)
             {
@@ -192,7 +189,7 @@ namespace Silownia.Controllers
 
         bool zajetyTrener(long? TrenerID, DateTime dataOd)
         {
-            var check = db.TreningiPersonalne.Where(o => o.Trener.OsobaID == TrenerID && dataOd >= o.TreningStart && dataOd <= o.TreningKoniec).ToList();
+            var check = db.TreningiPersonalne.Where(o => o.Trener.OsobaID == TrenerID && dataOd >= o.TreningStart && dataOd < o.TreningKoniec).ToList();
 
             if (check.Count == 1)
             {
