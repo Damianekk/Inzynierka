@@ -37,8 +37,7 @@ namespace Silownia.Controllers
                 }
                 else
                 {
-                   // TempData["msg"] = "<script>alert('Brak zdjęcia');</script>";
-                    return null;
+                    return View("DomyslneProfilowe");
                 }
    
         }

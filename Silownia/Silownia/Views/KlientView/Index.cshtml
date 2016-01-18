@@ -38,7 +38,7 @@
             type: "POST",
             success: function (json) {
                 $.each(json, function (i, item) {
-                    infoKoncowe += item.osWys +" "+ToJavaScriptDate(item.dataWys)+ "\n: " + item.tresc + "\n------------------------------------------------------------------------------------------------------------------------------------\n";
+                    infoKoncowe += item.osWys +" "+ToJavaScriptDate(item.dataWys)+ "\n: " + item.tresc + "\n--------------------------------------------------------------------------------------------------\n";
                 });
                 okienko.innerHTML = infoKoncowe;
             }
