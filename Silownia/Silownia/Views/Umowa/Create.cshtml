@@ -44,7 +44,7 @@
             <div class="form-group">
             @Html.Label("Zrób zdjęcie", new { @class = "control-label col-md-2" })
             <div class="wrap">
-                <img class="Slide" src="~/Content/ikony/ikona_kamera.png" width="48" height="48">
+                <img class="Slide" src="~/Content/ikony/ikona_kamera.png" width="90" height="90">
                 <div class="slidinggDiv" style="display:none">
                     @Html.Action("Index", "Photo", new { osoba = @ViewBag.Osoba })
                 </div>
@@ -54,7 +54,7 @@
         <div class="form-group">
             @Html.Label("Zapisane zdjęcie", new { @class = "control-label col-md-2" })
             <div class="wrap">
-                <img class="Slide" src="~/Content/ikony/ikona_ZapisaneZdjecie.png" width="48" height="48" onclick="javascript:pokazZdjecie()">
+                <img class="Slide" src="~/Content/ikony/ikona_Zapisane.png" width="90" height="90" onclick="javascript:pokazZdjecie()">
                 <div class="slidinggDiv" id="Zdjecie" style="display:none">
                 </div>
             </div>

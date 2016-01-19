@@ -277,12 +277,12 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\ikony\ikona_ZapisaneZdjecie.png" />
     <Content Include="Content\ikony\ikona_adres.png" />
     <Content Include="Content\ikony\ikona_adres60px.png" />
     <Content Include="Content\ikony\ikona_adres_rectangular_blue.png" />
     <Content Include="Content\ikony\ikona_adres_rectangular_blue_40px.png" />
     <Content Include="Content\ikony\ikona_kamera.png" />
+    <Content Include="Content\ikony\ikona_kamera60px.png" />
     <Content Include="Content\ikony\ikona_konserwacja.png" />
     <Content Include="Content\ikony\ikona_konserwacja60px.png" />
     <Content Include="Content\ikony\ikona_masaz.png" />
@@ -295,6 +295,8 @@
     <Content Include="Content\ikony\ikona_treningPersonalny60px.png" />
     <Content Include="Content\ikony\ikona_umowa.png" />
     <Content Include="Content\ikony\ikona_umowa60px.png" />
+    <Content Include="Content\ikony\ikona_Zapisane.png" />
+    <Content Include="Content\ikony\ikona_Zapisane60px.png" />
     <Content Include="Content\ikony\persony\ikona_instruktor.png" />
     <Content Include="Content\ikony\persony\ikona_instruktor60px.png" />
     <Content Include="Content\ikony\persony\ikona_klient.png" />
@@ -309,7 +311,6 @@
     <Content Include="Content\ikony\persony\ikona_recepcjonista60px.png" />
     <Content Include="Content\ikony\persony\ikona_trenerPersonalny.png" />
     <Content Include="Content\ikony\persony\ikona_trenerPersonalny60px.png" />
-    <Content Include="Content\ikony\profile_pic.png" />
     <Content Include="Content\ikony\sala\ikona_sala.png" />
     <Content Include="Content\ikony\sala\ikona_sala60px.png" />
     <Content Include="Content\ikony\silownia\ikona_adres_rectangular_blue60px.png" />
