@@ -1,6 +1,6 @@
 ﻿<div class="col-lg-2">
     <div style="font-size:larger">
-        Szukaj po nazwie siłowni:
+        Siłownia:
     </div>
     @Html.DropDownList("SilowniaID", (SelectList)ViewBag.SilowniaID, "Wszystkie siłownie", new { onchange = "this.form.submit();", @class = "form-control" }) <br />
   @* Przy zmianie w dropdownliscie od razu odświeża się widok *@

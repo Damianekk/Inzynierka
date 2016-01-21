@@ -19,13 +19,15 @@ namespace Silownia.Controllers
         private SilowniaContext db = new SilowniaContext();
 
         // GET: /Sala/
-        public ActionResult Index(string nazwa, string SilowniaID, int page = 1, int pageSize = 10, AkcjaEnumSala akcja = AkcjaEnumSala.Brak, String info = null)
+        public ActionResult Index(string nazwa, string SilowniaID, string Rodzaj, string Status, int page = 1, int pageSize = 10, AkcjaEnumSala akcja = AkcjaEnumSala.Brak, String info = null)
         {
             if (Session["Auth"] != null)
             {
                 if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
                 {
                     ViewBag.SilowniaID = new SelectList(db.Silownie.DistinctBy(a => new { a.Nazwa }), "Nazwa", "Nazwa");
+                    ViewBag.Rodzaj = new SelectList(db.Sale.DistinctBy(a => new { a.Rodzaj }), "Rodzaj", "Rodzaj");
+                    ViewBag.Status = new SelectList(db.Sale.DistinctBy(a => new { a.Status }), "Status", "Status");
 
                     var sala = from Sale in db.Sale select Sale;
 

@@ -1,0 +1,8 @@
+﻿<div class="col-lg-2">
+    <div style="font-size:larger">
+        Przeznaczenie:
+    </div>
+    @Html.DropDownList("Rodzaj", (SelectList)ViewBag.Rodzaj, "Dowolny rodzaj", new { onchange = "this.form.submit();", @class = "form-control" }) <br />
+    @* Przy zmianie w dropdownliscie od razu odświeża się widok *@
+
+</div>

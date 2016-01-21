@@ -285,8 +285,12 @@
     <Content Include="Content\ikony\ikona_kamera60px.png" />
     <Content Include="Content\ikony\ikona_konserwacja.png" />
     <Content Include="Content\ikony\ikona_konserwacja60px.png" />
+    <Content Include="Content\ikony\ikona_konserwacjaOngoing.png" />
+    <Content Include="Content\ikony\ikona_konserwacjaOngoing60px.png" />
     <Content Include="Content\ikony\ikona_masaz.png" />
     <Content Include="Content\ikony\ikona_masaz60px.png" />
+    <Content Include="Content\ikony\ikona_specjalizacja.png" />
+    <Content Include="Content\ikony\ikona_specjalizacja60px.png" />
     <Content Include="Content\ikony\ikona_sprzet.png" />
     <Content Include="Content\ikony\ikona_sprzet60px.png" />
     <Content Include="Content\ikony\ikona_treningGrupowy.png" />
@@ -577,6 +581,10 @@
     <Content Include="Views\Konserwacja\ListaSilowni.cshtml" />
     <Content Include="Views\Umowa\ListaSilowni.cshtml" />
     <Content Include="Views\Shared\DomyslneProfilowe.cshtml" />
+    <Content Include="Views\Shared\KryteriaSzukania\_statusNaprawy.cshtml" />
+    <Content Include="Views\Shared\KryteriaSzukania\_statusSali.cshtml" />
+    <Content Include="Views\Shared\KryteriaSzukania\_salaPrzeznaczenie.cshtml" />
+    <Content Include="Views\Shared\KryteriaSzukania\_wNaprawie.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

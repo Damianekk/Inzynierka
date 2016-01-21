@@ -19,7 +19,7 @@ namespace Silownia.Controllers
         private SilowniaContext db = new SilowniaContext();
 
         // GET: Sprzet
-        public ActionResult Index(string nazwa, string SilowniaID, int page = 1, int pageSize = 10, AkcjaEnumSprzet akcja = AkcjaEnumSprzet.Brak, String info = null)
+        public ActionResult Index(string nazwa, string SilowniaID,  int page = 1, int pageSize = 10, AkcjaEnumSprzet akcja = AkcjaEnumSprzet.Brak, String info = null)
         {
             if (Session["Auth"] != null)
             {
