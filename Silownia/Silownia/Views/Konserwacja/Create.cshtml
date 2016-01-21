@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Konserwacja: dodaj";
 }
-<h2>Dodaj nową konserwację</h2>
+<h2>Dodaj nową konserwację sprzętu</h2>
 
 @using (Html.BeginForm())
 {
@@ -62,12 +62,15 @@
                 <input type="submit" value="Utwórz" class="btn btn-lg btn-large btn-success" />
             </div>
         </div>
-
+    </div>
+    <div>
         @if (Request.UrlReferrer != null)
         {
             <button class="btn btn-large btn-block btn-primary btn-lg btn-primary" onclick="history.go(-1); return false;">powrót</button>
         }
+
     </div>
+
 }
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
