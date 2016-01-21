@@ -64,7 +64,6 @@
             else if (Session["Auth"].ToString() == "Recepcjonista")
             {
 
-
                 <li>@Html.ActionLink("Klienci", "Index", "Klient")</li>
                 <li>@Html.ActionLink("Umowy", "Index", "Umowa")</li>
 
@@ -112,7 +111,7 @@
                     <ul class="dropdown-menu">
                         <li><img src="~/Content/ikony/ikona_konserwacja60px.png" height="50" width="50" style="float:right">@Html.ActionLink("Konserwacje", "Index", "Konserwacja")</li>
                         <li role="separator" class="divider"></li>
-                        <li><img src="~/Content/ikony/ikona_treningPersonalny60px.png" height="50" width="50" style="float:right">@Html.ActionLink("Specjalizacje", "Index", "Specjalizacja")</li>
+                        <li><img src="~/Content/ikony/ikona_specjalizacja60px.png" height="50" width="50" style="float:right">@Html.ActionLink("Specjalizacje", "Index", "Specjalizacja")</li>
                     </ul>
                 </li>
             }
