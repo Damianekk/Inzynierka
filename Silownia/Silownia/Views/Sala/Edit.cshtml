@@ -13,6 +13,7 @@
 
             @Html.ValidationSummary(true)
             @Html.HiddenFor(model => model.Numer_sali)
+            @Html.HiddenFor(model => model.SilowniaID)
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Rodzaj, new { @class = "control-label col-md-2" })

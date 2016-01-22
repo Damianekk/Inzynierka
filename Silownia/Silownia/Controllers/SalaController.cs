@@ -170,7 +170,7 @@ namespace Silownia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="Numer_sali,Rodzaj,Status,Opis,Zdjecie,LiczbaOsob")] Sala sala)
+        public ActionResult Edit([Bind(Include="Numer_sali,Rodzaj,Status,Opis,Zdjecie,LiczbaOsob,SilowniaID")] Sala sala)
         {
             if (Session["Auth"] != null)
             {
