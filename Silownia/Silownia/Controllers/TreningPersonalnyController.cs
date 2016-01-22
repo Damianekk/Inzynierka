@@ -133,7 +133,7 @@ namespace Silownia.Controllers
                 if (Session["Auth"].ToString() == "Recepcjonista" || Session["Auth"].ToString() == "Administrator")
                 {
                     ViewBag.TrenerID = new SelectList(db.Trenerzy, "OsobaID", "imieNazwisko", treningPersonalny.TrenerID);
-                    treningPersonalny.TrenerID = Int32.Parse(Request["TrenerSelectLista"]);
+                    treningPersonalny.TrenerID = Int32.Parse(Request["PracownikSelectLista"]);
 
 
                     treningPersonalny.TreningStart = treningPersonalny.TreningStart.AddHours(System.Convert.ToDouble(treningPersonalny.TreningStartGodzina.Hour));
@@ -160,7 +160,7 @@ namespace Silownia.Controllers
                         db.TreningiPersonalne.Add(treningPersonalny);
                         db.SaveChanges();
 
-                        return RedirectToAction("Index", new { akcja = AkcjaEnumTrening.DodanoTrening+" klientowi: ", info = klient.imieNazwisko });
+                        return RedirectToAction("Index", new { akcja = AkcjaEnumTrening.DodanoTrening, info = klient.imieNazwisko });
                     }
                     return View(treningPersonalny);
                 }

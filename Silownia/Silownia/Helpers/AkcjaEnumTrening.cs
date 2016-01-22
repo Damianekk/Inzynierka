@@ -8,10 +8,10 @@ namespace Silownia
 {
     public enum AkcjaEnumTrening
     {
-        [Description("Poprawnie dodano trening")]
+        [Description("Poprawnie dodano trening klientowi:")]
         DodanoTrening
        ,
-        [Description("Poprawnie usunięto trening")]
+        [Description("Poprawnie usunięto trening klientowi:")]
         UsunietoTrening
        , Brak
     }

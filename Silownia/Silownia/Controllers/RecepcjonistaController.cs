@@ -184,6 +184,9 @@ namespace Silownia.Controllers
             return HttpNotFound();
         }
 
+
+
+
         // GET: Recepcjonista/Delete/5
         [MyAuthorize(RoleEnum.Administrator)]
         public ActionResult Delete(long? id)
