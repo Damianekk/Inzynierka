@@ -30,35 +30,38 @@ namespace Silownia.Controllers
                             id = (long)(Session["loggedUserID"]); // jeśli jest to bierzemy jej id z sesji 
                         }
                     }
-                    ViewBag.Klienci = new SelectList(db.Klienci, "OsobaID", "imieNazwisko");
-                    Osoba os = db.Osoby.Find(id);
-
-                    var wiad = db.Wiadomosci.Where(o => o.OsobaOdbierajaca.OsobaID == id);
-
-                    if (akcja != AkcjaEnumTrening.Brak)
+                    if (id == (long)Session["loggedUserID"])
                     {
-                        ViewBag.Akcja = akcja;
+                        ViewBag.Klienci = new SelectList(db.Klienci, "OsobaID", "imieNazwisko");
+                        Osoba os = db.Osoby.Find(id);
+
+                        var wiad = db.Wiadomosci.Where(o => o.OsobaOdbierajaca.OsobaID == id);
+
+                        if (akcja != AkcjaEnumTrening.Brak)
+                        {
+                            ViewBag.Akcja = akcja;
+                        }
+
+                        foreach (Wiadomosc w in wiad)
+                        {
+                            w.Status = StatusWiadomosciEnum.Odebrany;
+                            w.Odebrano = DateTime.Now;
+                        }
+
+                        if (wiad.Count() > 0)
+                            ViewBag.Wiad = wiad.ToList<Wiadomosc>();
+
+                        else
+                            ViewBag.Wiad = null;
+
+                        if (os == null)
+                        {
+                            return HttpNotFound();
+                        }
+                        var z = os;
+
+                        return View(z);
                     }
-
-                    foreach (Wiadomosc w in wiad)
-                    {
-                        w.Status = StatusWiadomosciEnum.Odebrany;
-                        w.Odebrano = DateTime.Now;
-                    }
-
-                    if (wiad.Count() > 0)
-                        ViewBag.Wiad = wiad.ToList<Wiadomosc>();
-
-                    else
-                        ViewBag.Wiad = null;
-
-                    if (os == null)
-                    {
-                        return HttpNotFound();
-                    }
-                    var z = os;
-
-                    return View(z);
                 }
             }
             return HttpNotFound();
@@ -67,9 +70,6 @@ namespace Silownia.Controllers
 
         public ActionResult Act(string username, long trenerID)
         {
-
-
-
             if (Session["Auth"] != null)
             {
                 if (Session["Auth"].ToString() == "Trener")
@@ -134,10 +134,17 @@ namespace Silownia.Controllers
 
         public ActionResult UsunTrenerowiTreningPersonalny(long id)
         {
-            var trP = db.TreningiPersonalne.Find(id);
-            db.TreningiPersonalne.Remove(trP);
-            db.SaveChanges();
-            return RedirectToAction("Index", "TrenerView", new { akcja = AkcjaEnumTrening.UsunietoTrening });
+            if (Session["Auth"] != null)
+            {
+                if (Session["Auth"].ToString() == "Trener")
+                {
+                    var trP = db.TreningiPersonalne.Find(id);
+                    db.TreningiPersonalne.Remove(trP);
+                    db.SaveChanges();
+                    return RedirectToAction("Index", "TrenerView", new { akcja = AkcjaEnumTrening.UsunietoTrening });
+                }
+            }
+            return HttpNotFound();
         }
     }
 }

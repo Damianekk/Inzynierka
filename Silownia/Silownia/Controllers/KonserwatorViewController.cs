@@ -29,20 +29,23 @@ namespace Silownia.Controllers
                             id = (long)(Session["loggedUserID"]); // jeśli jest to bierzemy jej id z sesji 
                         }
                     }
-                    Osoba os = db.Osoby.Find(id);
-
-                    if (akcja != AkcjaEnumKonserwacja.Brak)
+                    if (id == (long)Session["loggedUserID"])
                     {
-                        ViewBag.Akcja = akcja;
-                    }
+                        Osoba os = db.Osoby.Find(id);
 
-                    if (os == null)
-                    {
-                        return HttpNotFound();
-                    }
-                    var z = os;
+                        if (akcja != AkcjaEnumKonserwacja.Brak)
+                        {
+                            ViewBag.Akcja = akcja;
+                        }
 
-                    return View(z);
+                        if (os == null)
+                        {
+                            return HttpNotFound();
+                        }
+                        var z = os;
+
+                        return View(z);
+                    }
                 }
             }
             return HttpNotFound();
@@ -52,19 +55,33 @@ namespace Silownia.Controllers
 
         public ActionResult PrzyjmijKonserwacje(long id)
         {
-            var kons = db.Konserwacje.Find(id);
-            kons.Status = "w naprawie";
-            db.SaveChanges();
-            return RedirectToAction("Index", "KonserwatorView", new { akcja = AkcjaEnumKonserwacja.PrzyjetoKonserwacje });
+            if (Session["Auth"] != null)
+            {
+                if (Session["Auth"].ToString() == "Konserwator")
+                {
+                    var kons = db.Konserwacje.Find(id);
+                    kons.Status = "w naprawie";
+                    db.SaveChanges();
+                    return RedirectToAction("Index", "KonserwatorView", new { akcja = AkcjaEnumKonserwacja.PrzyjetoKonserwacje });
+                }
+            }
+            return HttpNotFound();
         }
 
         public ActionResult ZamknijKonserwacje(long id)
         {
-            var kons = db.Konserwacje.Find(id);
-            kons.Status = "zakończona";
-            kons.Data_naprawy = DateTime.Now;
-            db.SaveChanges();
-            return RedirectToAction("Index", "KonserwatorView", new { akcja = AkcjaEnumKonserwacja.ZamknietoKonserwacje });
+            if (Session["Auth"] != null)
+            {
+                if (Session["Auth"].ToString() == "Konserwator")
+                {
+                    var kons = db.Konserwacje.Find(id);
+                    kons.Status = "zakończona";
+                    kons.Data_naprawy = DateTime.Now;
+                    db.SaveChanges();
+                    return RedirectToAction("Index", "KonserwatorView", new { akcja = AkcjaEnumKonserwacja.ZamknietoKonserwacje });
+                }
+            }
+            return HttpNotFound();
         }
     }
 }

@@ -22,44 +22,47 @@ namespace Silownia.Controllers
                 {
                     if (id == null) // jeżeli nie podano idOsoby jako parametr 
                     {
-                        if(String.IsNullOrEmpty(Session["loggedUserID"].ToString())) // sprawdzamy czy zalogowana jest osoba
-                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                        if (String.IsNullOrEmpty(Session["loggedUserID"].ToString())) // sprawdzamy czy zalogowana jest osoba
+                            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                         else
                         {
                             id = (long)(Session["loggedUserID"]); // jeśli jest to bierzemy jej id z sesji 
                         }
                     }
 
-                    if (akcja != AkcjaEnumMasaz.Brak)
+                    if(id == (long)Session["loggedUserID"])
                     {
-                        ViewBag.Akcja = akcja;
+                        if (akcja != AkcjaEnumMasaz.Brak)
+                        {
+                            ViewBag.Akcja = akcja;
+                        }
+
+                        ViewBag.Trenerzy = new SelectList(db.Trenerzy, "OsobaID", "imieNazwisko");
+                        Klient klient = db.Klienci.Find(id);
+
+                        var wiad = db.Wiadomosci.Where(o => o.OsobaOdbierajaca.OsobaID == id);
+
+
+                        foreach (Wiadomosc w in wiad)
+                        {
+                            w.Status = StatusWiadomosciEnum.Odebrany;
+                            w.Odebrano = DateTime.Now;
+                        }
+
+                        if (wiad.Count() > 0)
+                            ViewBag.Wiad = wiad.ToList<Wiadomosc>();
+
+                        else
+                            ViewBag.Wiad = null;
+
+                        if (klient == null)
+                        {
+                            return HttpNotFound();
+                        }
+                        var z = klient;
+
+                        return View(z);
                     }
-
-                    ViewBag.Trenerzy = new SelectList(db.Trenerzy, "OsobaID", "imieNazwisko");
-                    Klient klient = db.Klienci.Find(id);
-
-                    var wiad = db.Wiadomosci.Where(o => o.OsobaOdbierajaca.OsobaID == id);
-
-
-                    foreach (Wiadomosc w in wiad)
-                    {
-                        w.Status = StatusWiadomosciEnum.Odebrany;
-                        w.Odebrano = DateTime.Now;
-                    }
-
-                    if (wiad.Count() > 0)
-                        ViewBag.Wiad = wiad.ToList<Wiadomosc>();
-
-                    else
-                        ViewBag.Wiad = null;
-
-                    if (klient == null)
-                    {
-                        return HttpNotFound();
-                    }
-                    var z = klient;
-
-                    return View(z);
                 }
             }
             return HttpNotFound();
@@ -67,9 +70,6 @@ namespace Silownia.Controllers
 
         public ActionResult Act(string username,long trenerID)
         {
-
-
-
             if (Session["Auth"] != null)
             {
                 if (Session["Auth"].ToString() == "Klient")
@@ -134,28 +134,49 @@ namespace Silownia.Controllers
 
         public ActionResult UsunKlientowiTreningGrupowy(long id)
         {
-            var k = db.Klienci.Find(11);
-            var trening = db.ZajeciaGrup.Find(id);
+            if (Session["Auth"] != null)
+            {
+                if (Session["Auth"].ToString() == "Klient")
+                {
+                    var k = db.Klienci.Find(11);
+                    var trening = db.ZajeciaGrup.Find(id);
 
-           // k.KlienciTreningiGrupowe.Remove(trening);
-            db.SaveChanges();
-            return null;
+                    // k.KlienciTreningiGrupowe.Remove(trening);
+                    db.SaveChanges();
+                    return null;
+                }
+            }
+            return HttpNotFound();
         }
 
         public ActionResult UsunKlientowiMasaz(long id)
         {
-            var masaz = db.Masaze.Find(id);
-            db.Masaze.Remove(masaz);
-            db.SaveChanges();
-            return RedirectToAction("Index", "KlientView", new { akcja = AkcjaEnumMasaz.UsunietoMasaz });
+            if (Session["Auth"] != null)
+            {
+                if (Session["Auth"].ToString() == "Klient")
+                {
+                    var masaz = db.Masaze.Find(id);
+                    db.Masaze.Remove(masaz);
+                    db.SaveChanges();
+                    return RedirectToAction("Index", "KlientView", new { akcja = AkcjaEnumMasaz.UsunietoMasaz });
+                }
+            }
+            return HttpNotFound();
         }
 
         public ActionResult UsunKlientowiTreningPersonalny(long id)
         {
-            var trP = db.TreningiPersonalne.Find(id);
-            db.TreningiPersonalne.Remove(trP);
-            db.SaveChanges();
-            return RedirectToAction("Index", "KlientView", new { akcja = AkcjaEnumTrening.UsunietoTrening });
+            if (Session["Auth"] != null)
+            {
+                if (Session["Auth"].ToString() == "Klient")
+                {
+                    var trP = db.TreningiPersonalne.Find(id);
+                    db.TreningiPersonalne.Remove(trP);
+                    db.SaveChanges();
+                    return RedirectToAction("Index", "KlientView", new { akcja = AkcjaEnumTrening.UsunietoTrening });
+                }
+            }
+            return HttpNotFound();
         }
     }
 }

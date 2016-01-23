@@ -29,21 +29,24 @@ namespace Silownia.Controllers
                             id = (long)(Session["loggedUserID"]); // jeśli jest to bierzemy jej id z sesji 
                         }
                     }
-                    Osoba os = db.Osoby.Find(id);
-
-                    if (akcja != AkcjaEnumMasaz.Brak)
+                    if (id == (long)Session["loggedUserID"])
                     {
-                        ViewBag.Akcja = akcja;
+                        Osoba os = db.Osoby.Find(id);
+
+                        if (akcja != AkcjaEnumMasaz.Brak)
+                        {
+                            ViewBag.Akcja = akcja;
+                        }
+
+
+                        if (os == null)
+                        {
+                            return HttpNotFound();
+                        }
+                        var z = os;
+
+                        return View(z);
                     }
-
-
-                    if (os == null)
-                    {
-                        return HttpNotFound();
-                    }
-                    var z = os;
-
-                    return View(z);
                 }
             }
             return HttpNotFound();
@@ -51,10 +54,17 @@ namespace Silownia.Controllers
         }
         public ActionResult UsunMasazyscieMasaz(long id)
         {
-            var mas = db.Masaze.Find(id);
-            db.Masaze.Remove(mas);
-            db.SaveChanges();
-            return RedirectToAction("Index", "MasazystaView", new { akcja = AkcjaEnumMasaz.UsunietoMasaz });
+            if (Session["Auth"] != null)
+            {
+                if (Session["Auth"].ToString() == "Masazysta")
+                {
+                    var mas = db.Masaze.Find(id);
+                    db.Masaze.Remove(mas);
+                    db.SaveChanges();
+                    return RedirectToAction("Index", "MasazystaView", new { akcja = AkcjaEnumMasaz.UsunietoMasaz });
+                }
+            }
+            return HttpNotFound();
         }
     }
 }

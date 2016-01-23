@@ -29,15 +29,18 @@ namespace Silownia.Controllers
                             id = (long)(Session["loggedUserID"]); // jeśli jest to bierzemy jej id z sesji 
                         }
                     }
-                    Osoba os = db.Osoby.Find(id);
-                   
-                    if (os == null)
+                    if (id == (long)Session["loggedUserID"])
                     {
-                        return HttpNotFound();
-                    }
-                    var z = os;
+                        Osoba os = db.Osoby.Find(id);
 
-                    return View(z);
+                        if (os == null)
+                        {
+                            return HttpNotFound();
+                        }
+                        var z = os;
+
+                        return View(z);
+                    }
                 }
             }
             return HttpNotFound();
