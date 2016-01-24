@@ -16,6 +16,7 @@ namespace Silownia.Controllers
     public class RecepcjonistaController : Controller
     {
         private SilowniaContext db = new SilowniaContext();
+        private SzyfrowanieHasel szyfr = new SzyfrowanieHasel("mojklucz", "mojwektor", 32);
 
         // GET: Recepcjonista
         public ActionResult Index(string imieNazwisko, string SilowniaID, int page = 1, int pageSize = 10, AkcjaEnumRecepcjonista akcja = AkcjaEnumRecepcjonista.Brak, String info = null)
@@ -114,13 +115,11 @@ namespace Silownia.Controllers
                         pracownik.IDOsoby = recepcjonista.OsobaID;
                         pracownik.Login = recepcjonista.Pesel.ToString();
 
-                        //string haslo = instruktor.Imie + instruktor.Nazwisko;
-                        //string szyfrowanie = szyfr.Encrypt(haslo);
-                        //pracownik.Haslo = szyfrowanie;
+                        string haslo = recepcjonista.Imie + recepcjonista.Nazwisko;
+                        string szyfrowanie = szyfr.Encrypt(haslo);
+                        pracownik.Haslo = szyfrowanie;
 
-                        //to bedzie do zakomentowania - zakomentowane do odkomentowania
-                        pracownik.Haslo = recepcjonista.Imie + recepcjonista.Nazwisko;
-
+                       
                         pracownik.Rola = RoleEnum.Recepcjonista.GetDescription();
                         db.Uzytkownicy.Add(pracownik);
                         db.SaveChanges();

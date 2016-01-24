@@ -16,6 +16,7 @@ namespace Silownia.Controllers
     public class MasazystaController : Controller
     {
         private SilowniaContext db = new SilowniaContext();
+        private SzyfrowanieHasel szyfr = new SzyfrowanieHasel("mojklucz", "mojwektor", 32);
 
         // GET: Masazysta
 
@@ -114,12 +115,9 @@ namespace Silownia.Controllers
                         pracownik.IDOsoby = masazysta.OsobaID;
                         pracownik.Login = masazysta.Pesel.ToString();
 
-                        //string haslo = instruktor.Imie + instruktor.Nazwisko;
-                        //string szyfrowanie = szyfr.Encrypt(haslo);
-                        //pracownik.Haslo = szyfrowanie;
-
-                        //to bedzie do zakomentowania - zakomentowane do odkomentowania
-                        pracownik.Haslo = masazysta.Imie + masazysta.Nazwisko;
+                        string haslo = masazysta.Imie + masazysta.Nazwisko;
+                        string szyfrowanie = szyfr.Encrypt(haslo);
+                        pracownik.Haslo = szyfrowanie;
 
                         pracownik.Rola = RoleEnum.Masazysta.GetDescription();
                         db.Uzytkownicy.Add(pracownik);

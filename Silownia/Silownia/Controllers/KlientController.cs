@@ -122,12 +122,9 @@ namespace Silownia.Controllers
                         uzytkownik.IDOsoby = klient.OsobaID;
                         uzytkownik.Login = klient.Mail;
 
-                        //string haslo = klient.Imie + klient.Nazwisko;
-                        //string szyfrowanie = szyfr.Encrypt(haslo);
-                        //uzytkownik.Haslo = szyfrowanie;
-
-                        //to bedzie do zakomentowania - zakomentowane do odkomentowania
-                        uzytkownik.Haslo = klient.Imie + klient.Nazwisko;
+                        string haslo = klient.Imie + klient.Nazwisko;
+                        string szyfrowanie = szyfr.Encrypt(haslo);
+                        uzytkownik.Haslo = szyfrowanie;
                         uzytkownik.Rola = RoleEnum.Klient.GetDescription();
                         db.Uzytkownicy.Add(uzytkownik);
                         db.SaveChanges();

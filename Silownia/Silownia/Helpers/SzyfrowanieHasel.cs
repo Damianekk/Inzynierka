@@ -96,14 +96,12 @@ namespace Silownia.Helpers
           RijndaelManaged Algorithm = new RijndaelManaged();
           Algorithm.BlockSize = _KeyByteLength*8;
           Algorithm.KeySize = _KeyByteLength*8;    
-          MemoryStream memStream = 
-               new MemoryStream(new UnicodeEncoding().GetBytes(s));
+          MemoryStream memStream = new MemoryStream(new UnicodeEncoding().GetBytes(s));
           ICryptoTransform Decryptor = Algorithm.CreateDecryptor(key,iv);
           memStream.Position = 0;
-          CryptoStream crStream = 
-          new CryptoStream(memStream,Decryptor,CryptoStreamMode.Read);
+          CryptoStream crStream = new CryptoStream(memStream,Decryptor,CryptoStreamMode.Read);
           StreamReader strReader = new StreamReader(crStream);
-          UnicodeEncoding g=new UnicodeEncoding();
+          UnicodeEncoding g = new UnicodeEncoding();
           return strReader.ReadToEnd();
      }
     }

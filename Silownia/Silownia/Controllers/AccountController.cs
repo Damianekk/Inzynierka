@@ -44,10 +44,6 @@ namespace Silownia.Controllers
                 Session["loggedUserID"] = null;
                
             }
-            if (returnUrl == "/Account/Manage")
-            {
-                return View("~/Views/Account/Manage.cshtml");
-            }
             return View();
         }
 
@@ -63,51 +59,59 @@ namespace Silownia.Controllers
 
             if (uzytkownik != null)
             {
-                //string haslo = szyfr.Decrypt(uzytkownik.Haslo);
-                //if (model.Haslo == haslo)
-                if(model.Haslo == uzytkownik.Haslo)
+                if (model.Login == "admin")
                 {
-                    Session["User"] = uzytkownik.Login;
-                    Session["Auth"] = uzytkownik.Rola;
-                    Session["loggedUserID"] = uzytkownik.IDOsoby; 
-                    if (uzytkownik.Login == "admin")
+                    if (model.Haslo == uzytkownik.Haslo)
                     {
+                        Session["User"] = uzytkownik.Login;
+                        Session["Auth"] = uzytkownik.Rola;
+                        Session["loggedUserID"] = uzytkownik.IDOsoby;
                         return RedirectToAction("Index", "Silownia", new { id = 1 });
-                    }
-                    if (uzytkownik.Rola == RoleEnum.Klient.GetDescription())
-                    {
-                        Klient klient = db.Klienci.Find(uzytkownik.IDOsoby);
-                        return RedirectToAction("Index", "KlientView", new { id = uzytkownik.IDOsoby });
-                    }
-                    if (uzytkownik.Rola == RoleEnum.Recepcjonista.GetDescription())
-                    {
-                        Recepcjonista recepcjonista = db.Recepcjonisci.Find(uzytkownik.IDOsoby);
-                        return RedirectToAction("Index", "Silownia", new { id = recepcjonista.SilowniaID });
-                    }
-                    if (uzytkownik.Rola == RoleEnum.Trener.GetDescription())
-                    {
-                        Trener trener = db.Trenerzy.Find(uzytkownik.IDOsoby);
-                        return RedirectToAction("Index", "TrenerView", new { id = uzytkownik.IDOsoby });
-                    }
-                    if (uzytkownik.Rola == RoleEnum.Konserwator.GetDescription())
-                    {
-                        Konserwator konserwator = db.Konserwatorzy.Find(uzytkownik.IDOsoby);
-                        return RedirectToAction("Index", "KonserwatorView", new { id = uzytkownik.IDOsoby });
-                    }
-                    if (uzytkownik.Rola == RoleEnum.Masazysta.GetDescription())
-                    {
-                        Masazysta masazysta = db.Masazysci.Find(uzytkownik.IDOsoby);
-                        return RedirectToAction("Index", "MasazystaView", new { id = uzytkownik.IDOsoby });
-                    }
-                    if (uzytkownik.Rola == RoleEnum.Instruktor.GetDescription())
-                    {
-                        Instruktor instruktor = db.Instruktorzy.Find(uzytkownik.IDOsoby);
-                        return RedirectToAction("Index", "InstruktorView", new { id = uzytkownik.IDOsoby });
                     }
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Niepoprawny login lub hasło");
+                    string haslo = szyfr.Decrypt(uzytkownik.Haslo);
+                    if (model.Haslo == haslo)
+                    {
+                        Session["User"] = uzytkownik.Login;
+                        Session["Auth"] = uzytkownik.Rola;
+                        Session["loggedUserID"] = uzytkownik.IDOsoby;
+                        if (uzytkownik.Rola == RoleEnum.Klient.GetDescription())
+                        {
+                            Klient klient = db.Klienci.Find(uzytkownik.IDOsoby);
+                            return RedirectToAction("Index", "KlientView", new { id = uzytkownik.IDOsoby });
+                        }
+                        if (uzytkownik.Rola == RoleEnum.Recepcjonista.GetDescription())
+                        {
+                            Recepcjonista recepcjonista = db.Recepcjonisci.Find(uzytkownik.IDOsoby);
+                            return RedirectToAction("Index", "Silownia", new { id = recepcjonista.SilowniaID });
+                        }
+                        if (uzytkownik.Rola == RoleEnum.Trener.GetDescription())
+                        {
+                            Trener trener = db.Trenerzy.Find(uzytkownik.IDOsoby);
+                            return RedirectToAction("Index", "TrenerView", new { id = uzytkownik.IDOsoby });
+                        }
+                        if (uzytkownik.Rola == RoleEnum.Konserwator.GetDescription())
+                        {
+                            Konserwator konserwator = db.Konserwatorzy.Find(uzytkownik.IDOsoby);
+                            return RedirectToAction("Index", "KonserwatorView", new { id = uzytkownik.IDOsoby });
+                        }
+                        if (uzytkownik.Rola == RoleEnum.Masazysta.GetDescription())
+                        {
+                            Masazysta masazysta = db.Masazysci.Find(uzytkownik.IDOsoby);
+                            return RedirectToAction("Index", "MasazystaView", new { id = uzytkownik.IDOsoby });
+                        }
+                        if (uzytkownik.Rola == RoleEnum.Instruktor.GetDescription())
+                        {
+                            Instruktor instruktor = db.Instruktorzy.Find(uzytkownik.IDOsoby);
+                            return RedirectToAction("Index", "InstruktorView", new { id = uzytkownik.IDOsoby });
+                        }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Niepoprawny login lub hasło");
+                    }
                 }
             }
             else
@@ -115,31 +119,8 @@ namespace Silownia.Controllers
                 ModelState.AddModelError("", "Użytkownik nie istnieje.");
             }
 
-            // If we got this far, something failed, redisplay form
+            
             return View("~/Views/Account/Login.cshtml");
-        }
-
-        //
-        //GET: /Account/Manage
-        [AllowAnonymous]
-        public ActionResult Manage()
-        {
-            return View("~/Views/Account/Manage.cshtml");
-        }
-
-        //
-        // POST: /Account/Manage
-        [HttpPost, ActionName("Manage")]
-        public ActionResult Manage([Bind(Include = "Login,Haslo")] Uzytkownik uzytkownik)
-        {
-            if (ModelState.IsValid)
-            {
-                SilowniaContext db = new SilowniaContext();
-                db.Entry(uzytkownik).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Manage");
-            }
-            return View();
         }
 
         //
@@ -150,6 +131,7 @@ namespace Silownia.Controllers
         {
             this.Session["User"] = null;
             this.Session["Auth"] = null;
+            this.Session["loggedUserID"] = null;
             return RedirectToAction("Index", "Home");
         }
 
