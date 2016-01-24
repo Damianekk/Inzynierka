@@ -19,14 +19,20 @@
             method: 'GET',
             data: { username: text1, trenerID: idTrenera},
             success: function (data) {
-                document.getElementById("Wiadomosc").style.color = "red";
-                var a = document.getElementById("Wiadomosc");
-                a.value = "Wysłano poprawnie";
-                BlokujWiadomosc();
+               // document.getElementById("Wiadomosc").style.color = "red";
+               // var a = document.getElementById("Wiadomosc");
+                //a.value = "Wysłano poprawnie";
+                alert("Wysłano poprawnie")
+                // BlokujWiadomosc();
+                 Clear();
             }, error: function (erro) {
                 alert("Wybierz trenera z listy ");
             }
         });
+    }
+
+    function Clear() {  
+            document.getElementById("Wiadomosc").value = "";
     }
 
     function OdbierzWiad()
@@ -177,7 +183,7 @@
 
         <h3>Wiadomość do trenera</h3>
         @Html.DropDownList("Trenerzy", String.Empty)
-        @Html.TextArea("Wiadomosc", new { @style = "width:270px; height:180px" })
+        @Html.TextArea("Wiadomosc", new { @style = "width:270px; height:180px" ,@onchange = "Clear()"})
         <button type="button" id="Send" class="btn btn-primary" role="button" onclick="Wyslij()" style="width:270px; ">Wyślij</button>
         @*  *@
 
