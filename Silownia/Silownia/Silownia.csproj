@@ -244,7 +244,6 @@
     <Compile Include="Models\Instruktor.cs" />
     <Compile Include="Models\Klient.cs" />
     <Compile Include="Models\KlientZajeciaGrupowe.cs" />
-    <Compile Include="Models\KomentarzOPracowniku.cs" />
     <Compile Include="Models\Konserwacja.cs" />
     <Compile Include="Models\Konserwator.cs" />
     <Compile Include="Models\Konto.cs" />
