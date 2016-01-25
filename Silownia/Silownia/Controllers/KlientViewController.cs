@@ -138,12 +138,34 @@ namespace Silownia.Controllers
             {
                 if (Session["Auth"].ToString() == "Klient")
                 {
-                    var k = db.Klienci.Find(11);
-                    var trening = db.ZajeciaGrup.Find(id);
+                  
+                    ZajeciaGrupowe zajecia = db.ZajeciaGrup.Find(id);
+                    if (zajecia == null)
+                    {
+                        return HttpNotFound();
+                    }
 
-                    // k.KlienciTreningiGrupowe.Remove(trening);
-                    db.SaveChanges();
-                    return null;
+                    Klient klient = db.Klienci.Find(Session["loggedUserID"]);
+
+                    if (klient.KlienciTreningiGrupowe.Where(s => s.TreningID == zajecia.TreningID).Count() != 0)
+                    {
+                        var trening = klient.KlienciTreningiGrupowe.Where(s => s.TreningID == zajecia.TreningID).First();
+                        if (klient.KlienciTreningiGrupowe.Contains(trening))
+                        {
+                            zajecia.ZapisaneOsoby--;
+                            db.SaveChanges();
+
+                            klient.KlienciTreningiGrupowe.Remove(trening);
+                            db.SaveChanges();
+
+                            zajecia.KlientZajeciaGrupowe.Remove(trening);
+                            db.SaveChanges();
+
+                            return RedirectToAction("Index", new { akcja = AkcjaZapisEnum.UsunietoZapis });
+                        }
+                    }
+                    
+                   
                 }
             }
             return HttpNotFound();
